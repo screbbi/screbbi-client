@@ -9,6 +9,7 @@ export default {
         whatNewBorder: "#FF6F26",
         grey: "#7C8899",
         closeBlack: "#1E1E1E",
+        faqBorder: "#D9D9D9",
       },
     },
   },

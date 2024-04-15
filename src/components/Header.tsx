@@ -8,10 +8,14 @@ import rewrite from "../assets/img/rewrite.svg";
 import write from "../assets/img/write.png";
 import story from "../assets/img/story.png";
 import believe from "../assets/img/believe.png";
+import description from "../assets/img/description.png";
+import pacing from "../assets/img/pacing.png";
 import rewritePng from "../assets/img/rewrite.png";
 import landing from "../assets/img/landing.png";
 import { FaPlay } from "react-icons/fa";
 import { MdDraw } from "react-icons/md";
+import FAQ from "./FAQ";
+import Footer from "./Footer";
 
 const Header = () => {
   return (
@@ -59,7 +63,7 @@ const Header = () => {
             className="w-5/6 max-w-3xl mx-auto relative z-10"
           />
 
-          <div className="font-semibold text-md text-center mt-20">
+          <div className="font-semibold text-lg text-center mt-20">
             Try Our Powerful, All-in-One AI Writing
           </div>
         </div>
@@ -76,7 +80,7 @@ const Header = () => {
 
         {/* RIGHT FEATURES */}
         <div className="right-feature py-16">
-          <div className="font-semibold text-xl text-center mb-10">
+          <div className="font-semibold text-3xl text-center mb-14">
             The right features for your use case
           </div>
 
@@ -119,98 +123,175 @@ const Header = () => {
           </div>
         </div>
 
-        {/* ANOTHER SECTION WRITE */}
-        <div className="grid-section">
-          <div className="w-4/6">
-            <div className="flex items-center text-sm gap-4">
-              <div className="py-2 px-4 rounded-full text-white bg-buttonPurple">
-                AI
+        {/* GRID SECTIONS */}
+        <div>
+          {/* WRITE */}
+          <div className="grid-section">
+            <div className="w-4/6">
+              <div className="flex items-center text-sm gap-4">
+                <div className="py-2 px-4 rounded-full text-white bg-buttonPurple">
+                  AI
+                </div>
+
+                <div className="font-semibold">Write</div>
               </div>
 
-              <div className="font-semibold">Write</div>
-            </div>
+              <div className="text-closeBlack text-xl font-semibold my-4">
+                Write assists in generating text when you are unable to find the
+                right words
+              </div>
 
-            <div className="text-closeBlack text-xl font-semibold my-4">
-              Write assists in generating text when you are unable to find the
-              right words
-            </div>
+              <div className="text-grey font-semibold">
+                It analyzes your writing style and produces the following 300
+                words in your tone. The tool also provides different choices for
+                you to select from.
+              </div>
 
-            <div className="text-grey font-semibold">
-              It analyzes your writing style and produces the following 300
-              words in your tone. The tool also provides different choices for
-              you to select from.
+              <button className="py-2 px-6 rounded-full text-white bg-black mt-3 text-sm">
+                Try for free
+              </button>
             </div>
-
-            <button className="py-2 px-6 rounded-full text-white bg-black mt-3">
-              Try for free
-            </button>
+            <div className="w-full">
+              <img src={write} alt="" className="w-full" />
+            </div>
           </div>
-          <div className="w-full">
-            <img src={write} alt="" className="w-full" />
+
+          {/* STORY ENGINE */}
+          <div className="grid-section">
+            <div className="w-full">
+              <img src={story} alt="" className="w-full" />
+            </div>
+
+            <div className="ml-[30%] w-4/6">
+              <div className="flex items-center text-sm gap-4">
+                <div className="py-2 px-4 rounded-full text-white bg-buttonPurple">
+                  AI
+                </div>
+
+                <div className="font-semibold">Story Engine</div>
+              </div>
+
+              <div className="text-closeBlack text-xl font-semibold my-4">
+                Story Engine guides you through writing a complete novel in a
+                short period
+              </div>
+
+              <div className="text-grey font-semibold">
+                Embark on a journey with Story Engine as it guides you through
+                generating ideas, creating outlines, developing chapters, and
+                producing thousands of words in your unique writing style.
+              </div>
+
+              <button className="py-2 px-6 rounded-full text-white bg-black mt-3 text-sm">
+                Try for free
+              </button>
+            </div>
+          </div>
+
+          {/* ANOTHER SECTION WRITE */}
+          <div className="grid-section">
+            <div className="w-4/6">
+              <div className="flex items-center text-sm gap-4">
+                <div className="py-2 px-4 rounded-full text-white bg-buttonPurple">
+                  AI
+                </div>
+
+                <div className="font-semibold">Rewrite</div>
+              </div>
+
+              <div className="text-closeBlack text-xl font-semibold my-4">
+                Discovering the ideal word is always a breeze! 
+              </div>
+
+              <div className="text-grey font-semibold">
+                How about just two clicks to reach the heart of a well-crafted
+                sentence?
+              </div>
+
+              <button className="py-2 px-6 rounded-full text-white bg-black mt-3 text-sm">
+                Try for free
+              </button>
+            </div>
+            <div className="w-full">
+              <img src={believe} alt="" />
+              <img src={rewritePng} alt="" />
+            </div>
+          </div>
+
+          {/* DESCRIPTION */}
+          <div className="grid-section">
+            <div className="w-full">
+              <img src={description} alt="" className="w-full" />
+            </div>
+
+            <div className="ml-[30%] w-4/6">
+              <div className="flex items-center text-sm gap-4">
+                <div className="py-2 px-4 rounded-full text-white bg-buttonPurple">
+                  AI
+                </div>
+
+                <div className="font-semibold">Descriptions</div>
+              </div>
+
+              <div className="text-closeBlack text-xl font-semibold my-4">
+                Painting a vivid picture in the mind through descriptions
+              </div>
+
+              <div className="text-grey font-semibold">
+                Focusing solely on action and dialogue in writing may result in
+                a lack of depth. Describing details can enhance reader
+                engagement with characters and create a sense of presence.
+              </div>
+
+              <button className="py-2 px-6 rounded-full text-white bg-black mt-3 text-sm">
+                Try for free
+              </button>
+            </div>
+          </div>
+
+          {/* PACING */}
+          <div className="grid-section">
+            <div className="w-4/6">
+              <div className="flex items-center text-sm gap-4">
+                <div className="py-2 px-4 rounded-full text-white bg-buttonPurple">
+                  AI
+                </div>
+
+                <div className="font-semibold">Pacing</div>
+              </div>
+
+              <div className="text-closeBlack text-xl font-semibold my-4">
+                Pacing may feel rushed despite thorough planning
+              </div>
+
+              <div className="text-grey font-semibold">
+                Expand feature helps build scenes to maintain pacing in the
+                story.
+              </div>
+
+              <button className="py-2 px-6 rounded-full text-white bg-black mt-3 text-sm">
+                Try for free
+              </button>
+            </div>
+            <div className="w-full">
+              <img src={pacing} alt="" />
+            </div>
           </div>
         </div>
 
-        {/* STORY ENGINE */}
-        <div className="grid-section">
-          <div className="w-full">
-            <img src={story} alt="" className="w-full" />
-          </div>
+        {/* FAQ */}
+        <div className="w-[90%] max-w-md mx-auto py-16">
+          <div className="font-bold text-2xl mb-6 p-2">FAQ</div>
 
-          <div className="ml-[30%] w-4/6">
-            <div className="flex items-center text-sm gap-4">
-              <div className="py-2 px-4 rounded-full text-white bg-buttonPurple">
-                AI
-              </div>
-
-              <div className="font-semibold">Story Engine</div>
-            </div>
-
-            <div className="text-closeBlack text-xl font-semibold my-4">
-              Story Engine guides you through writing a complete novel in a
-              short period
-            </div>
-
-            <div className="text-grey font-semibold">
-              Embark on a journey with Story Engine as it guides you through
-              generating ideas, creating outlines, developing chapters, and
-              producing thousands of words in your unique writing style.
-            </div>
-
-            <button className="py-2 px-6 rounded-full text-white bg-black mt-3">
-              Try for free
-            </button>
-          </div>
+          <FAQ />
+          <FAQ />
+          <FAQ />
+          <FAQ />
+          <FAQ />
         </div>
 
-        {/* ANOTHER SECTION WRITE */}
-        <div className="grid-section">
-          <div className="w-4/6">
-            <div className="flex items-center text-sm gap-4">
-              <div className="py-2 px-4 rounded-full text-white bg-buttonPurple">
-                AI
-              </div>
-
-              <div className="font-semibold">Rewrite</div>
-            </div>
-
-            <div className="text-closeBlack text-xl font-semibold my-4">
-              Discovering the ideal word is always a breeze! 
-            </div>
-
-            <div className="text-grey font-semibold">
-              How about just two clicks to reach the heart of a well-crafted
-              sentence?
-            </div>
-
-            <button className="py-2 px-6 rounded-full text-white bg-black mt-3">
-              Try for free
-            </button>
-          </div>
-          <div className="w-full">
-            <img src={believe} alt="" />
-            <img src={rewritePng} alt="" />
-          </div>
-        </div>
+        {/* FOOTER */}
+        <Footer />
       </div>
     </div>
   );

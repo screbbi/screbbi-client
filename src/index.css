@@ -23,3 +23,16 @@ body {
 .grid-section {
   @apply grid grid-cols-2 gap-4 w-9/12 mx-auto py-10 items-center;
 }
+.pass-grid {
+  grid-template-columns: 1fr 2rem;
+}
+.onboard-title {
+  @apply text-xl font-semibold text-center;
+}
+.onboard-subtitle {
+  @apply text-sm text-center text-grey mt-7 mb-6;
+}
+
+.reader a {
+  @apply text-buttonPurple;
+}
