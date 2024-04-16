@@ -1,0 +1,69 @@
+import { useEffect, useRef, useState } from "react";
+import { IoEllipsisVerticalSharp } from "react-icons/io5";
+import { CiExport } from "react-icons/ci";
+import { FaPen } from "react-icons/fa";
+import { LuTrash } from "react-icons/lu";
+
+const SingleContent = () => {
+  const [showOption, setShowOption] = useState(false);
+
+  const optionRef: any = useRef();
+
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (
+        optionRef.current &&
+        !optionRef?.current?.contains(event.target as Node)
+      ) {
+        setShowOption(false);
+      }
+    };
+
+    document.addEventListener("click", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, []);
+
+  return (
+    <div
+      className="flex justify-between items-center py-2 group cursor-pointer"
+      onClick={() => {
+        console.log("parent");
+      }}
+    >
+      <div className="text-xs w-5/6 truncate">
+        I need a writing software similar
+      </div>
+
+      <div className="relative" ref={optionRef}>
+        <IoEllipsisVerticalSharp
+          className="group-hover:opacity-100 opacity-0 duration-300"
+          onClick={(e) => {
+            e.stopPropagation();
+            setShowOption(!showOption);
+          }}
+        />
+
+        {showOption && (
+          <div className="absolute top-full left-2 bg-white rounded-lg p-4 border border-offWhite">
+            <div className="flex items-center gap-2 text-black font-semibold text-xs py-1 my-1">
+              <CiExport /> <div>Export</div>
+            </div>
+
+            <div className="flex items-center gap-2 text-black font-semibold text-xs py-1 my-1">
+              <FaPen /> <div>Rename</div>
+            </div>
+
+            <div className="flex items-center gap-2 text-red-500 font-semibold text-xs py-1 my-1">
+              <LuTrash /> <div>Delete</div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default SingleContent;

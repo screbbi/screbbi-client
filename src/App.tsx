@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/onboard/Login";
 import Register from "./pages/onboard/Register";
 import Verify from "./pages/onboard/Verify";
+import Generate from "./pages/Generate";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <div></div>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/generate" element={<Generate />} />
 
         <Route path="auth">
           <Route path="login" element={<Login />} />

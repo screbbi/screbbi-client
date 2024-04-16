@@ -36,3 +36,12 @@ body {
 .reader a {
   @apply text-buttonPurple;
 }
+.page-layout {
+  @apply grid;
+  height: calc(100vh - 4.4rem);
+  grid-template-columns: 15rem 1fr;
+}
+.sidebar {
+  @apply grid h-full bg-whatNewText text-lightButton p-4;
+  grid-template-rows: 3rem 1fr 6rem;
+}
