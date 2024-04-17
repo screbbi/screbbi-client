@@ -5,7 +5,7 @@ import SingleContent from "./SingleContent";
 import { useEffect, useRef, useState } from "react";
 // import { IoSettingsOutline } from "react-icons/io5";
 import { MdLogout } from "react-icons/md";
-import Settings from "./Settings";
+// import Settings from "./Settings";
 
 const Sidebar = () => {
   const [showOption, setShowOption] = useState(true);
