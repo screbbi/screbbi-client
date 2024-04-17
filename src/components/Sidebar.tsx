@@ -72,7 +72,12 @@ const Sidebar = () => {
                 <IoSettingsOutline /> <div>Settings</div>
               </div> */}
 
-              <button className="flex items-center gap-2 text-whatNewBorder font-semibold py-1 my-1">
+              <button
+                className="flex items-center gap-2 text-whatNewBorder font-semibold py-1 my-1"
+                onClick={() => {
+                  window.location.replace("/");
+                }}
+              >
                 <MdLogout /> <div>Log out</div>
               </button>
             </div>
