@@ -84,3 +84,11 @@ export const changePasswordSchema = yup.object().shape({
     .required("Password is required")
     .oneOf([yup.ref("newPassword")], "Passwords must match"),
 });
+
+export const validateEmailSchema = yup.object().shape({
+  code: yup
+    .string()
+    .required("Code is required")
+    .matches(/^[0-9]+$/, "Code must contain only numbers")
+    .max(6),
+});

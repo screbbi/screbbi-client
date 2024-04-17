@@ -24,6 +24,7 @@ const Register = () => {
     },
     validationSchema: signUpValidationSchema,
     onSubmit: (values) => {
+      window.location.replace("/auth/verify");
       return;
       setLoading(true);
       postRequest("/auth/register", values)
@@ -55,7 +56,7 @@ const Register = () => {
 
   return (
     <AuthLayout>
-      <div className="onboard-form max-w-md">
+      <div className="onboard-form max-w-md py-8">
         <form className="top-onboard-form" onSubmit={signUpFormik.handleSubmit}>
           <img src={logo} alt="" className="mx-auto mb-6" />
           <div className="onboard-title">Create your free account</div>

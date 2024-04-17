@@ -1,7 +1,7 @@
 import { useState } from "react";
 import OnboardInput from "../../components/OnboardInput";
 import OnboardButton from "../../components/OnboardButton";
-import { signUpValidationSchema } from "../../yup/validation";
+import { validateEmailSchema } from "../../yup/validation";
 import { useFormik } from "formik";
 import { postRequest } from "../../utils/request";
 import { toast } from "react-hot-toast";
@@ -14,8 +14,9 @@ const Verify = () => {
     initialValues: {
       code: "",
     },
-    validationSchema: signUpValidationSchema,
+    validationSchema: validateEmailSchema,
     onSubmit: (values) => {
+      window.location.replace("/generate");
       return;
       setLoading(true);
       postRequest("/auth/register", values)

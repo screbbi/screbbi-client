@@ -16,8 +16,10 @@ import { FaPlay } from "react-icons/fa";
 import { MdDraw } from "react-icons/md";
 import FAQ from "./FAQ";
 import Footer from "./Footer";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
   return (
     <div className="">
       <div className="relative overflow-hidden min-h-[100vh]">
@@ -44,7 +46,10 @@ const Header = () => {
           </div>
 
           <div className="buttons flex items-center gap-4 justify-center text-sm font-semibold">
-            <button className="py-2 px-6 rounded-full text-white bg-black">
+            <button
+              className="py-2 px-6 rounded-full text-white bg-black"
+              onClick={() => navigate("/auth/register")}
+            >
               Try for free
             </button>
             <button className="py-2 px-6 rounded-full text-white bg-buttonPurple flex gap-2 items-center">
@@ -147,7 +152,10 @@ const Header = () => {
                 you to select from.
               </div>
 
-              <button className="py-2 px-6 rounded-full text-white bg-black mt-3 text-sm">
+              <button
+                className="py-2 px-6 rounded-full text-white bg-black mt-3 text-sm"
+                onClick={() => navigate("/auth/register")}
+              >
                 Try for free
               </button>
             </div>
@@ -182,7 +190,10 @@ const Header = () => {
                 producing thousands of words in your unique writing style.
               </div>
 
-              <button className="py-2 px-6 rounded-full text-white bg-black mt-3 text-sm">
+              <button
+                className="py-2 px-6 rounded-full text-white bg-black mt-3 text-sm"
+                onClick={() => navigate("/auth/register")}
+              >
                 Try for free
               </button>
             </div>
@@ -208,7 +219,10 @@ const Header = () => {
                 sentence?
               </div>
 
-              <button className="py-2 px-6 rounded-full text-white bg-black mt-3 text-sm">
+              <button
+                className="py-2 px-6 rounded-full text-white bg-black mt-3 text-sm"
+                onClick={() => navigate("/auth/register")}
+              >
                 Try for free
               </button>
             </div>
@@ -243,7 +257,10 @@ const Header = () => {
                 engagement with characters and create a sense of presence.
               </div>
 
-              <button className="py-2 px-6 rounded-full text-white bg-black mt-3 text-sm">
+              <button
+                className="py-2 px-6 rounded-full text-white bg-black mt-3 text-sm"
+                onClick={() => navigate("/auth/register")}
+              >
                 Try for free
               </button>
             </div>
@@ -269,7 +286,10 @@ const Header = () => {
                 story.
               </div>
 
-              <button className="py-2 px-6 rounded-full text-white bg-black mt-3 text-sm">
+              <button
+                className="py-2 px-6 rounded-full text-white bg-black mt-3 text-sm"
+                onClick={() => navigate("/auth/register")}
+              >
                 Try for free
               </button>
             </div>

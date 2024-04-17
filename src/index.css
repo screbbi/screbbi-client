@@ -45,3 +45,14 @@ body {
   @apply grid h-full bg-whatNewText text-lightButton p-4;
   grid-template-rows: 3rem 1fr 6rem;
 }
+
+.generate {
+  @apply grid h-full;
+  grid-template-columns: 1fr 20rem;
+}
+.grey-text {
+  @apply text-grey font-semibold text-xs;
+}
+.purple-button {
+  @apply flex gap-2 rounded-md text-white bg-buttonPurple p-2 text-xs;
+}

@@ -22,6 +22,8 @@ const Login = () => {
     },
     validationSchema: loginValidationSchema,
     onSubmit: (values) => {
+      window.location.replace("/generate");
+      return;
       setLoading(true);
       postRequest("/auth/login", values)
         .then(({ data }) => {
