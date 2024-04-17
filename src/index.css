@@ -56,3 +56,6 @@ body {
 .purple-button {
   @apply flex gap-2 rounded-md text-white bg-buttonPurple p-2 text-xs;
 }
+.modal-grid {
+  grid-template-rows: 4px 1fr;
+}

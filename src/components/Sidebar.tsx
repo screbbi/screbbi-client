@@ -2,8 +2,34 @@ import { TbEdit } from "react-icons/tb";
 import { FiTrash } from "react-icons/fi";
 import profile from "../assets/img/profile.svg";
 import SingleContent from "./SingleContent";
+import { useEffect, useRef, useState } from "react";
+// import { IoSettingsOutline } from "react-icons/io5";
+import { MdLogout } from "react-icons/md";
+import Settings from "./Settings";
 
 const Sidebar = () => {
+  const [showOption, setShowOption] = useState(true);
+  // const [showSettings, setShowSettings] = useState(true);
+
+  const optionRef: any = useRef();
+
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (
+        optionRef.current &&
+        !optionRef?.current?.contains(event.target as Node)
+      ) {
+        setShowOption(false);
+      }
+    };
+
+    document.addEventListener("click", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, []);
+
   return (
     <div className="sidebar">
       {/* NEW CONTENT */}
@@ -30,11 +56,30 @@ const Sidebar = () => {
           <FiTrash />
           Trash (0)
         </button>
-        <button className="flex gap-2 p-2 hover:bg-darkBlue rounded-md w-full">
-          <img src={profile} alt="" />
-          Olamide Bernard
-        </button>
+
+        <div className="relative" ref={optionRef}>
+          <button
+            className="flex gap-2 p-2 hover:bg-darkBlue rounded-md w-full"
+            onClick={() => setShowOption(!showOption)}
+          >
+            <img src={profile} alt="" />
+            Olamide Bernard
+          </button>
+
+          {showOption && (
+            <div className="absolute bottom-[110%] left-[10%] bg-white rounded-lg p-2 border border-offWhite w-4/5 text-sm">
+              {/* <div className="flex items-center gap-2 text-black font-semibold py-1 my-1">
+                <IoSettingsOutline /> <div>Settings</div>
+              </div> */}
+
+              <button className="flex items-center gap-2 text-whatNewBorder font-semibold py-1 my-1">
+                <MdLogout /> <div>Log out</div>
+              </button>
+            </div>
+          )}
+        </div>
       </div>
+      {/* {showSettings && <Settings close={() => setShowSettings(false)} />} */}
     </div>
   );
 };
