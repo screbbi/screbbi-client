@@ -5,13 +5,17 @@ import SingleContent from "./SingleContent";
 import { useEffect, useRef, useState } from "react";
 // import { IoSettingsOutline } from "react-icons/io5";
 import { MdLogout } from "react-icons/md";
+import { getRequest } from "../utils/request";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 // import Settings from "./Settings";
 
 const Sidebar = () => {
-  const [showOption, setShowOption] = useState(true);
+  const [showOption, setShowOption] = useState(false);
   // const [showSettings, setShowSettings] = useState(true);
 
   const optionRef: any = useRef();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
@@ -30,10 +34,48 @@ const Sidebar = () => {
     };
   }, []);
 
+  // const getUserWriting = () => {
+  //   getRequest(`/writer/history/${localStorage.getItem("token")}`)
+  //     .then((data) => {
+  //       console.log(data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err.response.data);
+  //     });
+  // };
+
+  // useEffect(() => {
+  //   // getUserWriting();
+
+  //   // getRequest("/profile")
+  //   //   .then((data) => {
+  //   //     console.log(data);
+  //   //   })
+  //   //   .catch((err) => {
+  //   //     console.log(err.response.data);
+  //   //   });
+  // }, []);
+
+  const newWrite = () => {
+    toast.loading("Creating New Write");
+
+    getRequest("/writer/new")
+      .then((data) => {
+        toast.success(data.message);
+        navigate(`/generate/${data.data.userID}`);
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
+  };
+
   return (
     <div className="sidebar">
       {/* NEW CONTENT */}
-      <button className="bg-lightButton text-whatNewText flex justify-between py-2 px-4 rounded-full font-semibold items-center text-lg">
+      <button
+        className="bg-lightButton text-whatNewText flex justify-between py-2 px-4 rounded-full font-semibold items-center text-lg"
+        onClick={newWrite}
+      >
         New Content
         <TbEdit />
       </button>
@@ -75,6 +117,7 @@ const Sidebar = () => {
               <button
                 className="flex items-center gap-2 text-whatNewBorder font-semibold py-1 my-1"
                 onClick={() => {
+                  localStorage.removeItem("token");
                   window.location.replace("/");
                 }}
               >

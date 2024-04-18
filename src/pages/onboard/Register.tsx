@@ -24,23 +24,14 @@ const Register = () => {
     },
     validationSchema: signUpValidationSchema,
     onSubmit: (values) => {
-      window.location.replace("/auth/verify");
-      return;
       setLoading(true);
       postRequest("/auth/register", values)
         .then(({ data }) => {
           toast.success("Registration successful");
-
           setLoading(false);
           localStorage.setItem("token", data.token);
-          localStorage.setItem(
-            "user",
-            JSON.stringify({
-              name: `${signUpFormik.values.first_name} ${signUpFormik.values.last_name} `,
-              email: signUpFormik.values.email,
-            })
-          );
-          window.location.replace("/");
+
+          window.location.replace("/generate");
         })
         .catch((err) => {
           setLoading(false);
@@ -50,8 +41,7 @@ const Register = () => {
   });
 
   const signUpWithGoogle = () => {
-    return;
-    window.location.href = `${BASE_URL}auth/google`;
+    window.location.href = `${BASE_URL}/auth/google`;
   };
 
   return (

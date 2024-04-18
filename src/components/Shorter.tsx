@@ -6,7 +6,7 @@ import { CiStar } from "react-icons/ci";
 const Shorter = () => {
   return (
     <div className="py-2">
-      <div className="text-xs font-semibold text-closeBlack">Shorter</div>
+      <div className="text-xs font-bold text-closeBlack">Shorter</div>
       <div className="grey-text mt-2">
         Hello, I need a writing software similar to this that work with AI.
       </div>

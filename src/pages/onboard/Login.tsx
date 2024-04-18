@@ -22,14 +22,12 @@ const Login = () => {
     },
     validationSchema: loginValidationSchema,
     onSubmit: (values) => {
-      window.location.replace("/generate");
-      return;
       setLoading(true);
       postRequest("/auth/login", values)
         .then(({ data }) => {
           setLoading(false);
           localStorage.setItem("token", data.token);
-          window.location.replace("/");
+          window.location.replace("/generate");
         })
         .catch((err) => {
           setLoading(false);

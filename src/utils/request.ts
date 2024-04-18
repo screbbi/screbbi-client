@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const BASE_URL = "https://coursegenpro.vercel.app/api/v1/";
+export const BASE_URL = "https://ai-writer-black.vercel.app/api/v1";
 
 const axiosInstance = axios.create({
   // timeout: 10000,
