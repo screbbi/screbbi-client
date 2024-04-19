@@ -7,18 +7,18 @@ import { useEffect, useRef, useState } from "react";
 import { MdLogout } from "react-icons/md";
 import { getRequest } from "../utils/request";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import SectionLoader from "./SectionLoader";
 // import Settings from "./Settings";
 
 const Sidebar = () => {
   const [showOption, setShowOption] = useState(false);
-  // const [showSettings, setShowSettings] = useState(true);
+  const [refresh, setRefresh] = useState(false);
   const [loadingWritings, setLoadingWritings] = useState(false);
   const [writings, setWritings] = useState([]);
 
   const optionRef: any = useRef();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
@@ -42,7 +42,6 @@ const Sidebar = () => {
     getRequest(`/writer/writings`)
       .then(({ data }) => {
         setWritings(data);
-        console.log(data);
         setLoadingWritings(false);
       })
       .catch((err: any) => {
@@ -62,7 +61,7 @@ const Sidebar = () => {
     //   .catch((err) => {
     //     console.log(err.response.data);
     //   });
-  }, []);
+  }, [refresh]);
 
   const newWrite = () => {
     toast.loading("Creating New Write");
@@ -70,7 +69,7 @@ const Sidebar = () => {
     getRequest("/writer/new")
       .then((data) => {
         toast.success(data.message);
-        navigate(`/generate/${data.data.userID}`);
+        setRefresh(!refresh);
       })
       .catch((err) => {
         console.log(err.response.data);
@@ -89,7 +88,7 @@ const Sidebar = () => {
       </button>
 
       {/* CONTENTS */}
-      <div className="text-white p-2">
+      <div className="text-white p-2 w-full">
         {/* <div className="day text-[10px]">Today</div> */}
 
         {loadingWritings ? (
@@ -138,7 +137,6 @@ const Sidebar = () => {
           )}
         </div>
       </div>
-      {/* {showSettings && <Settings close={() => setShowSettings(false)} />} */}
     </div>
   );
 };

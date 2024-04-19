@@ -3,10 +3,12 @@ import { IoEllipsisVerticalSharp } from "react-icons/io5";
 import { CiExport } from "react-icons/ci";
 import { FaPen } from "react-icons/fa";
 import { LuTrash } from "react-icons/lu";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const SingleContent = ({ writing }: { writing: any }) => {
   const [showOption, setShowOption] = useState(false);
+
+  const { writer } = useParams();
 
   const optionRef: any = useRef();
 
@@ -31,12 +33,14 @@ const SingleContent = ({ writing }: { writing: any }) => {
 
   return (
     <div
-      className="flex justify-between items-center py-2 group cursor-pointer"
+      className={`flex justify-between items-center p-2 group cursor-pointer w-full rounded-md ${
+        writer === writing._id ? "bg-[#1F243C]" : ""
+      }`}
       onClick={() => {
         navigate(`/generate/${writing._id}`);
       }}
     >
-      <div className="text-xs w-5/6 truncate">{writing.title}</div>
+      <div className="text-xs w-40 truncate">{writing.title}</div>
 
       <div className="relative" ref={optionRef}>
         <IoEllipsisVerticalSharp

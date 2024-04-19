@@ -42,7 +42,7 @@ body {
   grid-template-columns: 15rem 1fr;
 }
 .sidebar {
-  @apply grid h-full bg-whatNewText text-lightButton p-4;
+  @apply grid h-full bg-whatNewText text-lightButton p-4 w-full;
   grid-template-rows: 3rem 1fr 6rem;
 }
 
@@ -58,6 +58,8 @@ body {
 }
 .modal-grid {
   grid-template-rows: 4px 1fr;
+  color: #0e1220;
+  /* color: hsl(225, 41%, 11%); */
 }
 
 /* LOADERS */
@@ -78,7 +80,7 @@ body {
 }
 
 .sun-editor-editable p:first-child {
-  @apply text-xl mb-4 font-semibold;
+  @apply text-base mb-4 font-bold;
 }
 .popup {
   @apply bg-black text-white rounded-full flex absolute z-50 p-1;

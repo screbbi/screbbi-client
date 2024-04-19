@@ -8,34 +8,45 @@ import expand from "../assets/img/expand.svg";
 
 import SunEditor from "suneditor-react";
 import "suneditor/dist/css/suneditor.min.css";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { getRequest, postRequest } from "../utils/request";
 import { useParams } from "react-router-dom";
+import toast from "react-hot-toast";
 
-const PopUp = ({
-  style,
-  insight,
-  ref,
-}: {
-  style: { left: string; top: string };
-  insight: (e: string) => void;
-  ref: any;
-}) => {
-  return (
-    <div className="popup pop" style={style} ref={ref}>
-      <div className="pop" onClick={() => insight("rewrite")}>
-        <img src={aText} alt="" /> Rewrite
-      </div>
-      <div className="pop" onClick={() => insight("describe")}>
-        <img src={dText} alt="" />
-        Describe
-      </div>
-      <div className="pop" onClick={() => insight("expand")}>
-        <img src={expand} alt="" /> Expand
-      </div>
-    </div>
-  );
-};
+// const PopUp = ({
+//   style,
+//   insight,
+//   ref,
+// }: {
+//   style: { left: string; top: string };
+//   insight: (e: string) => void;
+//   ref: any;
+// }) => {
+//   return (
+//     <div className="popup pop" style={style} ref={ref}>
+//       <div className="pop" onClick={() => insight("rewrite")}>
+//         <img src={aText} alt="" /> Rewrite
+//       </div>
+//       <div className="pop" onClick={() => insight("describe")}>
+//         <img src={dText} alt="" />
+//         Describe
+//       </div>
+//       <div className="pop" onClick={() => insight("expand")}>
+//         <img src={expand} alt="" /> Expand
+//       </div>
+//     </div>
+//   );
+// };
+
+const types = [
+  "Rephrase",
+  "Shorten",
+  "More descriptive",
+  "Show, not tell",
+  "More inner conflict",
+  "More intens",
+  "Customize...",
+];
 
 const Generate = () => {
   const { writer } = useParams();
@@ -44,6 +55,9 @@ const Generate = () => {
   const [highlightedText, setHighlightedText] = useState("");
   const [style, setStyle] = useState({ top: "0px", left: "0px" });
   const [showHighlightOptions, setShowHighlightOptions] = useState(false);
+  const [currentType, setCurrentType] = useState(types[0]);
+  const [history, setHistory] = useState<any>(null);
+  const [refresh, setRefresh] = useState(false);
 
   const options = {
     buttonList: [
@@ -85,7 +99,7 @@ const Generate = () => {
     return selectedText;
   }
 
-  const checkSelection = (e) => {
+  const checkSelection = (e: any) => {
     if (e.target.parentElement.classList.contains("pop")) {
       return;
     }
@@ -100,13 +114,19 @@ const Generate = () => {
   };
 
   const saveDocument = () => {
+    if (title.trim === "") {
+      return;
+    }
+
+    toast.loading("Saving Document");
     postRequest("/writer/writing", {
       writer,
       content: editorContent.outerHTML,
       title: title,
     })
       .then((data) => {
-        console.log(data);
+        toast.success("Document Saved");
+        // console.log(data);
       })
       .catch((err) => {
         console.log(err.response);
@@ -142,18 +162,20 @@ const Generate = () => {
     };
   }, []);
 
-  useEffect(() => {
+  const getHistory = () => {
     getRequest(`/writer/history/${writer}`)
-      .then((data) => {
-        setEditorContent(
-          `<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium, dolorum!</p>`
-        );
-        console.log(data);
+      .then(({ data }: { data: any }) => {
+        setEditorContent(`<p>Untitled Document</p>`);
+        setHistory(data);
       })
       .catch((err) => {
         console.log(err.response.data);
       });
-  }, []);
+  };
+
+  useEffect(() => {
+    getHistory();
+  }, [writer, refresh]);
 
   const inputting = (e: any) => {
     const parser = new DOMParser();
@@ -166,13 +188,22 @@ const Generate = () => {
   };
 
   const insights = (category: string) => {
+    toast.loading("Loading");
     postRequest("/writer/ai-insight", {
       category,
       writer,
       content: highlightedText,
       variation: 3,
-      type: "rephrase",
-    });
+      type: currentType,
+    })
+      .then((data) => {
+        console.log(data);
+        setRefresh(!refresh);
+        toast.success("Successful");
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
   };
 
   return (
@@ -243,11 +274,23 @@ const Generate = () => {
               AI.
             </div>
 
-            <Dropdown />
+            <Dropdown
+              setType={setCurrentType}
+              types={types}
+              current={currentType}
+            />
 
-            <Shorter />
-            <Shorter />
-            <Shorter />
+            <div className="h-[60vh] overflow-y-auto">
+              {!history ? (
+                <div>Loading...</div>
+              ) : history?.length < 1 ? (
+                <div>No Data</div>
+              ) : (
+                history?.map((item: any) => (
+                  <Shorter key={item._id} item={item} />
+                ))
+              )}
+            </div>
           </div>
         </div>
       </div>

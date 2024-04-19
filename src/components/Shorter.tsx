@@ -3,12 +3,16 @@ import { MdContentCopy } from "react-icons/md";
 import { BiLike, BiDislike } from "react-icons/bi";
 import { CiStar } from "react-icons/ci";
 
-const Shorter = () => {
+const Shorter = ({ item }: { item: any }) => {
   return (
     <div className="py-2">
-      <div className="text-xs font-bold text-closeBlack">Shorter</div>
+      <div className="text-xs font-bold text-closeBlack capitalize">
+        {item.category}
+        {/* {item?.suggestions?.name} */}
+      </div>
       <div className="grey-text mt-2">
-        Hello, I need a writing software similar to this that work with AI.
+        {/* Hello, I need a writing software similar to this that work with AI. */}
+        {item?.suggestions?.content}
       </div>
 
       <div className="flex items-center divide-x-2 mt-2">
