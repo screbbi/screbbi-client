@@ -75,28 +75,33 @@ const Generate = () => {
   };
 
   function getSelectedText() {
-    var selectedText = "";
+    let selectedText: any = "";
     let selection: any = window.getSelection();
-    if (window.getSelection !== null) {
-      // console.log(selection.rangeCount);
 
-      let range = selection.getRangeAt(0).getBoundingClientRect();
-      const { left, top } = range;
+    if (document !== null && window !== null) {
+      if (window.getSelection !== null) {
+        // console.log(selection.rangeCount);
 
-      setStyle({ left: `${left - 15 * 19}px`, top: `${top - 16 * 6}px` });
+        let range = selection.getRangeAt(0).getBoundingClientRect();
+        const { left, top } = range;
 
-      selectedText = window?.getSelection().toString();
+        setStyle({ left: `${left - 15 * 19}px`, top: `${top - 16 * 6}px` });
 
-      if (selectedText.length > 4) {
-        setShowHighlightOptions(true);
+        selectedText = window?.getSelection()?.toString();
+
+        if (selectedText.length > 4) {
+          setShowHighlightOptions(true);
+        }
       }
-      // else {
-      //   setShowHighlightOptions(false);
+      //  else if (
+      //   document?.selection &&
+      //   document?.selection.type !== "Control"
+      // ) {
+      //   selectedText = document.selection.createRange().text;
+      //   console.log(document.selection.createRange().text);
       // }
-    } else if (document?.selection && document?.selection.type !== "Control") {
-      selectedText = document.selection.createRange().text;
+      return selectedText;
     }
-    return selectedText;
   }
 
   const checkSelection = (e: any) => {
@@ -118,14 +123,14 @@ const Generate = () => {
       return;
     }
 
-    toast.loading("Saving Document");
+    // toast.loading("Saving Document");
     postRequest("/writer/writing", {
       writer,
       content: editorContent.outerHTML,
       title: title,
     })
-      .then((data) => {
-        toast.success("Document Saved");
+      .then(() => {
+        // toast.success("Document Saved");
         // console.log(data);
       })
       .catch((err) => {
