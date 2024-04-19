@@ -8,11 +8,14 @@ import { MdLogout } from "react-icons/md";
 import { getRequest } from "../utils/request";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import SectionLoader from "./SectionLoader";
 // import Settings from "./Settings";
 
 const Sidebar = () => {
   const [showOption, setShowOption] = useState(false);
   // const [showSettings, setShowSettings] = useState(true);
+  const [loadingWritings, setLoadingWritings] = useState(false);
+  const [writings, setWritings] = useState([]);
 
   const optionRef: any = useRef();
   const navigate = useNavigate();
@@ -34,27 +37,32 @@ const Sidebar = () => {
     };
   }, []);
 
-  // const getUserWriting = () => {
-  //   getRequest(`/writer/history/${localStorage.getItem("token")}`)
-  //     .then((data) => {
-  //       console.log(data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err.response.data);
-  //     });
-  // };
+  const getUserWriting = () => {
+    setLoadingWritings(true);
+    getRequest(`/writer/writings`)
+      .then(({ data }) => {
+        setWritings(data);
+        console.log(data);
+        setLoadingWritings(false);
+      })
+      .catch((err: any) => {
+        setLoadingWritings(false);
+        toast.error(err.response.data);
+        console.log(err.response.data);
+      });
+  };
 
-  // useEffect(() => {
-  //   // getUserWriting();
+  useEffect(() => {
+    getUserWriting();
 
-  //   // getRequest("/profile")
-  //   //   .then((data) => {
-  //   //     console.log(data);
-  //   //   })
-  //   //   .catch((err) => {
-  //   //     console.log(err.response.data);
-  //   //   });
-  // }, []);
+    // getRequest("/profile")
+    //   .then((data) => {
+    //     console.log(data);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err.response.data);
+    //   });
+  }, []);
 
   const newWrite = () => {
     toast.loading("Creating New Write");
@@ -82,14 +90,17 @@ const Sidebar = () => {
 
       {/* CONTENTS */}
       <div className="text-white p-2">
-        <div className="day text-[10px]">Today</div>
-        <SingleContent />
-        <SingleContent />
-        <SingleContent />
-        <SingleContent />
-        <SingleContent />
-        <SingleContent />
-        <SingleContent />
+        {/* <div className="day text-[10px]">Today</div> */}
+
+        {loadingWritings ? (
+          <div className="flex justify-center items-center h-52">
+            <SectionLoader />
+          </div>
+        ) : writings.length < 1 ? (
+          <div></div>
+        ) : (
+          writings.map((item) => <SingleContent writing={item} />)
+        )}
       </div>
 
       {/* TRASH AND PROFILE */}

@@ -3,11 +3,14 @@ import { IoEllipsisVerticalSharp } from "react-icons/io5";
 import { CiExport } from "react-icons/ci";
 import { FaPen } from "react-icons/fa";
 import { LuTrash } from "react-icons/lu";
+import { useNavigate } from "react-router-dom";
 
-const SingleContent = () => {
+const SingleContent = ({ writing }: { writing: any }) => {
   const [showOption, setShowOption] = useState(false);
 
   const optionRef: any = useRef();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
@@ -30,12 +33,10 @@ const SingleContent = () => {
     <div
       className="flex justify-between items-center py-2 group cursor-pointer"
       onClick={() => {
-        console.log("parent");
+        navigate(`/generate/${writing._id}`);
       }}
     >
-      <div className="text-xs w-5/6 truncate">
-        I need a writing software similar
-      </div>
+      <div className="text-xs w-5/6 truncate">{writing.title}</div>
 
       <div className="relative" ref={optionRef}>
         <IoEllipsisVerticalSharp
