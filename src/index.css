@@ -79,9 +79,6 @@ body {
   }
 }
 
-.sun-editor-editable p:first-child {
-  @apply text-base mb-4 font-bold;
-}
 .popup {
   @apply bg-black text-white rounded-full flex absolute z-50 p-1;
 }
@@ -107,4 +104,23 @@ body {
   to {
     transform: rotate(1turn);
   }
+}
+
+.sun-editor-editable p:first-child {
+  @apply text-base mb-4 font-bold;
+}
+.sun-editor {
+  @apply border-0 max-w-lg mx-auto;
+}
+.se-btn-tray {
+  @apply flex justify-center;
+}
+.sun-editor .se-toolbar {
+  @apply bg-white outline-none;
+}
+.sun-editor input {
+  @apply hidden;
+}
+.sun-editor .se-resizing-bar {
+  @apply hidden;
 }

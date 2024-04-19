@@ -98,7 +98,9 @@ const Sidebar = () => {
         ) : writings.length < 1 ? (
           <div></div>
         ) : (
-          writings.map((item) => <SingleContent writing={item} />)
+          writings.map((item: any) => (
+            <SingleContent writing={item} key={item._id} />
+          ))
         )}
       </div>
 

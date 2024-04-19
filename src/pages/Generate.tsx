@@ -214,48 +214,50 @@ const Generate = () => {
   return (
     <PageLayout>
       <div className="generate">
-        <div className="editor h-full relative flex justify-center p-2">
-          <SunEditor
-            setOptions={options}
-            setDefaultStyle="font-family: 'Manrope', sans-serif; background:'transparent'"
-            onInput={inputting}
-            setContents={editorContent}
-            height="calc(100vh - 11rem)"
-            width="95%"
-          />
+        <div className="p-2">
+          <div className="editor h-full relative flex justify-center bg-white">
+            <SunEditor
+              setOptions={options}
+              setDefaultStyle="font-family: 'Manrope', sans-serif; background:'transparent'"
+              onInput={inputting}
+              setContents={editorContent}
+              height="calc(100vh - 11rem)"
+              width="95%"
+            />
 
-          {showHighlightOptions && (
-            <div className="popup pop" style={style}>
-              <div
-                className="pop"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  insights("rewrite");
-                }}
-              >
-                <img src={aText} alt="" /> Rewrite
+            {showHighlightOptions && (
+              <div className="popup pop" style={style}>
+                <div
+                  className="pop"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    insights("rewrite");
+                  }}
+                >
+                  <img src={aText} alt="" /> Rewrite
+                </div>
+                <div
+                  className="pop"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    insights("describe");
+                  }}
+                >
+                  <img src={dText} alt="" />
+                  Describe
+                </div>
+                <div
+                  className="pop"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    insights("expand");
+                  }}
+                >
+                  <img src={expand} alt="" /> Expand
+                </div>
               </div>
-              <div
-                className="pop"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  insights("describe");
-                }}
-              >
-                <img src={dText} alt="" />
-                Describe
-              </div>
-              <div
-                className="pop"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  insights("expand");
-                }}
-              >
-                <img src={expand} alt="" /> Expand
-              </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
 
         <div className="controls bg-white p-4">
