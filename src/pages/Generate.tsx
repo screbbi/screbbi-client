@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { getRequest, postRequest } from "../utils/request";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
+import ButtonLoader1 from "../components/ButtonLoader1";
 
 // const PopUp = ({
 //   style,
@@ -289,7 +290,9 @@ const Generate = () => {
 
             <div className="h-[60vh] overflow-y-auto">
               {!history ? (
-                <div>Loading...</div>
+                <div className="h-60 flex justify-center items-center">
+                  <ButtonLoader1 />
+                </div>
               ) : history?.length < 1 ? (
                 <div>No Data</div>
               ) : (
