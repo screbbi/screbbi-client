@@ -40,7 +40,9 @@ const SingleContent = ({ writing }: { writing: any }) => {
         navigate(`/generate/${writing._id}`);
       }}
     >
-      <div className="text-xs w-40 truncate">{writing.title}</div>
+      <div className="text-xs w-40 truncate">
+        {writing.title ?? "Untitled Document"}
+      </div>
 
       <div className="relative" ref={optionRef}>
         <IoEllipsisVerticalSharp

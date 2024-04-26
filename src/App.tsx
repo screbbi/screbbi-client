@@ -1,10 +1,11 @@
-import Home from "./pages/Home";
+import Landing from "./pages/Landing";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/onboard/Login";
 import Register from "./pages/onboard/Register";
 import Verify from "./pages/onboard/Verify";
 import Generate from "./pages/Generate";
 import { Toaster } from "react-hot-toast";
+import Home from "./pages/Home";
 
 function App() {
   return (
@@ -17,8 +18,9 @@ function App() {
         />
       </div>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/generate" element={<Generate />} />
+        <Route path="/" element={<Landing />} />
+        <Route path="/home" element={<Home />} />
+        {/* <Route path="/generate" element={<Generate />} /> */}
         <Route path="/generate/:writer" element={<Generate />} />
 
         <Route path="auth">

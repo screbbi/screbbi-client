@@ -96,7 +96,7 @@ const Sidebar = () => {
             <SectionLoader />
           </div>
         ) : writings.length < 1 ? (
-          <div></div>
+          <div>No Data</div>
         ) : (
           writings.map((item: any) => (
             <SingleContent writing={item} key={item._id} />

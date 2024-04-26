@@ -27,7 +27,7 @@ const Login = () => {
         .then(({ data }) => {
           setLoading(false);
           localStorage.setItem("token", data.token);
-          window.location.replace("/generate");
+          window.location.replace("/home");
         })
         .catch((err) => {
           setLoading(false);
@@ -37,7 +37,7 @@ const Login = () => {
   });
 
   const signInWithGoogle = () => {
-    window.location.href = `${BASE_URL}auth/google`;
+    window.location.href = `${BASE_URL}/auth/google`;
   };
 
   return (

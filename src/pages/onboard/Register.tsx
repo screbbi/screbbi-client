@@ -31,7 +31,7 @@ const Register = () => {
           setLoading(false);
           localStorage.setItem("token", data.token);
 
-          window.location.replace("/generate");
+          window.location.replace("/home");
         })
         .catch((err) => {
           setLoading(false);

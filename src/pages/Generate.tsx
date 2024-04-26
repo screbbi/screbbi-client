@@ -110,6 +110,16 @@ const Generate = () => {
       return;
     }
 
+    console.log(e.target.parentElement);
+    if (!showHighlightOptions) {
+      if (
+        !e.target.parentElement.classList.contains("se-wrapper") ||
+        !e.target.parentElement.classList.contains("se-wrapper-inner")
+      ) {
+        return;
+      }
+    }
+
     setShowHighlightOptions(false);
 
     var selectedText = getSelectedText();
@@ -224,6 +234,11 @@ const Generate = () => {
               setContents={editorContent}
               height="calc(100vh - 11rem)"
               width="95%"
+              onClick={() => {
+                if (showHighlightOptions) {
+                  setShowHighlightOptions(false);
+                }
+              }}
             />
 
             {showHighlightOptions && (
