@@ -41,7 +41,7 @@ const SingleContent = ({ writing }: { writing: any }) => {
       }}
     >
       <div className="text-xs w-40 truncate">
-        {writing.title ?? "Untitled Document"}
+        {writing.title !== "" ? writing.title : "Untitled Document"}
       </div>
 
       <div className="relative" ref={optionRef}>

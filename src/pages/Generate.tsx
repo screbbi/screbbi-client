@@ -234,11 +234,6 @@ const Generate = () => {
               setContents={editorContent}
               height="calc(100vh - 11rem)"
               width="95%"
-              onClick={() => {
-                if (showHighlightOptions) {
-                  setShowHighlightOptions(false);
-                }
-              }}
             />
 
             {showHighlightOptions && (
@@ -309,7 +304,9 @@ const Generate = () => {
                   <ButtonLoader1 />
                 </div>
               ) : history?.length < 1 ? (
-                <div>No Data</div>
+                <div className="flex justify-center items-center h-40">
+                  No Data
+                </div>
               ) : (
                 history?.map((item: any) => (
                   <Shorter key={item._id} item={item} />
