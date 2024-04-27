@@ -5,10 +5,14 @@ const Dropdown = ({
   types,
   setType,
   current,
+  click,
+  loading,
 }: {
   types: string[];
   setType: (e: string) => void;
   current: string;
+  click: () => void;
+  loading: boolean;
 }) => {
   const optionRef: any = useRef();
   const [openOptions, setOpenOptions] = useState(false);
@@ -64,7 +68,13 @@ const Dropdown = ({
           )}
         </div>
 
-        <button className="purple-button">Go !</button>
+        <button
+          className={`purple-button ${loading ? "opacity-30" : "opacity-100"}`}
+          onClick={click}
+          disabled={loading}
+        >
+          Go !
+        </button>
       </div>
     </div>
   );

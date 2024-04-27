@@ -3,6 +3,7 @@ import { MdContentCopy } from "react-icons/md";
 import { BiLike, BiDislike } from "react-icons/bi";
 import { CiStar } from "react-icons/ci";
 import toast from "react-hot-toast";
+import { useState } from "react";
 
 function copyToClipboard(text: string) {
   const textarea = document.createElement("textarea");
@@ -19,57 +20,88 @@ const Shorter = ({
   insert,
 }: {
   item: any;
-  insert: (a: string, b: string) => void;
+  insert: (a: string) => void;
 }) => {
+  const [showResults, setShowResults] = useState(false);
+  const [showMore, setShowMore] = useState(false);
+
   return (
     <div className="py-2">
       <div className="text-xs font-bold text-closeBlack capitalize">
         {item.category}
-        {/* {item?.suggestions?.name} */}
-      </div>
-      <div className="grey-text mt-2">
-        {item?.suggestions?.result[0]?.suggestion.slice(2)}
       </div>
 
-      <div className="flex items-center divide-x-2 mt-2">
-        <div className="flex gap-2 items-center pr-2">
-          <button
-            className="purple-button"
-            onClick={() => {
-              insert(
-                item?.suggestions?.content,
-                item?.suggestions?.result[0]?.suggestion.slice(2)
-              );
-            }}
-          >
-            <IoMdLink className="text-lg" />
-            Insert
-          </button>
-
-          <button
-            className="purple-button"
-            onClick={() => {
-              copyToClipboard(
-                item?.suggestions?.result[0]?.suggestion.slice(2)
-              );
-            }}
-          >
-            <MdContentCopy className="text-lg" />
-            Copy
-          </button>
-        </div>
-        <div className="flex gap-2 items-center text-grey pl-2">
-          <div>
-            <BiLike />
-          </div>
-          <div>
-            <BiDislike />
-          </div>
-          <div>
-            <CiStar />
-          </div>
-        </div>
+      <div
+        className="grey-text mt-2 pb-2 border-b border-faqBorder cursor-pointer"
+        onClick={() => setShowResults(!showResults)}
+      >
+        {/* {item?.suggestions?.content} */}
+        {item?.suggestions?.content?.length < 60 ? (
+          item.suggestions.content
+        ) : (
+          <>
+            <span>
+              {showMore
+                ? item.suggestions.content
+                : item.suggestions.content.slice(0, 60)}
+            </span>{" "}
+            <span
+              className="underline"
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowMore(!showMore);
+              }}
+            >
+              show {showMore ? "less" : "more"}
+            </span>
+          </>
+        )}
       </div>
+
+      {showResults && (
+        <div>
+          {item.suggestions?.result?.map((result: any) => (
+            <div key={result.id} className="py-2 border-b-faqBorder border-b">
+              <div className="grey-text mt-2">{result.suggestion.slice(2)}</div>
+
+              <div className="flex items-center divide-x-2 mt-2">
+                <div className="flex gap-2 items-center pr-2">
+                  <button
+                    className="purple-button"
+                    onClick={() => {
+                      insert(result[0]?.suggestion.slice(2));
+                    }}
+                  >
+                    <IoMdLink className="text-lg" />
+                    Insert
+                  </button>
+
+                  <button
+                    className="purple-button"
+                    onClick={() => {
+                      copyToClipboard(result?.suggestion?.slice(2));
+                    }}
+                  >
+                    <MdContentCopy className="text-lg" />
+                    Copy
+                  </button>
+                </div>
+                <div className="flex gap-2 items-center text-grey pl-2">
+                  <div>
+                    <BiLike />
+                  </div>
+                  <div>
+                    <BiDislike />
+                  </div>
+                  <div>
+                    <CiStar />
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

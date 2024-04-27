@@ -5,39 +5,15 @@ import Dropdown from "../components/Dropdown";
 import aText from "../assets/img/draw-a.svg";
 import dText from "../assets/img/draw-d.svg";
 import expand from "../assets/img/expand.svg";
+import he from "he";
 
 import SunEditor from "suneditor-react";
 import "suneditor/dist/css/suneditor.min.css";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { getRequest, postRequest } from "../utils/request";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import ButtonLoader1 from "../components/ButtonLoader1";
-
-// const PopUp = ({
-//   style,
-//   insight,
-//   ref,
-// }: {
-//   style: { left: string; top: string };
-//   insight: (e: string) => void;
-//   ref: any;
-// }) => {
-//   return (
-//     <div className="popup pop" style={style} ref={ref}>
-//       <div className="pop" onClick={() => insight("rewrite")}>
-//         <img src={aText} alt="" /> Rewrite
-//       </div>
-//       <div className="pop" onClick={() => insight("describe")}>
-//         <img src={dText} alt="" />
-//         Describe
-//       </div>
-//       <div className="pop" onClick={() => insight("expand")}>
-//         <img src={expand} alt="" /> Expand
-//       </div>
-//     </div>
-//   );
-// };
 
 const types = [
   "Rephrase",
@@ -45,8 +21,7 @@ const types = [
   "More descriptive",
   "Show, not tell",
   "More inner conflict",
-  "More intens",
-  "Customize...",
+  "More intense",
 ];
 
 const Generate = () => {
@@ -58,11 +33,13 @@ const Generate = () => {
   const [showHighlightOptions, setShowHighlightOptions] = useState(false);
   const [currentType, setCurrentType] = useState(types[0]);
   const [history, setHistory] = useState<any>(null);
-  // const [refresh, setRefresh] = useState(false);
-
-  const editorRef: any = useRef();
+  const [rewriteText, setRewriteText] = useState<string>("");
+  const [loading, setLoading] = useState(false);
 
   const options = {
+    parsingBlockHtml: true,
+    parsingAttrHtml: true,
+    parsingTextHtml: true,
     buttonList: [
       [
         "bold",
@@ -139,18 +116,46 @@ const Generate = () => {
       return;
     }
 
-    // toast.loading("Saving Document");
     postRequest("/writer/writing", {
       writer,
-      content: editorContent.outerHTML,
+      content: editorContent.innerHTML,
       title: title,
     })
-      .then(() => {
-        // toast.success("Document Saved");
-        // console.log(data);
-      })
+      .then(() => {})
       .catch((err) => {
         console.log(err.response);
+      });
+  };
+
+  const getUserWriting = () => {
+    getRequest(`/writer/writings`)
+      .then(({ data }) => {
+        const currentContent = data.find(
+          (content: any) => content._id === writer
+        );
+
+        const decoded = he.decode(currentContent.content);
+        console.log(decoded);
+
+        // const parser = new DOMParser();
+        // const doc = parser.parseFromString(
+        //   `${currentContent.content}`,
+        //   "text/html"
+        // );
+        // console.log(doc);
+
+        // const div = document.createElement("div");
+        // div.innerHTML = currentContent.content.trim();
+        // console.log(div.firstChild);
+
+        // setEditorContent(doc.body);
+        setEditorContent(`${decoded}`);
+
+        // setEditorContent(`<p>Untitled Document</p> <p>Untitled Document</p>`);
+      })
+      .catch((err: any) => {
+        toast.error(err.response.data);
+        console.log(err.response.data);
       });
   };
 
@@ -164,7 +169,7 @@ const Generate = () => {
 
       timeoutId = setTimeout(() => {
         saveDocument();
-      }, 5000);
+      }, 2000);
     };
 
     window.addEventListener("keyup", handleKeyUp);
@@ -174,6 +179,8 @@ const Generate = () => {
       clearTimeout(timeoutId);
     };
   }, [editorContent]);
+
+  useEffect(() => {}, []);
 
   const getHistory = () => {
     setHistory(null);
@@ -188,14 +195,30 @@ const Generate = () => {
       });
   };
 
-  const insertText = (prevTest: string, newText: string) => {
-    let newContent = editorContent.outerHTML.replace(prevTest, newText);
+  const insertText = (text: string) => {
+    const editor = document.querySelector(".sun-editor-editable");
 
-    setEditorContent(newContent);
+    if (editor) {
+      const selection = window.getSelection();
+
+      if (selection && selection.toString().length > 0) {
+        const range = selection.getRangeAt(0);
+        range.deleteContents();
+        const newNode = document.createTextNode(text);
+        range.insertNode(newNode);
+      } else {
+        // const currentHtml = editor.innerHTML;
+        const range = selection?.getRangeAt(0);
+        range?.deleteContents();
+        const newNode = document.createTextNode(text);
+        range?.insertNode(newNode);
+      }
+    }
   };
 
   useEffect(() => {
     getHistory();
+    getUserWriting();
   }, [writer]);
 
   const inputting = (e: any) => {
@@ -205,14 +228,16 @@ const Generate = () => {
       doc.body.firstElementChild?.firstElementChild?.textContent;
 
     setTitle(myTitle);
-    setEditorContent(doc.body.firstElementChild);
+    setEditorContent(e.target);
   };
 
   const insights = (category: string) => {
     if (highlightedText === "") {
       return;
     }
-    toast.loading("Loading");
+
+    setLoading(true);
+
     postRequest("/writer/ai-insight", {
       category,
       writer,
@@ -222,9 +247,14 @@ const Generate = () => {
     })
       .then(() => {
         toast.success("Successful");
+        setLoading(false);
+        setRewriteText("");
+        setHighlightedText("");
         getHistory();
       })
       .catch((err) => {
+        setHighlightedText("");
+        setLoading(false);
         console.log(err.response);
       });
   };
@@ -235,7 +265,6 @@ const Generate = () => {
         <div className="p-2">
           <div
             className="editor h-full relative flex justify-center bg-white"
-            ref={editorRef}
             onMouseUp={checkSelection}
           >
             <SunEditor
@@ -253,7 +282,7 @@ const Generate = () => {
                   className="pop"
                   onClick={(e) => {
                     e.stopPropagation();
-                    insights("rewrite");
+                    setRewriteText(highlightedText);
                   }}
                 >
                   <img src={aText} alt="" /> Rewrite
@@ -293,21 +322,26 @@ const Generate = () => {
           </div>
 
           <div>
-            <div className="flex gap-2 items-center text-xs font-bold mb-2">
-              <img src={generate} alt="" />
-              <div>Rewrite</div>
-            </div>
+            {rewriteText && (
+              <>
+                <div className="flex gap-2 items-center text-xs font-bold mb-2">
+                  <img src={generate} alt="" />
+                  <div>Rewrite</div>
+                </div>
 
-            <div className="text-grey font-semibold text-xs my-2">
-              Hello, I need a writing software similar to this that work with
-              AI.
-            </div>
+                <div className="text-grey font-semibold text-xs my-2">
+                  {rewriteText}
+                </div>
 
-            <Dropdown
-              setType={setCurrentType}
-              types={types}
-              current={currentType}
-            />
+                <Dropdown
+                  setType={setCurrentType}
+                  types={types}
+                  current={currentType}
+                  click={() => insights("rewrite")}
+                  loading={loading}
+                />
+              </>
+            )}
 
             <div className="h-[60vh] overflow-y-auto">
               {!history ? (
@@ -321,6 +355,7 @@ const Generate = () => {
               ) : (
                 history?.map((item: any) => (
                   <Shorter key={item._id} item={item} insert={insertText} />
+                  // <Shorter key={item._id} item={item} insert={insertText} />
                 ))
               )}
             </div>

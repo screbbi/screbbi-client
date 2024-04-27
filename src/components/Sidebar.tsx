@@ -80,7 +80,7 @@ const Sidebar = () => {
     <div className="sidebar">
       {/* NEW CONTENT */}
       <button
-        className="bg-lightButton text-whatNewText flex justify-between py-2 px-4 rounded-full font-semibold items-center text-lg"
+        className="bg-lightButton text-whatNewText flex justify-between py-2 px-4 rounded-full font-semibold items-center text-sm h-fit"
         onClick={newWrite}
       >
         New Content
