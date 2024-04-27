@@ -8,7 +8,7 @@ import expand from "../assets/img/expand.svg";
 
 import SunEditor from "suneditor-react";
 import "suneditor/dist/css/suneditor.min.css";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getRequest, postRequest } from "../utils/request";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -60,6 +60,8 @@ const Generate = () => {
   const [history, setHistory] = useState<any>(null);
   const [refresh, setRefresh] = useState(false);
 
+  const editorRef: any = useRef();
+
   const options = {
     buttonList: [
       [
@@ -92,6 +94,8 @@ const Generate = () => {
 
         if (selectedText.length > 4) {
           setShowHighlightOptions(true);
+        } else {
+          setShowHighlightOptions(false);
         }
       }
       //  else if (
@@ -110,15 +114,16 @@ const Generate = () => {
       return;
     }
 
-    console.log(e.target.parentElement);
-    if (!showHighlightOptions) {
-      if (
-        !e.target.parentElement.classList.contains("se-wrapper") ||
-        !e.target.parentElement.classList.contains("se-wrapper-inner")
-      ) {
-        return;
-      }
-    }
+    // if (!showHighlightOptions) {
+    //   if (
+    //     !e.target.parentElement.classList.contains("se-wrapper") ||
+    //     !e.target.parentElement.classList.contains("se-wrapper-inner")
+    //   ) {
+    //     console.log(e.target.parentElement);
+    //     console.log("not");
+    //     return;
+    //   }
+    // }
 
     setShowHighlightOptions(false);
 
@@ -170,23 +175,33 @@ const Generate = () => {
     };
   }, [editorContent]);
 
-  useEffect(() => {
-    document.addEventListener("mouseup", checkSelection);
+  // useEffect(() => {
+  //   document.addEventListener("mouseup", checkSelection);
+  //   // editorRef.current.addEventListener("mouseup", checkSelection);
 
-    return () => {
-      document.removeEventListener("mouseup", checkSelection);
-    };
-  }, []);
+  //   return () => {
+  //     document.removeEventListener("mouseup", checkSelection);
+  //     // editorRef.current.removeEventListener("mouseup", checkSelection);
+  //   };
+  // }, []);
 
   const getHistory = () => {
+    setHistory(null);
     getRequest(`/writer/history/${writer}`)
       .then(({ data }: { data: any }) => {
-        setEditorContent(`<p>Untitled Document</p>`);
-        setHistory(data);
+        // setEditorContent(`<p>Untitled Document</p>`);
+        const reversed = data.reverse();
+        setHistory(reversed);
       })
       .catch((err) => {
         console.log(err.response.data);
       });
+  };
+
+  const insertText = (prevTest: string, newText: string) => {
+    let newContent = editorContent.outerHTML.replace(prevTest, newText);
+
+    setEditorContent(newContent);
   };
 
   useEffect(() => {
@@ -226,7 +241,11 @@ const Generate = () => {
     <PageLayout>
       <div className="generate">
         <div className="p-2">
-          <div className="editor h-full relative flex justify-center bg-white">
+          <div
+            className="editor h-full relative flex justify-center bg-white"
+            ref={editorRef}
+            onMouseUp={checkSelection}
+          >
             <SunEditor
               setOptions={options}
               setDefaultStyle="font-family: 'Manrope', sans-serif; background:'transparent'"
@@ -309,7 +328,7 @@ const Generate = () => {
                 </div>
               ) : (
                 history?.map((item: any) => (
-                  <Shorter key={item._id} item={item} />
+                  <Shorter key={item._id} item={item} insert={insertText} />
                 ))
               )}
             </div>
@@ -320,4 +339,5 @@ const Generate = () => {
   );
 };
 
+// ?.reverse()
 export default Generate;
