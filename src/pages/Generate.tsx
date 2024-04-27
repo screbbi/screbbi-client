@@ -58,7 +58,7 @@ const Generate = () => {
   const [showHighlightOptions, setShowHighlightOptions] = useState(false);
   const [currentType, setCurrentType] = useState(types[0]);
   const [history, setHistory] = useState<any>(null);
-  const [refresh, setRefresh] = useState(false);
+  // const [refresh, setRefresh] = useState(false);
 
   const editorRef: any = useRef();
 
@@ -175,16 +175,6 @@ const Generate = () => {
     };
   }, [editorContent]);
 
-  // useEffect(() => {
-  //   document.addEventListener("mouseup", checkSelection);
-  //   // editorRef.current.addEventListener("mouseup", checkSelection);
-
-  //   return () => {
-  //     document.removeEventListener("mouseup", checkSelection);
-  //     // editorRef.current.removeEventListener("mouseup", checkSelection);
-  //   };
-  // }, []);
-
   const getHistory = () => {
     setHistory(null);
     getRequest(`/writer/history/${writer}`)
@@ -206,7 +196,7 @@ const Generate = () => {
 
   useEffect(() => {
     getHistory();
-  }, [writer, refresh]);
+  }, [writer]);
 
   const inputting = (e: any) => {
     const parser = new DOMParser();
@@ -219,6 +209,9 @@ const Generate = () => {
   };
 
   const insights = (category: string) => {
+    if (highlightedText === "") {
+      return;
+    }
     toast.loading("Loading");
     postRequest("/writer/ai-insight", {
       category,
@@ -227,13 +220,12 @@ const Generate = () => {
       variation: 3,
       type: currentType,
     })
-      .then((data) => {
-        console.log(data);
-        setRefresh(!refresh);
+      .then(() => {
         toast.success("Successful");
+        getHistory();
       })
       .catch((err) => {
-        console.log(err.response.data);
+        console.log(err.response);
       });
   };
 
@@ -339,5 +331,12 @@ const Generate = () => {
   );
 };
 
-// ?.reverse()
 export default Generate;
+
+// useEffect(() => {
+//   document.addEventListener("mouseup", checkSelection);
+
+//   return () => {
+//     document.removeEventListener("mouseup", checkSelection);
+//   };
+// }, []);
