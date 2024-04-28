@@ -90,6 +90,10 @@ const Generate = () => {
       return;
     }
 
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(editorContent, "text/html");
+    if (doc.body.firstElementChild?.outerHTML == e.target.outerHTML) return;
+
     setShowHighlightOptions(false);
 
     var selectedText = getSelectedText();
@@ -204,11 +208,6 @@ const Generate = () => {
     const doc = parser.parseFromString(e.target.outerHTML, "text/html");
     const myTitle: any =
       doc.body.firstElementChild?.firstElementChild?.textContent;
-
-    // console.log(
-    //   doc.body.firstElementChild?.firstElementChild?.textContent,
-    //   e.target
-    // );
 
     setTitle(myTitle);
     setEditorContent(e.target);
