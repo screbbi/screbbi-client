@@ -103,14 +103,14 @@ const Generate = () => {
   };
 
   const saveDocument = () => {
-    if (title.trim === "") {
+    if (title?.trim === "") {
       return;
     }
 
     postRequest("/writer/writing", {
       writer,
       content: editorContent.innerHTML,
-      title: title,
+      title,
     })
       .then(() => {
         const newWritings = writings?.map((writing: any) => {
