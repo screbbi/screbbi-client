@@ -35,6 +35,7 @@ const Generate = () => {
   const [history, setHistory] = useState<any>(null);
   const [rewriteText, setRewriteText] = useState<string>("");
   const [loading, setLoading] = useState(false);
+  const [writings, setWritings] = useState<any>(null);
 
   const options = {
     parsingBlockHtml: true,
@@ -60,12 +61,10 @@ const Generate = () => {
 
     if (document !== null && window !== null) {
       if (window.getSelection !== null) {
-        // console.log(selection.rangeCount);
-
         let range = selection.getRangeAt(0).getBoundingClientRect();
         const { left, top } = range;
 
-        setStyle({ left: `${left - 15 * 19}px`, top: `${top - 16 * 6}px` });
+        setStyle({ left: `${left - 15 * 19}px`, top: `${top - 16 * 6.5}px` });
 
         selectedText = window?.getSelection()?.toString();
 
@@ -91,22 +90,10 @@ const Generate = () => {
       return;
     }
 
-    // if (!showHighlightOptions) {
-    //   if (
-    //     !e.target.parentElement.classList.contains("se-wrapper") ||
-    //     !e.target.parentElement.classList.contains("se-wrapper-inner")
-    //   ) {
-    //     console.log(e.target.parentElement);
-    //     console.log("not");
-    //     return;
-    //   }
-    // }
-
     setShowHighlightOptions(false);
 
     var selectedText = getSelectedText();
     if (selectedText !== "") {
-      // console.log("Selected text:", selectedText);
       setHighlightedText(selectedText);
     }
   };
@@ -121,7 +108,17 @@ const Generate = () => {
       content: editorContent.innerHTML,
       title: title,
     })
-      .then(() => {})
+      .then(() => {
+        const newWritings = writings?.map((writing: any) => {
+          if (writing._id === writer) {
+            return { ...writing, title: title };
+          } else {
+            return writing;
+          }
+        });
+
+        setWritings(newWritings);
+      })
       .catch((err) => {
         console.log(err.response);
       });
@@ -130,32 +127,16 @@ const Generate = () => {
   const getUserWriting = () => {
     getRequest(`/writer/writings`)
       .then(({ data }) => {
+        setWritings(data);
         const currentContent = data.find(
           (content: any) => content._id === writer
         );
 
         const decoded = he.decode(currentContent.content);
-        console.log(decoded);
-
-        // const parser = new DOMParser();
-        // const doc = parser.parseFromString(
-        //   `${currentContent.content}`,
-        //   "text/html"
-        // );
-        // console.log(doc);
-
-        // const div = document.createElement("div");
-        // div.innerHTML = currentContent.content.trim();
-        // console.log(div.firstChild);
-
-        // setEditorContent(doc.body);
-        setEditorContent(`${decoded}`);
-
-        // setEditorContent(`<p>Untitled Document</p> <p>Untitled Document</p>`);
+        setEditorContent(decoded);
       })
       .catch((err: any) => {
         toast.error(err.response.data);
-        console.log(err.response.data);
       });
   };
 
@@ -178,15 +159,12 @@ const Generate = () => {
       window.removeEventListener("keyup", handleKeyUp);
       clearTimeout(timeoutId);
     };
-  }, [editorContent]);
-
-  useEffect(() => {}, []);
+  }, [editorContent, title]);
 
   const getHistory = () => {
     setHistory(null);
     getRequest(`/writer/history/${writer}`)
       .then(({ data }: { data: any }) => {
-        // setEditorContent(`<p>Untitled Document</p>`);
         const reversed = data.reverse();
         setHistory(reversed);
       })
@@ -227,6 +205,11 @@ const Generate = () => {
     const myTitle: any =
       doc.body.firstElementChild?.firstElementChild?.textContent;
 
+    // console.log(
+    //   doc.body.firstElementChild?.firstElementChild?.textContent,
+    //   e.target
+    // );
+
     setTitle(myTitle);
     setEditorContent(e.target);
   };
@@ -260,7 +243,7 @@ const Generate = () => {
   };
 
   return (
-    <PageLayout>
+    <PageLayout writings={writings}>
       <div className="generate">
         <div className="p-2">
           <div

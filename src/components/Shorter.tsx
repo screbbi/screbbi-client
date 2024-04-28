@@ -69,7 +69,7 @@ const Shorter = ({
                   <button
                     className="purple-button"
                     onClick={() => {
-                      insert(result[0]?.suggestion.slice(2));
+                      insert(result?.suggestion.slice(2));
                     }}
                   >
                     <IoMdLink className="text-lg" />

@@ -3,22 +3,21 @@ import { FiTrash } from "react-icons/fi";
 import profile from "../assets/img/profile.svg";
 import SingleContent from "./SingleContent";
 import { useEffect, useRef, useState } from "react";
-// import { IoSettingsOutline } from "react-icons/io5";
 import { MdLogout } from "react-icons/md";
 import { getRequest } from "../utils/request";
 import toast from "react-hot-toast";
-// import { useNavigate } from "react-router-dom";
 import SectionLoader from "./SectionLoader";
 // import Settings from "./Settings";
+// import { useNavigate } from "react-router-dom";
+// import { IoSettingsOutline } from "react-icons/io5";
 
-const Sidebar = () => {
+const Sidebar = ({ writings }: { writings: any }) => {
   const [showOption, setShowOption] = useState(false);
   const [refresh, setRefresh] = useState(false);
-  const [loadingWritings, setLoadingWritings] = useState(false);
-  const [writings, setWritings] = useState([]);
+  // const [loadingWritings, setLoadingWritings] = useState(false);
+  // const [writings, setWritings] = useState([]);
 
   const optionRef: any = useRef();
-  // const navigate = useNavigate();
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
@@ -37,31 +36,30 @@ const Sidebar = () => {
     };
   }, []);
 
-  const getUserWriting = () => {
-    setLoadingWritings(true);
-    getRequest(`/writer/writings`)
-      .then(({ data }) => {
-        setWritings(data);
-        setLoadingWritings(false);
-      })
-      .catch((err: any) => {
-        setLoadingWritings(false);
-        toast.error(err.response.data);
-        console.log(err.response.data);
-      });
-  };
+  // const getUserWriting = () => {
+  //   setLoadingWritings(true);
+  //   getRequest(`/writer/writings`)
+  //     .then(({ data }) => {
+  //       setWritings(data);
+  //       setLoadingWritings(false);
+  //     })
+  //     .catch((err: any) => {
+  //       setLoadingWritings(false);
+  //       toast.error(err.response.data);
+  //       console.log(err.response.data);
+  //     });
+  // };
 
-  useEffect(() => {
-    getUserWriting();
-
-    // getRequest("/profile")
-    //   .then((data) => {
-    //     console.log(data);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err.response.data);
-    //   });
-  }, [refresh]);
+  // useEffect(() => {
+  //   getUserWriting();
+  // getRequest("/profile")
+  //   .then((data) => {
+  //     console.log(data);
+  //   })
+  //   .catch((err) => {
+  //     console.log(err.response.data);
+  //   });
+  // }, [refresh]);
 
   const newWrite = () => {
     toast.loading("Creating New Write");
@@ -91,7 +89,7 @@ const Sidebar = () => {
       <div className="text-white p-2 w-full">
         {/* <div className="day text-[10px]">Today</div> */}
 
-        {loadingWritings ? (
+        {!writings ? (
           <div className="flex justify-center items-center h-52">
             <SectionLoader />
           </div>
