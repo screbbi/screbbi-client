@@ -14,7 +14,7 @@ const PageLayout = ({
       <Navbar />
       <div className="page-layout h-full">
         <Sidebar writings={writings} />
-        <div>{children}</div>
+        <div className="h-full">{children}</div>
       </div>
     </div>
   );

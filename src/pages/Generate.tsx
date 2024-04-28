@@ -233,6 +233,7 @@ const Generate = () => {
         setLoading(false);
         setRewriteText("");
         setHighlightedText("");
+        setShowHighlightOptions(false);
         getHistory();
       })
       .catch((err) => {
@@ -244,7 +245,7 @@ const Generate = () => {
 
   return (
     <PageLayout writings={writings}>
-      <div className="generate">
+      <div className="generate h-full">
         <div className="p-2">
           <div
             className="editor h-full relative flex justify-center bg-white"
@@ -294,7 +295,7 @@ const Generate = () => {
           </div>
         </div>
 
-        <div className="controls bg-white p-4">
+        <div className="controls bg-white p-4 h-full overflow-y-auto">
           <div className="title mb-5">
             <div className="text-sm text-closeBlack font-bold">
               Review Suggestions
@@ -326,7 +327,7 @@ const Generate = () => {
               </>
             )}
 
-            <div className="h-[60vh] overflow-y-auto">
+            <div className="">
               {!history ? (
                 <div className="h-60 flex justify-center items-center">
                   <ButtonLoader1 />

@@ -62,6 +62,10 @@ body {
   /* color: hsl(225, 41%, 11%); */
 }
 
+.controls {
+  height: calc(100vh - 4.4rem);
+}
+
 /* LOADERS */
 .button-loader {
   width: 20px;
