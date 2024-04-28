@@ -7,7 +7,7 @@ const PageLayout = ({
   writings,
 }: {
   children: ReactNode;
-  writings: any;
+  writings?: any;
 }) => {
   return (
     <div className="bg-lightGrey h-screen">
