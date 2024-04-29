@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 
@@ -9,6 +9,12 @@ const PageLayout = ({
   children: ReactNode;
   writings?: any;
 }) => {
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      window.location.replace("/");
+    }
+  }, []);
+
   return (
     <div className="bg-lightGrey h-screen">
       <Navbar />

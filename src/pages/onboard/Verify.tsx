@@ -8,7 +8,7 @@ const Verify = () => {
   useEffect(() => {
     localStorage.setItem("token", token);
 
-    window.location.replace("/generate");
+    window.location.replace("/home");
   }, []);
 
   return <div></div>;
