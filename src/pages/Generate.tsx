@@ -36,6 +36,7 @@ const Generate = () => {
   const [rewriteText, setRewriteText] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const [writings, setWritings] = useState<any>(null);
+  const [selected, setSelected] = useState<any>(null);
 
   const options = {
     parsingBlockHtml: true,
@@ -109,7 +110,7 @@ const Generate = () => {
 
     postRequest("/writer/writing", {
       writer,
-      content: editorContent.innerHTML,
+      content: editorContent.outerHTML,
       title,
     })
       .then(() => {
@@ -138,6 +139,10 @@ const Generate = () => {
 
         const decoded = he.decode(currentContent.content);
         setEditorContent(decoded);
+        const parser = new DOMParser();
+        const doc: any = parser.parseFromString(decoded, "text/xml");
+
+        setTitle(doc.firstChild?.querySelector("p").textContent);
       })
       .catch((err: any) => {
         toast.error(err.response.data);
@@ -153,6 +158,8 @@ const Generate = () => {
       }
 
       timeoutId = setTimeout(() => {
+        console.log("hjhjkjkjk");
+
         saveDocument();
       }, 2000);
     };
@@ -163,7 +170,7 @@ const Generate = () => {
       window.removeEventListener("keyup", handleKeyUp);
       clearTimeout(timeoutId);
     };
-  }, [editorContent, title]);
+  }, [editorContent]);
 
   const getHistory = () => {
     setHistory(null);
@@ -181,20 +188,9 @@ const Generate = () => {
     const editor = document.querySelector(".sun-editor-editable");
 
     if (editor) {
-      const selection = window.getSelection();
-
-      if (selection && selection.toString().length > 0) {
-        const range = selection.getRangeAt(0);
-        range.deleteContents();
-        const newNode = document.createTextNode(text);
-        range.insertNode(newNode);
-      } else {
-        // const currentHtml = editor.innerHTML;
-        const range = selection?.getRangeAt(0);
-        range?.deleteContents();
-        const newNode = document.createTextNode(text);
-        range?.insertNode(newNode);
-      }
+      selected?.deleteContents();
+      const newNode = document.createTextNode(text);
+      selected?.insertNode(newNode);
     }
   };
 
@@ -202,16 +198,6 @@ const Generate = () => {
     getHistory();
     getUserWriting();
   }, [writer]);
-
-  const inputting = (e: any) => {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(e.target.outerHTML, "text/html");
-    const myTitle: any =
-      doc.body.firstElementChild?.firstElementChild?.textContent;
-
-    setTitle(myTitle);
-    setEditorContent(e.target);
-  };
 
   const insights = (category: string) => {
     if (highlightedText === "") {
@@ -242,6 +228,23 @@ const Generate = () => {
       });
   };
 
+  const setRange = () => {
+    const select = window.getSelection();
+    const range = select?.getRangeAt(0);
+    setSelected(range);
+  };
+
+  const inputting = (e: any) => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(e.target.outerHTML, "text/html");
+    const myTitle: any =
+      doc.body.firstElementChild?.firstElementChild?.textContent;
+
+    setTitle(myTitle);
+    setEditorContent(e.target);
+    setRange();
+  };
+
   return (
     <PageLayout writings={writings}>
       <div className="generate h-full">
@@ -253,10 +256,12 @@ const Generate = () => {
             <SunEditor
               setOptions={options}
               setDefaultStyle="font-family: 'Manrope', sans-serif; background:'transparent'"
-              onInput={inputting}
               setContents={editorContent}
               height="calc(100vh - 11rem)"
               width="95%"
+              // onChange={handleChange}
+              onInput={inputting}
+              onClick={setRange}
             />
 
             {showHighlightOptions && (
