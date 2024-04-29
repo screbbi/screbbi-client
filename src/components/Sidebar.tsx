@@ -5,15 +5,21 @@ import SingleContent from "./SingleContent";
 import { useEffect, useRef, useState } from "react";
 import { MdLogout } from "react-icons/md";
 import { getRequest } from "../utils/request";
-import toast from "react-hot-toast";
 import SectionLoader from "./SectionLoader";
+// import toast from "react-hot-toast";
 // import Settings from "./Settings";
 // import { useNavigate } from "react-router-dom";
 // import { IoSettingsOutline } from "react-icons/io5";
 
-const Sidebar = ({ writings }: { writings: any }) => {
+const Sidebar = ({
+  writings,
+  refresh,
+}: {
+  writings: any;
+  refresh: () => void;
+}) => {
   const [showOption, setShowOption] = useState(false);
-  const [refresh, setRefresh] = useState(false);
+  // const [refresh, setRefresh] = useState(false);
   // const [loadingWritings, setLoadingWritings] = useState(false);
   // const [writings, setWritings] = useState([]);
 
@@ -62,12 +68,9 @@ const Sidebar = ({ writings }: { writings: any }) => {
   // }, [refresh]);
 
   const newWrite = () => {
-    toast.loading("Creating New Write");
-
     getRequest("/writer/new")
-      .then((data) => {
-        toast.success(data.message);
-        setRefresh(!refresh);
+      .then(() => {
+        refresh();
       })
       .catch((err) => {
         console.log(err.response.data);

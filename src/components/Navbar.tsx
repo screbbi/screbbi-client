@@ -20,15 +20,19 @@ const Navbar = () => {
               What New
             </button>
 
-            <Link to={"/auth/login"}>
-              <button>Login</button>
-            </Link>
+            {!localStorage.getItem("token") && (
+              <div className="flex gap-2 items-center">
+                <Link to={"/auth/login"}>
+                  <button>Login</button>
+                </Link>
 
-            <Link to={"/auth/register"}>
-              <button className="py-2 px-4 rounded-md text-white bg-buttonPurple">
-                Sign Up
-              </button>
-            </Link>
+                <Link to={"/auth/register"}>
+                  <button className="py-2 px-4 rounded-md text-white bg-buttonPurple">
+                    Sign Up
+                  </button>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>

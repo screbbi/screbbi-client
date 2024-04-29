@@ -37,6 +37,7 @@ const Generate = () => {
   const [loading, setLoading] = useState(false);
   const [writings, setWritings] = useState<any>(null);
   const [selected, setSelected] = useState<any>(null);
+  const [refresh, setRefresh] = useState(false);
 
   const options = {
     parsingBlockHtml: true,
@@ -130,6 +131,7 @@ const Generate = () => {
   };
 
   const getUserWriting = () => {
+    setWritings(null);
     getRequest(`/writer/writings`)
       .then(({ data }) => {
         setWritings(data);
@@ -197,7 +199,7 @@ const Generate = () => {
   useEffect(() => {
     getHistory();
     getUserWriting();
-  }, [writer]);
+  }, [writer, refresh]);
 
   const insights = (category: string) => {
     if (highlightedText === "") {
@@ -246,7 +248,7 @@ const Generate = () => {
   };
 
   return (
-    <PageLayout writings={writings}>
+    <PageLayout writings={writings} refresh={() => setRefresh(!refresh)}>
       <div className="generate h-full">
         <div className="p-2">
           <div
@@ -343,7 +345,6 @@ const Generate = () => {
               ) : (
                 history?.map((item: any) => (
                   <Shorter key={item._id} item={item} insert={insertText} />
-                  // <Shorter key={item._id} item={item} insert={insertText} />
                 ))
               )}
             </div>

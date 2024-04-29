@@ -26,42 +26,52 @@ const Shorter = ({
   const [showMore, setShowMore] = useState(false);
 
   return (
-    <div className="py-2">
-      <div className="text-xs font-bold text-closeBlack capitalize">
-        {item.category}
-      </div>
-
+    <div className="py-2 relative mb-2">
       <div
-        className="grey-text mt-2 pb-2 border-b border-faqBorder cursor-pointer"
-        onClick={() => setShowResults(!showResults)}
+        className={`${
+          !showResults && "shadow-md"
+        } p-2 rounded-md relative bg-white z-20`}
       >
-        {/* {item?.suggestions?.content} */}
-        {item?.suggestions?.content?.length < 60 ? (
-          item.suggestions.content
-        ) : (
-          <>
-            <span>
-              {showMore
-                ? item.suggestions.content
-                : item.suggestions.content.slice(0, 60)}
-            </span>{" "}
-            <span
-              className="underline"
-              onClick={(e) => {
-                e.stopPropagation();
-                setShowMore(!showMore);
-              }}
-            >
-              show {showMore ? "less" : "more"}
-            </span>
-          </>
-        )}
-      </div>
+        <div className="text-xs font-bold text-closeBlack capitalize">
+          {item.category}
+        </div>
 
+        <div
+          className="grey-text mt-2 pb-2 cursor-pointer"
+          onClick={() => setShowResults(!showResults)}
+        >
+          {/* {item?.suggestions?.content} */}
+          {item?.suggestions?.content?.length < 80 ? (
+            item.suggestions.content
+          ) : (
+            <>
+              <span>
+                {showMore
+                  ? item.suggestions.content
+                  : item.suggestions.content.slice(0, 80)}
+              </span>{" "}
+              <span
+                className="underline"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowMore(!showMore);
+                }}
+              >
+                show {showMore ? "less" : "more"}
+              </span>
+            </>
+          )}
+        </div>
+      </div>
+      {!showResults && (
+        <div className="absolute w-11/12 h-full bg-white z-10 shadow-md rounded-md top-[2px] left-1/2 -translate-x-1/2"></div>
+      )}
+
+      {/* border-b-faqBorder border-b */}
       {showResults && (
         <div>
           {item.suggestions?.result?.map((result: any) => (
-            <div key={result.id} className="py-2 border-b-faqBorder border-b">
+            <div key={result.id} className="p-2 shadow-md my-2 rounded-md">
               <div className="grey-text mt-2">{result.suggestion.slice(2)}</div>
 
               <div className="flex items-center divide-x-2 mt-2">

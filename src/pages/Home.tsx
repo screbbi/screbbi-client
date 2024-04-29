@@ -5,8 +5,10 @@ import toast from "react-hot-toast";
 
 const Home = () => {
   const [writings, setWritings] = useState<any>(null);
+  const [refresh, setRefresh] = useState(false);
 
   const getUserWriting = () => {
+    setWritings(null);
     getRequest(`/writer/writings`)
       .then(({ data }) => {
         setWritings(data);
@@ -18,10 +20,10 @@ const Home = () => {
 
   useEffect(() => {
     getUserWriting();
-  }, []);
+  }, [refresh]);
 
   return (
-    <PageLayout writings={writings}>
+    <PageLayout writings={writings} refresh={() => setRefresh(!refresh)}>
       <div className="h-full w-full bg-white flex justify-center items-center">
         <div className="text-2xl font-semibold">Select a Content to edit</div>
       </div>
