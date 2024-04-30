@@ -49,7 +49,7 @@ const Dropdown = ({
           </div>
 
           {openOptions && (
-            <div className="absolute bg-white p-2 w-full border-faqBorder border rounded-lg text-[10px] top-[110%]">
+            <div className="absolute bg-white p-2 w-full border-faqBorder border rounded-lg text-[10px] top-[110%] z-30">
               {types.map((option, idx) => (
                 <div
                   className={`px-4 py-[10px] rounded-md cursor-pointer ${
