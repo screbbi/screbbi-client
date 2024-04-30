@@ -1,12 +1,14 @@
 import { Link } from "react-router-dom";
-import appLogo from "../assets/img/logo.svg";
+// import appLogo from "../assets/img/logo.svg";
+import appLogo from "../assets/img/ai-logo.png";
 
 const Navbar = () => {
   return (
     <div className="bg-white/80 py-4 sticky top-0 z-10">
       <div className="flex justify-between w-11/12 mx-auto">
-        <div className="logo">
-          <img src={appLogo} alt="" />
+        <div className="logo flex items-center gap-2">
+          <img src={appLogo} alt="" className="w-10" />
+          <div className="font-bold text-xl">AI ContentWriter</div>
         </div>
 
         <div className="links flex items-center divide-x-2">
