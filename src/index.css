@@ -43,7 +43,7 @@ body {
 }
 .sidebar {
   @apply grid h-full bg-whatNewText text-lightButton p-4 w-full;
-  grid-template-rows: 3rem 1fr 6rem;
+  grid-template-rows: 3rem 1fr 3rem;
 }
 
 .generate {

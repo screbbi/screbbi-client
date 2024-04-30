@@ -1,5 +1,5 @@
 import { TbEdit } from "react-icons/tb";
-import { FiTrash } from "react-icons/fi";
+// import { FiTrash } from "react-icons/fi";
 import profile from "../assets/img/profile.svg";
 import SingleContent from "./SingleContent";
 import { useEffect, useRef, useState } from "react";
@@ -107,10 +107,10 @@ const Sidebar = ({
 
       {/* TRASH AND PROFILE */}
       <div className="grid gap-4">
-        <button className="flex p-2 items-center gap-4 rounded-md w-full">
+        {/* <button className="flex p-2 items-center gap-4 rounded-md w-full">
           <FiTrash />
           Trash (0)
-        </button>
+        </button> */}
 
         <div className="relative" ref={optionRef}>
           <button

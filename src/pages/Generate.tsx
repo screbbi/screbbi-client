@@ -94,7 +94,14 @@ const Generate = () => {
 
     const parser = new DOMParser();
     const doc = parser.parseFromString(editorContent, "text/html");
-    if (doc.body.firstElementChild?.outerHTML == e.target.outerHTML) return;
+    // console.log(doc.body.firstElementChild?.firstElementChild?.outerHTML);
+    // console.log("target: " + e.target.outerHTML);
+
+    if (
+      doc.body.firstElementChild?.firstElementChild?.outerHTML ==
+      e.target.outerHTML
+    )
+      return;
 
     setShowHighlightOptions(false);
 
@@ -140,7 +147,7 @@ const Generate = () => {
         );
 
         const decoded = he.decode(currentContent.content);
-        setEditorContent(decoded);
+        setEditorContent(decoded ?? "Untitled Document");
         const parser = new DOMParser();
         const doc: any = parser.parseFromString(decoded, "text/xml");
 
@@ -160,8 +167,6 @@ const Generate = () => {
       }
 
       timeoutId = setTimeout(() => {
-        console.log("hjhjkjkjk");
-
         saveDocument();
       }, 2000);
     };
@@ -172,7 +177,7 @@ const Generate = () => {
       window.removeEventListener("keyup", handleKeyUp);
       clearTimeout(timeoutId);
     };
-  }, [editorContent]);
+  }, [editorContent, title]);
 
   const getHistory = () => {
     setHistory(null);
@@ -197,6 +202,7 @@ const Generate = () => {
   };
 
   useEffect(() => {
+    setEditorContent("");
     getHistory();
     getUserWriting();
   }, [writer, refresh]);
@@ -237,14 +243,15 @@ const Generate = () => {
   };
 
   const inputting = (e: any) => {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(e.target.outerHTML, "text/html");
-    const myTitle: any =
-      doc.body.firstElementChild?.firstElementChild?.textContent;
+    // const parser = new DOMParser();
+    // const doc = parser.parseFromString(e.target.outerHTML, "text/html");
+    // const myTitle: any =
+    //   doc.body.firstElementChild?.firstElementChild?.textContent;
+    // console.log(e.target.firstElementChild.textContent);
 
-    setTitle(myTitle);
-    setEditorContent(e.target);
     setRange();
+    setTitle(e.target.firstElementChild.textContent);
+    setEditorContent(e.target);
   };
 
   return (
@@ -261,7 +268,6 @@ const Generate = () => {
               setContents={editorContent}
               height="calc(100vh - 11rem)"
               width="95%"
-              // onChange={handleChange}
               onInput={inputting}
               onClick={setRange}
             />
