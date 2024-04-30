@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { MdLogout } from "react-icons/md";
 import { getRequest } from "../utils/request";
 import SectionLoader from "./SectionLoader";
+import Overlay from "./Overlay";
 // import toast from "react-hot-toast";
 // import Settings from "./Settings";
 // import { useNavigate } from "react-router-dom";
@@ -14,14 +15,15 @@ import SectionLoader from "./SectionLoader";
 const Sidebar = ({
   writings,
   refresh,
+  open,
+  setOpen,
 }: {
   writings: any;
   refresh: () => void;
+  open: boolean;
+  setOpen: () => void;
 }) => {
   const [showOption, setShowOption] = useState(false);
-  // const [refresh, setRefresh] = useState(false);
-  // const [loadingWritings, setLoadingWritings] = useState(false);
-  // const [writings, setWritings] = useState([]);
 
   const optionRef: any = useRef();
 
@@ -42,31 +44,6 @@ const Sidebar = ({
     };
   }, []);
 
-  // const getUserWriting = () => {
-  //   setLoadingWritings(true);
-  //   getRequest(`/writer/writings`)
-  //     .then(({ data }) => {
-  //       setWritings(data);
-  //       setLoadingWritings(false);
-  //     })
-  //     .catch((err: any) => {
-  //       setLoadingWritings(false);
-  //       toast.error(err.response.data);
-  //       console.log(err.response.data);
-  //     });
-  // };
-
-  // useEffect(() => {
-  //   getUserWriting();
-  // getRequest("/profile")
-  //   .then((data) => {
-  //     console.log(data);
-  //   })
-  //   .catch((err) => {
-  //     console.log(err.response.data);
-  //   });
-  // }, [refresh]);
-
   const newWrite = () => {
     getRequest("/writer/new")
       .then(() => {
@@ -78,7 +55,7 @@ const Sidebar = ({
   };
 
   return (
-    <div className="sidebar">
+    <div className={`sidebar ${open ? "left-0" : "-left-[20rem]"}`}>
       {/* NEW CONTENT */}
       <button
         className="bg-lightButton text-whatNewText flex justify-between py-2 px-4 rounded-full font-semibold items-center text-sm h-fit"
@@ -87,11 +64,8 @@ const Sidebar = ({
         New Content
         <TbEdit />
       </button>
-
       {/* CONTENTS */}
       <div className="text-white p-2 w-full">
-        {/* <div className="day text-[10px]">Today</div> */}
-
         {!writings ? (
           <div className="flex justify-center items-center h-52">
             <SectionLoader />
@@ -104,14 +78,8 @@ const Sidebar = ({
           ))
         )}
       </div>
-
       {/* TRASH AND PROFILE */}
       <div className="grid gap-4">
-        {/* <button className="flex p-2 items-center gap-4 rounded-md w-full">
-          <FiTrash />
-          Trash (0)
-        </button> */}
-
         <div className="relative" ref={optionRef}>
           <button
             className="flex gap-2 p-2 hover:bg-darkBlue rounded-md w-full"
@@ -123,10 +91,6 @@ const Sidebar = ({
 
           {showOption && (
             <div className="absolute bottom-[110%] left-[10%] bg-white rounded-lg p-2 border border-offWhite w-4/5 text-sm">
-              {/* <div className="flex items-center gap-2 text-black font-semibold py-1 my-1">
-                <IoSettingsOutline /> <div>Settings</div>
-              </div> */}
-
               <button
                 className="flex items-center gap-2 text-whatNewBorder font-semibold py-1 my-1"
                 onClick={() => {
@@ -140,8 +104,53 @@ const Sidebar = ({
           )}
         </div>
       </div>
+      {/* // onClick={click} */}
     </div>
   );
 };
 
 export default Sidebar;
+{
+  /* <div className="day text-[10px]">Today</div> */
+}
+
+{
+  /* <div className="flex items-center gap-2 text-black font-semibold py-1 my-1">
+                <IoSettingsOutline /> <div>Settings</div>
+              </div> */
+}
+{
+  /* <button className="flex p-2 items-center gap-4 rounded-md w-full">
+          <FiTrash />
+          Trash (0)
+        </button> */
+}
+
+// const getUserWriting = () => {
+//   setLoadingWritings(true);
+//   getRequest(`/writer/writings`)
+//     .then(({ data }) => {
+//       setWritings(data);
+//       setLoadingWritings(false);
+//     })
+//     .catch((err: any) => {
+//       setLoadingWritings(false);
+//       toast.error(err.response.data);
+//       console.log(err.response.data);
+//     });
+// };
+
+// useEffect(() => {
+//   getUserWriting();
+// getRequest("/profile")
+//   .then((data) => {
+//     console.log(data);
+//   })
+//   .catch((err) => {
+//     console.log(err.response.data);
+//   });
+// }, [refresh]);
+
+// const [refresh, setRefresh] = useState(false);
+// const [loadingWritings, setLoadingWritings] = useState(false);
+// const [writings, setWritings] = useState([]);

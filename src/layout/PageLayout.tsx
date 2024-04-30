@@ -1,4 +1,4 @@
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 
@@ -17,12 +17,31 @@ const PageLayout = ({
     }
   }, []);
 
+  const [openNav, setOpenNav] = useState(false);
+
   return (
-    <div className="bg-lightGrey h-screen">
-      <Navbar />
-      <div className="page-layout h-full">
-        <Sidebar writings={writings} refresh={refresh} />
-        <div className="h-full">{children}</div>
+    <div>
+      <div className="md:hidden text-2xl p-4 text-center">
+        AI ContentWriter works best on browsers at least 900px wide (Desktop or
+        Tablet). Please switch to a larger browser
+      </div>
+      <div className="bg-lightGrey h-screen md:block hidden">
+        <Navbar setOpen={() => setOpenNav(!openNav)} open={openNav} />
+        <div className="page-layout h-full">
+          <Sidebar
+            writings={writings}
+            refresh={refresh}
+            open={openNav}
+            setOpen={() => setOpenNav(false)}
+          />
+          <div className="h-full">{children}</div>
+        </div>
+        {openNav && (
+          <div
+            className="fixed top-0 left-0 w-full h-full bg-black/40 z-20"
+            onClick={() => setOpenNav(false)}
+          ></div>
+        )}
       </div>
     </div>
   );

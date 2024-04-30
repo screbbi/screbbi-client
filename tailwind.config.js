@@ -15,6 +15,9 @@ export default {
         darkBlue: "#1F243C",
         offWhite: "#EBF8F6",
       },
+      gridTemplateColumns: {
+        pageLayout: "15rem 1fr",
+      },
     },
   },
   plugins: [],
