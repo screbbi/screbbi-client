@@ -147,3 +147,22 @@ body {
 .sun-editor-editable::-webkit-scrollbar {
   display: none;
 }
+
+.write-option {
+  @apply flex items-center gap-2 font-semibold text-xs py-2 px-3 bg-white rounded-full relative z-50;
+}
+.editor {
+  height: calc(100vh - 9rem);
+
+  /* @apply h-[50vh] bg-slate-500; */
+}
+
+.write-ai {
+  @apply flex items-center gap-2 p-2 border-2 hover:border-purple-500 border-transparent rounded-lg cursor-pointer duration-300;
+}
+.write-settings-control {
+  @apply text-xs;
+}
+.write-settings-control select {
+  @apply block w-full text-[10px] text-selectText border border-selectText rounded-md p-1 mt-1;
+}

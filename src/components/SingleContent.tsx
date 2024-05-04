@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { IoEllipsisVerticalSharp } from "react-icons/io5";
-import { CiExport } from "react-icons/ci";
+// import { CiExport } from "react-icons/ci";
 import { FaPen } from "react-icons/fa";
 import { LuTrash } from "react-icons/lu";
 import { useNavigate, useParams } from "react-router-dom";
@@ -55,9 +55,9 @@ const SingleContent = ({ writing }: { writing: any }) => {
 
         {showOption && (
           <div className="absolute top-full left-2 bg-white rounded-lg p-4 border border-offWhite z-30 shadow-md">
-            <div className="flex items-center gap-2 text-black font-semibold text-xs py-1 my-1">
+            {/* <div className="flex items-center gap-2 text-black font-semibold text-xs py-1 my-1">
               <CiExport /> <div>Export</div>
-            </div>
+            </div> */}
 
             <div className="flex items-center gap-2 text-black font-semibold text-xs py-1 my-1">
               <FaPen /> <div>Rename</div>

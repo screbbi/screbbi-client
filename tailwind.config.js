@@ -14,6 +14,7 @@ export default {
         lightButton: "#F5F5F5",
         darkBlue: "#1F243C",
         offWhite: "#EBF8F6",
+        selectText: "#A5A5A5",
       },
       gridTemplateColumns: {
         pageLayout: "15rem 1fr",

@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { MdLogout } from "react-icons/md";
 import { getRequest } from "../utils/request";
 import SectionLoader from "./SectionLoader";
-import Overlay from "./Overlay";
+
 // import toast from "react-hot-toast";
 // import Settings from "./Settings";
 // import { useNavigate } from "react-router-dom";
@@ -16,7 +16,6 @@ const Sidebar = ({
   writings,
   refresh,
   open,
-  setOpen,
 }: {
   writings: any;
   refresh: () => void;
