@@ -8,7 +8,7 @@ body {
 }
 
 .linkes {
-  @apply flex gap-3 items-center text-sm;
+  @apply md:flex hidden gap-3 items-center text-sm;
 }
 
 .feature {

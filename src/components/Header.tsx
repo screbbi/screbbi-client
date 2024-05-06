@@ -1,4 +1,3 @@
-import Navbar from "./Navbar";
 import greenBg from "../assets/img/green-header-bg.svg";
 import purpleBg from "../assets/img/purple-header-bg.svg";
 import orangeBg from "../assets/img/orange-header-bg.svg";
@@ -17,6 +16,7 @@ import { MdDraw } from "react-icons/md";
 import FAQ from "./FAQ";
 import Footer from "./Footer";
 import { useNavigate } from "react-router-dom";
+import LandingPageNavbar from "./LandingPageNavbar";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ const Header = () => {
         <img src={greenBg} alt="" className="absolute -right-10 -top-8" />
         <img src={purpleBg} alt="" className="absolute -left-10 -top-8" />
 
-        {/* <Navbar /> */}
+        <LandingPageNavbar />
 
         <div className="mt-20 mb-12 relative z-10">
           <div className="flex items-center text-sm justify-center gap-4">
