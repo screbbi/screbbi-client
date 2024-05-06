@@ -26,9 +26,9 @@ const Header = () => {
         <img src={greenBg} alt="" className="absolute -right-10 -top-8" />
         <img src={purpleBg} alt="" className="absolute -left-10 -top-8" />
 
-        <Navbar />
+        {/* <Navbar /> */}
 
-        <div className="mt-20 mb-12">
+        <div className="mt-20 mb-12 relative z-10">
           <div className="flex items-center text-sm justify-center gap-4">
             <div className="py-2 px-4 rounded-full text-white bg-buttonPurple">
               New
@@ -74,7 +74,7 @@ const Header = () => {
         </div>
 
         {/* FEATURES */}
-        <div className="flex justify-between features w-11/12 mx-auto my-10">
+        <div className="flex justify-center md:justify-between features w-11/12 mx-auto my-10 flex-wrap gap-4">
           <div className="feature">AI Essay Writer</div>
           <div className="feature">Essay Rewriter</div>
           <div className="feature">Essay Shortener</div>
@@ -84,14 +84,14 @@ const Header = () => {
         </div>
 
         {/* RIGHT FEATURES */}
-        <div className="right-feature py-16">
-          <div className="font-semibold text-3xl text-center mb-14">
+        <div className="right-feature py-16 px-4">
+          <div className="font-semibold text-xl md:text-3xl text-center mb-14">
             The right features for your use case
           </div>
 
           {/* MAIN RIGHT FEATURES */}
-          <div className="grid grid-cols-3 mx-auto w-9/12 gap-8">
-            <div className="">
+          <div className="grid md:grid-cols-3 mx-auto w-9/12 gap-8">
+            <div className="text-center md:text-start">
               <div className="right-feature-icon-contaier">
                 <MdDraw className="text-white text-2xl" />
               </div>
@@ -103,7 +103,7 @@ const Header = () => {
               </div>
             </div>
 
-            <div className="">
+            <div className="text-center md:text-start">
               <div className="right-feature-icon-contaier">
                 <img src={rewrite} alt="" />
               </div>
@@ -114,7 +114,7 @@ const Header = () => {
               </div>
             </div>
 
-            <div className="">
+            <div className="text-center md:text-start">
               <div className="right-feature-icon-contaier">
                 <img src={describe} alt="" />
               </div>
@@ -132,8 +132,8 @@ const Header = () => {
         <div>
           {/* WRITE */}
           <div className="grid-section">
-            <div className="w-4/6">
-              <div className="flex items-center text-sm gap-4">
+            <div className="w-full lg:w-4/6">
+              <div className="flex justify-center md:justify-start items-center text-sm gap-4">
                 <div className="py-2 px-4 rounded-full text-white bg-buttonPurple">
                   AI
                 </div>
@@ -159,19 +159,20 @@ const Header = () => {
                 Try for free
               </button>
             </div>
-            <div className="w-full">
+
+            <div className="w-full max-w-sm mx-auto">
               <img src={write} alt="" className="w-full" />
             </div>
           </div>
 
           {/* STORY ENGINE */}
           <div className="grid-section">
-            <div className="w-full">
+            <div className="w-full max-w-sm mx-auto">
               <img src={story} alt="" className="w-full" />
             </div>
 
-            <div className="ml-[30%] w-4/6">
-              <div className="flex items-center text-sm gap-4">
+            <div className="lg:ml-[30%] w-full lg:w-4/6">
+              <div className="flex justify-center md:justify-start items-center text-sm gap-4">
                 <div className="py-2 px-4 rounded-full text-white bg-buttonPurple">
                   AI
                 </div>
@@ -201,8 +202,8 @@ const Header = () => {
 
           {/* ANOTHER SECTION WRITE */}
           <div className="grid-section">
-            <div className="w-4/6">
-              <div className="flex items-center text-sm gap-4">
+            <div className="w-full lg:w-4/6">
+              <div className="flex justify-center md:justify-start items-center text-sm gap-4">
                 <div className="py-2 px-4 rounded-full text-white bg-buttonPurple">
                   AI
                 </div>
@@ -226,7 +227,8 @@ const Header = () => {
                 Try for free
               </button>
             </div>
-            <div className="w-full">
+
+            <div className="w-full max-w-sm mx-auto">
               <img src={believe} alt="" />
               <img src={rewritePng} alt="" />
             </div>
@@ -234,12 +236,12 @@ const Header = () => {
 
           {/* DESCRIPTION */}
           <div className="grid-section">
-            <div className="w-full">
+            <div className="w-full max-w-sm mx-auto">
               <img src={description} alt="" className="w-full" />
             </div>
 
-            <div className="ml-[30%] w-4/6">
-              <div className="flex items-center text-sm gap-4">
+            <div className="lg:ml-[30%] w-full lg:w-4/6">
+              <div className="flex justify-center md:justify-start items-center text-sm gap-4">
                 <div className="py-2 px-4 rounded-full text-white bg-buttonPurple">
                   AI
                 </div>
@@ -268,8 +270,8 @@ const Header = () => {
 
           {/* PACING */}
           <div className="grid-section">
-            <div className="w-4/6">
-              <div className="flex items-center text-sm gap-4">
+            <div className="w-full lg:w-4/6">
+              <div className="flex justify-center md:justify-start items-center text-sm gap-4">
                 <div className="py-2 px-4 rounded-full text-white bg-buttonPurple">
                   AI
                 </div>
@@ -293,7 +295,7 @@ const Header = () => {
                 Try for free
               </button>
             </div>
-            <div className="w-full">
+            <div className="w-full max-w-sm mx-auto">
               <img src={pacing} alt="" />
             </div>
           </div>

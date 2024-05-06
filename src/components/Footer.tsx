@@ -1,8 +1,10 @@
 const Footer = () => {
   return (
     <footer className="bg-whatNewText py-16">
-      <div className="text-sm w-11/12 mx-auto max-w-4xl grid grid-cols-4">
-        <div className="text-white text-2xl font-semibold">AI WRITER</div>
+      <div className="text-sm w-11/12 mx-auto max-w-4xl grid md:grid-cols-4 sm:grid-cols-2 text-center gap-4">
+        <div className="text-white text-2xl font-semibold sm:col-span-2 lg:col-span-1">
+          AI WRITER
+        </div>
         <div className="">
           <div className="text-white">LEARN</div>
           <div className="text-grey my-2">Changelog</div>

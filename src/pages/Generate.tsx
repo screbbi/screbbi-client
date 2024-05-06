@@ -369,10 +369,11 @@ const Generate = () => {
               setDefaultStyle="font-family: 'Manrope', sans-serif; background:'transparent'"
               setContents={editorContent}
               height="calc(100vh - 16rem)"
-              // height="100%"
               width="95%"
               onInput={inputting}
-              onClick={setRange}
+              onClick={() => {
+                setRange();
+              }}
             />
 
             {showHighlightOptions && (
