@@ -149,7 +149,7 @@ body {
 }
 
 .write-option {
-  @apply flex items-center gap-2 font-semibold text-xs py-2 px-3 bg-white rounded-full relative z-50;
+  @apply flex items-center gap-2 font-semibold text-xs py-2 px-3 bg-white rounded-full relative z-10;
 }
 .editor {
   height: calc(100vh - 9rem);

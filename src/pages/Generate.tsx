@@ -16,6 +16,7 @@ import toast from "react-hot-toast";
 import ButtonLoader1 from "../components/ButtonLoader1";
 import WriteOptions from "../components/WriteOptions";
 import WriteSettings from "../components/WriteSettigs";
+import Prompt from "../components/Prompt";
 
 const types = [
   "Rephrase",
@@ -43,6 +44,26 @@ const Generate = () => {
   const [refresh, setRefresh] = useState(false);
   const [openWriteOptions, setOpenWriteOptions] = useState(false);
   const [openWriteSettings, setOpenWriteSettings] = useState(false);
+  const [openPrompt, setOpenPrompt] = useState(false);
+  const [prompt, setPrompt] = useState("");
+  const [loadingPrompt, setLoadingPrompt] = useState(false);
+
+  const generatePrompt = () => {
+    if (prompt.trim() === "") {
+      alert("Prompt canot be empty");
+      return;
+    }
+    setLoadingPrompt(true);
+    postRequest("/writer/generate", { prompt })
+      .then((data) => {
+        console.log(data);
+        setLoadingPrompt(false);
+      })
+      .catch(() => {
+        toast.error("Error getting prompt");
+        setLoadingPrompt(false);
+      });
+  };
 
   const options = {
     parsingBlockHtml: true,
@@ -192,6 +213,7 @@ const Generate = () => {
       ) {
         setOpenWriteOptions(false);
         setOpenWriteSettings(false);
+        setOpenPrompt(false);
       }
     };
 
@@ -307,7 +329,13 @@ const Generate = () => {
 
               <IoIosArrowDown className="text-base" />
               {openWriteOptions && (
-                <WriteOptions openSettings={() => setOpenWriteSettings(true)} />
+                <WriteOptions
+                  openSettings={() => setOpenWriteSettings(true)}
+                  openPrompt={() => {
+                    setOpenPrompt(true);
+                    setOpenWriteOptions(false);
+                  }}
+                />
               )}
 
               {openWriteSettings && (
@@ -316,6 +344,19 @@ const Generate = () => {
                     setOpenWriteSettings(false);
                     setOpenWriteOptions(true);
                   }}
+                />
+              )}
+
+              {openPrompt && (
+                <Prompt
+                  generate={generatePrompt}
+                  back={() => {
+                    setOpenPrompt(false);
+                    setOpenWriteOptions(true);
+                  }}
+                  prompt={prompt}
+                  setPrompt={setPrompt}
+                  loading={loadingPrompt}
                 />
               )}
             </div>

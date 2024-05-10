@@ -16,7 +16,7 @@ const Navbar = ({
       <div className="flex justify-between">
         <div className="flex items-center gap-3 relative z-30">
           {setOpen && (
-            <div className="text-3xl md:hidden" onClick={setOpen}>
+            <div className="text-3xl lg:hidden" onClick={setOpen}>
               {open ? <HiOutlineMenuAlt3 /> : <HiOutlineMenuAlt2 />}
             </div>
           )}

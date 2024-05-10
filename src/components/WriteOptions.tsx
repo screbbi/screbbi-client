@@ -1,7 +1,19 @@
-const WriteOptions = ({ openSettings }: { openSettings: () => void }) => {
+const WriteOptions = ({
+  openSettings,
+  openPrompt,
+}: {
+  openSettings: () => void;
+  openPrompt: () => void;
+}) => {
   return (
     <div className="absolute top-full left-0 w-60 bg-white p-3 shadow-lg rounded-md">
-      <div className="write-ai">
+      <div
+        className="write-ai"
+        onClick={(e) => {
+          e.stopPropagation();
+          openPrompt();
+        }}
+      >
         <svg
           width="18"
           height="16"
@@ -25,7 +37,6 @@ const WriteOptions = ({ openSettings }: { openSettings: () => void }) => {
         className="write-ai mt-2"
         onClick={(e) => {
           e.stopPropagation();
-          console.log("work");
           openSettings();
         }}
       >

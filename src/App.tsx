@@ -20,7 +20,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/home" element={<Home />} />
-        {/* <Route path="/generate" element={<Generate />} /> */}
+
         <Route path="/generate/:writer" element={<Generate />} />
 
         <Route path="auth">

@@ -4,8 +4,9 @@ import profile from "../assets/img/profile.svg";
 import SingleContent from "./SingleContent";
 import { useEffect, useRef, useState } from "react";
 import { MdLogout } from "react-icons/md";
-import { getRequest } from "../utils/request";
+import { delRequest, getRequest } from "../utils/request";
 import SectionLoader from "./SectionLoader";
+import { useNavigate, useParams } from "react-router-dom";
 
 // import toast from "react-hot-toast";
 // import Settings from "./Settings";
@@ -23,6 +24,8 @@ const Sidebar = ({
   setOpen: () => void;
 }) => {
   const [showOption, setShowOption] = useState(false);
+  const { writer } = useParams();
+  const navigate = useNavigate();
 
   const optionRef: any = useRef();
 
@@ -53,6 +56,29 @@ const Sidebar = ({
       });
   };
 
+  const deleteWrite = (id: string) => {
+    delRequest(`/writer/delete/${id}`)
+      .then(() => {
+        if (writer === id) {
+          navigate("/home");
+        }
+        refresh();
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
+  };
+
+  const getProfile = () => {
+    getRequest("/profile").then((data) => {
+      console.log(data);
+    });
+  };
+
+  useEffect(() => {
+    getProfile();
+  }, []);
+
   return (
     <div className={`sidebar ${open ? "left-0" : "-left-[20rem]"}`}>
       {/* NEW CONTENT */}
@@ -63,6 +89,7 @@ const Sidebar = ({
         New Content
         <TbEdit />
       </button>
+
       {/* CONTENTS */}
       <div className="text-white p-2 w-full">
         {!writings ? (
@@ -73,10 +100,15 @@ const Sidebar = ({
           <div>No Data</div>
         ) : (
           writings.map((item: any) => (
-            <SingleContent writing={item} key={item._id} />
+            <SingleContent
+              writing={item}
+              key={item._id}
+              deleteWrite={() => deleteWrite(item._id)}
+            />
           ))
         )}
       </div>
+
       {/* TRASH AND PROFILE */}
       <div className="grid gap-4">
         <div className="relative" ref={optionRef}>
@@ -103,12 +135,12 @@ const Sidebar = ({
           )}
         </div>
       </div>
-      {/* // onClick={click} */}
     </div>
   );
 };
 
 export default Sidebar;
+
 {
   /* <div className="day text-[10px]">Today</div> */
 }
