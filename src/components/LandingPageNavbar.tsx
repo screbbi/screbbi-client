@@ -21,6 +21,20 @@ const LandingPageNavbar = () => {
           <div className="links flex items-center gap-4">
             {localStorage.getItem("token") && <img src={profile} alt="" />}
 
+            {!localStorage.getItem("token") && (
+              <div className="flex gap-6 items-center">
+                <Link to={"/auth/login"}>
+                  <button>Login</button>
+                </Link>
+
+                <Link to={"/auth/register"} className="w-full">
+                  <button className="py-2 px-4 rounded-md text-white bg-buttonPurple w-full">
+                    Sign Up
+                  </button>
+                </Link>
+              </div>
+            )}
+
             <div className="text-3xl md:hidden" onClick={() => setOpen(!open)}>
               {!open ? <HiOutlineMenuAlt3 /> : <HiOutlineMenuAlt2 />}
             </div>
