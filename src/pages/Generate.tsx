@@ -159,7 +159,11 @@ const Generate = () => {
         let range = selection.getRangeAt(0).getBoundingClientRect();
         const { left, top } = range;
 
-        setStyle({ left: `${left - 15 * 19}px`, top: `${top - 16 * 6.5}px` });
+        if (window.innerWidth < 1024) {
+          setStyle({ left: `${left - 15 * 4}px`, top: `${top - 16 * 10}px` });
+        } else {
+          setStyle({ left: `${left - 15 * 19}px`, top: `${top - 16 * 10}px` });
+        }
 
         selectedText = window?.getSelection()?.toString();
 
