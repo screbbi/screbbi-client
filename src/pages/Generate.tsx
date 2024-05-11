@@ -468,7 +468,7 @@ const Generate = () => {
               )}
             </div>
 
-            <div className="write-option">
+            {/* <div className="write-option">
               <svg
                 width="17"
                 height="17"
@@ -485,7 +485,7 @@ const Generate = () => {
               <div>Describe</div>
 
               <IoIosArrowDown className="text-base" />
-            </div>
+            </div> */}
           </div>
 
           {/* EDITOR */}
