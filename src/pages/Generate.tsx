@@ -112,14 +112,12 @@ const Generate = () => {
 
     setLoadingToned(true);
     putRequest("/writer/settings", tonedPromptSetting)
-      .then((data) => {
-        console.log(data);
+      .then(() => {
         setLoadingToned(false);
       })
-      .catch((err) => {
+      .catch(() => {
         setLoadingToned(false);
-        toast.error("Error getting prompt");
-        console.log(err.response.data);
+        toast.error("Error Saving settings");
       });
   };
 

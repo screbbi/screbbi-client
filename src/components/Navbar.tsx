@@ -27,16 +27,7 @@ const Navbar = ({
         </div>
 
         <div className="links flex items-center divide-x-2">
-          <div className="linkes pr-4">
-            <button>Support</button>
-          </div>
-
           <div className="linkes pl-4">
-            <button className="text-whatNewText border border-whatNewBorder py-2 px-4 rounded-md outline-none flex items-center gap-2">
-              <div className="dot bg-whatNewBorder rounded-full w-2 h-2"></div>
-              What New
-            </button>
-
             {!localStorage.getItem("token") && (
               <div className="flex gap-2 items-center">
                 <Link to={"/auth/login"}>

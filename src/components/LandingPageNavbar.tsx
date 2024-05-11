@@ -19,34 +19,7 @@ const LandingPageNavbar = () => {
           </div>
 
           <div className="links flex items-center gap-4">
-            <div className="flex items-center divide-x-2 gap-4">
-              <div className="linkes pr-4">
-                <button>Support</button>
-              </div>
-
-              <div className="linkes pl-4">
-                <button className="text-whatNewText border border-whatNewBorder py-2 px-4 rounded-md outline-none flex items-center gap-2">
-                  <div className="dot bg-whatNewBorder rounded-full w-2 h-2"></div>
-                  What New
-                </button>
-
-                {!localStorage.getItem("token") && (
-                  <div className="flex gap-2 items-center">
-                    <Link to={"/auth/login"}>
-                      <button>Login</button>
-                    </Link>
-
-                    <Link to={"/auth/register"}>
-                      <button className="py-2 px-4 rounded-md text-white bg-buttonPurple">
-                        Sign Up
-                      </button>
-                    </Link>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <img src={profile} alt="" />
+            {localStorage.getItem("token") && <img src={profile} alt="" />}
 
             <div className="text-3xl md:hidden" onClick={() => setOpen(!open)}>
               {!open ? <HiOutlineMenuAlt3 /> : <HiOutlineMenuAlt2 />}
@@ -60,16 +33,7 @@ const LandingPageNavbar = () => {
           open ? "right-0" : "-right-60"
         } `}
       >
-        <div className="pr-4">
-          <button>Support</button>
-        </div>
-
         <div className="">
-          <button className="text-whatNewText border border-whatNewBorder py-2 px-4 rounded-md outline-none flex items-center gap-2 mb-6">
-            <div className="dot bg-whatNewBorder rounded-full w-2 h-2"></div>
-            What New
-          </button>
-
           {!localStorage.getItem("token") && (
             <div className="flex flex-col gap-6 items-center">
               <Link to={"/auth/login"}>
