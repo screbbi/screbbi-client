@@ -72,6 +72,9 @@ const Generate = () => {
 
     postRequest("/writer/generate", { prompt })
       .then(({ data }) => {
+        setOpenWriteOptions(false);
+        setOpenPrompt(false);
+        setPrompt("");
         setEditorContent(
           `<p>${title}</p> <br> <p>${data.replaceAll("\n", "<br>")}</p>`
         );
@@ -114,6 +117,8 @@ const Generate = () => {
     putRequest("/writer/settings", tonedPromptSetting)
       .then(() => {
         setLoadingToned(false);
+        setOpenWriteSettings(false);
+        setOpenWriteOptions(false);
       })
       .catch(() => {
         setLoadingToned(false);
