@@ -51,7 +51,7 @@ const Navbar = ({
               </div>
             )}
 
-            <img src={profile} alt="" />
+            {localStorage.getItem("token") && <img src={profile} alt="" />}
           </div>
         </div>
       </div>

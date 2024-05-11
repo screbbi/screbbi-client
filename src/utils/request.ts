@@ -1,10 +1,20 @@
 import axios from "axios";
 
 export const BASE_URL = "https://ai-writer-black.vercel.app/api/v1";
+export const BASE_URL1 = "https://ai-writer-black.vercel.app/api/v2";
 
 const axiosInstance = axios.create({
   // timeout: 10000,
   baseURL: BASE_URL,
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  },
+});
+
+export const axiosInstanceV2 = axios.create({
+  // timeout: 10000,
+  baseURL: BASE_URL1,
   headers: {
     "Content-Type": "application/json",
     Authorization: `Bearer ${localStorage.getItem("token")}`,

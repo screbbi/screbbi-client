@@ -10,7 +10,7 @@ import he from "he";
 import SunEditor from "suneditor-react";
 import "suneditor/dist/css/suneditor.min.css";
 import { useEffect, useRef, useState } from "react";
-import { getRequest, postRequest } from "../utils/request";
+import { getRequest, postRequest, putRequest } from "../utils/request";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import ButtonLoader1 from "../components/ButtonLoader1";
@@ -47,16 +47,49 @@ const Generate = () => {
   const [openPrompt, setOpenPrompt] = useState(false);
   const [prompt, setPrompt] = useState("");
   const [loadingPrompt, setLoadingPrompt] = useState(false);
+  const [tonedPromptSetting, setTonedPromptSetting] = useState({
+    keyDetails: "",
+    toneOfStory: "suspenseful",
+    lengthOfStory: 100,
+    chapters: 2,
+  });
+  const [loadingToned, setLoadingToned] = useState(false);
 
   const generatePrompt = () => {
     if (prompt.trim() === "") {
       alert("Prompt canot be empty");
       return;
     }
+
     setLoadingPrompt(true);
+
     postRequest("/writer/generate", { prompt })
-      .then((data) => {
-        console.log(data);
+      .then(({ data }) => {
+        setEditorContent(
+          `<p>${title}</p> <br> <p>${data.replaceAll("\n", "<br>")}</p>`
+        );
+        postRequest("/writer/writing", {
+          writer,
+          content: `<p>${title}</p> <br> <p>${data.replaceAll(
+            "\n",
+            "<br>"
+          )}</p>`,
+          title,
+        })
+          .then(() => {
+            const newWritings = writings?.map((writing: any) => {
+              if (writing._id === writer) {
+                return { ...writing, title: title };
+              } else {
+                return writing;
+              }
+            });
+
+            setWritings(newWritings);
+          })
+          .catch((err) => {
+            console.log(err.response);
+          });
         setLoadingPrompt(false);
       })
       .catch(() => {
@@ -64,6 +97,30 @@ const Generate = () => {
         setLoadingPrompt(false);
       });
   };
+
+  const generateTonedPrompt = () => {
+    if (tonedPromptSetting.keyDetails.trim() === "") {
+      alert("Fill all fields");
+    }
+
+    setLoadingToned(true);
+    putRequest("/writer/settings", tonedPromptSetting)
+      .then((data) => {
+        console.log(data);
+        setLoadingToned(false);
+      })
+      .catch((err) => {
+        setLoadingToned(false);
+        toast.error("Error getting prompt");
+        console.log(err.response.data);
+      });
+  };
+
+  const handleWriteSettingsChange = (e: any) =>
+    setTonedPromptSetting({
+      ...tonedPromptSetting,
+      [e.target.name]: e.target.value,
+    });
 
   const options = {
     parsingBlockHtml: true,
@@ -344,6 +401,10 @@ const Generate = () => {
                     setOpenWriteSettings(false);
                     setOpenWriteOptions(true);
                   }}
+                  writeSetting={tonedPromptSetting}
+                  change={handleWriteSettingsChange}
+                  generate={generateTonedPrompt}
+                  loading={loadingToned}
                 />
               )}
 
@@ -409,7 +470,7 @@ const Generate = () => {
               setOptions={options}
               setDefaultStyle="font-family: 'Manrope', sans-serif; background:'transparent'"
               setContents={editorContent}
-              height="calc(100vh - 16rem)"
+              height="calc(100vh - 11rem)"
               width="95%"
               onInput={inputting}
               onClick={() => {

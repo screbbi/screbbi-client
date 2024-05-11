@@ -40,7 +40,10 @@ const Prompt = ({
           className={`bg-buttonPurple text-white w-full p-2 rounded-md mt-4 ${
             loading && "opacity-50"
           }`}
-          onClick={generate}
+          onClick={(e) => {
+            e.stopPropagation();
+            generate();
+          }}
           disabled={loading}
         >
           Generate
