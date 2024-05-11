@@ -17,6 +17,7 @@ import ButtonLoader1 from "../components/ButtonLoader1";
 import WriteOptions from "../components/WriteOptions";
 import WriteSettings from "../components/WriteSettigs";
 import Prompt from "../components/Prompt";
+import RewriteOption from "../components/RewriteOption";
 
 const types = [
   "Rephrase",
@@ -30,6 +31,8 @@ const types = [
 const Generate = () => {
   const { writer } = useParams();
   const optionRef: any = useRef();
+  const reWriteRef: any = useRef();
+
   const [editorContent, setEditorContent] = useState<any>("");
   const [title, setTitle] = useState<any>("");
   const [highlightedText, setHighlightedText] = useState("");
@@ -54,6 +57,10 @@ const Generate = () => {
     chapters: 2,
   });
   const [loadingToned, setLoadingToned] = useState(false);
+  const [openRewriteOtions, setOpenRewriteOtions] = useState(false);
+  const [cardNumber, setCardNumber] = useState(
+    Number(localStorage.getItem("cardNumber")) ?? 1
+  );
 
   const generatePrompt = () => {
     if (prompt.trim() === "") {
@@ -272,6 +279,13 @@ const Generate = () => {
         setOpenWriteSettings(false);
         setOpenPrompt(false);
       }
+
+      if (
+        reWriteRef.current &&
+        !reWriteRef?.current?.contains(event.target as Node)
+      ) {
+        setOpenRewriteOtions(false);
+      }
     };
 
     document.addEventListener("click", handleOutsideClick);
@@ -320,7 +334,7 @@ const Generate = () => {
       category,
       writer,
       content: highlightedText,
-      variation: 3,
+      variation: category === "rewrite" ? cardNumber : 1,
       type: currentType,
     })
       .then(() => {
@@ -422,7 +436,13 @@ const Generate = () => {
               )}
             </div>
 
-            <div className="write-option">
+            <div
+              className="write-option"
+              onClick={() => {
+                setOpenRewriteOtions(true);
+              }}
+              ref={reWriteRef}
+            >
               <svg
                 width="16"
                 height="16"
@@ -439,6 +459,13 @@ const Generate = () => {
               <div>Rewrite</div>
 
               <IoIosArrowDown className="text-base" />
+
+              {openRewriteOtions && (
+                <RewriteOption
+                  cardNumber={cardNumber}
+                  setCardNumber={setCardNumber}
+                />
+              )}
             </div>
 
             <div className="write-option">
