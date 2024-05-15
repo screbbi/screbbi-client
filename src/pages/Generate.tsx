@@ -20,6 +20,8 @@ import Prompt from "../components/Prompt";
 import RewriteOption from "../components/RewriteOption";
 import DescribeOptions from "../components/DescribeOptions";
 import StoryBible from "../components/StoryBible";
+import { useStore } from "zustand";
+import store from "../store/state";
 
 const types = [
   "Rephrase",
@@ -34,6 +36,8 @@ const Generate = () => {
   const { writer } = useParams();
   const optionRef: any = useRef();
   const reWriteRef: any = useRef();
+
+  const { story } = useStore(store);
 
   const [editorContent, setEditorContent] = useState<any>("");
   const [title, setTitle] = useState<any>("");
@@ -630,7 +634,7 @@ const Generate = () => {
 
               {/* STORY BIBLE */}
             </div>
-            <StoryBible />
+            {story && <StoryBible />}
           </div>
         </div>
 

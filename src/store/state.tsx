@@ -23,7 +23,7 @@ const store = create<storeType>((set) => ({
       });
   },
 
-  story: true,
+  story: false,
   setStory: (newStory) => {
     set(() => ({ story: newStory }));
   },

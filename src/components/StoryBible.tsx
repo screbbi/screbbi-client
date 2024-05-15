@@ -9,7 +9,7 @@ import { FaGlobeAmericas, FaPlus } from "react-icons/fa";
 import { BsPersonBoundingBox, BsMenuButtonWide } from "react-icons/bs";
 import { useState } from "react";
 import { nanoid } from "nanoid";
-import { FaEllipsis } from "react-icons/fa6";
+import SingleForm from "./SingleForm";
 
 const StoryBible = () => {
   const formTypes = [
@@ -265,71 +265,16 @@ const StoryBible = () => {
       </div>
 
       {/* FORMS */}
-      {forms?.map((form: any, idx: number) => (
-        <div key={idx} className="single-story">
-          <div className="flex justify-between">
-            <div>
-              <input
-                type="text"
-                className="text-lg bg-transparent outline-none"
-                placeholder="Name"
-                onChange={(e) => setFormName(form.id, e.target.value)}
-              />
-            </div>
-
-            <div className="flex items-center gap-2">
-              <LuHistory className="text-2xl" />
-              <select
-                name=""
-                id=""
-                className="border border-black rounded-md p-[2px]"
-                value={form.type}
-              >
-                {formTypes.map((type) => (
-                  <option value={type} className="capitalize">
-                    {type}
-                  </option>
-                ))}
-              </select>
-              <div className="relative">
-                <FaEllipsis />
-                <div className="absolute rounded-md top-full right-0 bg-white p-4 shadow-lg font-semibold text-red-500">
-                  Delete
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* <form action=""> */}
-          <div>
-            {form?.traits?.map((inp: any) => (
-              <div className="my-4 text-sm" key={inp.id}>
-                {/* <label className="capitalize">{inp.name}</label> */}
-                <input
-                  type="text"
-                  value={inp.name}
-                  className="outline-none"
-                  placeholder="Field name"
-                  onChange={(e) =>
-                    setFieldName(form.id, inp.id, e.target.value)
-                  }
-                />
-
-                <input
-                  type="text"
-                  value={inp.value}
-                  className="w-full border border-black rounded-md outline-none mt-2 p-2"
-                  onChange={(e) =>
-                    setFieldValue(form.id, inp.id, e.target.value)
-                  }
-                />
-              </div>
-            ))}
-          </div>
-
-          <button onClick={() => addTrait(form.id)}>+ Add Trait</button>
-          {/* </form> */}
-        </div>
+      {forms?.map((form: any) => (
+        <SingleForm
+          key={form.id}
+          form={form}
+          formTypes={formTypes}
+          setFieldName={setFieldName}
+          setFieldValue={setFieldValue}
+          addTrait={addTrait}
+          setFormName={setFormName}
+        />
       ))}
     </div>
   );
