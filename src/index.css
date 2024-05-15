@@ -256,3 +256,7 @@ body {
 .single-story-textarea {
   @apply h-32 resize-none rounded-lg outline-none w-full bg-gray-50 p-2 text-sm mt-2 border border-gray-200;
 }
+
+.single-add-form {
+  @apply flex items-center gap-2 border border-buttonPurple rounded-md text-sm p-[2px] text-buttonPurple font-semibold cursor-pointer;
+}

@@ -7,6 +7,8 @@ import { MdLogout } from "react-icons/md";
 import { delRequest, getRequest } from "../utils/request";
 import SectionLoader from "./SectionLoader";
 import { useNavigate, useParams } from "react-router-dom";
+import { useStore } from "zustand";
+import store from "../store/state";
 
 // import toast from "react-hot-toast";
 // import Settings from "./Settings";
@@ -28,6 +30,8 @@ const Sidebar = ({
   const navigate = useNavigate();
 
   const optionRef: any = useRef();
+
+  const { story, setStory } = useStore(store);
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
@@ -121,13 +125,14 @@ const Sidebar = ({
               className="checkbox-wrapper-6"
               onClick={(e) => {
                 e.stopPropagation();
+                setStory(!story);
               }}
             >
               <input
                 className="tgl tgl-light"
                 id="cb1-1"
                 type="checkbox"
-                // checked={descriptions.includes("sight")}
+                checked={story}
               />
               <label className="tgl-btn" />
             </div>

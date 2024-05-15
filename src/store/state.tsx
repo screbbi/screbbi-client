@@ -5,6 +5,8 @@ interface storeType {
   user: any;
   writings: any;
   getWriting: () => void;
+  story: boolean;
+  setStory: (e: boolean) => void;
   //   authorize: () => void;
 }
 
@@ -17,10 +19,15 @@ const store = create<storeType>((set) => ({
         set(() => ({ writings: data }));
       })
       .catch((err: any) => {
-        // toast.error(err.response.data);
         console.log(err.response.data);
       });
   },
+
+  story: true,
+  setStory: (newStory) => {
+    set(() => ({ story: newStory }));
+  },
+
   //   authorize: () => {
   //     getRequest("/auth/me").then(({ data }) => {
   //       if (data.websites.length < 1) {
