@@ -18,6 +18,8 @@ import WriteOptions from "../components/WriteOptions";
 import WriteSettings from "../components/WriteSettigs";
 import Prompt from "../components/Prompt";
 import RewriteOption from "../components/RewriteOption";
+import DescribeOptions from "../components/DescribeOptions";
+import StoryBible from "../components/StoryBible";
 
 const types = [
   "Rephrase",
@@ -58,6 +60,27 @@ const Generate = () => {
   });
   const [loadingToned, setLoadingToned] = useState(false);
   const [openRewriteOtions, setOpenRewriteOtions] = useState(false);
+  const [openDescribeOptions, setOpenDescribeOptions] = useState(false);
+  const [descriptions, setDescriptions] = useState([
+    "sight",
+    "smell",
+    "taste",
+    "sound",
+    "touch",
+  ]);
+
+  const setSenses = (sense: string) => {
+    if (descriptions.includes(sense)) {
+      setDescriptions((prevDes) => {
+        return prevDes.filter((desc) => desc !== sense);
+      });
+    } else {
+      setDescriptions((prevDes) => {
+        return [...prevDes, sense];
+      });
+    }
+  };
+
   const [cardNumber, setCardNumber] = useState(
     Number(localStorage.getItem("cardNumber")) ?? 1
   );
@@ -337,26 +360,73 @@ const Generate = () => {
 
     setLoading(true);
 
-    postRequest("/writer/ai-insight", {
-      category,
-      writer,
-      content: highlightedText,
-      variation: category === "rewrite" ? cardNumber : 1,
-      type: currentType,
-    })
-      .then(() => {
-        toast.success("Successful");
-        setLoading(false);
-        setRewriteText("");
-        setHighlightedText("");
-        setShowHighlightOptions(false);
-        getHistory();
+    if (category === "describe") {
+      postRequest("/writer/ai-insight", {
+        category,
+        writer,
+        content: highlightedText,
+        //  variation: category === "rewrite" ? cardNumber : 1,
+        descriptions,
       })
-      .catch((err) => {
-        setHighlightedText("");
-        setLoading(false);
-        console.log(err.response);
-      });
+        .then(() => {
+          toast.success("Successful");
+          setLoading(false);
+          setRewriteText("");
+          setHighlightedText("");
+          setShowHighlightOptions(false);
+          getHistory();
+        })
+        .catch((err) => {
+          setHighlightedText("");
+          setLoading(false);
+          console.log(err.response);
+        });
+    }
+
+    if (category == "rewrite") {
+      postRequest("/writer/ai-insight", {
+        category,
+        writer,
+        content: highlightedText,
+        variation: cardNumber,
+      })
+        .then(() => {
+          toast.success("Successful");
+          setLoading(false);
+          setRewriteText("");
+          setHighlightedText("");
+          setShowHighlightOptions(false);
+          getHistory();
+        })
+        .catch((err) => {
+          setHighlightedText("");
+          setLoading(false);
+          console.log(err.response);
+        });
+    }
+
+    if (category === "expand") {
+      postRequest("/writer/ai-insight", {
+        category,
+        writer,
+        content: highlightedText,
+        variation: cardNumber,
+        type: currentType,
+      })
+        .then(() => {
+          toast.success("Successful");
+          setLoading(false);
+          setRewriteText("");
+          setHighlightedText("");
+          setShowHighlightOptions(false);
+          getHistory();
+        })
+        .catch((err) => {
+          setHighlightedText("");
+          setLoading(false);
+          console.log(err.response);
+        });
+    }
   };
 
   const setRange = () => {
@@ -379,7 +449,7 @@ const Generate = () => {
 
   return (
     <PageLayout writings={writings} refresh={() => setRefresh(!refresh)}>
-      <div className="generate h-full">
+      <div className="generate h-full overflow-hidden">
         <div className="p-2">
           {/* WRITE OPTIONS */}
           <div className="flex gap-2 items-center mb-4">
@@ -475,7 +545,12 @@ const Generate = () => {
               )}
             </div>
 
-            {/* <div className="write-option">
+            <div
+              className="write-option"
+              onClick={() => {
+                setOpenDescribeOptions(!openDescribeOptions);
+              }}
+            >
               <svg
                 width="17"
                 height="17"
@@ -492,58 +567,70 @@ const Generate = () => {
               <div>Describe</div>
 
               <IoIosArrowDown className="text-base" />
-            </div> */}
+
+              {openDescribeOptions && (
+                <DescribeOptions
+                  descriptions={descriptions}
+                  setDesc={setSenses}
+                />
+              )}
+            </div>
           </div>
 
           {/* EDITOR */}
-          <div
-            className="editor h-full relative flex justify-center bg-white"
-            onMouseUp={checkSelection}
-          >
-            <SunEditor
-              setOptions={options}
-              setDefaultStyle="font-family: 'Manrope', sans-serif; background:'transparent'"
-              setContents={editorContent}
-              height="calc(100vh - 11rem)"
-              width="95%"
-              onInput={inputting}
-              onClick={() => {
-                setRange();
-              }}
-            />
+          <div className="overflow-y-scroll h-[80vh]">
+            <div
+              className="editor h-full relative flex justify-center bg-white"
+              onMouseUp={checkSelection}
+            >
+              <SunEditor
+                setOptions={options}
+                setDefaultStyle="font-family: 'Manrope', sans-serif; background:'transparent'"
+                setContents={editorContent}
+                height="calc(100vh - 11rem)"
+                width="95%"
+                onInput={inputting}
+                onClick={() => {
+                  setRange();
+                }}
+              />
 
-            {showHighlightOptions && (
-              <div className="popup pop" style={style}>
-                <div
-                  className="pop"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setRewriteText(highlightedText);
-                  }}
-                >
-                  <img src={aText} alt="" /> Rewrite
+              {showHighlightOptions && (
+                <div className="popup pop" style={style}>
+                  <div
+                    className="pop"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setRewriteText(highlightedText);
+                    }}
+                  >
+                    <img src={aText} alt="" /> Rewrite
+                  </div>
+                  <div
+                    className="pop"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      insights("describe");
+                    }}
+                  >
+                    <img src={dText} alt="" />
+                    Describe
+                  </div>
+                  <div
+                    className="pop"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      insights("expand");
+                    }}
+                  >
+                    <img src={expand} alt="" /> Expand
+                  </div>
                 </div>
-                <div
-                  className="pop"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    insights("describe");
-                  }}
-                >
-                  <img src={dText} alt="" />
-                  Describe
-                </div>
-                <div
-                  className="pop"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    insights("expand");
-                  }}
-                >
-                  <img src={expand} alt="" /> Expand
-                </div>
-              </div>
-            )}
+              )}
+
+              {/* STORY BIBLE */}
+            </div>
+            <StoryBible />
           </div>
         </div>
 

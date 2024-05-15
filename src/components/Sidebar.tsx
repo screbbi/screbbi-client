@@ -110,7 +110,34 @@ const Sidebar = ({
       </div>
 
       {/* TRASH AND PROFILE */}
-      <div className="grid gap-4">
+      <div className="grid">
+        <div className="border border-gray-700 p-2 rounded-xl mb-3">
+          <div className="single-desc">
+            <div className="flex gap-4 items-center">
+              <div>Story Bible</div>
+            </div>
+
+            <div
+              className="checkbox-wrapper-6"
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            >
+              <input
+                className="tgl tgl-light"
+                id="cb1-1"
+                type="checkbox"
+                // checked={descriptions.includes("sight")}
+              />
+              <label className="tgl-btn" />
+            </div>
+          </div>
+
+          <div className="text-xs mt-2">
+            Get better results by telling the AI about your Characters, Genre,
+            etc. Powered by Story Engine.
+          </div>
+        </div>
         <div className="relative" ref={optionRef}>
           <button
             className="flex gap-2 p-2 hover:bg-darkBlue rounded-md w-full"
