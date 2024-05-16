@@ -68,13 +68,17 @@ const Dropdown = ({
           )}
         </div>
 
-        <button
-          className={`purple-button ${loading ? "opacity-30" : "opacity-100"}`}
-          onClick={click}
-          disabled={loading}
-        >
-          Go !
-        </button>
+        {click && (
+          <button
+            className={`purple-button ${
+              loading ? "opacity-30" : "opacity-100"
+            }`}
+            onClick={click}
+            disabled={loading}
+          >
+            Go !
+          </button>
+        )}
       </div>
     </div>
   );

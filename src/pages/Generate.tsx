@@ -335,6 +335,7 @@ const Generate = () => {
       .then(({ data }: { data: any }) => {
         const reversed = data.reverse();
         setHistory(reversed);
+        console.log(data);
       })
       .catch((err) => {
         console.log(err.response.data);

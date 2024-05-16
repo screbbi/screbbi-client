@@ -9,11 +9,11 @@ import SectionLoader from "./SectionLoader";
 import { useNavigate, useParams } from "react-router-dom";
 import { useStore } from "zustand";
 import store from "../store/state";
+import Settings from "./Settings";
+import { IoSettingsOutline } from "react-icons/io5";
 
 // import toast from "react-hot-toast";
-// import Settings from "./Settings";
 // import { useNavigate } from "react-router-dom";
-// import { IoSettingsOutline } from "react-icons/io5";
 
 const Sidebar = ({
   writings,
@@ -26,6 +26,7 @@ const Sidebar = ({
   setOpen: () => void;
 }) => {
   const [showOption, setShowOption] = useState(false);
+  const [openSettings, setOpenSettings] = useState(true);
   const { writer } = useParams();
   const navigate = useNavigate();
 
@@ -143,6 +144,7 @@ const Sidebar = ({
             etc. Powered by Story Engine.
           </div>
         </div>
+
         <div className="relative" ref={optionRef}>
           <button
             className="flex gap-2 p-2 hover:bg-darkBlue rounded-md w-full"
@@ -163,8 +165,13 @@ const Sidebar = ({
               >
                 <MdLogout /> <div>Log out</div>
               </button>
+
+              <div className="flex items-center gap-2 text-black font-semibold py-1 my-1">
+                <IoSettingsOutline /> <div>Settings</div>
+              </div>
             </div>
           )}
+          {openSettings && <Settings close={() => setOpenSettings(false)} />}
         </div>
       </div>
     </div>
