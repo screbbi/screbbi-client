@@ -387,37 +387,12 @@ const Generate = () => {
           setLoading(false);
           console.log(err.response);
         });
-    }
-
-    if (category == "rewrite") {
+    } else {
       postRequest("/writer/ai-insight", {
         category,
         writer,
         content: highlightedText,
         variation: 3,
-        type: currentType,
-      })
-        .then(() => {
-          toast.success("Successful");
-          setLoading(false);
-          setRewriteText("");
-          setHighlightedText("");
-          setShowHighlightOptions(false);
-          getHistory();
-        })
-        .catch((err) => {
-          setHighlightedText("");
-          setLoading(false);
-          console.log(err.response);
-        });
-    }
-
-    if (category === "expand") {
-      postRequest("/writer/ai-insight", {
-        category,
-        writer,
-        content: highlightedText,
-        variation: cardNumber,
         type: currentType,
       })
         .then(() => {
