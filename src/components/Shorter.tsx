@@ -4,6 +4,11 @@ import { BiLike, BiDislike } from "react-icons/bi";
 import { CiStar } from "react-icons/ci";
 import toast from "react-hot-toast";
 import { useState } from "react";
+import sight from "../assets/img/sight.svg";
+import sound from "../assets/img/sound.svg";
+import taste from "../assets/img/taste.svg";
+import smell from "../assets/img/smell.svg";
+import touch from "../assets/img/touch.svg";
 
 function copyToClipboard(text: string) {
   const textarea = document.createElement("textarea");
@@ -14,6 +19,20 @@ function copyToClipboard(text: string) {
   document.body.removeChild(textarea);
   toast.success("Copied");
 }
+
+const chooseImage = (description: string) => {
+  if (description === "sight") {
+    return <img src={sight} alt="" />;
+  } else if (description === "smell") {
+    return <img src={smell} alt="" />;
+  } else if (description === "taste") {
+    return <img src={taste} alt="" />;
+  } else if (description === "touch") {
+    return <img src={touch} alt="" />;
+  } else if (description === "sound") {
+    return <img src={sound} alt="" />;
+  }
+};
 
 const Shorter = ({
   item,
@@ -72,14 +91,22 @@ const Shorter = ({
         <div>
           {item.suggestions?.result?.map((result: any) => (
             <div key={result.id} className="p-2 shadow-md my-2 rounded-md">
-              <div className="grey-text mt-2">{result.suggestion.slice(2)}</div>
+              {result?.suggestion?.description && (
+                <div className="flex items-center gap-2 grey-text text-sm font-semibold capitalize">
+                  {chooseImage(result?.suggestion?.description)}
+                  <div>{result?.suggestion?.description}</div>
+                </div>
+              )}
+              <div className="grey-text mt-2">
+                {result?.suggestion?.text ?? result.suggestion}
+              </div>
 
               <div className="flex items-center divide-x-2 mt-2">
                 <div className="flex gap-2 items-center pr-2">
                   <button
                     className="purple-button"
                     onClick={() => {
-                      insert(result?.suggestion.slice(2));
+                      insert(result?.suggestion?.text ?? result?.suggestion);
                     }}
                   >
                     <IoMdLink className="text-lg" />
@@ -89,7 +116,9 @@ const Shorter = ({
                   <button
                     className="purple-button"
                     onClick={() => {
-                      copyToClipboard(result?.suggestion?.slice(2));
+                      copyToClipboard(
+                        result?.suggestion?.text ?? result?.suggestion
+                      );
                     }}
                   >
                     <MdContentCopy className="text-lg" />

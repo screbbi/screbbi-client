@@ -370,7 +370,8 @@ const Generate = () => {
         category,
         writer,
         content: highlightedText,
-        //  variation: category === "rewrite" ? cardNumber : 1,
+        variation: 3,
+        type: currentType,
         descriptions,
       })
         .then(() => {
@@ -393,7 +394,8 @@ const Generate = () => {
         category,
         writer,
         content: highlightedText,
-        variation: cardNumber,
+        variation: 3,
+        type: currentType,
       })
         .then(() => {
           toast.success("Successful");

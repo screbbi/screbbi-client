@@ -26,7 +26,7 @@ const Sidebar = ({
   setOpen: () => void;
 }) => {
   const [showOption, setShowOption] = useState(false);
-  const [openSettings, setOpenSettings] = useState(true);
+  const [openSettings, setOpenSettings] = useState(false);
   const { writer } = useParams();
   const navigate = useNavigate();
 
@@ -74,15 +74,15 @@ const Sidebar = ({
       });
   };
 
-  const getProfile = () => {
-    getRequest("/profile").then((data) => {
-      console.log(data);
-    });
-  };
+  // const getProfile = () => {
+  //   getRequest("/profile").then((data) => {
+  //     console.log(data);
+  //   });
+  // };
 
-  useEffect(() => {
-    getProfile();
-  }, []);
+  // useEffect(() => {
+  //   getProfile();
+  // }, []);
 
   return (
     <div className={`sidebar ${open ? "left-0" : "-left-[20rem]"}`}>
