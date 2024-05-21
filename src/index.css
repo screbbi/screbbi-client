@@ -266,3 +266,6 @@ body {
 .spacing.active {
   @apply border-buttonPurple;
 }
+.small-modal {
+  @apply fixed max-w-lg w-full h-fit top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white z-40 rounded-md p-8;
+}

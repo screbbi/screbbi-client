@@ -10,6 +10,10 @@ import { BsPersonBoundingBox, BsMenuButtonWide } from "react-icons/bs";
 import { useState } from "react";
 import { nanoid } from "nanoid";
 import SingleForm from "./SingleForm";
+import { postRequest } from "../utils/request";
+import toast from "react-hot-toast";
+import { copyToClipboard } from "../utils/functions";
+import Writing from "./Writing";
 
 const StoryBible = () => {
   const formTypes = [
@@ -29,6 +33,13 @@ const StoryBible = () => {
   ];
 
   const [forms, setForms] = useState<any>([]);
+  const [braindump, setBraindump] = useState("");
+  const [genre, setGenre] = useState("");
+  const [sunopsis, setSunopsis] = useState("");
+  const [generatingSynopsis, setGeneratingSynopsis] = useState(false);
+  const [generatingMatchStyle, setGeneratingMatchStyle] = useState(false);
+  const [matchStyle, setMatchStyle] = useState("");
+  const [openWriting, setOpenWriting] = useState(false);
 
   const addForms = (type: string) => {
     setForms((prevForm: any) => {
@@ -92,6 +103,45 @@ const StoryBible = () => {
     });
   };
 
+  const generateSynopsis = () => {
+    if (braindump.trim() === "") {
+      alert("Braindump cannot be empty");
+      return;
+    } else if (genre.trim() === "") {
+      alert("Genre cannot be empty");
+      return;
+    }
+
+    setGeneratingSynopsis(true);
+    postRequest("/story/synopsis-generate", { genre, braindump })
+      .then(({ data }) => {
+        setSunopsis(data);
+        setGeneratingSynopsis(false);
+      })
+      .catch(() => {
+        setGeneratingSynopsis(false);
+        toast.error("Error generating synopsis");
+      });
+  };
+
+  const generateMatchStyle = (writing: string) => {
+    if (writing.trim() === "") {
+      alert("Writing cannot be empty");
+      return;
+    }
+
+    setGeneratingMatchStyle(true);
+    postRequest("/story/style-generate", { writing })
+      .then(({ data }) => {
+        setMatchStyle(data);
+        setGeneratingMatchStyle(false);
+      })
+      .catch(() => {
+        setGeneratingMatchStyle(false);
+        toast.error("Error generating match style");
+      });
+  };
+
   return (
     <div className="w-full mt-4">
       <div className="single-story">
@@ -111,6 +161,8 @@ const StoryBible = () => {
         <textarea
           className="single-story-textarea"
           placeholder="Write a braindump of everything you know about the story. You can include information about plot, characters, worldbuilding, theme - anything!"
+          value={braindump}
+          onChange={(e) => setBraindump(e.target.value)}
         ></textarea>
       </div>
 
@@ -130,6 +182,8 @@ const StoryBible = () => {
         <textarea
           className="single-story-textarea"
           placeholder="What genre are you writing in? Feel free to include sub-genres and tropes. Examples: Romance, Horror, Fantasy, Cozy mystery, Friends-to-Lovers, Gumshoe"
+          value={genre}
+          onChange={(e) => setGenre(e.target.value)}
         ></textarea>
       </div>
 
@@ -141,9 +195,12 @@ const StoryBible = () => {
           </div>
 
           <div className="flex items-center gap-4 text-nowrap">
-            <div className="text-sm font-semibold">0/40 words</div>
+            {/* <div className="text-sm font-semibold">0/40 words</div> */}
             <FaRegCopy />
-            <button className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4">
+            <button
+              className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4"
+              onClick={() => setOpenWriting(true)}
+            >
               <BsStars />
               Match my style
             </button>
@@ -153,6 +210,8 @@ const StoryBible = () => {
         <textarea
           className="single-story-textarea"
           placeholder="Write the style of prose you want Story Bible to write. e.g. short sentences, lots of dialogue, show don’t tell"
+          value={matchStyle}
+          onChange={(e) => setMatchStyle(e.target.value)}
         ></textarea>
       </div>
 
@@ -164,11 +223,16 @@ const StoryBible = () => {
           </div>
 
           <div className="flex items-center gap-4 text-nowrap">
-            <div className="text-sm font-semibold">0/800 words</div>
-            <FaRegCopy />
-            <button className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4">
+            {/* <div className="text-sm font-semibold">0/800 words</div> */}
+            <FaRegCopy onClick={() => copyToClipboard(sunopsis)} />
+            <button
+              className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4"
+              type="button"
+              onClick={generateSynopsis}
+              disabled={generatingSynopsis}
+            >
               <BsStars />
-              Generate Synopsis
+              {generatingSynopsis ? "Generating..." : "Generate Synopsis"}
             </button>
           </div>
         </div>
@@ -176,6 +240,8 @@ const StoryBible = () => {
         <textarea
           className="single-story-textarea"
           placeholder="Introduce the characters, their goals, and the central conflict, while conveying the story's tone, themes, and unique elements."
+          onChange={(e) => setSunopsis(e.target.value)}
+          value={sunopsis}
         ></textarea>
       </div>
 
@@ -276,6 +342,14 @@ const StoryBible = () => {
           setFormName={setFormName}
         />
       ))}
+
+      {openWriting && (
+        <Writing
+          generate={generateMatchStyle}
+          loading={generatingMatchStyle}
+          close={() => setOpenWriting(false)}
+        />
+      )}
     </div>
   );
 };
