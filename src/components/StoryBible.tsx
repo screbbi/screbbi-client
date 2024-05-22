@@ -40,7 +40,7 @@ const StoryBible = () => {
   const [forms, setForms] = useState<any>([]);
   const [braindump, setBraindump] = useState("");
   const [genre, setGenre] = useState("");
-  const [sunopsis, setSunopsis] = useState("");
+  const [synopsis, setSynopsis] = useState("");
   const [generatingSynopsis, setGeneratingSynopsis] = useState(false);
   const [generatingMatchStyle, setGeneratingMatchStyle] = useState(false);
   const [matchStyle, setMatchStyle] = useState<any>("");
@@ -50,6 +50,10 @@ const StoryBible = () => {
   const [rawText, setRawText] = useState("");
   const [compressedText, setCompressedText] = useState("");
   const [openInsertModal, setOpenInsertModal] = useState(false);
+  const [characters, setCharacters] = useState("");
+  const [generatingCharacters, setGeneratingCharacters] = useState(false);
+  const [outline, setOutline] = useState("");
+  const [generatingOutline, setGeneratingOutline] = useState(false);
 
   const addForms = (type: string) => {
     setForms((prevForm: any) => {
@@ -125,7 +129,7 @@ const StoryBible = () => {
     setGeneratingSynopsis(true);
     postRequest("/story/synopsis-generate", { genre, braindump })
       .then(({ data }) => {
-        setSunopsis(data);
+        setSynopsis(data);
         setGeneratingSynopsis(false);
       })
       .catch(() => {
@@ -171,6 +175,58 @@ const StoryBible = () => {
       .catch(() => {
         setCompressing(false);
         toast.error("Error generating match style");
+      });
+  };
+
+  const generateOutline = () => {
+    if (synopsis.trim() === "") {
+      alert("Synopsis cannot be empty");
+      return;
+    } else if (genre.trim() === "") {
+      alert("Genre cannot be empty");
+      return;
+    }
+
+    setGeneratingOutline(true);
+    postRequest("/story/outline-generate", {
+      writer,
+      synopsis,
+      genre,
+      characters,
+    })
+      .then(({ data }) => {
+        setOutline(data.replaceAll("**", `''`));
+        setGeneratingOutline(false);
+      })
+      .catch(() => {
+        setGeneratingOutline(false);
+        toast.error("Error generating outline");
+      });
+  };
+
+  const generateCharacters = () => {
+    if (synopsis.trim() === "") {
+      alert("Synopsis cannot be empty");
+      return;
+    } else if (braindump.trim() === "") {
+      alert("Braindump cannot be empty");
+      return;
+    }
+
+    setGeneratingCharacters(true);
+    postRequest("/story/characters-generate", {
+      writer,
+      synopsis,
+      braindump,
+    })
+      .then(({ data }) => {
+        // setCompressedText(data.replaceAll("**", `''`));
+        setGeneratingCharacters(false);
+        setCharacters(data);
+      })
+      .catch(() => {
+        setGeneratingCharacters(false);
+        toast.error("Error generating outline");
       });
   };
 
@@ -263,7 +319,7 @@ const StoryBible = () => {
 
           <div className="flex items-center gap-4 text-nowrap">
             {/* <div className="text-sm font-semibold">0/800 words</div> */}
-            <FaRegCopy onClick={() => copyToClipboard(sunopsis)} />
+            <FaRegCopy onClick={() => copyToClipboard(synopsis)} />
             <button
               className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4"
               type="button"
@@ -279,8 +335,8 @@ const StoryBible = () => {
         <textarea
           className="single-story-textarea"
           placeholder="Introduce the characters, their goals, and the central conflict, while conveying the story's tone, themes, and unique elements."
-          onChange={(e) => setSunopsis(e.target.value)}
-          value={sunopsis}
+          onChange={(e) => setSynopsis(e.target.value)}
+          value={synopsis}
         ></textarea>
       </div>
 
@@ -292,9 +348,13 @@ const StoryBible = () => {
           </div>
 
           <div className="flex items-center gap-4 text-nowrap">
-            <div className="text-sm font-semibold">0/700 words</div>
+            {/* <div className="text-sm font-semibold">0/700 words</div> */}
             <FaRegCopy />
-            <button className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4">
+            <button
+              className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4"
+              onClick={generateCharacters}
+              disabled={generatingCharacters}
+            >
               <BsStars />
               Generate Characters
             </button>
@@ -304,6 +364,8 @@ const StoryBible = () => {
         <textarea
           className="single-story-textarea"
           placeholder="Describe everything the AI should know about your characters when writing them in scenes. Consider physical appearance, mannerisms, how they relate to other characters, and their motivations / goals."
+          value={characters}
+          onChange={(e) => setCharacters(e.target.value)}
         ></textarea>
       </div>
 
@@ -315,9 +377,13 @@ const StoryBible = () => {
           </div>
 
           <div className="flex items-center gap-4 text-nowrap">
-            <div className="text-sm font-semibold">0/1700 words</div>
+            {/* <div className="text-sm font-semibold">0/1700 words</div> */}
             <FaRegCopy />
-            <button className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4">
+            <button
+              className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4"
+              onClick={generateOutline}
+              disabled={generatingOutline}
+            >
               <BsStars />
               Generate Outline
             </button>
@@ -327,6 +393,8 @@ const StoryBible = () => {
         <textarea
           className="single-story-textarea"
           placeholder="Describe everything the AI should know about your characters when writing them in scenes. Consider physical appearance, mannerisms, how they relate to other characters, and their motivations / goals."
+          value={outline}
+          onChange={(e) => setOutline(e.target.value)}
         ></textarea>
       </div>
 
