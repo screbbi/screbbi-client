@@ -127,7 +127,7 @@ const StoryBible = () => {
     }
 
     setGeneratingSynopsis(true);
-    postRequest("/story/synopsis-generate", { genre, braindump })
+    postRequest("/story/synopsis-generate", { genre, braindump, writer })
       .then(({ data }) => {
         setSynopsis(data);
         setGeneratingSynopsis(false);
@@ -220,13 +220,18 @@ const StoryBible = () => {
       braindump,
     })
       .then(({ data }) => {
-        // setCompressedText(data.replaceAll("**", `''`));
+        let characterString = "";
+
+        data.forEach((item: any) => {
+          characterString += `${item.name}\n Personality: ${item.personality} \n Background: ${item.background} \n\n`;
+        });
+
         setGeneratingCharacters(false);
-        setCharacters(data);
+        setCharacters(characterString);
       })
       .catch(() => {
         setGeneratingCharacters(false);
-        toast.error("Error generating outline");
+        toast.error("Error generating characters");
       });
   };
 
