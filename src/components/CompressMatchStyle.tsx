@@ -1,16 +1,18 @@
 import { useState } from "react";
 import { FaTimes } from "react-icons/fa";
 
-const Writing = ({
-  generate,
+const CompressMatchStyle = ({
+  compress,
   loading,
   close,
+  rawWriting,
 }: {
-  generate: (e: string) => void;
+  compress: (e: string) => void;
   close: () => void;
   loading: boolean;
+  rawWriting: string;
 }) => {
-  const [writing, setWriting] = useState("");
+  const [writing, setWriting] = useState(rawWriting);
 
   return (
     <div>
@@ -20,22 +22,19 @@ const Writing = ({
       ></div>
       <div className="small-modal">
         <div className="flex justify-between items-center">
-          <div className="font-semibold text-sm">Step 1:</div>
-          <FaTimes
-            className="cursor-pointer"
-            onClick={() => {
-              console.log("work");
-              close();
-            }}
-          />
+          <div className="font-semibold text-sm">Step 2:</div>
+          <FaTimes className="cursor-pointer" onClick={close} />
         </div>
-        <div className="text-xl font-semibold mb-4">
-          Paste in your writing sample
+        <div className="text-xl font-semibold mb-4">Correct & Improve</div>
+
+        <div>
+          Clean up anything the AI got wrong about your style, or that you don't
+          think is needed. This will be condensed in the final style.
         </div>
 
         <textarea
-          value={writing}
           className="w-full h-32 border-2 border-selectText outline-0 resize-none rounded-md p-2 text-xs"
+          value={writing}
           onChange={(e) => setWriting(e.target.value)}
         ></textarea>
 
@@ -52,10 +51,10 @@ const Writing = ({
             className={`bg-buttonPurple text-white w-full p-2 rounded-md mt-4 ${
               loading && "opacity-50"
             }`}
-            onClick={() => generate(writing)}
+            onClick={() => compress(writing)}
             disabled={writing.trim().length === 0 || loading}
           >
-            Generate
+            Compress
           </button>
         </div>
       </div>
@@ -63,4 +62,4 @@ const Writing = ({
   );
 };
 
-export default Writing;
+export default CompressMatchStyle;

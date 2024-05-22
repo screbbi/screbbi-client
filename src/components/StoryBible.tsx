@@ -14,8 +14,13 @@ import { postRequest } from "../utils/request";
 import toast from "react-hot-toast";
 import { copyToClipboard } from "../utils/functions";
 import Writing from "./Writing";
+import { useParams } from "react-router-dom";
+import CompressMatchStyle from "./CompressMatchStyle";
+import Compressed from "./Compressed";
 
 const StoryBible = () => {
+  const { writer } = useParams();
+
   const formTypes = [
     "settings",
     "organizations",
@@ -38,8 +43,13 @@ const StoryBible = () => {
   const [sunopsis, setSunopsis] = useState("");
   const [generatingSynopsis, setGeneratingSynopsis] = useState(false);
   const [generatingMatchStyle, setGeneratingMatchStyle] = useState(false);
-  const [matchStyle, setMatchStyle] = useState("");
+  const [matchStyle, setMatchStyle] = useState<any>("");
   const [openWriting, setOpenWriting] = useState(false);
+  const [openCompressWriting, setOpenCompressWriting] = useState(false);
+  const [compressing, setCompressing] = useState(false);
+  const [rawText, setRawText] = useState("");
+  const [compressedText, setCompressedText] = useState("");
+  const [openInsertModal, setOpenInsertModal] = useState(false);
 
   const addForms = (type: string) => {
     setForms((prevForm: any) => {
@@ -131,13 +141,35 @@ const StoryBible = () => {
     }
 
     setGeneratingMatchStyle(true);
-    postRequest("/story/style-generate", { writing })
+    postRequest("/story/style-generate", { writing, writer })
       .then(({ data }) => {
-        setMatchStyle(data);
+        setRawText(data.replaceAll("**", "''"));
         setGeneratingMatchStyle(false);
+        setOpenWriting(false);
+        setOpenCompressWriting(true);
       })
       .catch(() => {
         setGeneratingMatchStyle(false);
+        toast.error("Error generating match style");
+      });
+  };
+
+  const generateCompressStyle = (style: string) => {
+    if (style.trim() === "") {
+      alert("Style cannot be empty");
+      return;
+    }
+
+    setCompressing(true);
+    postRequest("/story/style-compress", { style, writer })
+      .then(({ data }) => {
+        setCompressedText(data.replaceAll("**", `''`));
+        setCompressing(false);
+        setOpenCompressWriting(false);
+        setOpenInsertModal(true);
+      })
+      .catch(() => {
+        setCompressing(false);
         toast.error("Error generating match style");
       });
   };
@@ -196,7 +228,14 @@ const StoryBible = () => {
 
           <div className="flex items-center gap-4 text-nowrap">
             {/* <div className="text-sm font-semibold">0/40 words</div> */}
-            <FaRegCopy />
+            <FaRegCopy
+              className="cursor-pointer"
+              onClick={() =>
+                copyToClipboard(
+                  matchStyle.replaceAll("\n", "<br>").replaceAll("**", '"')
+                )
+              }
+            />
             <button
               className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4"
               onClick={() => setOpenWriting(true)}
@@ -348,6 +387,23 @@ const StoryBible = () => {
           generate={generateMatchStyle}
           loading={generatingMatchStyle}
           close={() => setOpenWriting(false)}
+        />
+      )}
+
+      {openCompressWriting && (
+        <CompressMatchStyle
+          compress={generateCompressStyle}
+          loading={compressing}
+          close={() => setOpenCompressWriting(false)}
+          rawWriting={rawText}
+        />
+      )}
+
+      {openInsertModal && (
+        <Compressed
+          insert={setMatchStyle}
+          close={() => setOpenInsertModal(false)}
+          compressRaw={compressedText}
         />
       )}
     </div>
