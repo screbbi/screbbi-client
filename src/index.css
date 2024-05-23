@@ -38,7 +38,7 @@ body {
 }
 .page-layout {
   @apply grid grid-cols-1 lg:grid-cols-pageLayout relative;
-  height: calc(100vh - 4.4rem);
+  height: calc(100vh - 5rem);
 }
 .sidebar {
   @apply grid h-full bg-whatNewText text-lightButton p-4 w-[15rem] lg:w-full absolute lg:static top-0 duration-300 z-30;
@@ -46,8 +46,9 @@ body {
 }
 
 .generate {
-  @apply grid h-full;
+  @apply grid;
   grid-template-columns: 1fr 20rem;
+  height: calc(100vh - 3rem);
 }
 .grey-text {
   @apply text-grey font-semibold text-xs;
