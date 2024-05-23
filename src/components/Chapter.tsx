@@ -12,8 +12,10 @@ const Chapter = ({
   generateProse,
   loadingBeats,
   loadingChapter,
+  close,
 }: {
   generate: () => void;
+  close: () => void;
   setBeats: (e: string) => void;
   beats: string;
   generateProse: () => void;
@@ -29,7 +31,7 @@ const Chapter = ({
           <img src={chapter} alt="" />
           <div className="text-lg">Chapter Generator</div>
         </div>
-        <button>
+        <button onClick={close}>
           <FaTimes />
         </button>
       </div>

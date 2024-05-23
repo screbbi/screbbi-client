@@ -42,7 +42,7 @@ body {
 }
 .sidebar {
   @apply grid h-full bg-whatNewText text-lightButton p-4 w-[15rem] lg:w-full absolute lg:static top-0 duration-300 z-30;
-  grid-template-rows: 3rem 1fr 10rem;
+  grid-template-rows: 6rem 1fr 10rem;
 }
 
 .generate {
@@ -275,4 +275,7 @@ body {
 }
 .single-writing {
   @apply shadow-lg p-4 rounded-lg bg-white;
+}
+.character-input {
+  @apply w-full border border-gray-300 rounded-md outline-none mt-2 p-2;
 }

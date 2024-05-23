@@ -81,7 +81,7 @@ const Generate = () => {
   const [genre, setGenre] = useState("");
   const [synopsis, setSynopsis] = useState("");
   const [outline, setOutline] = useState("");
-  const [characters, setCharacters] = useState("");
+  const [characters, setCharacters] = useState<any[]>([]);
   const [matchStyle, setMatchStyle] = useState("");
   const [beats, setBeats] = useState("");
   const [prose, setProse] = useState("");
@@ -288,6 +288,11 @@ const Generate = () => {
         const doc: any = parser.parseFromString(decoded, "text/xml");
 
         setTitle(doc.firstChild?.querySelector("p").textContent);
+
+        if (currentContent?.linkedChapter) {
+          setOpenChapter(true);
+          setBeats(currentContent?.linkedChapter?.content);
+        }
       })
       .catch((err: any) => {
         toast.error(err?.response?.data);
@@ -342,12 +347,14 @@ const Generate = () => {
   }, []);
 
   const getHistory = () => {
+    if (!writer) {
+      return;
+    }
     setHistory(null);
     getRequest(`/writer/history/${writer}`)
       .then(({ data }: { data: any }) => {
         const reversed = data.reverse();
         setHistory(reversed);
-        console.log(data);
       })
       .catch(() => {
         toast.error("Error getting history");
@@ -514,12 +521,7 @@ const Generate = () => {
     }
 
     setGeneratingChapters(true);
-    postRequest("/chapter/prose-generate", {
-      style: matchStyle,
-      beats,
-      genre,
-      characters,
-    })
+    getRequest(`/chapter/prose-generate/${project}`)
       .then(({ data }) => {
         setGeneratingChapters(false);
         setProse(data.replace(/\*/g, ""));
@@ -543,7 +545,7 @@ const Generate = () => {
       setMatchStyle(story?.style?.replace(/\*/g, "") ?? "");
       setOutline(story?.outline?.replace(/\*/g, "") ?? "");
       setBraindump(story?.braindump?.replace(/\*/g, "") ?? "");
-      setCharacters(story?.characters?.replace(/\*/g, "") ?? "");
+      setCharacters(story?.characters?.replace(/\*/g, "") ?? []);
     }
   }, []);
 
@@ -688,6 +690,7 @@ const Generate = () => {
                 </button>
                 {openChapter && (
                   <Chapter
+                    close={() => setOpenChapter(false)}
                     generate={generateChapter}
                     beats={beats}
                     setBeats={setBeats}

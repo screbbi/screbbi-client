@@ -10,20 +10,26 @@ import { BsPersonBoundingBox, BsMenuButtonWide } from "react-icons/bs";
 import { useState } from "react";
 import { nanoid } from "nanoid";
 import SingleForm from "./SingleForm";
-import { postRequest, putRequest } from "../utils/request";
+import {
+  delRequest,
+  getRequest,
+  postRequest,
+  putRequest,
+} from "../utils/request";
 import toast from "react-hot-toast";
 import { copyToClipboard } from "../utils/functions";
 import Writing from "./Writing";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import CompressMatchStyle from "./CompressMatchStyle";
 import Compressed from "./Compressed";
+import SingleCharacter from "./SingleCharacter";
 
 const StoryBible = ({
   genre,
   braindump,
   synopsis,
   matchStyle,
-  characters,
+  characters = [],
   outline,
   setOutline,
   setCharacters,
@@ -36,18 +42,18 @@ const StoryBible = ({
   braindump: string;
   genre: string;
   matchStyle: any;
-  characters: string;
+  characters: any[];
   outline: string;
 
   setGenre: (e: string) => void;
   setBraindump: (e: string) => void;
   setSynopsis: (e: string) => void;
   setMatchStyle: (e: string) => void;
-  setCharacters: (e: string) => void;
+  setCharacters: (e: any) => void;
   setOutline: (e: string) => void;
 }) => {
   const { project } = useParams();
-
+  const navigate = useNavigate();
   const formTypes = [
     "settings",
     "organizations",
@@ -64,6 +70,41 @@ const StoryBible = ({
     "custom",
   ];
 
+  const chars: any[] = [
+    {
+      name: "Jasper",
+      pronouns: "He/Him",
+      other_names: "None",
+      personality:
+        "Jasper is an old monkey who is set in his ways. He is selfish and only thinks about himself. He is not a very good father and often forgets to feed his children.",
+      background:
+        "Jasper has lived in the animal kingdom for many years. He has seen many things and has become jaded. He has lost his sense of compassion and only cares about his own needs.",
+      dialogue_style:
+        "Jasper speaks in a gruff voice. He is not very articulate and often uses slang. He is not afraid to speak his mind, even if it is hurtful.",
+    },
+    {
+      name: "Willow",
+      pronouns: "She/Her",
+      other_names: "None",
+      personality:
+        "Willow is an old monkey who is kind and caring. She is always looking out for others and is always willing to help. She is a great mother and always puts her children first.",
+      background:
+        "Willow has lived in the animal kingdom for many years. She has seen many things and has never lost her sense of compassion. She believes that everyone deserves a chance to be happy.",
+      dialogue_style:
+        "Willow speaks in a soft voice. She is very articulate and always chooses her words carefully. She is not afraid to stand up for what she believes in, even if it is unpopular.",
+    },
+    {
+      name: "Oliver",
+      pronouns: "He/Him",
+      other_names: "None",
+      personality:
+        "Oliver is a young monkey who is full of life. He is always looking for adventure and is always up for a challenge. He is a loyal friend and is always there for the people he cares about.",
+      background:
+        "Oliver is new to the animal kingdom. He has not seen much of the world, but he is eager to learn. He is always asking questions and is always trying to make new friends.",
+      dialogue_style:
+        "Oliver speaks in a clear voice. He is very articulate and always knows what to say. He is not afraid to speak his mind, even if it is different from the others.",
+    },
+  ];
   const [forms, setForms] = useState<any>([]);
   const [generatingSynopsis, setGeneratingSynopsis] = useState(false);
   const [generatingMatchStyle, setGeneratingMatchStyle] = useState(false);
@@ -75,6 +116,22 @@ const StoryBible = ({
   const [openInsertModal, setOpenInsertModal] = useState(false);
   const [generatingCharacters, setGeneratingCharacters] = useState(false);
   const [generatingOutline, setGeneratingOutline] = useState(false);
+  const [demoChar, setDemoChar] = useState(chars);
+  const [chapters, setChapters] = useState<any[]>([]);
+  const [currentChapter, setCurrentChapter] = useState("");
+  const [addingChapter, setAddingChapter] = useState(false);
+
+  const editChars = (key: string, value: string, index: number) => {
+    const newChar = demoChar.map((char: any, idx: number) => {
+      if (idx === index) {
+        return { ...char, [key]: value };
+      } else {
+        return char;
+      }
+    });
+
+    setDemoChar(newChar);
+  };
 
   const saveLocal = (field: string, value: string) => {
     const projects: any = localStorage.getItem("projects");
@@ -156,20 +213,16 @@ const StoryBible = ({
   };
 
   const generateSynopsis = () => {
-    if (braindump.trim() === "") {
-      alert("Braindump cannot be empty");
-      return;
-    } else if (genre.trim() === "") {
-      alert("Genre cannot be empty");
-      return;
-    }
+    // if (braindump.trim() === "") {
+    //   alert("Braindump cannot be empty");
+    //   return;
+    // } else if (genre.trim() === "") {
+    //   alert("Genre cannot be empty");
+    //   return;
+    // }
 
     setGeneratingSynopsis(true);
-    postRequest("/story/synopsis-generate", {
-      genre,
-      braindump,
-      projectID: project,
-    })
+    getRequest(`/story/synopsis-generate/${project}`)
       .then(({ data }) => {
         setSynopsis(data);
         setGeneratingSynopsis(false);
@@ -223,23 +276,19 @@ const StoryBible = ({
   };
 
   const generateOutline = () => {
-    if (synopsis.trim() === "") {
-      alert("Synopsis cannot be empty");
-      return;
-    } else if (genre.trim() === "") {
-      alert("Genre cannot be empty");
-      return;
-    }
+    // if (synopsis.trim() === "") {
+    //   alert("Synopsis cannot be empty");
+    //   return;
+    // } else if (genre.trim() === "") {
+    //   alert("Genre cannot be empty");
+    //   return;
+    // }
 
     setGeneratingOutline(true);
-    postRequest("/story/outline-generate", {
-      projectID: project,
-      synopsis,
-      genre,
-      characters,
-    })
+    getRequest(`/story/outline-generate/${project}`)
       .then(({ data }) => {
         setOutline(data.replace(/\*/g, ""));
+        setChapters(data.chapters);
         saveLocal("outline", data?.outline?.replace(/\*/g, ""));
         setGeneratingOutline(false);
       })
@@ -250,20 +299,16 @@ const StoryBible = ({
   };
 
   const generateCharacters = () => {
-    if (synopsis.trim() === "") {
-      alert("Synopsis cannot be empty");
-      return;
-    } else if (braindump.trim() === "") {
-      alert("Braindump cannot be empty");
-      return;
-    }
+    // if (synopsis.trim() === "") {
+    //   alert("Synopsis cannot be empty");
+    //   return;
+    // } else if (braindump.trim() === "") {
+    //   alert("Braindump cannot be empty");
+    //   return;
+    // }
 
     setGeneratingCharacters(true);
-    postRequest("/story/characters-generate", {
-      projectID: project,
-      synopsis,
-      braindump,
-    })
+    getRequest(`/story/characters-generate/${project}`)
       .then(({ data }) => {
         let characterString = "";
 
@@ -290,6 +335,66 @@ const StoryBible = ({
       .then()
       .catch(() => {
         toast.error(`Error Saving ${field}`);
+      });
+  };
+
+  const deleteCharacter = (id: string) => {
+    delRequest(`/story/characters-delete?projectID=${project}&character=${id}`)
+      .then((data) => {
+        console.log(data);
+      })
+      .catch(() => {
+        toast.error("Unable to delete");
+      });
+  };
+
+  const updateCharacter = (id: string, char: any) => {
+    putRequest(`/story/characters-update/${id}`, {
+      productID: project,
+      ...char,
+    })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch(() => {
+        toast.error("Unable to update");
+      });
+  };
+
+  const addChaacter = () => {
+    postRequest("/story/characters-create", {
+      projectID: project,
+      name: "Name",
+      other_names: "",
+      dialogue_style: "",
+      background: "",
+      personality: "",
+      pronouns: "",
+    })
+      .then(({ data }) => {
+        setCharacters((prevChar: any) => {
+          return [...prevChar, data.traits];
+        });
+        generateCharacters();
+      })
+      .catch(() => {
+        toast.error("Unable to add character");
+      });
+  };
+
+  const addChapter = () => {
+    setAddingChapter(true);
+    postRequest("/story/add-chapter", {
+      chapter: currentChapter,
+      projectID: project,
+    })
+      .then(({ data }) => {
+        navigate(`/project/${data.project}/${data._id}`);
+        setAddingChapter(false);
+      })
+      .catch(() => {
+        setAddingChapter(false);
+        toast.error("Unabe to Add Chapter");
       });
   };
 
@@ -424,8 +529,14 @@ const StoryBible = ({
           </div>
 
           <div className="flex items-center gap-4 text-nowrap">
-            {/* <div className="text-sm font-semibold">0/700 words</div> */}
-            <FaRegCopy />
+            <button
+              className="text-base border border-buttonPurple text-buttonPurple rounded-md py-2 font-semibold gap-2 inline-flex justify-center items-center px-4"
+              onClick={addChaacter}
+              disabled={generatingCharacters}
+            >
+              <FaPlus />
+              Add Characters
+            </button>
             <button
               className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4"
               onClick={generateCharacters}
@@ -436,15 +547,18 @@ const StoryBible = ({
             </button>
           </div>
         </div>
-
-        <textarea
-          className="single-story-textarea"
-          placeholder="Describe everything the AI should know about your characters when writing them in scenes. Consider physical appearance, mannerisms, how they relate to other characters, and their motivations / goals."
-          value={characters}
-          onChange={(e) => setCharacters(e.target.value)}
-          onBlur={() => saveChanges("characters", characters)}
-        ></textarea>
       </div>
+
+      {characters?.map((item, idx: number) => (
+        <SingleCharacter
+          key={idx}
+          character={item}
+          index={idx}
+          handleChange={editChars}
+          deleteChar={() => deleteCharacter(item._id)}
+          updateChar={updateCharacter}
+        />
+      ))}
 
       <div className="single-story">
         <div className="single-story-top">
@@ -475,6 +589,46 @@ const StoryBible = ({
           onBlur={() => saveChanges("outline", outline)}
         ></textarea>
       </div>
+
+      {/* ADD CHAPTER */}
+      {chapters.length > 0 && (
+        <div className="bg-buttonPurple p-4 rounded-lg text-white my-6">
+          <div className="flex jstify-between items-center gap-4">
+            <div>
+              <div className="text-lg font-semibold">
+                Now the fun part begins!
+              </div>
+
+              <div className="text-xs">
+                Click Add Chapter to start a draft of your Chapter. (Formerly
+                Beats and Prose)
+              </div>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <select
+                className="p-2 bg-transparent text-white border-white border rounded-md"
+                value={currentChapter}
+                onChange={(e) => setCurrentChapter(e.target.value)}
+              >
+                {chapters?.map((_, idx) => (
+                  <option value={`Chapter ${idx + 1}`} key={idx}>
+                    Chapter {idx + 1}
+                  </option>
+                ))}
+              </select>
+
+              <button
+                className="text-base bg-white text-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4 text-nowrap"
+                onClick={addChapter}
+                disabled={addingChapter}
+              >
+                {addingChapter ? "Adding.." : "Add Chapter"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="single-story">
         <div className="single-story-top">

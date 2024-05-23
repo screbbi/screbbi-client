@@ -25,8 +25,8 @@ const PageLayout = ({
         AI ContentWriter works best on browsers at least 900px wide (Desktop or
         Tablet). Please switch to a larger browser
       </div>
+
       <div className="bg-lightGrey h-screen md:block hidden">
-        <Navbar setOpen={() => setOpenNav(!openNav)} open={openNav} />
         <div className="page-layout h-full">
           <Sidebar
             writings={writings}
@@ -34,7 +34,11 @@ const PageLayout = ({
             open={openNav}
             setOpen={() => setOpenNav(false)}
           />
-          <div className="h-full">{children}</div>
+
+          <div>
+            <Navbar setOpen={() => setOpenNav(!openNav)} open={openNav} />
+            <div className="h-full">{children}</div>
+          </div>
         </div>
         {openNav && (
           <div

@@ -1,19 +1,16 @@
 import { TbEdit } from "react-icons/tb";
-// import { FiTrash } from "react-icons/fi";
+import appLogo from "../assets/img/ai-logo.png";
 import profile from "../assets/img/profile.svg";
 import SingleContent from "./SingleContent";
 import { useEffect, useRef, useState } from "react";
 import { MdLogout } from "react-icons/md";
 import { delRequest, getRequest } from "../utils/request";
 import SectionLoader from "./SectionLoader";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useStore } from "zustand";
 import store from "../store/state";
 import Settings from "./Settings";
 import { IoSettingsOutline } from "react-icons/io5";
-
-// import toast from "react-hot-toast";
-// import { useNavigate } from "react-router-dom";
 
 const Sidebar = ({
   writings,
@@ -87,13 +84,21 @@ const Sidebar = ({
   return (
     <div className={`sidebar ${open ? "left-0" : "-left-[20rem]"}`}>
       {/* NEW CONTENT */}
-      <button
-        className="bg-lightButton text-whatNewText flex justify-between py-2 px-4 rounded-full font-semibold items-center text-sm h-fit"
-        onClick={newWrite}
-      >
-        New Content
-        <TbEdit />
-      </button>
+      <div className="">
+        <Link to={"/home"}>
+          <div className="logo flex items-center gap-2">
+            <img src={appLogo} alt="" className="w-8" />
+            <div className="font-bold text-lg">AI ContentWriter</div>
+          </div>
+        </Link>
+        <button
+          className="bg-lightButton text-whatNewText flex justify-between py-2 px-4 rounded-full font-semibold items-center text-sm h-fit w-full mt-2"
+          onClick={newWrite}
+        >
+          New Content
+          <TbEdit />
+        </button>
+      </div>
 
       {/* CONTENTS */}
       <div className="text-white p-2 w-full">
