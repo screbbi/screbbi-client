@@ -6,3 +6,16 @@ export function copyToClipboard(text: string) {
   document?.execCommand("copy");
   document.body.removeChild(textarea);
 }
+
+export const formatDate = (date: any) => {
+  const newDate = new Date(date);
+
+  const options: Intl.DateTimeFormatOptions = {
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  };
+
+  return new Intl.DateTimeFormat("en-US", options).format(newDate);
+};

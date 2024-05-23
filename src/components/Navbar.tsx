@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-// import appLogo from "../assets/img/logo.svg";
 import appLogo from "../assets/img/ai-logo.png";
 import profile from "../assets/img/profile.svg";
 import { HiOutlineMenuAlt2, HiOutlineMenuAlt3 } from "react-icons/hi";
@@ -20,10 +19,12 @@ const Navbar = ({
               {open ? <HiOutlineMenuAlt3 /> : <HiOutlineMenuAlt2 />}
             </div>
           )}
-          <div className="logo flex items-center gap-2">
-            <img src={appLogo} alt="" className="w-10" />
-            <div className="font-bold text-xl">AI ContentWriter</div>
-          </div>
+          <Link to={"/home"}>
+            <div className="logo flex items-center gap-2">
+              <img src={appLogo} alt="" className="w-10" />
+              <div className="font-bold text-xl">AI ContentWriter</div>
+            </div>
+          </Link>
         </div>
 
         <div className="links flex items-center divide-x-2">

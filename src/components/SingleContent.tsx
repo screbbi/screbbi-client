@@ -13,7 +13,7 @@ const SingleContent = ({
 }) => {
   const [showOption, setShowOption] = useState(false);
 
-  const { writer } = useParams();
+  const { writer, project } = useParams();
 
   const optionRef: any = useRef();
 
@@ -42,7 +42,7 @@ const SingleContent = ({
         writer === writing._id ? "bg-[#1F243C]" : ""
       }`}
       onClick={() => {
-        navigate(`/generate/${writing._id}`);
+        navigate(`/project/${project}/${writing._id}`);
       }}
     >
       <div className="text-xs w-40 truncate">

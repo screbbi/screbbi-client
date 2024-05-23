@@ -27,7 +27,7 @@ const Sidebar = ({
 }) => {
   const [showOption, setShowOption] = useState(false);
   const [openSettings, setOpenSettings] = useState(false);
-  const { writer } = useParams();
+  const { writer, project } = useParams();
   const navigate = useNavigate();
 
   const optionRef: any = useRef();
@@ -52,7 +52,7 @@ const Sidebar = ({
   }, []);
 
   const newWrite = () => {
-    getRequest("/writer/new")
+    getRequest(`/writer/new?project=${project}`)
       .then(() => {
         refresh();
       })
@@ -104,13 +104,16 @@ const Sidebar = ({
         ) : writings.length < 1 ? (
           <div>No Data</div>
         ) : (
-          writings.map((item: any) => (
-            <SingleContent
-              writing={item}
-              key={item._id}
-              deleteWrite={() => deleteWrite(item._id)}
-            />
-          ))
+          writings.map(
+            (item: any) =>
+              item.project === project && (
+                <SingleContent
+                  writing={item}
+                  key={item._id}
+                  deleteWrite={() => deleteWrite(item._id)}
+                />
+              )
+          )
         )}
       </div>
 
@@ -160,6 +163,7 @@ const Sidebar = ({
                 className="flex items-center gap-2 text-whatNewBorder font-semibold py-1 my-1"
                 onClick={() => {
                   localStorage.removeItem("token");
+                  localStorage.removeItem("projects");
                   window.location.replace("/");
                 }}
               >
@@ -171,6 +175,7 @@ const Sidebar = ({
               </div>
             </div>
           )}
+
           {openSettings && <Settings close={() => setOpenSettings(false)} />}
         </div>
       </div>

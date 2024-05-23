@@ -10,7 +10,7 @@ import { BsPersonBoundingBox, BsMenuButtonWide } from "react-icons/bs";
 import { useState } from "react";
 import { nanoid } from "nanoid";
 import SingleForm from "./SingleForm";
-import { postRequest } from "../utils/request";
+import { postRequest, putRequest } from "../utils/request";
 import toast from "react-hot-toast";
 import { copyToClipboard } from "../utils/functions";
 import Writing from "./Writing";
@@ -18,8 +18,35 @@ import { useParams } from "react-router-dom";
 import CompressMatchStyle from "./CompressMatchStyle";
 import Compressed from "./Compressed";
 
-const StoryBible = () => {
-  const { writer } = useParams();
+const StoryBible = ({
+  genre,
+  braindump,
+  synopsis,
+  matchStyle,
+  characters,
+  outline,
+  setOutline,
+  setCharacters,
+  setMatchStyle,
+  setBraindump,
+  setSynopsis,
+  setGenre,
+}: {
+  synopsis: string;
+  braindump: string;
+  genre: string;
+  matchStyle: any;
+  characters: string;
+  outline: string;
+
+  setGenre: (e: string) => void;
+  setBraindump: (e: string) => void;
+  setSynopsis: (e: string) => void;
+  setMatchStyle: (e: string) => void;
+  setCharacters: (e: string) => void;
+  setOutline: (e: string) => void;
+}) => {
+  const { project } = useParams();
 
   const formTypes = [
     "settings",
@@ -38,22 +65,33 @@ const StoryBible = () => {
   ];
 
   const [forms, setForms] = useState<any>([]);
-  const [braindump, setBraindump] = useState("");
-  const [genre, setGenre] = useState("");
-  const [synopsis, setSynopsis] = useState("");
   const [generatingSynopsis, setGeneratingSynopsis] = useState(false);
   const [generatingMatchStyle, setGeneratingMatchStyle] = useState(false);
-  const [matchStyle, setMatchStyle] = useState<any>("");
   const [openWriting, setOpenWriting] = useState(false);
   const [openCompressWriting, setOpenCompressWriting] = useState(false);
   const [compressing, setCompressing] = useState(false);
   const [rawText, setRawText] = useState("");
   const [compressedText, setCompressedText] = useState("");
   const [openInsertModal, setOpenInsertModal] = useState(false);
-  const [characters, setCharacters] = useState("");
   const [generatingCharacters, setGeneratingCharacters] = useState(false);
-  const [outline, setOutline] = useState("");
   const [generatingOutline, setGeneratingOutline] = useState(false);
+
+  const saveLocal = (field: string, value: string) => {
+    const projects: any = localStorage.getItem("projects");
+    const projec = JSON.parse(projects);
+
+    const newProject: any = projec.map((item: any) => {
+      if (item._id === project) {
+        return { ...item, storyBible: { ...item.storyBible, [field]: value } };
+      } else {
+        return item;
+      }
+    });
+
+    console.log(newProject);
+
+    localStorage.setItem("projects", JSON.stringify(newProject));
+  };
 
   const addForms = (type: string) => {
     setForms((prevForm: any) => {
@@ -127,10 +165,15 @@ const StoryBible = () => {
     }
 
     setGeneratingSynopsis(true);
-    postRequest("/story/synopsis-generate", { genre, braindump, writer })
+    postRequest("/story/synopsis-generate", {
+      genre,
+      braindump,
+      projectID: project,
+    })
       .then(({ data }) => {
         setSynopsis(data);
         setGeneratingSynopsis(false);
+        saveLocal("synopsis", data.replace(/\*/g, ""));
       })
       .catch(() => {
         setGeneratingSynopsis(false);
@@ -145,9 +188,10 @@ const StoryBible = () => {
     }
 
     setGeneratingMatchStyle(true);
-    postRequest("/story/style-generate", { writing, writer })
+    postRequest("/story/style-generate", { writing, projectID: project })
       .then(({ data }) => {
-        setRawText(data.replaceAll("**", "''"));
+        setRawText(data.replace(/\*/g, ""));
+        saveLocal("style", data.replace(/\*/g, ""));
         setGeneratingMatchStyle(false);
         setOpenWriting(false);
         setOpenCompressWriting(true);
@@ -165,7 +209,7 @@ const StoryBible = () => {
     }
 
     setCompressing(true);
-    postRequest("/story/style-compress", { style, writer })
+    postRequest("/story/style-compress", { style, projectID: project })
       .then(({ data }) => {
         setCompressedText(data.replaceAll("**", `''`));
         setCompressing(false);
@@ -189,13 +233,14 @@ const StoryBible = () => {
 
     setGeneratingOutline(true);
     postRequest("/story/outline-generate", {
-      writer,
+      projectID: project,
       synopsis,
       genre,
       characters,
     })
       .then(({ data }) => {
-        setOutline(data.replaceAll("**", `''`));
+        setOutline(data.replace(/\*/g, ""));
+        saveLocal("outline", data.replace(/\*/g, ""));
         setGeneratingOutline(false);
       })
       .catch(() => {
@@ -215,7 +260,7 @@ const StoryBible = () => {
 
     setGeneratingCharacters(true);
     postRequest("/story/characters-generate", {
-      writer,
+      projectID: project,
       synopsis,
       braindump,
     })
@@ -226,12 +271,25 @@ const StoryBible = () => {
           characterString += `${item.name}\n Personality: ${item.personality} \n Background: ${item.background} \n\n`;
         });
 
+        saveLocal("characters", data);
+
         setGeneratingCharacters(false);
         setCharacters(characterString);
       })
       .catch(() => {
         setGeneratingCharacters(false);
         toast.error("Error generating characters");
+      });
+  };
+
+  const saveChanges = (field: string, value: string) => {
+    putRequest("/story/fill", {
+      projectID: project,
+      [field]: value,
+    })
+      .then()
+      .catch(() => {
+        toast.error(`Error Saving ${field}`);
       });
   };
 
@@ -255,7 +313,11 @@ const StoryBible = () => {
           className="single-story-textarea"
           placeholder="Write a braindump of everything you know about the story. You can include information about plot, characters, worldbuilding, theme - anything!"
           value={braindump}
-          onChange={(e) => setBraindump(e.target.value)}
+          onChange={(e) => {
+            setBraindump(e.target.value);
+            saveLocal("braindump", e.target.value);
+          }}
+          onBlur={() => saveChanges("braindump", braindump)}
         ></textarea>
       </div>
 
@@ -276,7 +338,11 @@ const StoryBible = () => {
           className="single-story-textarea"
           placeholder="What genre are you writing in? Feel free to include sub-genres and tropes. Examples: Romance, Horror, Fantasy, Cozy mystery, Friends-to-Lovers, Gumshoe"
           value={genre}
-          onChange={(e) => setGenre(e.target.value)}
+          onChange={(e) => {
+            setGenre(e.target.value);
+            saveLocal("genre", e.target.value);
+          }}
+          onBlur={() => saveChanges("genre", genre)}
         ></textarea>
       </div>
 
@@ -311,7 +377,11 @@ const StoryBible = () => {
           className="single-story-textarea"
           placeholder="Write the style of prose you want Story Bible to write. e.g. short sentences, lots of dialogue, show don’t tell"
           value={matchStyle}
-          onChange={(e) => setMatchStyle(e.target.value)}
+          onChange={(e) => {
+            setMatchStyle(e.target.value);
+            saveLocal("style", e.target.value);
+          }}
+          onBlur={() => saveChanges("style", matchStyle)}
         ></textarea>
       </div>
 
@@ -342,6 +412,7 @@ const StoryBible = () => {
           placeholder="Introduce the characters, their goals, and the central conflict, while conveying the story's tone, themes, and unique elements."
           onChange={(e) => setSynopsis(e.target.value)}
           value={synopsis}
+          onBlur={() => saveChanges("synopsis", synopsis)}
         ></textarea>
       </div>
 
@@ -361,7 +432,7 @@ const StoryBible = () => {
               disabled={generatingCharacters}
             >
               <BsStars />
-              Generate Characters
+              {generatingCharacters ? "Generating.." : "Generate Characters"}
             </button>
           </div>
         </div>
@@ -371,6 +442,7 @@ const StoryBible = () => {
           placeholder="Describe everything the AI should know about your characters when writing them in scenes. Consider physical appearance, mannerisms, how they relate to other characters, and their motivations / goals."
           value={characters}
           onChange={(e) => setCharacters(e.target.value)}
+          onBlur={() => saveChanges("characters", characters)}
         ></textarea>
       </div>
 
@@ -390,7 +462,7 @@ const StoryBible = () => {
               disabled={generatingOutline}
             >
               <BsStars />
-              Generate Outline
+              {generatingOutline ? "Generating.." : "Generate Outline"}
             </button>
           </div>
         </div>
@@ -400,6 +472,7 @@ const StoryBible = () => {
           placeholder="Describe everything the AI should know about your characters when writing them in scenes. Consider physical appearance, mannerisms, how they relate to other characters, and their motivations / goals."
           value={outline}
           onChange={(e) => setOutline(e.target.value)}
+          onBlur={() => saveChanges("outline", outline)}
         ></textarea>
       </div>
 
