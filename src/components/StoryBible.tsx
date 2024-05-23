@@ -240,7 +240,7 @@ const StoryBible = ({
     })
       .then(({ data }) => {
         setOutline(data.replace(/\*/g, ""));
-        saveLocal("outline", data.replace(/\*/g, ""));
+        saveLocal("outline", data?.outline?.replace(/\*/g, ""));
         setGeneratingOutline(false);
       })
       .catch(() => {
