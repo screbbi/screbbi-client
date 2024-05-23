@@ -524,7 +524,7 @@ const Generate = () => {
         setGeneratingChapters(false);
         setProse(data.replace(/\*/g, ""));
       })
-      .catch((err) => {
+      .catch(() => {
         setGeneratingChapters(false);
         toast.error("Error Generating Chapter");
       });
