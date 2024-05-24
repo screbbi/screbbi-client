@@ -316,7 +316,7 @@ const Generate = () => {
       }
 
       timeoutId = setTimeout(() => {
-        // saveDocument();
+        saveDocument();
       }, 2000);
     };
 
