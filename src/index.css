@@ -257,6 +257,9 @@ body {
 .single-story-textarea {
   @apply h-32 resize-none rounded-lg outline-none w-full bg-gray-50 p-2 text-sm mt-2 border border-gray-200;
 }
+.single-story-textarea.long {
+  @apply h-48;
+}
 
 .single-add-form {
   @apply flex items-center gap-2 border border-buttonPurple rounded-md text-sm p-[2px] text-buttonPurple font-semibold cursor-pointer;
@@ -282,7 +285,7 @@ body {
 }
 
 .bottom-up {
-  @apply hidden group-hover:block bg-white z-10 absolute p-6 left-full rounded-lg;
+  @apply hidden group-hover:block bg-white z-10 absolute p-6 left-full rounded-lg w-[30rem] text-sm;
   animation: tooltip 0.5s;
 }
 
@@ -296,4 +299,9 @@ body {
 }
 .tooltip-title {
   @apply font-semibold;
+}
+
+ul {
+  list-style: circle;
+  @apply ml-6;
 }

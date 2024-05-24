@@ -713,6 +713,7 @@ const Generate = () => {
 
                   {openLinkingOption && (
                     <Notlinked
+                      linked={linkedChapter}
                       handleClick={() => {
                         setOpenLinkingOption(false);
                         setOpenChapterLiking(true);

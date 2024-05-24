@@ -2,6 +2,7 @@ import chapter from "../assets/img/chapter.svg";
 import { FaRegCopy, FaTimes } from "react-icons/fa";
 import { BsStars } from "react-icons/bs";
 import { copyToClipboard } from "../utils/functions";
+import Tooltip from "../layout/Tooltip";
 
 const Chapter = ({
   generate,
@@ -56,12 +57,50 @@ const Chapter = ({
         )}
       </div>
 
-      <div className="base">
+      <div className="base -my-4">
         <div className="single-story">
           <div className="single-story-top">
             <div className="flex items-center gap-2">
               <img src={chapter} alt="" />
               <div className="font-semibold">Step 1: Beats</div>
+
+              <Tooltip>
+                <div className="mb-4">
+                  Beats are a set of step-by-step instructions for the "Al" $ or
+                  "junior writing partner" to follow when writing this Chapter.
+                  Make sure each beat has enough detail to turn into $100-200$
+                  words
+                </div>
+
+                <div className="my-4">
+                  <div>Bad Beat: 1. Todd welcomes Eli to the mansion.</div>
+                  <div>
+                    Good Beat: 1. Todd says hi to Eli at the entrance of the
+                    mansion. Describe the statues and art in the entrance. Then,
+                    Todd shows Eli to his room, pointing out the Tuscan
+                    architecture details and humble-bragging about the famous
+                    people who have visited before.
+                  </div>
+                </div>
+
+                <div className="my-4">
+                  You can add special instructions for the "Al" in [square
+                  brackets] for greater control. e.g. [Write Todd's dialogue in
+                  the form of a limerick]
+                </div>
+
+                <div className="my-4">
+                  <div>This section is generated based on:</div>
+                  <ul>
+                    <li>Braindump</li>
+                    <li>Genre </li>
+                    <li>Style</li>
+                    <li> Synopsis </li>
+                    <li>Characters </li>
+                    <li>Outline</li>
+                  </ul>
+                </div>
+              </Tooltip>
             </div>
 
             <div className="flex items-center gap-4 text-nowrap">
@@ -89,12 +128,28 @@ const Chapter = ({
         </div>
       </div>
 
-      <div className="base">
+      <div className="base -mt-6 -mb-4">
         <div className="single-story">
           <div className="single-story-top">
             <div className="flex items-center gap-2">
               <img src={chapter} alt="" />
               <div className="font-semibold">Step 2: Prose</div>
+              <Tooltip>
+                <div className="my-4">
+                  The Prose section generates a first draft for you to edit into
+                  your manuscript
+                </div>
+
+                <div className="my-4">
+                  <div>This section is generated based on:</div>
+                  <ul>
+                    <li>Genre </li>
+                    <li>Characters </li>
+                    <li>Style</li>
+                    <li>This Chapter's Beats</li>
+                  </ul>
+                </div>
+              </Tooltip>
             </div>
 
             <div className="flex items-center gap-4 text-nowrap">

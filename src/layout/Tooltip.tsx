@@ -8,9 +8,7 @@ const Tooltip = ({ children }: { children: ReactNode }) => {
         <BsQuestionCircleFill className="text-gray-400" />
       </div>
 
-      <div className="hidden group-hover:block bg-white z-10 absolute p-4 left-full bottom-up">
-        {children}
-      </div>
+      <div className="bottom-up">{children}</div>
     </div>
   );
 };

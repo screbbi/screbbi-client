@@ -277,7 +277,19 @@ const StoryBible = ({
             <PiBrainThin />
             <div className="font-semibold">Braindump</div>
             <Tooltip>
-              <div className="tooltip-title"></div>
+              <div className="tooltip-title">How it works</div>
+              <div className="my-4">
+                Braindump is a completely free-form box you can put everything
+                you know about your story into. A stream-of-consciousness
+                ramble, a treatment, or even just one word
+              </div>
+              <div>This section affects:</div>
+              <ul>
+                <li>Synopsis</li>
+                <li>Beats</li>
+              </ul>
+              {/* <div>- Synopsis </div>
+              <div>- Beats</div> */}
             </Tooltip>
           </div>
 
@@ -305,6 +317,20 @@ const StoryBible = ({
           <div className="flex items-center gap-2">
             <PiFlowerTulipDuotone />
             <div className="font-semibold">Genre</div>
+            <Tooltip>
+              <div className="tooltip-title">How it works</div>
+              <div className="my-4">
+                Genre affects the tropes, tone, and style of the outlines and
+                prose that Story Bible generates. Edit this section to remove
+                clichés or shift the tone.
+              </div>
+              <div>This section affects:</div>
+              <ul>
+                <li>Outline</li>
+                <li>Beats</li>
+                <li>Prose</li>
+              </ul>
+            </Tooltip>
           </div>
 
           <div className="flex items-center gap-4">
@@ -330,6 +356,19 @@ const StoryBible = ({
           <div className="flex items-center gap-2">
             <GiMustache />
             <div className="font-semibold">Style</div>
+            <Tooltip>
+              <div className="tooltip-title">How it works</div>
+              <div className="my-4">
+                Style affects the tone, word choice, and sentence structure the
+                Al uses. It's the last thing the Al looks at before writing the
+                prose so it has the most influence on Prose.
+              </div>
+              <div>This section affects:</div>
+              <ul>
+                <li>Beats</li>
+                <li>Prose</li>
+              </ul>
+            </Tooltip>
           </div>
 
           <div className="flex items-center gap-4 text-nowrap">
@@ -369,10 +408,22 @@ const StoryBible = ({
           <div className="flex items-center gap-2">
             <GiMustache />
             <div className="font-semibold">Synopsis</div>
+            <Tooltip>
+              <div className="tooltip-title">How it works</div>
+              <div className="my-4">
+                Synopsis establishes the characters, their goals, the central
+                conflict, how the story begins and how it ends. It also conveys
+                the story's tone, themes, and unique elements.
+              </div>
+              <div>This section affects:</div>
+              <ul>
+                <li>Braindump</li>
+                <li>Genre</li>
+              </ul>
+            </Tooltip>
           </div>
 
           <div className="flex items-center gap-4 text-nowrap">
-            {/* <div className="text-sm font-semibold">0/800 words</div> */}
             <FaRegCopy onClick={() => copyToClipboard(synopsis)} />
             <button
               className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4"
@@ -400,6 +451,26 @@ const StoryBible = ({
           <div className="flex items-center gap-2">
             <BsPersonBoundingBox />
             <div className="font-semibold">Characters</div>
+            <Tooltip>
+              <div className="tooltip-title">How it works</div>
+              <div className="my-4">
+                The Characters section tells Story Bible how to write your
+                Characters. This can affect how their dialog is written, what
+                choices they make, and how they interact with the other
+                characters. Update this section as your characters evolve in the
+                story.
+              </div>
+
+              <div className="my-4">
+                You can add any kinds of custom traits you like to Characters by
+                clicking "Customize".
+              </div>
+              <div>This section is generated based on: </div>
+              <ul>
+                <li>Synopsis (if it exists)</li>
+                <li>Braindump (if Synopsis doesn't exist)</li>
+              </ul>
+            </Tooltip>
           </div>
 
           <div className="flex items-center gap-4 text-nowrap">
@@ -437,6 +508,34 @@ const StoryBible = ({
           <div className="flex items-center gap-2">
             <BsMenuButtonWide />
             <div className="font-semibold">Outline</div>
+            <Tooltip>
+              <div className="tooltip-title">How it works</div>
+              <div className="my-4">
+                The Outline section expands on everything to the left and weaves
+                it into something that will be entertaining to read. Make sure
+                to replace any vagueness with specific ideas. This will make
+                your Beats and Prose better
+              </div>
+              <div>This section is generated based on: </div>
+              <ul>
+                <li> Genre </li>
+                <li>Synopsis</li>
+                <li>Characters</li>
+              </ul>
+
+              <div className="my-4">
+                If you paste in an outline, match this format, including a title
+                for each Act:{" "}
+              </div>
+              <div className="my-4">
+                <div>
+                  Act 1 : <br />
+                  Chapter 1: <br /> Chapter 2: <br /> Chapter 3 : <br /> Act 2:{" "}
+                  <br /> Chapter 4: <br />
+                  Chapter 5:
+                </div>
+              </div>
+            </Tooltip>
           </div>
 
           <div className="flex items-center gap-4 text-nowrap">
@@ -453,7 +552,7 @@ const StoryBible = ({
         </div>
 
         <textarea
-          className="single-story-textarea"
+          className="single-story-textarea long"
           placeholder="Describe everything the AI should know about your characters when writing them in scenes. Consider physical appearance, mannerisms, how they relate to other characters, and their motivations / goals."
           value={outline}
           onChange={(e) => setOutline(e.target.value)}
