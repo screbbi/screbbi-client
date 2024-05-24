@@ -175,3 +175,14 @@ export const formTypes = [
 //     });
 //   });
 // };
+// const editChars = (key: string, value: string, index: number) => {
+//   const newChar = characters.map((char: any, idx: number) => {
+//     if (idx === index) {
+//       return { ...char, [key]: value };
+//     } else {
+//       return char;
+//     }
+//   });
+
+//   setCharacters(newChar);
+// };

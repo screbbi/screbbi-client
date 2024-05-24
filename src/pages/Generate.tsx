@@ -5,7 +5,7 @@ import Dropdown from "../components/Dropdown";
 import aText from "../assets/img/draw-a.svg";
 import dText from "../assets/img/draw-d.svg";
 import expand from "../assets/img/expand.svg";
-import { IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowDown, IoMdLink } from "react-icons/io";
 import he from "he";
 import SunEditor from "suneditor-react";
 import "suneditor/dist/css/suneditor.min.css";
@@ -24,6 +24,9 @@ import { useStore } from "zustand";
 import store from "../store/state";
 import chapter from "../assets/img/chapter.svg";
 import Chapter from "../components/Chapter";
+import { MdLinkOff } from "react-icons/md";
+import Notlinked from "../components/Notlinked";
+import CHaptersList from "../components/CHaptersList";
 
 const types = [
   "Rephrase",
@@ -38,6 +41,7 @@ const Generate = () => {
   const { writer, project } = useParams();
   const optionRef: any = useRef();
   const reWriteRef: any = useRef();
+  const linkedRef: any = useRef();
 
   const { story } = useStore(store);
 
@@ -89,6 +93,9 @@ const Generate = () => {
   const [generatingBeats, setGeneratingBeats] = useState(false);
   const [generatingChapters, setGeneratingChapters] = useState(false);
   const [chapters, setChapters] = useState<any>({});
+  const [linkedChapter, setLinkedChapter] = useState<any>(null);
+  const [openLinkingOption, setOpenLinkingOption] = useState(false);
+  const [openChapterLiking, setOpenChapterLiking] = useState(false);
 
   const setSenses = (sense: string) => {
     if (descriptions.includes(sense)) {
@@ -295,11 +302,16 @@ const Generate = () => {
           );
         } else {
           setEditorContent(`<p>${currentContent.title}</p>`);
+          setTitle(currentContent.title);
         }
 
         if (currentContent?.linkedChapter) {
           setOpenChapter(true);
-          setBeats(currentContent?.linkedChapter?.content);
+          setLinkedChapter(currentContent?.linkedChapter?.chapter);
+        }
+
+        if (currentContent.beats !== null) {
+          setBeats(currentContent.beats);
         }
       })
       .catch((err: any) => {
@@ -344,6 +356,14 @@ const Generate = () => {
         !reWriteRef?.current?.contains(event.target as Node)
       ) {
         setOpenRewriteOtions(false);
+      }
+
+      if (
+        linkedRef.current &&
+        !linkedRef?.current?.contains(event.target as Node)
+      ) {
+        setOpenChapterLiking(false);
+        setOpenLinkingOption(false);
       }
     };
 
@@ -460,14 +480,20 @@ const Generate = () => {
     if (!outline.trim()) {
       alert("Outline cannot be empty");
       return;
+    } else {
+      if (!linkedChapter) {
+        alert("Link a chapter from your outline to continue");
+        return;
+      }
     }
 
     setGeneratingBeats(true);
 
     postRequest("/chapter/beats-generate", {
       outline,
-      chapter: 4,
+      chapter: Number(linkedChapter.slice(-1)),
       projectID: project,
+      writing: writer,
     })
       .then(({ data }) => {
         setBeats(data.replace(/\*/g, ""));
@@ -485,7 +511,10 @@ const Generate = () => {
     }
 
     setGeneratingChapters(true);
-    getRequest(`/chapter/prose-generate/${project}`)
+    postRequest(`/chapter/prose-generate`, {
+      projectID: project,
+      writing: writer,
+    })
       .then(({ data }) => {
         setGeneratingChapters(false);
         setProse(data.replace(/\*/g, ""));
@@ -496,35 +525,30 @@ const Generate = () => {
       });
   };
 
+  const retriveLocal = (story: any) => {
+    setSynopsis(story?.synopsis?.replace(/\*/g, "") ?? "");
+    setGenre(story?.genre?.replace(/\*/g, "") ?? "");
+    setMatchStyle(story?.style?.replace(/\*/g, "") ?? "");
+    setChapters(story?.chapters ?? {});
+    setOutline(story?.outline?.replace(/\*/g, "") ?? "");
+    setBraindump(story?.braindump?.replace(/\*/g, "") ?? "");
+    setCharacters(story?.characters?.replace(/\*/g, "") ?? []);
+  };
+
   useEffect(() => {
     if (localStorage.getItem("projects")) {
       const projects: any = localStorage?.getItem("projects");
       const projec = JSON.parse(projects);
-
       const currentProject = projec.find((item: any) => item._id === project);
       const story = currentProject?.storyBible;
-
-      setSynopsis(story?.synopsis?.replace(/\*/g, "") ?? "");
-      setGenre(story?.genre?.replace(/\*/g, "") ?? "");
-      setMatchStyle(story?.style?.replace(/\*/g, "") ?? "");
-      setChapters(story?.chapters ?? {});
-      setOutline(story?.outline?.replace(/\*/g, "") ?? "");
-      setBraindump(story?.braindump?.replace(/\*/g, "") ?? "");
-      setCharacters(story?.characters?.replace(/\*/g, "") ?? []);
+      retriveLocal(story);
     } else {
       getRequest(`/project/projects`)
         .then(({ data }) => {
           localStorage.setItem("projects", JSON.stringify(data));
           const currentProject = data.find((item: any) => item._id === project);
           const story = currentProject?.storyBible;
-
-          setSynopsis(story?.synopsis?.replace(/\*/g, "") ?? "");
-          setGenre(story?.genre?.replace(/\*/g, "") ?? "");
-          setMatchStyle(story?.style?.replace(/\*/g, "") ?? "");
-          setOutline(story?.outline?.replace(/\*/g, "") ?? "");
-          setChapters(story?.chapters ?? {});
-          setBraindump(story?.braindump?.replace(/\*/g, "") ?? "");
-          setCharacters(story?.characters?.replace(/\*/g, "") ?? []);
+          retriveLocal(story);
         })
         .catch((err: any) => {
           toast.error(err.response.data);
@@ -664,13 +688,54 @@ const Generate = () => {
                 </div>
               </div>
 
-              <div className="">
+              <div className="flex items-center gap-4">
+                <div
+                  className="flex bg-gray-200 items-center px-2 py-1 rounded-full gap-2 relative"
+                  onClick={() => setOpenLinkingOption(true)}
+                  ref={linkedRef}
+                >
+                  {linkedChapter ? (
+                    <IoMdLink className="text-2xl" />
+                  ) : (
+                    <MdLinkOff />
+                  )}
+
+                  {linkedChapter ? (
+                    <div>
+                      <div className="text-xs">Outline Linked</div>
+                      <div className="text-[10px]">{linkedChapter}</div>
+                    </div>
+                  ) : (
+                    "Not in Outline"
+                  )}
+
+                  {openLinkingOption && (
+                    <Notlinked
+                      handleClick={() => {
+                        setOpenLinkingOption(false);
+                        setOpenChapterLiking(true);
+                      }}
+                    />
+                  )}
+
+                  {openChapterLiking && (
+                    <CHaptersList
+                      chapters={chapters}
+                      handleClick={(chap) => {
+                        setLinkedChapter(chap);
+                        setOpenChapterLiking(false);
+                      }}
+                    />
+                  )}
+                </div>
+
                 <button
                   title="Chapter"
                   onClick={() => setOpenChapter(!openChapter)}
                 >
                   <img src={chapter} alt="" />
                 </button>
+
                 {openChapter && (
                   <Chapter
                     close={() => setOpenChapter(false)}
@@ -682,6 +747,8 @@ const Generate = () => {
                     setProse={setProse}
                     loadingBeats={generatingBeats}
                     loadingChapter={generatingChapters}
+                    chapters={chapters}
+                    linked={linkedChapter}
                   />
                 )}
               </div>

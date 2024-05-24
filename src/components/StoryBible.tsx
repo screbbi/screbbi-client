@@ -20,6 +20,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import CompressMatchStyle from "./CompressMatchStyle";
 import Compressed from "./Compressed";
 import SingleCharacter from "./SingleCharacter";
+import Tooltip from "../layout/Tooltip";
 
 const StoryBible = ({
   genre,
@@ -68,18 +69,6 @@ const StoryBible = ({
   const [generatingOutline, setGeneratingOutline] = useState(false);
   const [currentChapter, setCurrentChapter] = useState("");
   const [addingChapter, setAddingChapter] = useState(false);
-
-  const editChars = (key: string, value: string, index: number) => {
-    const newChar = characters.map((char: any, idx: number) => {
-      if (idx === index) {
-        return { ...char, [key]: value };
-      } else {
-        return char;
-      }
-    });
-
-    setCharacters(newChar);
-  };
 
   const saveLocal = (field: string, value: string) => {
     const projects: any = localStorage.getItem("projects");
@@ -233,24 +222,13 @@ const StoryBible = ({
 
   const deleteCharacter = (id: string) => {
     delRequest(`/story/characters-delete?projectID=${project}&character=${id}`)
-      .then((data) => {
-        console.log(data);
+      .then(() => {
+        // console.log(data);
+        const newChar = characters.filter((char) => char.id !== id);
+        setChapters(newChar);
       })
       .catch(() => {
         toast.error("Unable to delete");
-      });
-  };
-
-  const updateCharacter = (id: string, char: any) => {
-    putRequest(`/story/characters-update/${id}`, {
-      productID: project,
-      ...char,
-    })
-      .then((data) => {
-        console.log(data);
-      })
-      .catch(() => {
-        toast.error("Unable to update");
       });
   };
 
@@ -266,9 +244,9 @@ const StoryBible = ({
     })
       .then(({ data }) => {
         setCharacters((prevChar: any) => {
-          return [...prevChar, data.traits];
+          return [...prevChar, { ...data.traits, id: data._id }];
         });
-        generateCharacters();
+        // generateCharacters();
       })
       .catch(() => {
         toast.error("Unable to add character");
@@ -298,6 +276,9 @@ const StoryBible = ({
           <div className="flex items-center gap-2">
             <PiBrainThin />
             <div className="font-semibold">Braindump</div>
+            <Tooltip>
+              <div className="tooltip-title"></div>
+            </Tooltip>
           </div>
 
           <div className="flex items-center gap-4">
@@ -430,6 +411,7 @@ const StoryBible = ({
               <FaPlus />
               Add Characters
             </button>
+
             <button
               className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4"
               onClick={generateCharacters}
@@ -442,14 +424,11 @@ const StoryBible = ({
         </div>
       </div>
 
-      {characters?.map((item, idx: number) => (
+      {characters?.map((item) => (
         <SingleCharacter
-          key={idx}
+          key={item.id}
           character={item}
-          index={idx}
-          handleChange={editChars}
-          deleteChar={() => deleteCharacter(item._id)}
-          updateChar={updateCharacter}
+          deleteChar={() => deleteCharacter(item.id)}
         />
       ))}
 
@@ -506,13 +485,13 @@ const StoryBible = ({
                 {Object.keys(chapters)?.map((item: any, idx) => (
                   <optgroup
                     label={`Act ${idx + 1}`}
-                    key={idx}
+                    key={item}
                     className="text-black"
                   >
                     {chapters[item]?.map((chap: any) => (
                       <option
                         value={chap.chapter}
-                        key={idx}
+                        key={chap.chapter}
                         className="text-black"
                       >
                         {chap.chapter}

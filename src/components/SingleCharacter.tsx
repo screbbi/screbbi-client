@@ -2,21 +2,34 @@ import { useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import OptionLayout from "../layout/OptionLayout";
 import { FaRegTrashCan } from "react-icons/fa6";
+import { useParams } from "react-router-dom";
+import { putRequest } from "../utils/request";
+import toast from "react-hot-toast";
 
 const SingleCharacter = ({
   character,
-  index,
-  handleChange,
   deleteChar,
-  updateChar,
 }: {
   character: any;
-  index: number;
-  handleChange: (e: string, f: string, i: number) => void;
   deleteChar: () => void;
-  updateChar: (f: string, e: any) => void;
 }) => {
   const [open, setOpen] = useState(false);
+  const { project } = useParams();
+  const [data, setData] = useState(character);
+
+  const update = () => {
+    putRequest(`/story/characters-update/${character.id}`, {
+      projectID: project,
+      ...data,
+    })
+      .then(() => {})
+      .catch(() => {
+        toast.error("Unable to update");
+      });
+  };
+
+  const handleChange = (e: any) =>
+    setData({ ...data, [e.target.name]: e.target.value });
 
   return (
     <div className="bg-white p-4 rounded-md my-4">
@@ -26,9 +39,10 @@ const SingleCharacter = ({
             <input
               type="text"
               className="outline-0 w-fit p-1 focus:border border-gray-300 rounded-lg"
-              value={character.name}
-              onChange={(e) => handleChange("name", e.target.value, index)}
-              onBlur={() => updateChar(character._id, character)}
+              value={data.name}
+              name="name"
+              onChange={handleChange}
+              onBlur={update}
             />
           </div>
           <div onClick={() => setOpen(!open)}>
@@ -56,11 +70,10 @@ const SingleCharacter = ({
                 <input
                   type="text"
                   className="character-input"
-                  value={character.pronouns}
-                  onChange={(e) =>
-                    handleChange("pronouns", e.target.value, index)
-                  }
-                  onBlur={() => updateChar(character._id, character)}
+                  value={data.pronouns}
+                  name="pronouns"
+                  onChange={handleChange}
+                  onBlur={update}
                 />
               </div>
 
@@ -69,11 +82,10 @@ const SingleCharacter = ({
                 <input
                   type="text"
                   className="w-full border border-gray-300 rounded-md outline-none mt-2 p-2"
-                  value={character.other_names}
-                  onChange={(e) =>
-                    handleChange("other_names", e.target.value, index)
-                  }
-                  onBlur={() => updateChar(character._id, character)}
+                  value={data.other_names}
+                  name={"other_names"}
+                  onChange={handleChange}
+                  onBlur={update}
                 />
               </div>
             </div>
@@ -83,11 +95,10 @@ const SingleCharacter = ({
             <div>Personality</div>
             <textarea
               className="w-full border border-gray-300 rounded-md outline-none mt-2 p-2 resize-none h-32"
-              value={character.personality}
-              onChange={(e) =>
-                handleChange("personality", e.target.value, index)
-              }
-              onBlur={() => updateChar(character._id, character)}
+              value={data.personality}
+              name={"personality"}
+              onChange={handleChange}
+              onBlur={update}
             ></textarea>
           </div>
 
@@ -95,11 +106,10 @@ const SingleCharacter = ({
             <div>Background</div>
             <textarea
               className="w-full border border-gray-300 rounded-md outline-none mt-2 p-2 resize-none h-32"
-              value={character.background}
-              onChange={(e) =>
-                handleChange("background", e.target.value, index)
-              }
-              onBlur={() => updateChar(character._id, character)}
+              value={data.background}
+              name={"background"}
+              onChange={handleChange}
+              onBlur={update}
             ></textarea>
           </div>
 
@@ -107,11 +117,10 @@ const SingleCharacter = ({
             <div>Dialogue Style</div>
             <textarea
               className="w-full border border-gray-300 rounded-md outline-none mt-2 p-2 resize-none h-32"
-              value={character.dialogue_style}
-              onChange={(e) =>
-                handleChange("dialogue_style", e.target.value, index)
-              }
-              onBlur={() => updateChar(character._id, character)}
+              value={data.dialogue_style}
+              name={"dialogue_style"}
+              onChange={handleChange}
+              onBlur={update}
             ></textarea>
           </div>
         </>

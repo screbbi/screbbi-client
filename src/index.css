@@ -280,3 +280,20 @@ body {
 .character-input {
   @apply w-full border border-gray-300 rounded-md outline-none mt-2 p-2;
 }
+
+.bottom-up {
+  @apply hidden group-hover:block bg-white z-10 absolute p-6 left-full rounded-lg;
+  animation: tooltip 0.5s;
+}
+
+@keyframes tooltip {
+  from {
+    transform: translateY(3rem);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+.tooltip-title {
+  @apply font-semibold;
+}

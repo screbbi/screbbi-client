@@ -13,6 +13,8 @@ const Chapter = ({
   loadingBeats,
   loadingChapter,
   close,
+  chapters,
+  linked,
 }: {
   generate: () => void;
   close: () => void;
@@ -23,17 +25,35 @@ const Chapter = ({
   prose: string;
   loadingChapter: boolean;
   loadingBeats: boolean;
+  chapters: any;
+  linked: string;
 }) => {
+  const newChapter = Object.values(chapters).flat();
+  const currenLinked: any = newChapter?.find(
+    (chap: any) => chap.chapter === linked
+  );
+
   return (
     <div className="absolute right-0 top-full bg-white w-full z-10 shadow-lg rounded-md">
-      <div className="flex justify-between items-center p-4 border-b border-gray-200">
-        <div className="flex gap-2 items-center">
-          <img src={chapter} alt="" />
-          <div className="text-lg">Chapter Generator</div>
+      <div className="p-4 border-b border-gray-200">
+        <div className="flex justify-between items-center">
+          <div className="flex gap-2 items-center">
+            <img src={chapter} alt="" />
+            <div className="text-lg">Chapter Generator</div>
+          </div>
+          <button onClick={close}>
+            <FaTimes />
+          </button>
         </div>
-        <button onClick={close}>
-          <FaTimes />
-        </button>
+        {currenLinked && (
+          <div className="mt-2 italic">
+            <span className="font-semibold">
+              {currenLinked?.content.slice(0, 10)}
+            </span>{" "}
+            {currenLinked?.content.slice(10, 150)}
+            {currenLinked?.content?.length > 150 && "..."}
+          </div>
+        )}
       </div>
 
       <div className="base">
