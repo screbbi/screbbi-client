@@ -70,41 +70,6 @@ const StoryBible = ({
     "custom",
   ];
 
-  const chars: any[] = [
-    {
-      name: "Jasper",
-      pronouns: "He/Him",
-      other_names: "None",
-      personality:
-        "Jasper is an old monkey who is set in his ways. He is selfish and only thinks about himself. He is not a very good father and often forgets to feed his children.",
-      background:
-        "Jasper has lived in the animal kingdom for many years. He has seen many things and has become jaded. He has lost his sense of compassion and only cares about his own needs.",
-      dialogue_style:
-        "Jasper speaks in a gruff voice. He is not very articulate and often uses slang. He is not afraid to speak his mind, even if it is hurtful.",
-    },
-    {
-      name: "Willow",
-      pronouns: "She/Her",
-      other_names: "None",
-      personality:
-        "Willow is an old monkey who is kind and caring. She is always looking out for others and is always willing to help. She is a great mother and always puts her children first.",
-      background:
-        "Willow has lived in the animal kingdom for many years. She has seen many things and has never lost her sense of compassion. She believes that everyone deserves a chance to be happy.",
-      dialogue_style:
-        "Willow speaks in a soft voice. She is very articulate and always chooses her words carefully. She is not afraid to stand up for what she believes in, even if it is unpopular.",
-    },
-    {
-      name: "Oliver",
-      pronouns: "He/Him",
-      other_names: "None",
-      personality:
-        "Oliver is a young monkey who is full of life. He is always looking for adventure and is always up for a challenge. He is a loyal friend and is always there for the people he cares about.",
-      background:
-        "Oliver is new to the animal kingdom. He has not seen much of the world, but he is eager to learn. He is always asking questions and is always trying to make new friends.",
-      dialogue_style:
-        "Oliver speaks in a clear voice. He is very articulate and always knows what to say. He is not afraid to speak his mind, even if it is different from the others.",
-    },
-  ];
   const [forms, setForms] = useState<any>([]);
   const [generatingSynopsis, setGeneratingSynopsis] = useState(false);
   const [generatingMatchStyle, setGeneratingMatchStyle] = useState(false);
@@ -116,13 +81,13 @@ const StoryBible = ({
   const [openInsertModal, setOpenInsertModal] = useState(false);
   const [generatingCharacters, setGeneratingCharacters] = useState(false);
   const [generatingOutline, setGeneratingOutline] = useState(false);
-  const [demoChar, setDemoChar] = useState(chars);
-  const [chapters, setChapters] = useState<any[]>([]);
+  // const [demoChar, setDemoChar] = useState(chars);
+  const [chapters, setChapters] = useState<any>({});
   const [currentChapter, setCurrentChapter] = useState("");
   const [addingChapter, setAddingChapter] = useState(false);
 
   const editChars = (key: string, value: string, index: number) => {
-    const newChar = demoChar.map((char: any, idx: number) => {
+    const newChar = characters.map((char: any, idx: number) => {
       if (idx === index) {
         return { ...char, [key]: value };
       } else {
@@ -130,7 +95,7 @@ const StoryBible = ({
       }
     });
 
-    setDemoChar(newChar);
+    setCharacters(newChar);
   };
 
   const saveLocal = (field: string, value: string) => {
@@ -287,9 +252,9 @@ const StoryBible = ({
     setGeneratingOutline(true);
     getRequest(`/story/outline-generate/${project}`)
       .then(({ data }) => {
-        setOutline(data.replace(/\*/g, ""));
+        setOutline(data?.outline.replace(/\*/g, ""));
         setChapters(data.chapters);
-        saveLocal("outline", data?.outline?.replace(/\*/g, ""));
+        saveLocal("outline", data);
         setGeneratingOutline(false);
       })
       .catch(() => {
@@ -591,7 +556,7 @@ const StoryBible = ({
       </div>
 
       {/* ADD CHAPTER */}
-      {chapters.length > 0 && (
+      {Object.keys(chapters).length > 0 && (
         <div className="bg-buttonPurple p-4 rounded-lg text-white my-6">
           <div className="flex jstify-between items-center gap-4">
             <div>
@@ -611,10 +576,22 @@ const StoryBible = ({
                 value={currentChapter}
                 onChange={(e) => setCurrentChapter(e.target.value)}
               >
-                {chapters?.map((_, idx) => (
-                  <option value={`Chapter ${idx + 1}`} key={idx}>
-                    Chapter {idx + 1}
-                  </option>
+                {Object.keys(chapters)?.map((item: any, idx) => (
+                  <optgroup
+                    label={`Act ${idx + 1}`}
+                    key={idx}
+                    className="text-black"
+                  >
+                    {chapters[item]?.map((chap: any) => (
+                      <option
+                        value={chap.chapter}
+                        key={idx}
+                        className="text-black"
+                      >
+                        {chap.chapter}
+                      </option>
+                    ))}
+                  </optgroup>
                 ))}
               </select>
 

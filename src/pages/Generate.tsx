@@ -449,61 +449,17 @@ const Generate = () => {
   };
 
   const generateChapter = () => {
-    if (
-      !matchStyle.trim() ||
-      !outline.trim() ||
-      !synopsis.trim() ||
-      !braindump.trim() ||
-      !genre.trim()
-    ) {
-      alert("All story bible fields must be filled");
+    if (!outline.trim()) {
+      alert("Outline cannot be empty");
       return;
     }
 
     setGeneratingBeats(true);
 
     postRequest("/chapter/beats-generate", {
-      style: matchStyle,
-      braindump,
       outline,
-      synopsis,
-      genre,
-      characters: [
-        {
-          name: "Jasper",
-          pronouns: "He/Him",
-          other_names: "None",
-          personality:
-            "Jasper is an old monkey who is set in his ways. He is selfish and only thinks about himself. He is not a very good father and often forgets to feed his children.",
-          background:
-            "Jasper has lived in the animal kingdom for many years. He has seen many things and has become jaded. He has lost his sense of compassion and only cares about his own needs.",
-          dialogue_style:
-            "Jasper speaks in a gruff voice. He is not very articulate and often uses slang. He is not afraid to speak his mind, even if it is hurtful.",
-        },
-        {
-          name: "Willow",
-          pronouns: "She/Her",
-          other_names: "None",
-          personality:
-            "Willow is an old monkey who is kind and caring. She is always looking out for others and is always willing to help. She is a great mother and always puts her children first.",
-          background:
-            "Willow has lived in the animal kingdom for many years. She has seen many things and has never lost her sense of compassion. She believes that everyone deserves a chance to be happy.",
-          dialogue_style:
-            "Willow speaks in a soft voice. She is very articulate and always chooses her words carefully. She is not afraid to stand up for what she believes in, even if it is unpopular.",
-        },
-        {
-          name: "Oliver",
-          pronouns: "He/Him",
-          other_names: "None",
-          personality:
-            "Oliver is a young monkey who is full of life. He is always looking for adventure and is always up for a challenge. He is a loyal friend and is always there for the people he cares about.",
-          background:
-            "Oliver is new to the animal kingdom. He has not seen much of the world, but he is eager to learn. He is always asking questions and is always trying to make new friends.",
-          dialogue_style:
-            "Oliver speaks in a clear voice. He is very articulate and always knows what to say. He is not afraid to speak his mind, even if it is different from the others.",
-        },
-      ],
       chapter: 4,
+      projectID: project,
     })
       .then(({ data }) => {
         setBeats(data.replace(/\*/g, ""));
@@ -543,9 +499,28 @@ const Generate = () => {
       setSynopsis(story?.synopsis?.replace(/\*/g, "") ?? "");
       setGenre(story?.genre?.replace(/\*/g, "") ?? "");
       setMatchStyle(story?.style?.replace(/\*/g, "") ?? "");
+      // setOutline(story?.outline?.outline?.replace(/\*/g, "") ?? "");
       setOutline(story?.outline?.replace(/\*/g, "") ?? "");
       setBraindump(story?.braindump?.replace(/\*/g, "") ?? "");
       setCharacters(story?.characters?.replace(/\*/g, "") ?? []);
+    } else {
+      getRequest(`/project/projects`)
+        .then(({ data }) => {
+          localStorage.setItem("projects", JSON.stringify(data));
+          const currentProject = data.find((item: any) => item._id === project);
+          const story = currentProject?.storyBible;
+
+          setSynopsis(story?.synopsis?.replace(/\*/g, "") ?? "");
+          setGenre(story?.genre?.replace(/\*/g, "") ?? "");
+          setMatchStyle(story?.style?.replace(/\*/g, "") ?? "");
+          setOutline(story?.outline?.outline?.replace(/\*/g, "") ?? "");
+          // setOutline(story?.outline?.replace(/\*/g, "") ?? "");
+          setBraindump(story?.braindump?.replace(/\*/g, "") ?? "");
+          setCharacters(story?.characters?.replace(/\*/g, "") ?? []);
+        })
+        .catch((err: any) => {
+          toast.error(err.response.data);
+        });
     }
   }, []);
 
