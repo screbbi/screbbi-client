@@ -514,6 +514,8 @@ const Generate = () => {
     postRequest(`/chapter/prose-generate`, {
       projectID: project,
       writing: writer,
+      beats,
+      braindump,
     })
       .then(({ data }) => {
         setGeneratingChapters(false);
