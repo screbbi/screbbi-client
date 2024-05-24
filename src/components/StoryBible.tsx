@@ -4,12 +4,9 @@ import { LuHistory } from "react-icons/lu";
 import { PiFlowerTulipDuotone } from "react-icons/pi";
 import { GiMustache } from "react-icons/gi";
 import { BsStars } from "react-icons/bs";
-import { IoSettingsOutline } from "react-icons/io5";
-import { FaGlobeAmericas, FaPlus } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
 import { BsPersonBoundingBox, BsMenuButtonWide } from "react-icons/bs";
 import { useState } from "react";
-import { nanoid } from "nanoid";
-import SingleForm from "./SingleForm";
 import {
   delRequest,
   getRequest,
@@ -31,6 +28,8 @@ const StoryBible = ({
   matchStyle,
   characters = [],
   outline,
+  chapters,
+  setChapters,
   setOutline,
   setCharacters,
   setMatchStyle,
@@ -44,7 +43,9 @@ const StoryBible = ({
   matchStyle: any;
   characters: any[];
   outline: string;
+  chapters: any;
 
+  setChapters: (e: any) => void;
   setGenre: (e: string) => void;
   setBraindump: (e: string) => void;
   setSynopsis: (e: string) => void;
@@ -54,23 +55,7 @@ const StoryBible = ({
 }) => {
   const { project } = useParams();
   const navigate = useNavigate();
-  const formTypes = [
-    "settings",
-    "organizations",
-    "lore",
-    "key events",
-    "clue",
-    "magic system",
-    "item",
-    "technology",
-    "government",
-    "economy",
-    "culture",
-    "religiion",
-    "custom",
-  ];
 
-  const [forms, setForms] = useState<any>([]);
   const [generatingSynopsis, setGeneratingSynopsis] = useState(false);
   const [generatingMatchStyle, setGeneratingMatchStyle] = useState(false);
   const [openWriting, setOpenWriting] = useState(false);
@@ -81,8 +66,6 @@ const StoryBible = ({
   const [openInsertModal, setOpenInsertModal] = useState(false);
   const [generatingCharacters, setGeneratingCharacters] = useState(false);
   const [generatingOutline, setGeneratingOutline] = useState(false);
-  // const [demoChar, setDemoChar] = useState(chars);
-  const [chapters, setChapters] = useState<any>({});
   const [currentChapter, setCurrentChapter] = useState("");
   const [addingChapter, setAddingChapter] = useState(false);
 
@@ -113,68 +96,6 @@ const StoryBible = ({
     console.log(newProject);
 
     localStorage.setItem("projects", JSON.stringify(newProject));
-  };
-
-  const addForms = (type: string) => {
-    setForms((prevForm: any) => {
-      return [...prevForm, { type, traits: [], id: nanoid(), name: "" }];
-    });
-  };
-
-  const addTrait = (formId: string) => {
-    setForms((prevForm: any) => {
-      return prevForm.map((form: any) => {
-        if (form.id == formId) {
-          return {
-            ...form,
-            traits: [...form.traits, { name: "", id: nanoid(), value: "" }],
-          };
-        }
-      });
-      //   return [...prevForm, { type, traits: [], id: nanoid(), name: "" }];
-    });
-  };
-
-  const setFormName = (id: string, name: string) => {
-    setForms((prevForm: any) => {
-      return prevForm.map((form: any) => {
-        if (form.id === id) {
-          return { ...form, name };
-        } else return form;
-      });
-    });
-  };
-
-  const setFieldName = (id: string, traitId: string, name: string) => {
-    setForms((prevForm: any) => {
-      return prevForm.map((form: any) => {
-        if (form.id === id) {
-          const newTraits = form.traits.map((item: any) => {
-            if (item.id === traitId) {
-              return { ...item, name };
-            } else return item;
-          });
-
-          return { ...form, traits: newTraits };
-        } else return form;
-      });
-    });
-  };
-
-  const setFieldValue = (id: string, traitId: string, value: string) => {
-    setForms((prevForm: any) => {
-      return prevForm.map((form: any) => {
-        if (form.id === id) {
-          const newTraits = form.traits.map((item: any) => {
-            if (item.id === traitId) {
-              return { ...item, value };
-            } else return item;
-          });
-
-          return { ...form, traits: newTraits };
-        } else return form;
-      });
-    });
   };
 
   const generateSynopsis = () => {
@@ -241,14 +162,6 @@ const StoryBible = ({
   };
 
   const generateOutline = () => {
-    // if (synopsis.trim() === "") {
-    //   alert("Synopsis cannot be empty");
-    //   return;
-    // } else if (genre.trim() === "") {
-    //   alert("Genre cannot be empty");
-    //   return;
-    // }
-
     setGeneratingOutline(true);
     getRequest(`/story/outline-generate/${project}`)
       .then(({ data }) => {
@@ -298,6 +211,21 @@ const StoryBible = ({
       [field]: value,
     })
       .then()
+      .catch(() => {
+        toast.error(`Error Saving ${field}`);
+      });
+  };
+
+  const saveChangesAnfUpdate = (field: string, value: string) => {
+    putRequest("/story/fill", {
+      projectID: project,
+      [field]: value,
+    })
+      .then(({ data }) => {
+        setChapters(data["storyBible.chapters"]);
+        saveLocal("chapters", data["storyBible.chapters"]);
+        saveLocal("outline", data["storyBible.outline"]);
+      })
       .catch(() => {
         toast.error(`Error Saving ${field}`);
       });
@@ -533,8 +461,7 @@ const StoryBible = ({
           </div>
 
           <div className="flex items-center gap-4 text-nowrap">
-            {/* <div className="text-sm font-semibold">0/1700 words</div> */}
-            <FaRegCopy />
+            <FaRegCopy onClick={() => copyToClipboard(outline)} />
             <button
               className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4"
               onClick={generateOutline}
@@ -551,7 +478,7 @@ const StoryBible = ({
           placeholder="Describe everything the AI should know about your characters when writing them in scenes. Consider physical appearance, mannerisms, how they relate to other characters, and their motivations / goals."
           value={outline}
           onChange={(e) => setOutline(e.target.value)}
-          onBlur={() => saveChanges("outline", outline)}
+          onBlur={() => saveChangesAnfUpdate("outline", outline)}
         ></textarea>
       </div>
 
@@ -607,7 +534,7 @@ const StoryBible = ({
         </div>
       )}
 
-      <div className="single-story">
+      {/* <div className="single-story">
         <div className="single-story-top">
           <div>
             <div className="flex items-center gap-2">
@@ -644,10 +571,10 @@ const StoryBible = ({
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
 
       {/* FORMS */}
-      {forms?.map((form: any) => (
+      {/* {forms?.map((form: any) => (
         <SingleForm
           key={form.id}
           form={form}
@@ -657,7 +584,7 @@ const StoryBible = ({
           addTrait={addTrait}
           setFormName={setFormName}
         />
-      ))}
+      ))} */}
 
       {openWriting && (
         <Writing

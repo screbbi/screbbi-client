@@ -96,3 +96,82 @@ export const storyOutline = {
     },
   ],
 };
+
+export const formTypes = [
+  "settings",
+  "organizations",
+  "lore",
+  "key events",
+  "clue",
+  "magic system",
+  "item",
+  "technology",
+  "government",
+  "economy",
+  "culture",
+  "religiion",
+  "custom",
+];
+
+// FORMS
+// const addForms = (type: string) => {
+//   setForms((prevForm: any) => {
+//     return [...prevForm, { type, traits: [], id: nanoid(), name: "" }];
+//   });
+// };
+
+// const addTrait = (formId: string) => {
+//   setForms((prevForm: any) => {
+//     return prevForm.map((form: any) => {
+//       if (form.id == formId) {
+//         return {
+//           ...form,
+//           traits: [...form.traits, { name: "", id: nanoid(), value: "" }],
+//         };
+//       }
+//     });
+//     //   return [...prevForm, { type, traits: [], id: nanoid(), name: "" }];
+//   });
+// };
+
+// const setFormName = (id: string, name: string) => {
+//   setForms((prevForm: any) => {
+//     return prevForm.map((form: any) => {
+//       if (form.id === id) {
+//         return { ...form, name };
+//       } else return form;
+//     });
+//   });
+// };
+
+// const setFieldName = (id: string, traitId: string, name: string) => {
+//   setForms((prevForm: any) => {
+//     return prevForm.map((form: any) => {
+//       if (form.id === id) {
+//         const newTraits = form.traits.map((item: any) => {
+//           if (item.id === traitId) {
+//             return { ...item, name };
+//           } else return item;
+//         });
+
+//         return { ...form, traits: newTraits };
+//       } else return form;
+//     });
+//   });
+// };
+
+// const setFieldValue = (id: string, traitId: string, value: string) => {
+//   setForms((prevForm: any) => {
+//     return prevForm.map((form: any) => {
+//       if (form.id === id) {
+//         const newTraits = form.traits.map((item: any) => {
+//           if (item.id === traitId) {
+//             return { ...item, value };
+//           } else return item;
+//         });
+
+//         return { ...form, traits: newTraits };
+//       } else return form;
+//     });
+//   });
+// };

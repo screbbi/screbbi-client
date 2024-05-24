@@ -88,6 +88,7 @@ const Generate = () => {
   const [openChapter, setOpenChapter] = useState(false);
   const [generatingBeats, setGeneratingBeats] = useState(false);
   const [generatingChapters, setGeneratingChapters] = useState(false);
+  const [chapters, setChapters] = useState<any>({});
 
   const setSenses = (sense: string) => {
     if (descriptions.includes(sense)) {
@@ -282,12 +283,19 @@ const Generate = () => {
           (content: any) => content._id === writer
         );
 
-        const decoded = he.decode(currentContent.content);
-        setEditorContent(decoded ?? "Untitled Document");
-        const parser = new DOMParser();
-        const doc: any = parser.parseFromString(decoded, "text/xml");
+        if (currentContent.content) {
+          const decoded = he.decode(currentContent.content);
+          setEditorContent(decoded ?? "Untitled Document");
+          const parser = new DOMParser();
+          const doc: any = parser.parseFromString(decoded, "text/xml");
 
-        setTitle(doc.firstChild?.querySelector("p").textContent);
+          setTitle(
+            doc.firstChild?.querySelector("p").textContent ??
+              currentContent.title
+          );
+        } else {
+          setEditorContent(`<p>${currentContent.title}</p>`);
+        }
 
         if (currentContent?.linkedChapter) {
           setOpenChapter(true);
@@ -308,7 +316,7 @@ const Generate = () => {
       }
 
       timeoutId = setTimeout(() => {
-        saveDocument();
+        // saveDocument();
       }, 2000);
     };
 
@@ -499,7 +507,7 @@ const Generate = () => {
       setSynopsis(story?.synopsis?.replace(/\*/g, "") ?? "");
       setGenre(story?.genre?.replace(/\*/g, "") ?? "");
       setMatchStyle(story?.style?.replace(/\*/g, "") ?? "");
-      // setOutline(story?.outline?.outline?.replace(/\*/g, "") ?? "");
+      setChapters(story?.chapters ?? {});
       setOutline(story?.outline?.replace(/\*/g, "") ?? "");
       setBraindump(story?.braindump?.replace(/\*/g, "") ?? "");
       setCharacters(story?.characters?.replace(/\*/g, "") ?? []);
@@ -513,8 +521,8 @@ const Generate = () => {
           setSynopsis(story?.synopsis?.replace(/\*/g, "") ?? "");
           setGenre(story?.genre?.replace(/\*/g, "") ?? "");
           setMatchStyle(story?.style?.replace(/\*/g, "") ?? "");
-          setOutline(story?.outline?.outline?.replace(/\*/g, "") ?? "");
-          // setOutline(story?.outline?.replace(/\*/g, "") ?? "");
+          setOutline(story?.outline?.replace(/\*/g, "") ?? "");
+          setChapters(story?.chapters ?? {});
           setBraindump(story?.braindump?.replace(/\*/g, "") ?? "");
           setCharacters(story?.characters?.replace(/\*/g, "") ?? []);
         })
@@ -746,6 +754,8 @@ const Generate = () => {
                   setMatchStyle={setMatchStyle}
                   matchStyle={matchStyle}
                   characters={characters}
+                  chapters={chapters}
+                  setChapters={setChapters}
                 />
               )}
             </div>
