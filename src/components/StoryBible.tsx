@@ -6,7 +6,7 @@ import { GiMustache } from "react-icons/gi";
 import { BsStars } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa";
 import { BsPersonBoundingBox, BsMenuButtonWide } from "react-icons/bs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   delRequest,
   getRequest,
@@ -223,9 +223,7 @@ const StoryBible = ({
   const deleteCharacter = (id: string) => {
     delRequest(`/story/characters-delete?projectID=${project}&character=${id}`)
       .then(() => {
-        // console.log(data);
-        const newChar = characters.filter((char) => char.id !== id);
-        setChapters(newChar);
+        getCharacters();
       })
       .catch(() => {
         toast.error("Unable to delete");
@@ -242,11 +240,8 @@ const StoryBible = ({
       personality: "",
       pronouns: "",
     })
-      .then(({ data }) => {
-        setCharacters((prevChar: any) => {
-          return [...prevChar, { ...data.traits, id: data._id }];
-        });
-        // generateCharacters();
+      .then(() => {
+        getCharacters();
       })
       .catch(() => {
         toast.error("Unable to add character");
@@ -268,6 +263,21 @@ const StoryBible = ({
         toast.error("Unabe to Add Chapter");
       });
   };
+
+  const getCharacters = () => {
+    getRequest(`/story/characters-get/${project}`)
+      .then(({ data }) => {
+        console.log(data);
+        setCharacters(data);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  };
+
+  useEffect(() => {
+    getCharacters();
+  }, []);
 
   return (
     <div className="w-full mt-4">
@@ -497,9 +507,9 @@ const StoryBible = ({
 
       {characters?.map((item) => (
         <SingleCharacter
-          key={item.id}
+          key={item._id}
           character={item}
-          deleteChar={() => deleteCharacter(item.id)}
+          deleteChar={() => deleteCharacter(item._id)}
         />
       ))}
 
@@ -561,7 +571,7 @@ const StoryBible = ({
       </div>
 
       {/* ADD CHAPTER */}
-      {Object.keys(chapters).length > 0 && (
+      {Object.keys(chapters)?.length > 0 && (
         <div className="bg-buttonPurple p-4 rounded-lg text-white my-6">
           <div className="flex jstify-between items-center gap-4">
             <div>
@@ -683,7 +693,11 @@ const StoryBible = ({
 
       {openInsertModal && (
         <Compressed
-          insert={setMatchStyle}
+          insert={(e: string) => {
+            setMatchStyle(e);
+            saveLocal("style", e);
+            saveChanges("style", e);
+          }}
           close={() => setOpenInsertModal(false)}
           compressRaw={compressedText}
         />

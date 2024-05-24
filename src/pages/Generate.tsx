@@ -256,6 +256,10 @@ const Generate = () => {
   };
 
   const saveDocument = () => {
+    if (!writer) {
+      return;
+    }
+
     if (title?.trim === "") {
       return;
     }
@@ -286,6 +290,7 @@ const Generate = () => {
     getRequest(`/writer/writings`)
       .then(({ data }) => {
         setWritings(data);
+        if (!writer) return;
         const currentContent = data.find(
           (content: any) => content._id === writer
         );
@@ -296,10 +301,7 @@ const Generate = () => {
           const parser = new DOMParser();
           const doc: any = parser.parseFromString(decoded, "text/xml");
 
-          setTitle(
-            doc.firstChild?.querySelector("p").textContent ??
-              currentContent.title
-          );
+          setTitle(doc.firstChild?.querySelector("p")?.textContent);
         } else {
           setEditorContent(`<p>${currentContent.title}</p>`);
           setTitle(currentContent.title);
@@ -315,7 +317,8 @@ const Generate = () => {
         }
       })
       .catch((err: any) => {
-        toast.error(err?.response?.data);
+        // toast.error(err?.response?.data);
+        console.log(err);
       });
   };
 

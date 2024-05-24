@@ -41,7 +41,7 @@ body {
   height: calc(100vh - 5rem);
 }
 .sidebar {
-  @apply grid h-full bg-whatNewText text-lightButton p-4 w-[15rem] lg:w-full absolute lg:static top-0 duration-300 z-30;
+  @apply grid h-full bg-whatNewText text-lightButton p-4 w-[15rem] lg:w-full absolute lg:static top-0 duration-300 z-30 h-screen;
   grid-template-rows: 6rem 1fr 10rem;
 }
 

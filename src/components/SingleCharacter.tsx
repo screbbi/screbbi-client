@@ -43,6 +43,7 @@ const SingleCharacter = ({
               name="name"
               onChange={handleChange}
               onBlur={update}
+              placeholder="Name"
             />
           </div>
           <div onClick={() => setOpen(!open)}>
