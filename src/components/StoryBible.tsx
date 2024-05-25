@@ -70,6 +70,23 @@ const StoryBible = ({
   const [currentChapter, setCurrentChapter] = useState("");
   const [addingChapter, setAddingChapter] = useState(false);
 
+  // WORDCOUNTS
+  const [brainDumpWordCount, setBrainDumpWordCount] = useState(
+    braindump.trim().split(/\s+/).length
+  );
+  const [genreWordCount, setGenreWordCount] = useState(
+    genre.trim().split(/\s+/).length
+  );
+  const [styleWordCount, setStyleWordCount] = useState(
+    matchStyle.trim().split(/\s+/).length
+  );
+  const [synopsisWordCount, setSynopsisWordCount] = useState(
+    synopsis.trim().split(/\s+/).length
+  );
+  const [outlineWordCount, setOutlineWordCount] = useState(
+    outline.trim().split(/\s+/).length
+  );
+
   const saveLocal = (field: string, value: string) => {
     const projects: any = localStorage.getItem("projects");
     const projec = JSON.parse(projects);
@@ -211,9 +228,9 @@ const StoryBible = ({
       [field]: value,
     })
       .then(({ data }) => {
-        setChapters(data["storyBible.chapters"]);
-        saveLocal("chapters", data["storyBible.chapters"]);
-        saveLocal("outline", data["storyBible.outline"]);
+        setChapters(data["storyBible.chapters"] ?? {});
+        saveLocal("chapters", data["storyBible.chapters"] ?? {});
+        saveLocal("outline", data["storyBible.outline"] ?? "");
       })
       .catch(() => {
         toast.error(`Error Saving ${field}`);
@@ -280,7 +297,7 @@ const StoryBible = ({
   }, []);
 
   return (
-    <div className="w-full mt-4">
+    <div className="w-full mt-4 pb-4">
       <div className="single-story">
         <div className="single-story-top">
           <div className="flex items-center gap-2">
@@ -298,13 +315,13 @@ const StoryBible = ({
                 <li>Synopsis</li>
                 <li>Beats</li>
               </ul>
-              {/* <div>- Synopsis </div>
-              <div>- Beats</div> */}
             </Tooltip>
           </div>
 
           <div className="flex items-center gap-4">
-            <div className="text-sm font-semibold">0/2000 words</div>
+            <div className="text-sm font-semibold">
+              {brainDumpWordCount}/2000 words
+            </div>
             <FaRegCopy />
             <LuHistory />
           </div>
@@ -315,8 +332,14 @@ const StoryBible = ({
           placeholder="Write a braindump of everything you know about the story. You can include information about plot, characters, worldbuilding, theme - anything!"
           value={braindump}
           onChange={(e) => {
-            setBraindump(e.target.value);
-            saveLocal("braindump", e.target.value);
+            const text = e.target.value;
+            const words = text.trim().split(/\s+/);
+            setBrainDumpWordCount(words.length);
+
+            if (words.length <= 2000) {
+              setBraindump(e.target.value);
+              saveLocal("braindump", e.target.value);
+            }
           }}
           onBlur={() => saveChanges("braindump", braindump)}
         ></textarea>
@@ -344,18 +367,24 @@ const StoryBible = ({
           </div>
 
           <div className="flex items-center gap-4">
-            <div className="text-sm font-semibold">0/40 words</div>
+            <div className="word-count">{genreWordCount}/40 words</div>
             <FaRegCopy />
           </div>
         </div>
 
         <textarea
           className="single-story-textarea"
-          placeholder="What genre are you writing in? Feel free to include sub-genres and tropes. Examples: Romance, Horror, Fantasy, Cozy mystery, Friends-to-Lovers, Gumshoe"
+          placeholder={`What genre are you writing in? Feel free to include sub-genres and tropes.\n \n Examples: Romance, Horror, Fantasy, Cozy mystery, Friends-to-Lovers, Gumshoe`}
           value={genre}
           onChange={(e) => {
-            setGenre(e.target.value);
-            saveLocal("genre", e.target.value);
+            const text = e.target.value;
+            const words = text.trim().split(/\s+/);
+            setGenreWordCount(words.length);
+
+            if (words.length <= 40) {
+              setGenre(e.target.value);
+              saveLocal("genre", e.target.value);
+            }
           }}
           onBlur={() => saveChanges("genre", genre)}
         ></textarea>
@@ -382,7 +411,9 @@ const StoryBible = ({
           </div>
 
           <div className="flex items-center gap-4 text-nowrap">
-            {/* <div className="text-sm font-semibold">0/40 words</div> */}
+            <div className="text-sm font-semibold">
+              {styleWordCount}/40 words
+            </div>
             <FaRegCopy
               className="cursor-pointer"
               onClick={() =>
@@ -403,11 +434,17 @@ const StoryBible = ({
 
         <textarea
           className="single-story-textarea"
-          placeholder="Write the style of prose you want Story Bible to write. e.g. short sentences, lots of dialogue, show don’t tell"
+          placeholder={`Write the style of prose you want Story Bible to write.\n\n e.g. short sentences, lots of dialogue, show don’t tell`}
           value={matchStyle}
           onChange={(e) => {
-            setMatchStyle(e.target.value);
-            saveLocal("style", e.target.value);
+            const text = e.target.value;
+            const words = text.trim().split(/\s+/);
+            setStyleWordCount(words.length);
+
+            if (words.length <= 40) {
+              setMatchStyle(e.target.value);
+              saveLocal("style", e.target.value);
+            }
           }}
           onBlur={() => saveChanges("style", matchStyle)}
         ></textarea>
@@ -434,6 +471,7 @@ const StoryBible = ({
           </div>
 
           <div className="flex items-center gap-4 text-nowrap">
+            <div className="word-count">{synopsisWordCount}/800 words</div>
             <FaRegCopy onClick={() => copyToClipboard(synopsis)} />
             <button
               className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4"
@@ -450,7 +488,16 @@ const StoryBible = ({
         <textarea
           className="single-story-textarea"
           placeholder="Introduce the characters, their goals, and the central conflict, while conveying the story's tone, themes, and unique elements."
-          onChange={(e) => setSynopsis(e.target.value)}
+          onChange={(e) => {
+            const text = e.target.value;
+            const words = text.trim().split(/\s+/);
+            setSynopsisWordCount(words.length);
+
+            if (words.length <= 800) {
+              setSynopsis(e.target.value);
+              saveLocal("braindump", e.target.value);
+            }
+          }}
           value={synopsis}
           onBlur={() => saveChanges("synopsis", synopsis)}
         ></textarea>
@@ -549,6 +596,7 @@ const StoryBible = ({
           </div>
 
           <div className="flex items-center gap-4 text-nowrap">
+            <div className="word-count">{outlineWordCount}/1700</div>
             <FaRegCopy onClick={() => copyToClipboard(outline)} />
             <button
               className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4"
@@ -563,9 +611,18 @@ const StoryBible = ({
 
         <textarea
           className="single-story-textarea long"
-          placeholder="Describe everything the AI should know about your characters when writing them in scenes. Consider physical appearance, mannerisms, how they relate to other characters, and their motivations / goals."
+          placeholder={`Similar to the Synopsis, but in greater detail. Each chapter here can be linked to a document for use with the Chapter Generator.\nIf you write your own Outline, match this format:\n\nAct 1:\n\nChapter 1:\nChapter 2:\nChapter 3:\n\nAct 2:\nChapter 4:\nChapter 5:\netc...`}
           value={outline}
-          onChange={(e) => setOutline(e.target.value)}
+          onChange={(e) => {
+            const text = e.target.value;
+            const words = text.trim().split(/\s+/);
+            setOutlineWordCount(words.length);
+
+            if (words.length <= 1700) {
+              setOutline(e.target.value);
+              saveLocal("outline", e.target.value);
+            }
+          }}
           onBlur={() => saveChangesAnfUpdate("outline", outline)}
         ></textarea>
       </div>

@@ -41,9 +41,10 @@ const Generate = () => {
   const { writer, project } = useParams();
   const optionRef: any = useRef();
   const reWriteRef: any = useRef();
+  const describeRef: any = useRef();
   const linkedRef: any = useRef();
 
-  const { story } = useStore(store);
+  const { story, setStory } = useStore(store);
 
   const [editorContent, setEditorContent] = useState<any>("");
   const [title, setTitle] = useState<any>("");
@@ -88,7 +89,7 @@ const Generate = () => {
   const [characters, setCharacters] = useState<any[]>([]);
   const [matchStyle, setMatchStyle] = useState("");
   const [beats, setBeats] = useState("");
-  const [prose, setProse] = useState("");
+  // const [prose, setProse] = useState("");
   const [openChapter, setOpenChapter] = useState(false);
   const [generatingBeats, setGeneratingBeats] = useState(false);
   const [generatingChapters, setGeneratingChapters] = useState(false);
@@ -161,7 +162,7 @@ const Generate = () => {
     }
 
     setLoadingToned(true);
-    putRequest("/writer/settings", tonedPromptSetting)
+    putRequest("/writer/settings", { ...tonedPromptSetting, writer })
       .then(() => {
         setLoadingToned(false);
         setOpenWriteSettings(false);
@@ -310,6 +311,9 @@ const Generate = () => {
         if (currentContent?.linkedChapter) {
           setOpenChapter(true);
           setLinkedChapter(currentContent?.linkedChapter?.chapter);
+        } else {
+          setLinkedChapter(null);
+          setOpenChapter(false);
         }
 
         if (currentContent.beats !== null) {
@@ -368,6 +372,12 @@ const Generate = () => {
         setOpenChapterLiking(false);
         setOpenLinkingOption(false);
       }
+      if (
+        describeRef.current &&
+        !describeRef?.current?.contains(event.target as Node)
+      ) {
+        setOpenDescribeOptions(false);
+      }
     };
 
     document.addEventListener("click", handleOutsideClick);
@@ -425,7 +435,6 @@ const Generate = () => {
         descriptions,
       })
         .then(() => {
-          toast.success("Successful");
           setLoading(false);
           setRewriteText("");
           setHighlightedText("");
@@ -446,7 +455,6 @@ const Generate = () => {
         type: currentType,
       })
         .then(() => {
-          toast.success("Successful");
           setLoading(false);
           setRewriteText("");
           setHighlightedText("");
@@ -522,7 +530,9 @@ const Generate = () => {
     })
       .then(({ data }) => {
         setGeneratingChapters(false);
-        setProse(data.replace(/\*/g, ""));
+        setEditorContent(`<p>${title}</p>\n <p>${data}</p>`);
+        saveDocument();
+        setOpenChapter(false);
       })
       .catch(() => {
         setGeneratingChapters(false);
@@ -546,6 +556,12 @@ const Generate = () => {
       const projec = JSON.parse(projects);
       const currentProject = projec.find((item: any) => item._id === project);
       const story = currentProject?.storyBible;
+      if (story) {
+        setStory(true);
+      } else {
+        setStory(false);
+      }
+
       retriveLocal(story);
     } else {
       getRequest(`/project/projects`)
@@ -564,8 +580,8 @@ const Generate = () => {
   return (
     <PageLayout writings={writings} refresh={() => setRefresh(!refresh)}>
       {writer ? (
-        <div className="generate h-full overflow-hidden">
-          <div className="p-2">
+        <div className="generate h-full">
+          <div className="p-2 overflow-y-scroll">
             {/* WRITE OPTIONS */}
             <div className="flex justify-between items-center relative">
               <div className="flex gap-2 items-center mb-4">
@@ -663,6 +679,7 @@ const Generate = () => {
 
                 <div
                   className="write-option"
+                  ref={describeRef}
                   onClick={() => {
                     setOpenDescribeOptions(!openDescribeOptions);
                   }}
@@ -749,8 +766,6 @@ const Generate = () => {
                     beats={beats}
                     setBeats={setBeats}
                     generateProse={generateProse}
-                    prose={prose}
-                    setProse={setProse}
                     loadingBeats={generatingBeats}
                     loadingChapter={generatingChapters}
                     chapters={chapters}
@@ -761,17 +776,17 @@ const Generate = () => {
             </div>
 
             {/* EDITOR */}
-            <div className="overflow-y-scroll h-[80vh]">
+            <div className="h-[80vh]">
               <div
-                className="editor h-full relative flex justify-center bg-white"
+                className="editor h-full relative flex justify-center bg-white rounded-lg overflow-hidden shadow-lg"
                 onMouseUp={checkSelection}
               >
                 <SunEditor
                   setOptions={options}
                   setDefaultStyle="font-family: 'Manrope', sans-serif; background:'transparent'"
                   setContents={editorContent}
-                  height="calc(100vh - 11rem)"
-                  width="95%"
+                  height="calc(100vh - 12rem)"
+                  width="100%"
                   onInput={inputting}
                   onClick={() => {
                     setRange();

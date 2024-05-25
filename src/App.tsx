@@ -6,6 +6,7 @@ import Verify from "./pages/onboard/Verify";
 import Generate from "./pages/Generate";
 import { Toaster } from "react-hot-toast";
 import Home from "./pages/Home";
+import Count from "./pages/Count";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/generate/:writer" element={<Generate />} />
         <Route path="/project/:project/:writer" element={<Generate />} />
         <Route path="/project/:project/" element={<Generate />} />
+        <Route path="/count" element={<Count />} />
 
         <Route path="auth">
           <Route path="login" element={<Login />} />

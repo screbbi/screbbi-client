@@ -14,6 +14,7 @@ const RewriteOption = ({
           className="border border-selectText text-black block w-full p-2 rounded-md outline-0"
           placeholder="Card Number"
           value={cardNumber}
+          min={1}
           onChange={(e) => {
             setCardNumber(e.target.value);
             localStorage.setItem("cardNumber", e.target.value);

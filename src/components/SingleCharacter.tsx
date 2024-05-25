@@ -15,10 +15,10 @@ const SingleCharacter = ({
 }) => {
   const [open, setOpen] = useState(false);
   const { project } = useParams();
-  const [data, setData] = useState(character);
+  const [data, setData] = useState(character.traits);
 
   const update = () => {
-    putRequest(`/story/characters-update/${character.id}`, {
+    putRequest(`/story/characters-update/${character._id}`, {
       projectID: project,
       ...data,
     })

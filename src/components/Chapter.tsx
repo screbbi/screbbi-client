@@ -8,8 +8,7 @@ const Chapter = ({
   generate,
   beats,
   setBeats,
-  prose,
-  setProse,
+
   generateProse,
   loadingBeats,
   loadingChapter,
@@ -22,20 +21,18 @@ const Chapter = ({
   setBeats: (e: string) => void;
   beats: string;
   generateProse: () => void;
-  setProse: (e: string) => void;
-  prose: string;
   loadingChapter: boolean;
   loadingBeats: boolean;
   chapters: any;
   linked: string;
 }) => {
-  const newChapter = Object.values(chapters).flat();
+  const newChapter = chapters && Object.values(chapters)?.flat();
   const currenLinked: any = newChapter?.find(
     (chap: any) => chap.chapter === linked
   );
 
   return (
-    <div className="absolute right-0 top-full bg-white w-full z-10 shadow-lg rounded-md">
+    <div className="absolute right-0 top-36 bg-white w-full z-10 shadow-lg rounded-md">
       <div className="p-4 border-b border-gray-200">
         <div className="flex justify-between items-center">
           <div className="flex gap-2 items-center">
@@ -153,10 +150,6 @@ const Chapter = ({
             </div>
 
             <div className="flex items-center gap-4 text-nowrap">
-              <FaRegCopy
-                className="cursor-pointer"
-                onClick={() => copyToClipboard(prose)}
-              />
               <button
                 className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4"
                 onClick={() => generateProse()}
@@ -168,12 +161,12 @@ const Chapter = ({
             </div>
           </div>
 
-          <textarea
+          {/* <textarea
             className="single-story-textarea"
             placeholder="Write a braindump of everything you know about the story. You can include information about plot, characters, worldbuilding, theme - anything!"
             value={prose}
             onChange={(e) => setProse(e.target.value)}
-          ></textarea>
+          ></textarea> */}
         </div>
       </div>
     </div>

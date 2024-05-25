@@ -130,7 +130,7 @@ body {
   @apply text-base mb-4 font-bold;
 }
 .sun-editor {
-  @apply border-0 max-w-lg mx-auto;
+  @apply border-0;
 }
 .se-btn-tray {
   @apply flex justify-center;
@@ -165,7 +165,7 @@ body {
   @apply text-xs;
 }
 .write-settings-control select {
-  @apply block w-full text-[10px] text-selectText border border-selectText rounded-md p-1 mt-1;
+  @apply block w-full text-[10px] text-black border border-selectText rounded-md p-1 mt-1 outline-0;
 }
 
 .single-desc {
@@ -258,7 +258,7 @@ body {
   @apply h-32 resize-none rounded-lg outline-none w-full bg-gray-50 p-2 text-sm mt-2 border border-gray-200;
 }
 .single-story-textarea.long {
-  @apply h-48;
+  @apply h-80;
 }
 
 .single-add-form {
@@ -304,4 +304,7 @@ body {
 ul {
   list-style: circle;
   @apply ml-6;
+}
+.word-count {
+  @apply text-sm font-semibold;
 }
