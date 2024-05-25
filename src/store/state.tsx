@@ -5,8 +5,8 @@ interface storeType {
   user: any;
   writings: any;
   getWriting: () => void;
-  story: boolean;
-  setStory: (e: boolean) => void;
+  story: any;
+  setStory: (e: any) => void;
   //   authorize: () => void;
 }
 
@@ -23,8 +23,9 @@ const store = create<storeType>((set) => ({
       });
   },
 
-  story: false,
+  story: localStorage.getItem("story") ?? false,
   setStory: (newStory) => {
+    localStorage.setItem("story", newStory);
     set(() => ({ story: newStory }));
   },
 

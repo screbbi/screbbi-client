@@ -44,7 +44,7 @@ const Generate = () => {
   const describeRef: any = useRef();
   const linkedRef: any = useRef();
 
-  const { story, setStory } = useStore(store);
+  const { story } = useStore(store);
 
   const [editorContent, setEditorContent] = useState<any>("");
   const [title, setTitle] = useState<any>("");
@@ -89,7 +89,6 @@ const Generate = () => {
   const [characters, setCharacters] = useState<any[]>([]);
   const [matchStyle, setMatchStyle] = useState("");
   const [beats, setBeats] = useState("");
-  // const [prose, setProse] = useState("");
   const [openChapter, setOpenChapter] = useState(false);
   const [generatingBeats, setGeneratingBeats] = useState(false);
   const [generatingChapters, setGeneratingChapters] = useState(false);
@@ -290,7 +289,11 @@ const Generate = () => {
     setWritings(null);
     getRequest(`/writer/writings`)
       .then(({ data }) => {
-        setWritings(data);
+        const filtered = data.filter(
+          (writing: any) => writing.project === project
+        );
+
+        setWritings(filtered);
         if (!writer) return;
         const currentContent = data.find(
           (content: any) => content._id === writer
@@ -321,7 +324,7 @@ const Generate = () => {
         }
       })
       .catch((err: any) => {
-        // toast.error(err?.response?.data);
+        toast.error("Unable to get User writings");
         console.log(err);
       });
   };
@@ -553,14 +556,8 @@ const Generate = () => {
   useEffect(() => {
     getRequest(`/project/projects`)
       .then(({ data }) => {
-        localStorage.setItem("projects", JSON.stringify(data));
         const currentProject = data.find((item: any) => item._id === project);
         const story = currentProject?.storyBible;
-        if (story) {
-          setStory(true);
-        } else {
-          setStory(false);
-        }
         retriveLocal(story);
       })
       .catch((err: any) => {
@@ -572,7 +569,7 @@ const Generate = () => {
     <PageLayout writings={writings} refresh={() => setRefresh(!refresh)}>
       {writer ? (
         <div className="generate h-full">
-          <div className="p-2 overflow-y-scroll">
+          <div className="py-2 px-6 overflow-y-scroll">
             {/* WRITE OPTIONS */}
             <div className="flex justify-between items-center relative">
               <div className="flex gap-2 items-center mb-4">

@@ -150,7 +150,7 @@ body {
 }
 
 .write-option {
-  @apply flex items-center gap-2 font-semibold text-xs py-2 px-3 bg-white rounded-full relative z-10;
+  @apply flex items-center gap-2 font-semibold text-xs py-2 px-3 bg-white rounded-full relative z-20;
 }
 .editor {
   height: calc(100vh - 9rem);
@@ -307,4 +307,8 @@ ul {
 }
 .word-count {
   @apply text-sm font-semibold;
+}
+.chapter-modal {
+  @apply absolute right-[3%] top-36 bg-white w-[94%] mx-auto z-10 rounded-md;
+  box-shadow: 0 0 10px 5px rgba(197, 197, 197, 0.508);
 }

@@ -97,7 +97,9 @@ const StoryBible = ({
     // setSynopsisWordCount(synopsis.trim().split(/\s+/).length);
     // setOutlineWordCount(outline.trim().split(/\s+/).length);
     // setStyleWordCount(matchStyle.trim().split(/\s+/).length);
-  }, [braindump, matchStyle, outline, synopsis]);
+  }, [braindump, matchStyle, outline, synopsis, genre]);
+
+  console.log(genreWordCount);
 
   const setValueWithWordCount = (
     value: string,
@@ -105,6 +107,10 @@ const StoryBible = ({
     count: number,
     counter: (e: number) => void
   ) => {
+    if (value === "") {
+      counter(0);
+      return;
+    }
     const words = value.trim().split(/\s+/);
     const wordLength = words.length;
 

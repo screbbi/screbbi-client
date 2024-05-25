@@ -32,7 +32,7 @@ const Chapter = ({
   );
 
   return (
-    <div className="absolute right-0 top-36 bg-white w-full z-10 shadow-lg rounded-md">
+    <div className="chapter-modal">
       <div className="p-4 border-b border-gray-200">
         <div className="flex justify-between items-center">
           <div className="flex gap-2 items-center">
@@ -118,7 +118,7 @@ const Chapter = ({
 
           <textarea
             className="single-story-textarea"
-            placeholder="Write a braindump of everything you know about the story. You can include information about plot, characters, worldbuilding, theme - anything!"
+            placeholder={`Write a numbered list of Beats. Beats are step by step instructions for the AI for how to write your chapter. Each Beat needs enough meat to write 200 words or so.\n\ne.g. 1. Begin in Sarah’s home, where we see her drinking a cup of coffee and reading the paper. She hears a loud boom and rushes to the window where she sees an explosion in the distance. She panics and runs around the house looking for the rest of the family.`}
             value={beats}
             onChange={(e) => setBeats(e.target.value)}
           ></textarea>
