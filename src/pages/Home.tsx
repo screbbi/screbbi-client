@@ -45,7 +45,6 @@ const Home = () => {
     getRequest(`/project/projects`)
       .then(({ data }) => {
         setWritings(data);
-        localStorage.setItem("projects", JSON.stringify(data));
       })
       .catch((err: any) => {
         toast.error(err.response.data);
@@ -64,13 +63,7 @@ const Home = () => {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("projects")) {
-      const projects: any = localStorage.getItem("projects");
-      setWritings(JSON.parse(projects));
-      return;
-    } else {
-      getUserWriting();
-    }
+    getUserWriting();
   }, []);
 
   return (

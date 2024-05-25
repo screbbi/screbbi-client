@@ -551,30 +551,21 @@ const Generate = () => {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("projects")) {
-      const projects: any = localStorage?.getItem("projects");
-      const projec = JSON.parse(projects);
-      const currentProject = projec.find((item: any) => item._id === project);
-      const story = currentProject?.storyBible;
-      if (story) {
-        setStory(true);
-      } else {
-        setStory(false);
-      }
-
-      retriveLocal(story);
-    } else {
-      getRequest(`/project/projects`)
-        .then(({ data }) => {
-          localStorage.setItem("projects", JSON.stringify(data));
-          const currentProject = data.find((item: any) => item._id === project);
-          const story = currentProject?.storyBible;
-          retriveLocal(story);
-        })
-        .catch((err: any) => {
-          toast.error(err.response.data);
-        });
-    }
+    getRequest(`/project/projects`)
+      .then(({ data }) => {
+        localStorage.setItem("projects", JSON.stringify(data));
+        const currentProject = data.find((item: any) => item._id === project);
+        const story = currentProject?.storyBible;
+        if (story) {
+          setStory(true);
+        } else {
+          setStory(false);
+        }
+        retriveLocal(story);
+      })
+      .catch((err: any) => {
+        toast.error(err.response.data);
+      });
   }, []);
 
   return (
