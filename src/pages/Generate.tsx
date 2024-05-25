@@ -321,6 +321,8 @@ const Generate = () => {
 
         if (currentContent.beats !== null) {
           setBeats(currentContent.beats);
+        } else {
+          setBeats("");
         }
       })
       .catch((err: any) => {
