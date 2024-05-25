@@ -287,7 +287,7 @@ const Generate = () => {
 
   const getUserWriting = () => {
     setWritings(null);
-    getRequest(`/writer/writings`)
+    getRequest(`/writer/writings?project=${project}`)
       .then(({ data }) => {
         const filtered = data.filter(
           (writing: any) => writing.project === project
