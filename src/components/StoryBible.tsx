@@ -87,6 +87,37 @@ const StoryBible = ({
     outline.trim().split(/\s+/).length
   );
 
+  useEffect(() => {
+    setValueWithWordCount(braindump, setBraindump, 2000, setBrainDumpWordCount);
+    setValueWithWordCount(matchStyle, setMatchStyle, 40, setStyleWordCount);
+    setValueWithWordCount(outline, setOutline, 1700, setOutlineWordCount);
+    setValueWithWordCount(synopsis, setSynopsis, 800, setSynopsisWordCount);
+    setValueWithWordCount(genre, setGenre, 40, setGenreWordCount);
+
+    // setSynopsisWordCount(synopsis.trim().split(/\s+/).length);
+    // setOutlineWordCount(outline.trim().split(/\s+/).length);
+    // setStyleWordCount(matchStyle.trim().split(/\s+/).length);
+  }, [braindump, matchStyle, outline, synopsis]);
+
+  const setValueWithWordCount = (
+    value: string,
+    setter: (e: string) => void,
+    count: number,
+    counter: (e: number) => void
+  ) => {
+    const words = value.trim().split(/\s+/);
+    const wordLength = words.length;
+
+    if (wordLength <= count) {
+      setter(value);
+      counter(wordLength);
+    } else {
+      const newValue = words.slice(0, count).join(" ");
+      counter(count);
+      setter(newValue);
+    }
+  };
+
   const saveLocal = (field: string, value: string) => {
     const projects: any = localStorage.getItem("projects");
     const projec = JSON.parse(projects);
@@ -98,8 +129,6 @@ const StoryBible = ({
         return item;
       }
     });
-
-    console.log(newProject);
 
     localStorage.setItem("projects", JSON.stringify(newProject));
   };
@@ -284,7 +313,6 @@ const StoryBible = ({
   const getCharacters = () => {
     getRequest(`/story/characters-get/${project}`)
       .then(({ data }) => {
-        console.log(data);
         setCharacters(data);
       })
       .catch((err) => {
@@ -332,14 +360,8 @@ const StoryBible = ({
           placeholder="Write a braindump of everything you know about the story. You can include information about plot, characters, worldbuilding, theme - anything!"
           value={braindump}
           onChange={(e) => {
-            const text = e.target.value;
-            const words = text.trim().split(/\s+/);
-            setBrainDumpWordCount(words.length);
-
-            if (words.length <= 2000) {
-              setBraindump(e.target.value);
-              saveLocal("braindump", e.target.value);
-            }
+            setBraindump(e.target.value);
+            saveLocal("braindump", e.target.value);
           }}
           onBlur={() => saveChanges("braindump", braindump)}
         ></textarea>
@@ -377,14 +399,8 @@ const StoryBible = ({
           placeholder={`What genre are you writing in? Feel free to include sub-genres and tropes.\n \n Examples: Romance, Horror, Fantasy, Cozy mystery, Friends-to-Lovers, Gumshoe`}
           value={genre}
           onChange={(e) => {
-            const text = e.target.value;
-            const words = text.trim().split(/\s+/);
-            setGenreWordCount(words.length);
-
-            if (words.length <= 40) {
-              setGenre(e.target.value);
-              saveLocal("genre", e.target.value);
-            }
+            setGenre(e.target.value);
+            saveLocal("genre", e.target.value);
           }}
           onBlur={() => saveChanges("genre", genre)}
         ></textarea>
@@ -437,14 +453,8 @@ const StoryBible = ({
           placeholder={`Write the style of prose you want Story Bible to write.\n\n e.g. short sentences, lots of dialogue, show don’t tell`}
           value={matchStyle}
           onChange={(e) => {
-            const text = e.target.value;
-            const words = text.trim().split(/\s+/);
-            setStyleWordCount(words.length);
-
-            if (words.length <= 40) {
-              setMatchStyle(e.target.value);
-              saveLocal("style", e.target.value);
-            }
+            setMatchStyle(e.target.value);
+            saveLocal("style", e.target.value);
           }}
           onBlur={() => saveChanges("style", matchStyle)}
         ></textarea>
@@ -489,14 +499,8 @@ const StoryBible = ({
           className="single-story-textarea"
           placeholder="Introduce the characters, their goals, and the central conflict, while conveying the story's tone, themes, and unique elements."
           onChange={(e) => {
-            const text = e.target.value;
-            const words = text.trim().split(/\s+/);
-            setSynopsisWordCount(words.length);
-
-            if (words.length <= 800) {
-              setSynopsis(e.target.value);
-              saveLocal("braindump", e.target.value);
-            }
+            setSynopsis(e.target.value);
+            saveLocal("synopsis", e.target.value);
           }}
           value={synopsis}
           onBlur={() => saveChanges("synopsis", synopsis)}
@@ -614,14 +618,8 @@ const StoryBible = ({
           placeholder={`Similar to the Synopsis, but in greater detail. Each chapter here can be linked to a document for use with the Chapter Generator.\nIf you write your own Outline, match this format:\n\nAct 1:\n\nChapter 1:\nChapter 2:\nChapter 3:\n\nAct 2:\nChapter 4:\nChapter 5:\netc...`}
           value={outline}
           onChange={(e) => {
-            const text = e.target.value;
-            const words = text.trim().split(/\s+/);
-            setOutlineWordCount(words.length);
-
-            if (words.length <= 1700) {
-              setOutline(e.target.value);
-              saveLocal("outline", e.target.value);
-            }
+            setOutline(e.target.value);
+            saveLocal("outline", e.target.value);
           }}
           onBlur={() => saveChangesAnfUpdate("outline", outline)}
         ></textarea>
