@@ -118,21 +118,6 @@ const StoryBible = ({
     }
   };
 
-  const saveLocal = (field: string, value: string) => {
-    const projects: any = localStorage.getItem("projects");
-    const projec = JSON.parse(projects);
-
-    const newProject: any = projec.map((item: any) => {
-      if (item._id === project) {
-        return { ...item, storyBible: { ...item.storyBible, [field]: value } };
-      } else {
-        return item;
-      }
-    });
-
-    localStorage.setItem("projects", JSON.stringify(newProject));
-  };
-
   const generateSynopsis = () => {
     // if (braindump.trim() === "") {
     //   alert("Braindump cannot be empty");
@@ -147,7 +132,6 @@ const StoryBible = ({
       .then(({ data }) => {
         setSynopsis(data);
         setGeneratingSynopsis(false);
-        saveLocal("synopsis", data.replace(/\*/g, ""));
       })
       .catch(() => {
         setGeneratingSynopsis(false);
@@ -165,7 +149,7 @@ const StoryBible = ({
     postRequest("/story/style-generate", { writing, projectID: project })
       .then(({ data }) => {
         setRawText(data.replace(/\*/g, ""));
-        saveLocal("style", data.replace(/\*/g, ""));
+
         setGeneratingMatchStyle(false);
         setOpenWriting(false);
         setOpenCompressWriting(true);
@@ -202,7 +186,7 @@ const StoryBible = ({
       .then(({ data }) => {
         setOutline(data?.outline.replace(/\*/g, ""));
         setChapters(data.chapters);
-        saveLocal("outline", data);
+
         setGeneratingOutline(false);
       })
       .catch(() => {
@@ -228,8 +212,6 @@ const StoryBible = ({
         data.forEach((item: any) => {
           characterString += `${item.name}\n Personality: ${item.personality} \n Background: ${item.background} \n\n`;
         });
-
-        saveLocal("characters", data);
 
         setGeneratingCharacters(false);
         setCharacters(characterString);
@@ -258,8 +240,6 @@ const StoryBible = ({
     })
       .then(({ data }) => {
         setChapters(data["storyBible.chapters"] ?? {});
-        saveLocal("chapters", data["storyBible.chapters"] ?? {});
-        saveLocal("outline", data["storyBible.outline"] ?? "");
       })
       .catch(() => {
         toast.error(`Error Saving ${field}`);
@@ -361,7 +341,6 @@ const StoryBible = ({
           value={braindump}
           onChange={(e) => {
             setBraindump(e.target.value);
-            saveLocal("braindump", e.target.value);
           }}
           onBlur={() => saveChanges("braindump", braindump)}
         ></textarea>
@@ -400,7 +379,6 @@ const StoryBible = ({
           value={genre}
           onChange={(e) => {
             setGenre(e.target.value);
-            saveLocal("genre", e.target.value);
           }}
           onBlur={() => saveChanges("genre", genre)}
         ></textarea>
@@ -454,7 +432,6 @@ const StoryBible = ({
           value={matchStyle}
           onChange={(e) => {
             setMatchStyle(e.target.value);
-            saveLocal("style", e.target.value);
           }}
           onBlur={() => saveChanges("style", matchStyle)}
         ></textarea>
@@ -500,7 +477,6 @@ const StoryBible = ({
           placeholder="Introduce the characters, their goals, and the central conflict, while conveying the story's tone, themes, and unique elements."
           onChange={(e) => {
             setSynopsis(e.target.value);
-            saveLocal("synopsis", e.target.value);
           }}
           value={synopsis}
           onBlur={() => saveChanges("synopsis", synopsis)}
@@ -619,7 +595,6 @@ const StoryBible = ({
           value={outline}
           onChange={(e) => {
             setOutline(e.target.value);
-            saveLocal("outline", e.target.value);
           }}
           onBlur={() => saveChangesAnfUpdate("outline", outline)}
         ></textarea>
@@ -750,8 +725,6 @@ const StoryBible = ({
         <Compressed
           insert={(e: string) => {
             setMatchStyle(e);
-            saveLocal("style", e);
-            saveChanges("style", e);
           }}
           close={() => setOpenInsertModal(false)}
           compressRaw={compressedText}
