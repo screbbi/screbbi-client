@@ -99,15 +99,13 @@ const StoryBible = ({
     // setStyleWordCount(matchStyle.trim().split(/\s+/).length);
   }, [braindump, matchStyle, outline, synopsis, genre]);
 
-  console.log(genreWordCount);
-
   const setValueWithWordCount = (
     value: string,
     setter: (e: string) => void,
     count: number,
     counter: (e: number) => void
   ) => {
-    if (value === "") {
+    if (value.trim() === "") {
       counter(0);
       return;
     }
