@@ -14,7 +14,10 @@ const WriteSettings = ({
   loading: boolean;
 }) => {
   return (
-    <div className="absolute top-full left-0 w-60 bg-white shadow-lg rounded-md">
+    <div
+      className="absolute top-full left-0 w-60 bg-white shadow-lg rounded-md"
+      onClick={(e) => e.stopPropagation()}
+    >
       <div
         className="flex items-center gap-2 p-3 text-sm border-b border-faqBorder"
         onClick={(e) => {
@@ -28,12 +31,12 @@ const WriteSettings = ({
 
       <div className="grid grid-cols-2 gap-5 p-3 text-sm  border-b border-faqBorder">
         <div className="write-settings-control">
-          <label htmlFor="lengthOfStory">Length of words</label>
+          <label htmlFor="lengthOfWords">Length of words</label>
           <select
-            name="lengthOfStory"
-            id="lengthOfStory"
+            name="lengthOfWords"
+            id="lengthOfWords"
             onChange={change}
-            value={writeSetting.lengthOfStory}
+            value={writeSetting.lengthOfWords}
           >
             <option value="150">150 words</option>
             <option value="250">250 words</option>

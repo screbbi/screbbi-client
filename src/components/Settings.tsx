@@ -1,10 +1,14 @@
 import ModalLayout from "../layout/ModalLayout";
 import { IoMdPerson } from "react-icons/io";
 import { CiEdit } from "react-icons/ci";
-import profile from "../assets/img/profile.svg";
 import { MdOutlineFormatLineSpacing } from "react-icons/md";
+import { useStore } from "zustand";
+import store from "../store/state";
+import ProfilePicture from "./ProfilePicture";
 
 const Settings = ({ close }: { close: () => void }) => {
+  const { user } = useStore(store);
+
   return (
     <ModalLayout close={close} title="Settings">
       <div className="flex gap-2 items-center">
@@ -18,12 +22,12 @@ const Settings = ({ close }: { close: () => void }) => {
       <div className="text-closeBlack text-xs font-semibold mt-2">
         User account
       </div>
-      <div className="text-xs font-semibold mt-1">example@gmail.com</div>
+      <div className="text-xs font-semibold mt-1">{user?.email}</div>
 
       <div className="flex justify-between items-center mt-2">
         <div className="flex gap-2 rounded-md w-full text-closeBlack text-xs items-center">
-          <img src={profile} alt="" />
-          Olamide Bernard
+          <ProfilePicture />
+          {user?.name}
         </div>
 
         <CiEdit className="text-blue-700 text-xl" />

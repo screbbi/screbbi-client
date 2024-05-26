@@ -169,7 +169,10 @@ const Sidebar = ({
                 <MdLogout /> <div>Log out</div>
               </button>
 
-              <div className="flex items-center gap-2 text-black font-semibold py-1 my-1">
+              <div
+                className="flex items-center gap-2 text-black font-semibold py-1 my-1 cursor-pointer"
+                onClick={() => setOpenSettings(true)}
+              >
                 <IoSettingsOutline /> <div>Settings</div>
               </div>
             </div>

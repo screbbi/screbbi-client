@@ -44,7 +44,7 @@ const Generate = () => {
   const describeRef: any = useRef();
   const linkedRef: any = useRef();
 
-  const { story } = useStore(store);
+  const { story, user } = useStore(store);
 
   const [editorContent, setEditorContent] = useState<any>("");
   const [title, setTitle] = useState<any>("");
@@ -63,12 +63,14 @@ const Generate = () => {
   const [openPrompt, setOpenPrompt] = useState(false);
   const [prompt, setPrompt] = useState("");
   const [loadingPrompt, setLoadingPrompt] = useState(false);
-  const [tonedPromptSetting, setTonedPromptSetting] = useState({
-    keyDetails: "",
-    toneOfStory: "suspenseful",
-    lengthOfStory: 100,
-    chapters: 2,
-  });
+  const [tonedPromptSetting, setTonedPromptSetting] = useState(
+    user?.writeSettings ?? {
+      keyDetails: "",
+      toneOfStory: "suspenseful",
+      lengthOfWords: 100,
+      chapters: 2,
+    }
+  );
   const [loadingToned, setLoadingToned] = useState(false);
   const [openRewriteOtions, setOpenRewriteOtions] = useState(false);
   const [openDescribeOptions, setOpenDescribeOptions] = useState(false);
@@ -566,6 +568,10 @@ const Generate = () => {
         toast.error(err.response.data);
       });
   }, []);
+
+  useEffect(() => {
+    setTonedPromptSetting(user?.writeSettings);
+  }, [user]);
 
   return (
     <PageLayout writings={writings} refresh={() => setRefresh(!refresh)}>
