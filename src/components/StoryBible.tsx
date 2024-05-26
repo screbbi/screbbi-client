@@ -16,7 +16,7 @@ import {
 import toast from "react-hot-toast";
 import { copyToClipboard } from "../utils/functions";
 import Writing from "./Writing";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import CompressMatchStyle from "./CompressMatchStyle";
 import Compressed from "./Compressed";
 import SingleCharacter from "./SingleCharacter";
@@ -362,29 +362,41 @@ const StoryBible = ({
             </div>
 
             <div className="flex items-center gap-6">
-              <div className="p-3 bg-[#ece6fa] rounded-md">
-                <img src={storyGuide} alt="" className="w-52" />
-                <div className="flex justify-center text-[#ad90ea] items-center mt-2 gap-2 font-semibold">
-                  <div className="text">Read the guide</div>
-                  <FaArrowRight />
+              <Link
+                to={`https://sudowrite.notion.site/Story-Bible-Guide-7cffc29ac9094a6e82ae517cd7fbb81c?pvs=4`}
+                target="_black"
+              >
+                <div className="p-3 bg-[#ece6fa] rounded-md">
+                  <img src={storyGuide} alt="" className="w-52" />
+                  <div className="flex justify-center text-[#ad90ea] items-center mt-2 gap-2 font-semibold">
+                    <div className="text">Read the guide</div>
+                    <FaArrowRight />
+                  </div>
                 </div>
-              </div>
+              </Link>
 
-              <div className="p-3 bg-[#e4f3f7] rounded-md">
-                <img src={storyClass} alt="" className="w-52" />
-                <div className="flex justify-center text-[#73cce0] items-center mt-2 gap-2 font-semibold">
-                  <div className="text">Attend a Class</div>
-                  <FaArrowRight />
+              <Link to={`https://lu.ma/sudowrite`} target="_black">
+                <div className="p-3 bg-[#e4f3f7] rounded-md">
+                  <img src={storyClass} alt="" className="w-52" />
+                  <div className="flex justify-center text-[#73cce0] items-center mt-2 gap-2 font-semibold">
+                    <div className="text">Attend a Class</div>
+                    <FaArrowRight />
+                  </div>
                 </div>
-              </div>
+              </Link>
 
-              <div className="p-3 bg-[#e2f2e9] rounded-md">
-                <img src={storyVideo} alt="" className="w-52" />
-                <div className="flex justify-center text-[#80dbaa] items-center mt-2 gap-2 font-semibold">
-                  <div className="text">Watch the Video</div>
-                  <FaArrowRight />
+              <Link
+                to={`https://www.youtube.com/watch?v=iQDVMuYjvRk`}
+                target="_black"
+              >
+                <div className="p-3 bg-[#e2f2e9] rounded-md">
+                  <img src={storyVideo} alt="" className="w-52" />
+                  <div className="flex justify-center text-[#80dbaa] items-center mt-2 gap-2 font-semibold">
+                    <div className="text">Watch the Video</div>
+                    <FaArrowRight />
+                  </div>
                 </div>
-              </div>
+              </Link>
             </div>
           </>
         )}
