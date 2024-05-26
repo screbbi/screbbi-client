@@ -249,7 +249,7 @@ body {
 
 /* STORY MODE */
 .single-story {
-  @apply bg-white p-4 my-4 rounded-lg;
+  @apply bg-white p-4 my-8 rounded-lg;
 }
 .single-story-top {
   @apply flex justify-between items-center;
@@ -311,4 +311,7 @@ ul {
 .chapter-modal {
   @apply absolute right-[3%] top-36 bg-white w-[94%] mx-auto z-10 rounded-md;
   box-shadow: 0 0 10px 5px rgba(197, 197, 197, 0.508);
+}
+.sudo-text {
+  @apply mt-2 text-gray-700;
 }

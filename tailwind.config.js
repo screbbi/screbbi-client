@@ -19,6 +19,9 @@ export default {
       gridTemplateColumns: {
         pageLayout: "15rem 1fr",
       },
+      screens: {
+        story: "900px",
+      },
     },
   },
   plugins: [],

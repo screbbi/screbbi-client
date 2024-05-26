@@ -7,7 +7,7 @@ interface storeType {
   getWriting: () => void;
   story: any;
   setStory: (e: any) => void;
-  //   authorize: () => void;
+  authorize: () => void;
 }
 
 const store = create<storeType>((set) => ({
@@ -29,14 +29,11 @@ const store = create<storeType>((set) => ({
     set(() => ({ story: newStory }));
   },
 
-  //   authorize: () => {
-  //     getRequest("/auth/me").then(({ data }) => {
-  //       if (data.websites.length < 1) {
-  //         window.location.replace("/auth/create-a-domain");
-  //       }
-  //       set(() => ({ loading: false, user: data }));
-  //     });
-  //   },
+  authorize: () => {
+    getRequest("/profile").then(({ data }) => {
+      console.log(data);
+      set(() => ({ user: data }));
+    });
+  },
 }));
-//  set(() => ({ user: doc.data(), loggedOut: false }));
 export default store;

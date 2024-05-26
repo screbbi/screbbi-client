@@ -1,6 +1,5 @@
 import { TbEdit } from "react-icons/tb";
 import appLogo from "../assets/img/ai-logo.png";
-import profile from "../assets/img/profile.svg";
 import SingleContent from "./SingleContent";
 import { useEffect, useRef, useState } from "react";
 import { MdLogout } from "react-icons/md";
@@ -11,6 +10,7 @@ import { useStore } from "zustand";
 import store from "../store/state";
 import Settings from "./Settings";
 import { IoSettingsOutline } from "react-icons/io5";
+import ProfilePicture from "./ProfilePicture";
 
 const Sidebar = ({
   writings,
@@ -29,7 +29,7 @@ const Sidebar = ({
 
   const optionRef: any = useRef();
 
-  const { story, setStory } = useStore(store);
+  const { story, setStory, authorize, user } = useStore(store);
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
@@ -71,15 +71,9 @@ const Sidebar = ({
       });
   };
 
-  // const getProfile = () => {
-  //   getRequest("/profile").then((data) => {
-  //     console.log(data);
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   getProfile();
-  // }, []);
+  useEffect(() => {
+    authorize();
+  }, []);
 
   return (
     <div className={`sidebar ${open ? "left-0" : "-left-[20rem]"}`}>
@@ -155,11 +149,11 @@ const Sidebar = ({
 
         <div className="relative" ref={optionRef}>
           <button
-            className="flex gap-2 p-2 hover:bg-darkBlue rounded-md w-full"
+            className="flex gap-2 p-2 hover:bg-darkBlue rounded-md w-full items-center"
             onClick={() => setShowOption(!showOption)}
           >
-            <img src={profile} alt="" />
-            Olamide Bernard
+            <ProfilePicture />
+            {user?.name}
           </button>
 
           {showOption && (

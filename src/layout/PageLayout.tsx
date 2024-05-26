@@ -21,12 +21,12 @@ const PageLayout = ({
 
   return (
     <div className="h-screen overflow-y-hidden">
-      <div className="md:hidden text-2xl p-4 text-center">
+      <div className="story:hidden text-2xl p-4 text-center">
         AI ContentWriter works best on browsers at least 900px wide (Desktop or
         Tablet). Please switch to a larger browser
       </div>
 
-      <div className="bg-lightGrey h-screen md:block hidden">
+      <div className="bg-lightGrey h-screen story:block hidden">
         <div className="page-layout h-full">
           <Sidebar
             writings={writings}

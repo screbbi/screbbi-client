@@ -21,6 +21,11 @@ import CompressMatchStyle from "./CompressMatchStyle";
 import Compressed from "./Compressed";
 import SingleCharacter from "./SingleCharacter";
 import Tooltip from "../layout/Tooltip";
+import storyBible from "../assets/img/story-bible.svg";
+import storyGuide from "../assets/img/story-engine-guide.png";
+import storyClass from "../assets/img/story-engine-class.png";
+import storyVideo from "../assets/img/story-engine-video.png";
+import { FaArrowRight } from "react-icons/fa6";
 
 const StoryBible = ({
   genre,
@@ -69,6 +74,7 @@ const StoryBible = ({
   const [generatingOutline, setGeneratingOutline] = useState(false);
   const [currentChapter, setCurrentChapter] = useState("");
   const [addingChapter, setAddingChapter] = useState(false);
+  const [openStory, setOpenStory] = useState(true);
 
   // WORDCOUNTS
   const [brainDumpWordCount, setBrainDumpWordCount] = useState(
@@ -309,7 +315,81 @@ const StoryBible = ({
   }, []);
 
   return (
-    <div className="w-full mt-4 pb-4">
+    <div className="w-full mt-6 pb-4">
+      <div className="single-story">
+        <div className="flex justify-between items-center">
+          <div className="flex gap-2 items-center">
+            <img src={storyBible} alt="" />
+            <div>Story Bible</div>
+          </div>
+
+          <div>
+            <button
+              className="underline"
+              onClick={() => setOpenStory(!openStory)}
+            >
+              See {openStory ? "Less" : "More"}
+            </button>
+          </div>
+        </div>
+
+        {openStory && (
+          <>
+            <div className="mt-4 mb-8">
+              <div className="sudo-text">
+                Tell Sudowrite more about your story and it can help you write a
+                first draft of every chapter.
+              </div>
+
+              <div className="sudo-text">
+                To get started, fill out the Braindump and Genre below sections.
+                Then use <span className="font-semibold">Match My Style</span>
+                ... with a sample of your writing to help Sudowrite understand
+                your style.
+              </div>
+
+              <div className="sudo-text">
+                Next, fill in Synopsis, Characters, and Outline OR click{" "}
+                <span className="font-semibold"> Generate</span> and Sudowrite
+                will do it for you. (Be sure to read Sudowrite's suggestions and
+                make edits before proceeding.)
+              </div>
+
+              <div className="sudo-text">
+                Once your Story Bible is all filled out, we'll help you write
+                your first chapter!
+              </div>
+            </div>
+
+            <div className="flex items-center gap-6">
+              <div className="p-3 bg-[#ece6fa] rounded-md">
+                <img src={storyGuide} alt="" className="w-52" />
+                <div className="flex justify-center text-[#ad90ea] items-center mt-2 gap-2 font-semibold">
+                  <div className="text">Read the guide</div>
+                  <FaArrowRight />
+                </div>
+              </div>
+
+              <div className="p-3 bg-[#e4f3f7] rounded-md">
+                <img src={storyClass} alt="" className="w-52" />
+                <div className="flex justify-center text-[#73cce0] items-center mt-2 gap-2 font-semibold">
+                  <div className="text">Attend a Class</div>
+                  <FaArrowRight />
+                </div>
+              </div>
+
+              <div className="p-3 bg-[#e2f2e9] rounded-md">
+                <img src={storyVideo} alt="" className="w-52" />
+                <div className="flex justify-center text-[#80dbaa] items-center mt-2 gap-2 font-semibold">
+                  <div className="text">Watch the Video</div>
+                  <FaArrowRight />
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+
       <div className="single-story">
         <div className="single-story-top">
           <div className="flex items-center gap-2">
@@ -334,7 +414,10 @@ const StoryBible = ({
             <div className="text-sm font-semibold">
               {brainDumpWordCount}/2000 words
             </div>
-            <FaRegCopy />
+            <FaRegCopy
+              onClick={() => copyToClipboard(braindump)}
+              className="cursor-pointer"
+            />
             <LuHistory />
           </div>
         </div>
@@ -373,7 +456,10 @@ const StoryBible = ({
 
           <div className="flex items-center gap-4">
             <div className="word-count">{genreWordCount}/40 words</div>
-            <FaRegCopy />
+            <FaRegCopy
+              onClick={() => copyToClipboard(genre)}
+              className="cursor-pointer"
+            />
           </div>
         </div>
 
@@ -463,7 +549,10 @@ const StoryBible = ({
 
           <div className="flex items-center gap-4 text-nowrap">
             <div className="word-count">{synopsisWordCount}/800 words</div>
-            <FaRegCopy onClick={() => copyToClipboard(synopsis)} />
+            <FaRegCopy
+              className="cursor-pointer"
+              onClick={() => copyToClipboard(synopsis)}
+            />
             <button
               className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4"
               type="button"
@@ -581,7 +670,10 @@ const StoryBible = ({
 
           <div className="flex items-center gap-4 text-nowrap">
             <div className="word-count">{outlineWordCount}/1700</div>
-            <FaRegCopy onClick={() => copyToClipboard(outline)} />
+            <FaRegCopy
+              className="cursor-pointer"
+              onClick={() => copyToClipboard(outline)}
+            />
             <button
               className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4"
               onClick={generateOutline}
@@ -656,7 +748,40 @@ const StoryBible = ({
         </div>
       )}
 
-      {/* <div className="single-story">
+      {openWriting && (
+        <Writing
+          generate={generateMatchStyle}
+          loading={generatingMatchStyle}
+          close={() => setOpenWriting(false)}
+        />
+      )}
+
+      {openCompressWriting && (
+        <CompressMatchStyle
+          compress={generateCompressStyle}
+          loading={compressing}
+          close={() => setOpenCompressWriting(false)}
+          rawWriting={rawText}
+        />
+      )}
+
+      {openInsertModal && (
+        <Compressed
+          insert={(e: string) => {
+            setMatchStyle(e);
+          }}
+          close={() => setOpenInsertModal(false)}
+          compressRaw={compressedText}
+        />
+      )}
+    </div>
+  );
+};
+
+export default StoryBible;
+
+{
+  /* <div className="single-story">
         <div className="single-story-top">
           <div>
             <div className="flex items-center gap-2">
@@ -693,10 +818,14 @@ const StoryBible = ({
             </div>
           ))}
         </div>
-      </div> */}
+      </div> */
+}
 
-      {/* FORMS */}
-      {/* {forms?.map((form: any) => (
+{
+  /* FORMS */
+}
+{
+  /* {forms?.map((form: any) => (
         <SingleForm
           key={form.id}
           form={form}
@@ -706,36 +835,5 @@ const StoryBible = ({
           addTrait={addTrait}
           setFormName={setFormName}
         />
-      ))} */}
-
-      {openWriting && (
-        <Writing
-          generate={generateMatchStyle}
-          loading={generatingMatchStyle}
-          close={() => setOpenWriting(false)}
-        />
-      )}
-
-      {openCompressWriting && (
-        <CompressMatchStyle
-          compress={generateCompressStyle}
-          loading={compressing}
-          close={() => setOpenCompressWriting(false)}
-          rawWriting={rawText}
-        />
-      )}
-
-      {openInsertModal && (
-        <Compressed
-          insert={(e: string) => {
-            setMatchStyle(e);
-          }}
-          close={() => setOpenInsertModal(false)}
-          compressRaw={compressedText}
-        />
-      )}
-    </div>
-  );
-};
-
-export default StoryBible;
+      ))} */
+}

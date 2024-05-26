@@ -600,7 +600,10 @@ const Generate = () => {
                   <IoIosArrowDown className="text-base" />
                   {openWriteOptions && (
                     <WriteOptions
-                      openSettings={() => setOpenWriteSettings(true)}
+                      openSettings={() => {
+                        setOpenWriteSettings(true);
+                        setOpenWriteOptions(false);
+                      }}
                       openPrompt={() => {
                         setOpenPrompt(true);
                         setOpenWriteOptions(false);
