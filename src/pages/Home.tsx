@@ -9,7 +9,6 @@ import { FaRegTrashCan } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
 import greenBg from "../assets/img/green-header-bg.svg";
 import purpleBg from "../assets/img/purple-header-bg.svg";
-import SectionLoader from "../components/SectionLoader";
 
 const SingleProject = ({ item }: { item: any }) => {
   return (
