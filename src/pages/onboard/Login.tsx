@@ -5,7 +5,7 @@ import OnboardButton from "../../components/OnboardButton";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import { loginValidationSchema } from "../../yup/validation";
 import { useFormik } from "formik";
-import { postRequest, BASE_URL } from "../../utils/request";
+import { postRequest } from "../../utils/request";
 import { toast } from "react-hot-toast";
 import AuthLayout from "../../layout/AuthLayout";
 import googleImage from "../../assets/img/google.svg";
@@ -37,7 +37,7 @@ const Login = () => {
   });
 
   const signInWithGoogle = () => {
-    window.location.href = `${BASE_URL}/auth/google`;
+    window.location.href = `${import.meta.env.VITE_BASE_URL}/auth/google`;
   };
 
   return (
