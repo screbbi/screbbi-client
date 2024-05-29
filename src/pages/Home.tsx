@@ -22,7 +22,7 @@ const SingleProject = ({ item }: { item: any }) => {
 
           <OptionLayout>
             <button className="text-red-500 p-2 flex gap-3 items-center">
-              <FaRegTrashCan />
+              <FaRegTrashCan className="text-red-500" />
               Delete
             </button>
           </OptionLayout>
