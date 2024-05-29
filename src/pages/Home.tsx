@@ -9,6 +9,7 @@ import { FaRegTrashCan } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
 import greenBg from "../assets/img/green-header-bg.svg";
 import purpleBg from "../assets/img/purple-header-bg.svg";
+import SectionLoader from "../components/SectionLoader";
 
 const SingleProject = ({ item }: { item: any }) => {
   return (
@@ -73,11 +74,21 @@ const Home = () => {
 
       <HomeNavbar newWrite={newWrite} />
 
-      <div className="writings-grid">
-        {writings?.map((item: any) => (
-          <SingleProject key={item._id} item={item} />
-        ))}
-      </div>
+      {!writings ? (
+        <div className="h-40 flex justify-center items-center">
+          <div className="text-2xl">Loading My Projects</div>
+        </div>
+      ) : writings?.length < 1 ? (
+        <div className="h-40 flex justify-center items-center">
+          <div className="text-2xl">No Data</div>
+        </div>
+      ) : (
+        <div className="writings-grid">
+          {writings?.map((item: any) => (
+            <SingleProject key={item._id} item={item} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

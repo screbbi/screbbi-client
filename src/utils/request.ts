@@ -5,7 +5,7 @@ export const BASE_URL = "https://ai-writer-black.vercel.app/api/v1";
 
 const axiosInstance = axios.create({
   // timeout: 10000,
-  baseURL: BASE_URL,
+  baseURL: import.meta.env.VITE_BASE_URL,
   headers: {
     "Content-Type": "application/json",
     Authorization: `Bearer ${localStorage.getItem("token")}`,
