@@ -3,6 +3,9 @@ import { FaRegCopy, FaTimes } from "react-icons/fa";
 import { BsStars } from "react-icons/bs";
 import { copyToClipboard } from "../utils/functions";
 import Tooltip from "../layout/Tooltip";
+import { useStore } from "zustand";
+import store from "../store/state";
+import { Link } from "react-router-dom";
 
 const Chapter = ({
   generate,
@@ -26,6 +29,8 @@ const Chapter = ({
   chapters: any;
   linked: string;
 }) => {
+  const { user } = useStore(store);
+
   const newChapter = chapters && Object.values(chapters)?.flat();
   const currenLinked: any = newChapter?.find(
     (chap: any) => chap.chapter === linked
@@ -150,23 +155,35 @@ const Chapter = ({
             </div>
 
             <div className="flex items-center gap-4 text-nowrap">
-              <button
-                className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4"
-                onClick={() => generateProse()}
-                disabled={loadingChapter}
-              >
-                <BsStars />
-                {loadingChapter ? "Generating..." : "Generate Chapter"}
-              </button>
+              {user?.subscription?.subscriptionPlan || user?.token === 0 ? (
+                <div className="relative group">
+                  <button
+                    className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4 opacity-80"
+                    disabled={true}
+                  >
+                    <BsStars />
+                    Generate Chapter
+                  </button>
+
+                  <div className="absolute -left-6 bg-neutral-800 top-10 text-white text-sm p-2 w-60 text-wrap rounded-md group-hover:block hidden">
+                    This isn't available on your free trial.{" "}
+                    <Link className="underline" to={"/billing"}>
+                      Subscribe to Sudowrite.
+                    </Link>
+                  </div>
+                </div>
+              ) : (
+                <button
+                  className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4"
+                  onClick={() => generateProse()}
+                  disabled={loadingChapter}
+                >
+                  <BsStars />
+                  {loadingChapter ? "Generating..." : "Generate Chapter"}
+                </button>
+              )}
             </div>
           </div>
-
-          {/* <textarea
-            className="single-story-textarea"
-            placeholder="Write a braindump of everything you know about the story. You can include information about plot, characters, worldbuilding, theme - anything!"
-            value={prose}
-            onChange={(e) => setProse(e.target.value)}
-          ></textarea> */}
         </div>
       </div>
     </div>

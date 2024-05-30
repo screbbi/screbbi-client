@@ -27,6 +27,7 @@ import Chapter from "../components/Chapter";
 import { MdLinkOff } from "react-icons/md";
 import Notlinked from "../components/Notlinked";
 import CHaptersList from "../components/CHaptersList";
+import SubscribeButton from "../components/SubscribeButton";
 
 const types = [
   "Rephrase",
@@ -849,53 +850,63 @@ const Generate = () => {
           </div>
 
           <div className="controls bg-white p-4 h-full overflow-y-auto">
-            <div className="title mb-5">
-              <div className="text-sm text-closeBlack font-bold">
-                Review Suggestions
-              </div>
-              <div className="text-grey font-semibold text-xs">
-                Integrated with GPT-Based Models
-              </div>
-            </div>
-
             <div>
-              {rewriteText && (
-                <>
-                  <div className="flex gap-2 items-center text-xs font-bold mb-2">
-                    <img src={generate} alt="" />
-                    <div>Rewrite</div>
-                  </div>
+              <div className="title mb-5">
+                <div className="text-sm text-closeBlack font-bold">
+                  Review Suggestions
+                </div>
+                <div className="text-grey font-semibold text-xs">
+                  Integrated with GPT-Based Models
+                </div>
+              </div>
 
-                  <div className="text-grey font-semibold text-xs my-2">
-                    {rewriteText}
-                  </div>
+              <div>
+                {rewriteText && (
+                  <>
+                    <div className="flex gap-2 items-center text-xs font-bold mb-2">
+                      <img src={generate} alt="" />
+                      <div>Rewrite</div>
+                    </div>
 
-                  <Dropdown
-                    setType={setCurrentType}
-                    types={types}
-                    current={currentType}
-                    click={() => insights("rewrite")}
-                    loading={loading}
-                  />
-                </>
-              )}
+                    <div className="text-grey font-semibold text-xs my-2">
+                      {rewriteText}
+                    </div>
 
-              <div className="">
-                {!history ? (
-                  <div className="h-60 flex justify-center items-center">
-                    <ButtonLoader1 />
-                  </div>
-                ) : history?.length < 1 ? (
-                  <div className="flex justify-center items-center h-40">
-                    No Data
-                  </div>
-                ) : (
-                  history?.map((item: any) => (
-                    <Shorter key={item._id} item={item} insert={insertText} />
-                  ))
+                    <Dropdown
+                      setType={setCurrentType}
+                      types={types}
+                      current={currentType}
+                      click={() => insights("rewrite")}
+                      loading={loading}
+                    />
+                  </>
                 )}
+
+                <div className="">
+                  {!history ? (
+                    <div className="h-60 flex justify-center items-center">
+                      <ButtonLoader1 />
+                    </div>
+                  ) : history?.length < 1 ? (
+                    <div className="flex justify-center items-center h-40">
+                      No Data
+                    </div>
+                  ) : (
+                    history?.map((item: any) => (
+                      <Shorter key={item._id} item={item} insert={insertText} />
+                    ))
+                  )}
+                </div>
               </div>
             </div>
+
+            {user?.subscription?.subscriptionPlan || user?.token === 0 ? (
+              <div className="flex justify-end">
+                <SubscribeButton />
+              </div>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       ) : (

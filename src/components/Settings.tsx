@@ -5,6 +5,7 @@ import { MdOutlineFormatLineSpacing } from "react-icons/md";
 import { useStore } from "zustand";
 import store from "../store/state";
 import ProfilePicture from "./ProfilePicture";
+import { Link } from "react-router-dom";
 
 const Settings = ({ close }: { close: () => void }) => {
   const { user } = useStore(store);
@@ -41,12 +42,17 @@ const Settings = ({ close }: { close: () => void }) => {
       </div>
 
       <div className="text-xs font-semibold  py border-t border-gray-200 py-4">
-        <div className="">4950 / 5000 credtis left</div>
+        <div className="">
+          {user?.token} / {user?.subscription?.subscriptionPlan?.tokens} credtis
+          left
+        </div>
         <div className="flex gap-4 items-center mt-2">
-          <button className="py-2 px-4 bg-buttonPurple text-white rounded-sm">
-            Subscribe
-          </button>
-          <div>$10/month</div>
+          <Link to={"/billing"}>
+            <button className="py-2 px-6 bg-buttonPurple text-white rounded-full text-sm">
+              Start Membership
+            </button>
+          </Link>
+          <div>Starting Price: $15/month</div>
         </div>
       </div>
 

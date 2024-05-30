@@ -5,21 +5,22 @@ export const BASE_URL = "https://ai-writer-black.vercel.app/api/v1";
 
 const axiosInstance = axios.create({
   // timeout: 10000,
-  baseURL: import.meta.env.VITE_BASE_URL,
+  baseURL: BASE_URL,
+  // baseURL: import.meta.env.VITE_BASE_URL,
   headers: {
     "Content-Type": "application/json",
     Authorization: `Bearer ${localStorage.getItem("token")}`,
   },
 });
 
-// export const axiosInstanceV2 = axios.create({
-//   // timeout: 10000,
-//   baseURL: BASE_URL1,
-//   headers: {
-//     "Content-Type": "application/json",
-//     Authorization: `Bearer ${localStorage.getItem("token")}`,
-//   },
-// });
+export const axiosInstanceVercel = axios.create({
+  // timeout: 10000,
+  baseURL: BASE_URL,
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  },
+});
 
 export const getRequest = async (
   url: string,
@@ -30,9 +31,9 @@ export const getRequest = async (
     const response = await axiosInstance.get(url, { params });
     return response.data;
   } catch (error: any) {
-    // if (error.response.data === "Unauthorized") {
-    //   window.location.replace("/auth/login");
-    // }
+    if (error.response.data === "Unauthorized") {
+      window.location.replace("/auth/login");
+    }
     if (axios.isCancel(error)) {
       console.log("Canceled due to timeout");
       setTime?.(true);
@@ -46,9 +47,9 @@ export const delRequest = async (url: string, params = {}) => {
     const response = await axiosInstance.delete(url, { params });
     return response.data;
   } catch (error: any) {
-    // if (error.response.data === "Unauthorized") {
-    //   window.location.replace("/auth/login");
-    // }
+    if (error.response.data === "Unauthorized") {
+      window.location.replace("/auth/login");
+    }
     throw error;
   }
 };
@@ -58,9 +59,9 @@ export const postRequest = async (url: string, data: any) => {
     const response = await axiosInstance.post(url, data);
     return response.data;
   } catch (error: any) {
-    // if (error.response.data === "Unauthorized") {
-    //   window.location.replace("/auth/login");
-    // }
+    if (error.response.data === "Unauthorized") {
+      window.location.replace("/auth/login");
+    }
     throw error;
   }
 };
@@ -70,9 +71,9 @@ export const putRequest = async (url: string, data: any) => {
     const response = await axiosInstance.put(url, data);
     return response.data;
   } catch (error: any) {
-    // if (error.response.data === "Unauthorized") {
-    //   window.location.replace("/auth/login");
-    // }
+    if (error.response.data === "Unauthorized") {
+      window.location.replace("/auth/login");
+    }
     throw error;
   }
 };
