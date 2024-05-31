@@ -37,6 +37,8 @@ const Chapter = ({
     (chap: any) => chap.chapter === linked
   );
 
+  console.log(user?.subscription.trialUser);
+
   return (
     <div className="chapter-modal">
       <div className="p-4 border-b border-gray-200">
@@ -157,35 +159,37 @@ const Chapter = ({
               </Tooltip>
             </div>
 
-            <div className="flex items-center gap-4 text-nowrap">
-              {user?.subscription?.subscriptionPlan || user?.token === 0 ? (
-                <div className="relative group">
+            {user && (
+              <div className="flex items-center gap-4 text-nowrap">
+                {user?.subscription?.trialUser === true ? (
+                  <div className="relative group">
+                    <button
+                      className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4 opacity-80"
+                      disabled={true}
+                    >
+                      <BsStars />
+                      Generate Chapter
+                    </button>
+
+                    <div className="absolute -left-6 bg-neutral-800 top-10 text-white text-sm p-2 w-60 text-wrap rounded-md group-hover:block hidden">
+                      This isn't available on your free trial.{" "}
+                      <Link className="underline" to={"/billing"}>
+                        Subscribe to Screbbi.
+                      </Link>
+                    </div>
+                  </div>
+                ) : (
                   <button
-                    className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4 opacity-80"
-                    disabled={true}
+                    className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4"
+                    onClick={() => generateProse()}
+                    disabled={loadingChapter}
                   >
                     <BsStars />
-                    Generate Chapter
+                    {loadingChapter ? "Generating..." : "Generate Chapter"}
                   </button>
-
-                  <div className="absolute -left-6 bg-neutral-800 top-10 text-white text-sm p-2 w-60 text-wrap rounded-md group-hover:block hidden">
-                    This isn't available on your free trial.{" "}
-                    <Link className="underline" to={"/billing"}>
-                      Subscribe to Screbbi.
-                    </Link>
-                  </div>
-                </div>
-              ) : (
-                <button
-                  className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4"
-                  onClick={() => generateProse()}
-                  disabled={loadingChapter}
-                >
-                  <BsStars />
-                  {loadingChapter ? "Generating..." : "Generate Chapter"}
-                </button>
-              )}
-            </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>

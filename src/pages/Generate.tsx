@@ -45,7 +45,7 @@ const Generate = () => {
   const describeRef: any = useRef();
   const linkedRef: any = useRef();
 
-  const { story, user } = useStore(store);
+  const { story, user, editToken } = useStore(store);
 
   const [editorContent, setEditorContent] = useState<any>("");
   const [title, setTitle] = useState<any>("");
@@ -515,7 +515,8 @@ const Generate = () => {
       writing: writer,
     })
       .then(({ data }) => {
-        setBeats(data.replace(/\*/g, ""));
+        setBeats(data?.result?.replace(/\*/g, ""));
+        editToken(data.tokens.newToken);
         setGeneratingBeats(false);
       })
       .catch((err) => {
@@ -828,7 +829,7 @@ const Generate = () => {
 
                 {/* STORY BIBLE */}
               </div>
-              {story && (
+              {story === "true" && (
                 <StoryBible
                   genre={genre}
                   setGenre={setGenre}
@@ -900,7 +901,7 @@ const Generate = () => {
               </div>
             </div>
 
-            {user?.subscription?.subscriptionPlan || user?.token === 0 ? (
+            {user?.subscription?.trialUser ? (
               <div className="flex justify-end">
                 <SubscribeButton />
               </div>

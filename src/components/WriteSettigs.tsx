@@ -36,7 +36,7 @@ const WriteSettings = ({
             name="lengthOfWords"
             id="lengthOfWords"
             onChange={change}
-            value={writeSetting.lengthOfWords}
+            value={writeSetting?.lengthOfWords ?? 0}
           >
             <option value="150">150 words</option>
             <option value="250">250 words</option>
@@ -52,7 +52,7 @@ const WriteSettings = ({
             name="chapters"
             id="chapters"
             onChange={change}
-            value={writeSetting.chapters}
+            value={writeSetting?.chapters}
           >
             <option value="1">1</option>
             <option value="2">2</option>
@@ -68,7 +68,7 @@ const WriteSettings = ({
             name="toneOfStory"
             id="toneOfStory"
             onChange={change}
-            value={writeSetting.toneOfStory}
+            value={writeSetting?.toneOfStory}
           >
             <option value="suspenseful">Suspenseful</option>
             <option value="humorous">Humorous</option>
@@ -88,7 +88,7 @@ const WriteSettings = ({
             name="keyDetails"
             id="keyDetails"
             onChange={change}
-            value={writeSetting.keyDetails}
+            value={writeSetting?.keyDetails}
             placeholder="What important details about you story should we keep in mind?"
             className="p-2 w-full h-40 rounded-md resize-none outline-0 text-black border border-selectText mt-1 text-[10px]"
           ></textarea>
