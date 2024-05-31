@@ -6,6 +6,7 @@ import Tooltip from "../layout/Tooltip";
 import { useStore } from "zustand";
 import store from "../store/state";
 import { Link } from "react-router-dom";
+import EmptyToken from "../layout/EmptyToken";
 
 const Chapter = ({
   generate,
@@ -110,14 +111,16 @@ const Chapter = ({
                 className="cursor-pointer"
                 onClick={() => copyToClipboard(beats)}
               />
-              <button
-                className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4"
-                onClick={() => generate()}
-                disabled={loadingBeats}
-              >
-                <BsStars />
-                {loadingBeats ? "Generating..." : "Generate Beats"}
-              </button>
+              <EmptyToken text="Generate Beats">
+                <button
+                  className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4"
+                  onClick={() => generate()}
+                  disabled={loadingBeats}
+                >
+                  <BsStars />
+                  {loadingBeats ? "Generating..." : "Generate Beats"}
+                </button>
+              </EmptyToken>
             </div>
           </div>
 

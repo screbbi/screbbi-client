@@ -26,6 +26,7 @@ import storyGuide from "../assets/img/story-engine-guide.png";
 import storyClass from "../assets/img/story-engine-class.png";
 import storyVideo from "../assets/img/story-engine-video.png";
 import { FaArrowRight } from "react-icons/fa6";
+import EmptyToken from "../layout/EmptyToken";
 
 const StoryBible = ({
   genre,
@@ -518,13 +519,16 @@ const StoryBible = ({
                 )
               }
             />
-            <button
-              className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4"
-              onClick={() => setOpenWriting(true)}
-            >
-              <BsStars />
-              Match my style
-            </button>
+
+            <EmptyToken text="Match my style">
+              <button
+                className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4"
+                onClick={() => setOpenWriting(true)}
+              >
+                <BsStars />
+                Match my style
+              </button>
+            </EmptyToken>
           </div>
         </div>
 
@@ -565,15 +569,17 @@ const StoryBible = ({
               className="cursor-pointer"
               onClick={() => copyToClipboard(synopsis)}
             />
-            <button
-              className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4"
-              type="button"
-              onClick={generateSynopsis}
-              disabled={generatingSynopsis}
-            >
-              <BsStars />
-              {generatingSynopsis ? "Generating..." : "Generate Synopsis"}
-            </button>
+            <EmptyToken text="Generate Synopsis">
+              <button
+                className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4"
+                type="button"
+                onClick={generateSynopsis}
+                disabled={generatingSynopsis}
+              >
+                <BsStars />
+                {generatingSynopsis ? "Generating..." : "Generate Synopsis"}
+              </button>
+            </EmptyToken>
           </div>
         </div>
 
@@ -625,14 +631,16 @@ const StoryBible = ({
               Add Characters
             </button>
 
-            <button
-              className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4"
-              onClick={generateCharacters}
-              disabled={generatingCharacters}
-            >
-              <BsStars />
-              {generatingCharacters ? "Generating.." : "Generate Characters"}
-            </button>
+            <EmptyToken text="Generate Characters">
+              <button
+                className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4"
+                onClick={generateCharacters}
+                disabled={generatingCharacters}
+              >
+                <BsStars />
+                {generatingCharacters ? "Generating.." : "Generate Characters"}
+              </button>
+            </EmptyToken>
           </div>
         </div>
       </div>
@@ -686,14 +694,16 @@ const StoryBible = ({
               className="cursor-pointer"
               onClick={() => copyToClipboard(outline)}
             />
-            <button
-              className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4"
-              onClick={generateOutline}
-              disabled={generatingOutline}
-            >
-              <BsStars />
-              {generatingOutline ? "Generating.." : "Generate Outline"}
-            </button>
+            <EmptyToken text="Generate Outline">
+              <button
+                className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4"
+                onClick={generateOutline}
+                disabled={generatingOutline}
+              >
+                <BsStars />
+                {generatingOutline ? "Generating.." : "Generate Outline"}
+              </button>
+            </EmptyToken>
           </div>
         </div>
 
