@@ -1,7 +1,20 @@
+import { useEffect } from "react";
 import { FiCheckCircle } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { getRequest } from "../utils/request";
+import toast from "react-hot-toast";
 
 const PaymentSuccess = () => {
+  const locations = useLocation();
+  const queryParams = new URLSearchParams(locations.search);
+  const sessionId = queryParams.get("session_id");
+
+  useEffect(() => {
+    getRequest(`/subscription/success?session_id=${sessionId}`).then(() => {
+      toast("Payment Verified");
+    });
+  }, []);
+
   return (
     <div className="bg-[url(https://editor.sudowrite.com/assets/sorbet-background.png)] bg-cover bg-no-repeat min-h-screen flex justify-center items-center">
       <div>
