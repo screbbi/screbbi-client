@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ProfilePicture from "./ProfilePicture";
+import { IoSettingsSharp } from "react-icons/io5";
 import Settings from "./Settings";
 
 const OpenSettings = () => {
@@ -8,7 +8,8 @@ const OpenSettings = () => {
   return (
     <div>
       <div onClick={() => setOpenSettings(true)}>
-        <ProfilePicture />
+        {/* <IoSettingsSharp className="text-neutral-600 text-3xl" /> */}
+        <IoSettingsSharp className="text-3xl" />
       </div>
 
       {openSettings && <Settings close={() => setOpenSettings(false)} />}

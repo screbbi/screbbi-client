@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { HiOutlineMenuAlt2, HiOutlineMenuAlt3 } from "react-icons/hi";
-import ProfilePicture from "./ProfilePicture";
+import OpenSettings from "./OpenSettings";
 
 const Navbar = ({
   setOpen,
@@ -36,7 +36,7 @@ const Navbar = ({
               </div>
             )}
 
-            {localStorage.getItem("token") && <ProfilePicture />}
+            {localStorage.getItem("token") && <OpenSettings />}
           </div>
         </div>
       </div>

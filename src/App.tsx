@@ -7,6 +7,7 @@ import Generate from "./pages/Generate";
 import { Toaster } from "react-hot-toast";
 import Home from "./pages/Home";
 import Billing from "./pages/Billing";
+import PaymentSuccess from "./pages/PaymentSuccess";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/home" element={<Home />} />
 
         <Route path="/billing" element={<Billing />} />
+        <Route path="/payment/success" element={<PaymentSuccess />} />
 
         <Route path="/generate/:writer" element={<Generate />} />
         <Route path="/project/:project/:writer" element={<Generate />} />

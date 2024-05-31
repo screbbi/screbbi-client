@@ -22,7 +22,10 @@ const SingleBilling = ({
       <div className="text-center bg-white shadow-lg mx-auto max-w-xs p-6 rounded-3xl">
         <div className="">
           <div className="text-3xl font-bold">
-            ${annual ? plan.price - plan.annualDiscount : plan.price}
+            $
+            {annual
+              ? plan.price * ((100 - plan.annualDiscount) / 100)
+              : plan.price}
           </div>
           <div className="text-sm">per month</div>
         </div>

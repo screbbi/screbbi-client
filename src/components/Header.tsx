@@ -13,7 +13,6 @@ import rewritePng from "../assets/img/rewrite.png";
 import landing from "../assets/img/landing.png";
 import { FaPlay } from "react-icons/fa";
 import { MdDraw } from "react-icons/md";
-import FAQ from "./FAQ";
 import Footer from "./Footer";
 import { useNavigate } from "react-router-dom";
 import LandingPageNavbar from "./LandingPageNavbar";
@@ -307,7 +306,7 @@ const Header = () => {
         </div>
 
         {/* FAQ */}
-        <div className="w-[90%] max-w-md mx-auto py-16">
+        {/* <div className="w-[90%] max-w-md mx-auto py-16">
           <div className="font-bold text-2xl mb-6 p-2">FAQ</div>
 
           <FAQ />
@@ -315,7 +314,7 @@ const Header = () => {
           <FAQ />
           <FAQ />
           <FAQ />
-        </div>
+        </div> */}
 
         {/* FOOTER */}
         <Footer />
