@@ -27,6 +27,8 @@ import storyClass from "../assets/img/story-engine-class.png";
 import storyVideo from "../assets/img/story-engine-video.png";
 import { FaArrowRight } from "react-icons/fa6";
 import EmptyToken from "../layout/EmptyToken";
+import { useStore } from "zustand";
+import store from "../store/state";
 
 const StoryBible = ({
   genre,
@@ -62,6 +64,7 @@ const StoryBible = ({
 }) => {
   const { project } = useParams();
   const navigate = useNavigate();
+  const { editToken } = useStore(store);
 
   const [generatingSynopsis, setGeneratingSynopsis] = useState(false);
   const [generatingMatchStyle, setGeneratingMatchStyle] = useState(false);
@@ -130,18 +133,19 @@ const StoryBible = ({
   };
 
   const generateSynopsis = () => {
-    // if (braindump.trim() === "") {
-    //   alert("Braindump cannot be empty");
-    //   return;
-    // } else if (genre.trim() === "") {
-    //   alert("Genre cannot be empty");
-    //   return;
-    // }
+    if (braindump.trim() === "") {
+      alert("Braindump cannot be empty");
+      return;
+    } else if (genre.trim() === "") {
+      alert("Genre cannot be empty");
+      return;
+    }
 
     setGeneratingSynopsis(true);
     getRequest(`/story/synopsis-generate/${project}`)
       .then(({ data }) => {
-        setSynopsis(data);
+        setSynopsis(data.result);
+        editToken(data.tokens.newToken);
         setGeneratingSynopsis(false);
       })
       .catch(() => {
@@ -159,7 +163,8 @@ const StoryBible = ({
     setGeneratingMatchStyle(true);
     postRequest("/story/style-generate", { writing, projectID: project })
       .then(({ data }) => {
-        setRawText(data.replace(/\*/g, ""));
+        setRawText(data.result.replace(/\*/g, ""));
+        editToken(data.tokens.newToken);
 
         setGeneratingMatchStyle(false);
         setOpenWriting(false);
@@ -180,7 +185,8 @@ const StoryBible = ({
     setCompressing(true);
     postRequest("/story/style-compress", { style, projectID: project })
       .then(({ data }) => {
-        setCompressedText(data.replaceAll("**", `''`));
+        setCompressedText(data.result.replaceAll("**", `''`));
+        editToken(data.tokens.newToken);
         setCompressing(false);
         setOpenCompressWriting(false);
         setOpenInsertModal(true);
@@ -195,9 +201,9 @@ const StoryBible = ({
     setGeneratingOutline(true);
     getRequest(`/story/outline-generate/${project}`)
       .then(({ data }) => {
-        setOutline(data?.outline.replace(/\*/g, ""));
-        setChapters(data.chapters);
-
+        setOutline(data?.result?.outline.replace(/\*/g, ""));
+        setChapters(data?.result?.chapters);
+        editToken(data.tokens.newToken);
         setGeneratingOutline(false);
       })
       .catch(() => {
@@ -207,25 +213,20 @@ const StoryBible = ({
   };
 
   const generateCharacters = () => {
-    // if (synopsis.trim() === "") {
-    //   alert("Synopsis cannot be empty");
-    //   return;
-    // } else if (braindump.trim() === "") {
-    //   alert("Braindump cannot be empty");
-    //   return;
-    // }
+    if (synopsis.trim() === "") {
+      alert("Synopsis cannot be empty");
+      return;
+    } else if (braindump.trim() === "") {
+      alert("Braindump cannot be empty");
+      return;
+    }
 
     setGeneratingCharacters(true);
     getRequest(`/story/characters-generate/${project}`)
       .then(({ data }) => {
-        let characterString = "";
-
-        data.forEach((item: any) => {
-          characterString += `${item.name}\n Personality: ${item.personality} \n Background: ${item.background} \n\n`;
-        });
-
         setGeneratingCharacters(false);
-        setCharacters(characterString);
+        setCharacters(data.result);
+        editToken(data.tokens.newToken);
       })
       .catch(() => {
         setGeneratingCharacters(false);

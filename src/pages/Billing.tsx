@@ -65,7 +65,7 @@ const Billing = () => {
   useEffect(() => {
     getRequest("/subscription/plans")
       .then(({ data }) => {
-        setPlans(data.data);
+        setPlans(data);
       })
       .catch((err) => {
         console.log(err.response.data);
@@ -79,7 +79,7 @@ const Billing = () => {
       plan,
     })
       .then(({ data }) => {
-        window.location.href = data.data.url;
+        window.location.href = data.url;
         setFetching(false);
       })
       .catch(() => {

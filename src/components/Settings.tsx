@@ -1,7 +1,6 @@
 import ModalLayout from "../layout/ModalLayout";
 import { IoMdPerson } from "react-icons/io";
 import { CiEdit } from "react-icons/ci";
-// import { MdOutlineFormatLineSpacing } from "react-icons/md";
 import { useStore } from "zustand";
 import store from "../store/state";
 import ProfilePicture from "./ProfilePicture";
@@ -9,7 +8,7 @@ import { Link } from "react-router-dom";
 import { numberFormat } from "../utils/functions";
 
 const Settings = ({ close }: { close: () => void }) => {
-  const { user } = useStore(store);
+  const { user,token } = useStore(store);
 
   return (
     <ModalLayout close={close} title="Settings">
@@ -44,34 +43,46 @@ const Settings = ({ close }: { close: () => void }) => {
 
       <div className="text-xs font-semibold  py border-t border-gray-200 py-4">
         <div className="">
-          {user?.token && numberFormat(user?.token)} /{" "}
+          {user?.token && numberFormat(token)} /{" "}
           {user?.subscription?.subscriptionPlan?.tokens &&
             numberFormat(user?.subscription?.subscriptionPlan?.tokens)}{" "}
           credtis left
         </div>
-        <div className="flex gap-4 items-center mt-2">
-          <Link to={"/billing"}>
-            <button className="py-2 px-6 bg-buttonPurple text-white rounded-full text-sm">
-              Start Membership
-            </button>
-          </Link>
-          <div>Starting Price: $15/month</div>
-        </div>
+        {user?.trialUser && (
+          <div className="flex gap-4 items-center mt-2">
+            <Link to={"/billing"}>
+              <button className="py-2 px-6 bg-buttonPurple text-white rounded-full text-sm">
+                Start Membership
+              </button>
+            </Link>
+            <div>Starting Price: $15/month</div>
+          </div>
+        )}
       </div>
+    </ModalLayout>
+  );
+};
 
-      {/* <div className="flex gap-2 items-center my-2">
+export default Settings;
+
+{
+  /* <div className="flex gap-2 items-center my-2">
         <div className="flex justify-center items-center bg-grey rounded-full w-6 h-6">
           <IoMdPerson />
         </div>
         <div className="text-grey text-xs font-semibold">Preferences</div>
-      </div> */}
+      </div> */
+}
 
-      {/* <div>
+{
+  /* <div>
         <div className="text-xs font-semibold">Text Size</div>
         <div></div>
-      </div> */}
+      </div> */
+}
 
-      {/* <div className="py border-t border-gray-200 py-4">
+{
+  /* <div className="py border-t border-gray-200 py-4">
         <div className="text-xs font-semibold">Line Spacing</div>
         <div className="flex gap-4 items-center mt-2">
           <MdOutlineFormatLineSpacing className="text-2xl" />
@@ -79,10 +90,14 @@ const Settings = ({ close }: { close: () => void }) => {
           <div className="spacing">1.5</div>
           <div className="spacing">2</div>
         </div>
-      </div> */}
+      </div> */
+}
 
-      {/* SHOW PREFERENCES */}
-      {/* <div className="py border-t border-gray-200 py-4">
+{
+  /* SHOW PREFERENCES */
+}
+{
+  /* <div className="py border-t border-gray-200 py-4">
         <div className="grid grid-cols-2 divide-x-2">
           <div className="flex gap-2 items-center text-xs font-semibold justify-between pr-4">
             <div>Show word count</div>
@@ -120,9 +135,5 @@ const Settings = ({ close }: { close: () => void }) => {
             </div>
           </div>
         </div>
-      </div> */}
-    </ModalLayout>
-  );
-};
-
-export default Settings;
+      </div> */
+}
