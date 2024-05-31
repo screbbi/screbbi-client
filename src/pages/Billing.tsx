@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { axiosInstanceVercel } from "../utils/request";
+import { getRequest, postRequest } from "../utils/request";
 import appLogo from "../assets/img/ai-logo.png";
 import ButtonLoader from "../components/ButtonLoader";
 import { Link } from "react-router-dom";
@@ -63,8 +63,7 @@ const Billing = () => {
   const [annual, setAnnual] = useState(true);
 
   useEffect(() => {
-    axiosInstanceVercel
-      .get("/subscription/plans")
+    getRequest("/subscription/plans")
       .then(({ data }) => {
         setPlans(data.data);
       })
@@ -75,18 +74,15 @@ const Billing = () => {
 
   const subscribe = (plan: string) => {
     setFetching(true);
-    axiosInstanceVercel
-      .post(`/subscription/subscribe`, {
-        period: annual ? "annual" : "monthly",
-        plan,
-      })
+    postRequest(`/subscription/subscribe`, {
+      period: annual ? "annual" : "monthly",
+      plan,
+    })
       .then(({ data }) => {
-        console.log(data.data.url);
         window.location.href = data.data.url;
         setFetching(false);
       })
-      .catch((err) => {
-        console.log(err.response.data);
+      .catch(() => {
         setFetching(false);
       });
   };

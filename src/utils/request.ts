@@ -1,11 +1,11 @@
 import axios from "axios";
 
-export const BASE_URL = "https://ai-writer-black.vercel.app/api/v1";
+// export const BASE_URL = "https://ai-writer-black.vercel.app/api/v1";
 // export const BASE_URL1 = "https://ai-writer-black.vercel.app/api/v2";
 
 const axiosInstance = axios.create({
   // timeout: 10000,
-  baseURL: BASE_URL,
+  baseURL: import.meta.env.VITE_BASE_URL,
   // baseURL: import.meta.env.VITE_BASE_URL,
   headers: {
     "Content-Type": "application/json",
@@ -13,14 +13,14 @@ const axiosInstance = axios.create({
   },
 });
 
-export const axiosInstanceVercel = axios.create({
-  // timeout: 10000,
-  baseURL: BASE_URL,
-  headers: {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
-  },
-});
+// export const axiosInstanceVercel = axios.create({
+//   // timeout: 10000,
+//   baseURL: BASE_URL,
+//   headers: {
+//     "Content-Type": "application/json",
+//     Authorization: `Bearer ${localStorage.getItem("token")}`,
+//   },
+// });
 
 export const getRequest = async (
   url: string,
