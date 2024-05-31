@@ -1,13 +1,8 @@
 import { FaPlus } from "react-icons/fa";
 import appLogo from "../assets/img/ai-logo.png";
-import profile from "../assets/img/profile.svg";
-import Settings from "./Settings";
-import { useState } from "react";
 import OpenSettings from "./OpenSettings";
 
 const HomeNavbar = ({ newWrite }: { newWrite: () => void }) => {
-  const [openSettings, setOpenSettings] = useState(false);
-
   return (
     <div className="grid grid-cols-3 p-6 sticky top-0 z-20">
       <div>
@@ -25,10 +20,7 @@ const HomeNavbar = ({ newWrite }: { newWrite: () => void }) => {
 
       <div className="flex justify-end">
         <OpenSettings />
-        {/* <img src={profile} alt="" onClick={() => setOpenSettings(true)} /> */}
       </div>
-
-      {/* {openSettings && <Settings close={() => setOpenSettings(false)} />} */}
     </div>
   );
 };
