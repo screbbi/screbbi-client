@@ -6,6 +6,7 @@ import { useStore } from "zustand";
 import store from "../store/state";
 import ProfilePicture from "./ProfilePicture";
 import { Link } from "react-router-dom";
+import { numberFormat } from "../utils/functions";
 
 const Settings = ({ close }: { close: () => void }) => {
   const { user } = useStore(store);
@@ -43,8 +44,10 @@ const Settings = ({ close }: { close: () => void }) => {
 
       <div className="text-xs font-semibold  py border-t border-gray-200 py-4">
         <div className="">
-          {user?.token} / {user?.subscription?.subscriptionPlan?.tokens} credtis
-          left
+          {user?.token && numberFormat(user?.token)} /{" "}
+          {user?.subscription?.subscriptionPlan?.tokens &&
+            numberFormat(user?.subscription?.subscriptionPlan?.tokens)}{" "}
+          credtis left
         </div>
         <div className="flex gap-4 items-center mt-2">
           <Link to={"/billing"}>

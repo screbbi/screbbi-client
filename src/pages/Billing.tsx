@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { axiosInstanceVercel } from "../utils/request";
 import appLogo from "../assets/img/ai-logo.png";
 import ButtonLoader from "../components/ButtonLoader";
+import { Link } from "react-router-dom";
+import { numberFormat } from "../utils/functions";
 
 const SingleBilling = ({
   plan,
@@ -14,10 +16,6 @@ const SingleBilling = ({
   click: () => void;
   loading: boolean;
 }) => {
-  const numberFormat = (num: number) => {
-    return new Intl.NumberFormat().format(num);
-  };
-
   return (
     <div>
       <div className="text-center capitalize text-2xl py-4">{plan.name}</div>
@@ -93,7 +91,9 @@ const Billing = () => {
   return (
     <div className="bg-[url(https://editor.sudowrite.com/assets/sorbet-background.png)] bg-cover bg-no-repeat pb-10 billing min-h-screen">
       <div className="flex justify-between p-4">
-        <img src={appLogo} alt="" className="w-10" />
+        <Link to={"/home"}>
+          <img src={appLogo} alt="" className="w-10" />
+        </Link>
         <div>Pricing</div>
       </div>
 

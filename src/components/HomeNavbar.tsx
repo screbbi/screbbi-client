@@ -3,6 +3,7 @@ import appLogo from "../assets/img/ai-logo.png";
 import profile from "../assets/img/profile.svg";
 import Settings from "./Settings";
 import { useState } from "react";
+import OpenSettings from "./OpenSettings";
 
 const HomeNavbar = ({ newWrite }: { newWrite: () => void }) => {
   const [openSettings, setOpenSettings] = useState(false);
@@ -23,10 +24,11 @@ const HomeNavbar = ({ newWrite }: { newWrite: () => void }) => {
       </div>
 
       <div className="flex justify-end">
-        <img src={profile} alt="" onClick={() => setOpenSettings(true)} />
+        <OpenSettings />
+        {/* <img src={profile} alt="" onClick={() => setOpenSettings(true)} /> */}
       </div>
 
-      {openSettings && <Settings close={() => setOpenSettings(false)} />}
+      {/* {openSettings && <Settings close={() => setOpenSettings(false)} />} */}
     </div>
   );
 };

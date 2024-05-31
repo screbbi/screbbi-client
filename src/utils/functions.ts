@@ -19,3 +19,7 @@ export const formatDate = (date: any) => {
 
   return new Intl.DateTimeFormat("en-US", options).format(newDate);
 };
+
+export const numberFormat = (num: number) => {
+  return new Intl.NumberFormat().format(num);
+};
