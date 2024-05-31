@@ -1,7 +1,7 @@
 import ModalLayout from "../layout/ModalLayout";
 import { IoMdPerson } from "react-icons/io";
 import { CiEdit } from "react-icons/ci";
-import { MdOutlineFormatLineSpacing } from "react-icons/md";
+// import { MdOutlineFormatLineSpacing } from "react-icons/md";
 import { useStore } from "zustand";
 import store from "../store/state";
 import ProfilePicture from "./ProfilePicture";
@@ -68,7 +68,7 @@ const Settings = ({ close }: { close: () => void }) => {
         <div></div>
       </div> */}
 
-      <div className="py border-t border-gray-200 py-4">
+      {/* <div className="py border-t border-gray-200 py-4">
         <div className="text-xs font-semibold">Line Spacing</div>
         <div className="flex gap-4 items-center mt-2">
           <MdOutlineFormatLineSpacing className="text-2xl" />
@@ -76,10 +76,10 @@ const Settings = ({ close }: { close: () => void }) => {
           <div className="spacing">1.5</div>
           <div className="spacing">2</div>
         </div>
-      </div>
+      </div> */}
 
       {/* SHOW PREFERENCES */}
-      <div className="py border-t border-gray-200 py-4">
+      {/* <div className="py border-t border-gray-200 py-4">
         <div className="grid grid-cols-2 divide-x-2">
           <div className="flex gap-2 items-center text-xs font-semibold justify-between pr-4">
             <div>Show word count</div>
@@ -117,7 +117,7 @@ const Settings = ({ close }: { close: () => void }) => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </ModalLayout>
   );
 };

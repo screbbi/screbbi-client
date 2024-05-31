@@ -9,6 +9,8 @@ import { FaRegTrashCan } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
 import greenBg from "../assets/img/green-header-bg.svg";
 import purpleBg from "../assets/img/purple-header-bg.svg";
+import { useStore } from "zustand";
+import store from "../store/state";
 
 const SingleProject = ({ item }: { item: any }) => {
   return (
@@ -62,7 +64,10 @@ const Home = () => {
       });
   };
 
+  const { authorize } = useStore(store);
+
   useEffect(() => {
+    authorize();
     getUserWriting();
   }, []);
 

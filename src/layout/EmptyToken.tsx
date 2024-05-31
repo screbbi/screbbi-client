@@ -14,7 +14,7 @@ const EmptyToken = ({
 
   return (
     <div className="flex items-center gap-4 text-nowrap">
-      {user?.token === 0 ? (
+      {user?.token <= 0 ? (
         <div className="relative group">
           <button
             className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4 opacity-80"

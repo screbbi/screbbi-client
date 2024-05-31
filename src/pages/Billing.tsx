@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { axiosInstanceVercel } from "../utils/request";
 import appLogo from "../assets/img/ai-logo.png";
+import ButtonLoader from "../components/ButtonLoader";
 
 const SingleBilling = ({
   plan,
@@ -45,7 +46,7 @@ const SingleBilling = ({
         <div>{plan.description}</div>
 
         <button className="subscribe-button" onClick={click} disabled={loading}>
-          Subscribe
+          {loading ? <ButtonLoader /> : "Subscribe"}
         </button>
         <div className="text-[#888888] mt-2 text-xs">
           Pause or cancel anytime.
@@ -78,8 +79,9 @@ const Billing = () => {
         period: annual ? "annual" : "monthly",
         plan,
       })
-      .then((data) => {
-        console.log(data);
+      .then(({ data }) => {
+        console.log(data.data.url);
+        window.location.href = data.data.url;
         setFetching(false);
       })
       .catch((err) => {
@@ -128,7 +130,9 @@ const Billing = () => {
 
       <div className="mt-8">
         {!plans ? (
-          <div>Loading Plans</div>
+          <div className="flex justify-center items-center h-60">
+            <div className="billing-loader"></div>
+          </div>
         ) : (
           <div className="grid lg:grid-cols-3 w-[90%] mx-auto max-w-4xl gap-6">
             {plans?.map((item: any) => (
