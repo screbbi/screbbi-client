@@ -51,7 +51,7 @@ const Settings = ({ close }: { close: () => void }) => {
             numberFormat(user?.subscription?.subscriptionPlan?.tokens)}{" "}
           credtis left
         </div>
-        {user?.subscription?.trialUser && (
+        {user?.subscription?.trialUser ? (
           <div className="flex gap-4 items-center mt-2">
             <Link to={"/billing"}>
               <button className="py-2 px-6 bg-buttonPurple text-white rounded-full text-sm">
@@ -59,6 +59,29 @@ const Settings = ({ close }: { close: () => void }) => {
               </button>
             </Link>
             <div>Starting Price: $15/month</div>
+          </div>
+        ) : (
+          <div className="mt-4 text-sm">
+            <div className="text-base">Subscription Details</div>
+
+            <div>
+              Plan :{" "}
+              <span className="text-gray-400 capitalize">
+                {user?.subscription?.subscriptionPlan?.name}
+              </span>
+            </div>
+            <div>
+              Duration :{" "}
+              <span className="text-gray-400">
+                {user?.subscription?.subscriptionPlan?.period}
+              </span>
+            </div>
+            <div>
+              Description :
+              <span className="text-gray-400">
+                {user?.subscription?.subscriptionPlan?.description}
+              </span>
+            </div>
           </div>
         )}
       </div>

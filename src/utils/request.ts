@@ -22,11 +22,7 @@ const axiosInstance = axios.create({
 //   },
 // });
 
-export const getRequest = async (
-  url: string,
-  params = {},
-  setTime?: (e: boolean) => void
-) => {
+export const getRequest = async (url: string, params = {}) => {
   try {
     const response = await axiosInstance.get(url, { params });
     return response.data;
@@ -34,10 +30,7 @@ export const getRequest = async (
     if (error.response.data === "Unauthorized") {
       window.location.replace("/auth/login");
     }
-    if (axios.isCancel(error)) {
-      console.log("Canceled due to timeout");
-      setTime?.(true);
-    }
+
     throw error;
   }
 };

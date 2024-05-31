@@ -10,7 +10,7 @@ const Navbar = ({
   open?: boolean;
 }) => {
   return (
-    <div className="bg-white/80 p-4 sticky top-0 z-10">
+    <div className="bg-white/80 p-4 sticky top-0 z-20 lg:z-30">
       <div className="flex justify-between lg:justify-end">
         <div className="flex items-center gap-3 relative z-30">
           {setOpen && (
@@ -45,12 +45,3 @@ const Navbar = ({
 };
 
 export default Navbar;
-
-{
-  /* <Link to={"/home"}>
-            <div className="logo flex items-center gap-2">
-              <img src={appLogo} alt="" className="w-10" />
-              <div className="font-bold text-xl">AI ContentWriter</div>
-            </div>
-          </Link> */
-}

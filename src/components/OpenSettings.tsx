@@ -8,7 +8,6 @@ const OpenSettings = () => {
   return (
     <div>
       <div onClick={() => setOpenSettings(true)}>
-        {/* <IoSettingsSharp className="text-neutral-600 text-3xl" /> */}
         <IoSettingsSharp className="text-3xl" />
       </div>
 
