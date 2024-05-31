@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { numberFormat } from "../utils/functions";
 
 const Settings = ({ close }: { close: () => void }) => {
-  const { user,token } = useStore(store);
+  const { user, token } = useStore(store);
 
   return (
     <ModalLayout close={close} title="Settings">
@@ -20,9 +20,12 @@ const Settings = ({ close }: { close: () => void }) => {
         <div className="text-grey text-xs font-semibold">User account</div>
       </div>
 
-      <div className="text-closeBlack text-xs font-semibold mt-2">
-        User account
-      </div>
+      {/* User account */}
+      {user && (
+        <div className="text-closeBlack text-xs font-semibold mt-2 capitalize">
+          {user?.subscription?.subscriptionPlan?.name.split("_").join(" ")}
+        </div>
+      )}
       <div className="text-xs font-semibold mt-1">{user?.email}</div>
 
       <div className="flex justify-between items-center mt-2">
@@ -48,7 +51,7 @@ const Settings = ({ close }: { close: () => void }) => {
             numberFormat(user?.subscription?.subscriptionPlan?.tokens)}{" "}
           credtis left
         </div>
-        {user?.trialUser && (
+        {user?.subscription?.trialUser && (
           <div className="flex gap-4 items-center mt-2">
             <Link to={"/billing"}>
               <button className="py-2 px-6 bg-buttonPurple text-white rounded-full text-sm">
