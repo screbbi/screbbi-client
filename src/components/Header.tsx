@@ -34,12 +34,14 @@ const Header = () => {
               New
             </div>
 
-            <div className="font-semibold">Powered GPT-based models</div>
+            {/* <div className="font-semibold">Powered GPT-based models</div> */}
           </div>
 
-          <div className="font-semibold text-4xl text-center max-w-md mx-auto my-8">
-            AI mind writer powered by Chatgpt
+          <div className="font-semibold text-4xl text-center max-w-3xl mx-auto my-8">
+            AIContentWriter is the non-judgemental, unexpectedly creative AI
+            writing tool that sounds like you, not a robot.
           </div>
+          {/* AI mind writer powered by Chatgpt */}
 
           <div className=" font-semibold text-grey text-center max-w-sm mx-auto my-8">
             AI-powered text generation and editing suggestions
@@ -142,14 +144,14 @@ const Header = () => {
               </div>
 
               <div className="text-closeBlack text-xl font-semibold my-4">
-                Write assists in generating text when you are unable to find the
-                right words
+                Write a novel from start to finish. In a week.
               </div>
 
               <div className="text-grey font-semibold">
-                It analyzes your writing style and produces the following 300
-                words in your tone. The tool also provides different choices for
-                you to select from.
+                <span className="font-semibold">Story Bible</span>
+                takes you step-by-step from idea, to outline, to beating out
+                chapters, and then writes 1,000s of words,
+                <span className="font-semibold">in your style.</span>
               </div>
 
               <button
@@ -212,12 +214,13 @@ const Header = () => {
               </div>
 
               <div className="text-closeBlack text-xl font-semibold my-4">
-                Discovering the ideal word is always a breeze! 
+                When the words just won’t come out – Write can do it for you
               </div>
 
               <div className="text-grey font-semibold">
-                How about just two clicks to reach the heart of a well-crafted
-                sentence?
+                Write is like autocomplete on steroids. It analyzes your
+                characters, tone, and plot arc and generates the next 300 words
+                in your voice. It even gives you options!
               </div>
 
               <button
@@ -250,13 +253,14 @@ const Header = () => {
               </div>
 
               <div className="text-closeBlack text-xl font-semibold my-4">
-                Painting a vivid picture in the mind through descriptions
+                Blank page, begone! Descriptions that paint a picture in the
+                mind, without bogging down the story.
               </div>
 
               <div className="text-grey font-semibold">
-                Focusing solely on action and dialogue in writing may result in
-                a lack of depth. Describing details can enhance reader
-                engagement with characters and create a sense of presence.
+                If you only focus on action and dialogue, writing can feel flat.
+                Describe makes it easy to help your readers connect to your
+                characters and feel like they’re really “there”.
               </div>
 
               <button
@@ -280,12 +284,13 @@ const Header = () => {
               </div>
 
               <div className="text-closeBlack text-xl font-semibold my-4">
-                Pacing may feel rushed despite thorough planning
+                Pacing too fast? Presto expand–o
               </div>
 
               <div className="text-grey font-semibold">
-                Expand feature helps build scenes to maintain pacing in the
-                story.
+                No matter how much time you spend planning, you’ll end up with
+                some sections that feel rushed. Expand magically builds out your
+                scenes so the pacing doesn’t take readers out of the story.
               </div>
 
               <button
