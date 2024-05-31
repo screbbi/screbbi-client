@@ -82,7 +82,7 @@ const Sidebar = ({
         <Link to={"/home"}>
           <div className="logo flex items-center gap-2">
             <img src={appLogo} alt="" className="w-8" />
-            <div className="font-bold text-lg">AI ContentWriter</div>
+            <div className="font-bold text-lg">Screbbi</div>
           </div>
         </Link>
         <button

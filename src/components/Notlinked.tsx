@@ -15,8 +15,8 @@ const Notlinked = ({
               <span className="font-semibold">{linked}</span> to your Outline
             </div>
             <div className="mt-2">
-              AIContentWriter will refer to this part of your outline when
-              generatig text
+              Screbbi will refer to this part of your outline when generatig
+              text
             </div>
           </>
         ) : (
@@ -26,8 +26,8 @@ const Notlinked = ({
               to your Outline
             </div>
             <div className="mt-2">
-              AIContentWriter will not refer to this part of your outline when
-              generatig text
+              Screbbi will not refer to this part of your outline when generatig
+              text
             </div>
           </>
         )}

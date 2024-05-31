@@ -37,8 +37,8 @@ const Header = () => {
           </div>
 
           <div className="font-semibold text-4xl text-center max-w-3xl mx-auto my-8">
-            AIContentWriter is the non-judgemental, unexpectedly creative AI
-            writing tool that sounds like you, not a robot.
+            Scebbi is the non-judgemental, unexpectedly creative AI writing tool
+            that sounds like you, not a robot.
           </div>
           {/* AI mind writer powered by Chatgpt */}
 

@@ -38,8 +38,8 @@ const SingleBilling = ({
           <div className="absolute top-full bg-white rounded-lg shadow-md p-1 text-sm group-hover:block hidden">
             <div className="font-semibold">What is credit?</div>
             <div>
-              Each feature in AIContentWriter uses up credits, based on the AI
-              model, and how many words it reads and writes for you.
+              Each feature in Screbbi uses up credits, based on the AI model,
+              and how many words it reads and writes for you.
             </div>
           </div>
         </div>

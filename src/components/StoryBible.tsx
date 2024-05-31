@@ -338,21 +338,21 @@ const StoryBible = ({
           <>
             <div className="mt-4 mb-8">
               <div className="sudo-text">
-                Tell Sudowrite more about your story and it can help you write a
+                Tell Screbbi more about your story and it can help you write a
                 first draft of every chapter.
               </div>
 
               <div className="sudo-text">
                 To get started, fill out the Braindump and Genre below sections.
                 Then use <span className="font-semibold">Match My Style</span>
-                ... with a sample of your writing to help Sudowrite understand
+                ... with a sample of your writing to help Screbbi understand
                 your style.
               </div>
 
               <div className="sudo-text">
                 Next, fill in Synopsis, Characters, and Outline OR click{" "}
-                <span className="font-semibold"> Generate</span> and Sudowrite
-                will do it for you. (Be sure to read Sudowrite's suggestions and
+                <span className="font-semibold"> Generate</span> and Screbbi
+                will do it for you. (Be sure to read Screbbi's suggestions and
                 make edits before proceeding.)
               </div>
 

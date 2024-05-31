@@ -171,7 +171,7 @@ const Chapter = ({
                   <div className="absolute -left-6 bg-neutral-800 top-10 text-white text-sm p-2 w-60 text-wrap rounded-md group-hover:block hidden">
                     This isn't available on your free trial.{" "}
                     <Link className="underline" to={"/billing"}>
-                      Subscribe to Sudowrite.
+                      Subscribe to Screbbi.
                     </Link>
                   </div>
                 </div>
