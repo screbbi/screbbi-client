@@ -44,6 +44,7 @@ const Generate = () => {
   const reWriteRef: any = useRef();
   const describeRef: any = useRef();
   const linkedRef: any = useRef();
+  // const storyRef: any = useRef();
 
   const { story, user, editToken } = useStore(store);
 
@@ -414,6 +415,12 @@ const Generate = () => {
         toast.error("Error getting history");
       });
   };
+
+  // const scrollStory = () => {
+  //   if (story === "true") {
+  //     storyRef.current.scrollIntoView({ behavior: "smooth" });
+  //   }
+  // };
 
   const insertText = (text: string) => {
     const editor = document.querySelector(".sun-editor-editable");

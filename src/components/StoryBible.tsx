@@ -310,7 +310,6 @@ const StoryBible = ({
   };
 
   useEffect(() => {
-    // getCharacters();
     getRequest(`/story/characters-get/${project}`)
       .then(({ data }) => {
         setCharacters(data);

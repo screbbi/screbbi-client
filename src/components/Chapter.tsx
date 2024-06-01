@@ -30,7 +30,7 @@ const Chapter = ({
   chapters: any;
   linked: string;
 }) => {
-  const { user } = useStore(store);
+  const { user, token } = useStore(store);
 
   const newChapter = chapters && Object.values(chapters)?.flat();
   const currenLinked: any = newChapter?.find(
@@ -159,7 +159,7 @@ const Chapter = ({
 
             {user && (
               <div className="flex items-center gap-4 text-nowrap">
-                {!user?.subscription?.trialUser ? (
+                {user?.subscription?.trialUser || token < 1 ? (
                   <div className="relative group">
                     <button
                       className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4 opacity-80"

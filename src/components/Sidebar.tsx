@@ -81,10 +81,6 @@ const Sidebar = ({
       <div className="">
         <Link to={"/home"}>
           <Logo />
-          {/* <div className="logo flex items-center gap-2">
-            <img src={appLogo} alt="" className="w-8" />
-            <div className="font-bold text-lg">Screbbi</div>
-          </div> */}
         </Link>
         <button
           className="bg-lightButton text-whatNewText flex justify-between py-2 px-4 rounded-full font-semibold items-center text-sm h-fit w-full mt-2"

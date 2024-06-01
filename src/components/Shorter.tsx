@@ -1,7 +1,6 @@
 import { IoMdLink } from "react-icons/io";
 import { MdContentCopy } from "react-icons/md";
-// import { BiLike, BiDislike } from "react-icons/bi";
-// import { CiStar } from "react-icons/ci";
+import he from "he";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import sight from "../assets/img/sight.svg";
@@ -43,6 +42,11 @@ const Shorter = ({
 }) => {
   const [showResults, setShowResults] = useState(false);
   const [showMore, setShowMore] = useState(false);
+
+  const decodeText = (text: string) => {
+    const decoded = he.decode(text);
+    return decoded;
+  };
 
   return (
     <div className="py-2 relative mb-2">
@@ -98,7 +102,7 @@ const Shorter = ({
                 </div>
               )}
               <div className="grey-text mt-2">
-                {result?.suggestion?.text ?? result.suggestion}
+                {decodeText(result?.suggestion?.text ?? result.suggestion)}
               </div>
 
               <div className="flex items-center divide-x-2 mt-2">
@@ -125,17 +129,6 @@ const Shorter = ({
                     Copy
                   </button>
                 </div>
-                {/* <div className="flex gap-2 items-center text-grey pl-2">
-                  <div>
-                    <BiLike />
-                  </div>
-                  <div>
-                    <BiDislike />
-                  </div>
-                  <div>
-                    <CiStar />
-                  </div>
-                </div> */}
               </div>
             </div>
           ))}
@@ -146,3 +139,17 @@ const Shorter = ({
 };
 
 export default Shorter;
+
+{
+  /* <div className="flex gap-2 items-center text-grey pl-2">
+                  <div>
+                    <BiLike />
+                  </div>
+                  <div>
+                    <BiDislike />
+                  </div>
+                  <div>
+                    <CiStar />
+                  </div>
+                </div> */
+}
