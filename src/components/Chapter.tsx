@@ -159,7 +159,7 @@ const Chapter = ({
 
             {user && (
               <div className="flex items-center gap-4 text-nowrap">
-                {!user?.subscription?.trialUser ? (
+                {user?.subscription?.trialUser ? (
                   <div className="relative group">
                     <button
                       className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4 opacity-80"
