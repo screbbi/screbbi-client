@@ -45,14 +45,25 @@ body {
   height: calc(100vh - 5rem);
 }
 .sidebar {
-  @apply grid h-full bg-whatNewText text-lightButton p-4 w-[15rem] lg:w-full absolute lg:static top-0 duration-300 z-30 h-screen;
+  @apply grid bg-whatNewText text-lightButton p-4 w-[15rem] lg:w-full absolute lg:static top-0 duration-300 z-30 h-screen;
   grid-template-rows: 6rem 1fr 10rem;
 }
 
 .generate {
   @apply grid;
   grid-template-columns: 1fr 20rem;
-  height: calc(100vh - 4rem);
+  height: calc(100vh - 5rem);
+}
+.select-write {
+  height: calc(100vh - 5rem);
+}
+.generates {
+  @apply grid;
+  grid-template-columns: 1fr 20rem;
+  height: calc(100vh - 10rem);
+}
+.editors {
+  grid-template-rows: 5.5rem 1fr;
 }
 .grey-text {
   @apply text-grey font-semibold text-xs;
@@ -69,7 +80,6 @@ body {
 .controls {
   @apply grid;
   grid-template-rows: 1fr 3rem;
-  height: calc(100vh - 4.4rem);
 }
 
 /* LOADERS */
@@ -157,11 +167,6 @@ body {
 
 .write-option {
   @apply flex items-center gap-2 font-semibold text-xs py-2 px-3 bg-white rounded-full relative z-20;
-}
-.editor {
-  height: calc(100vh - 9rem);
-
-  /* @apply h-[50vh] bg-slate-500; */
 }
 
 .write-ai {
