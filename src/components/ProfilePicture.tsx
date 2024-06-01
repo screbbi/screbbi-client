@@ -9,7 +9,7 @@ const ProfilePicture = () => {
       {user && (
         <>
           {user?.picture !== "" ? (
-            <img src={user.picture} alt="" />
+            <img src={user.picture} alt="" className="w-8 h-8 rounded-full" />
           ) : (
             <div className="w-8 h-8 flex justify-center items-center border-2 border-gray-700 rounded-full">
               <IoPerson />
