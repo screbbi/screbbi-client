@@ -33,12 +33,12 @@ const Header = () => {
               New
             </div>
 
-            {/* <div className="font-semibold">Powered GPT-based models</div> */}
+            <div className="font-semibold">Powered GPT-based models</div>
           </div>
 
           <div className="font-semibold text-4xl text-center max-w-3xl mx-auto my-8">
-            Scebbi is the non-judgemental, unexpectedly creative AI writing tool
-            that sounds like you, not a robot.
+            Screbbi is the non-judgemental, unexpectedly creative AI writing
+            tool that sounds like you, not a robot.
           </div>
           {/* AI mind writer powered by Chatgpt */}
 

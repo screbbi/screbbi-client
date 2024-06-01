@@ -1,5 +1,4 @@
 import { TbEdit } from "react-icons/tb";
-import appLogo from "../assets/img/ai-logo.png";
 import SingleContent from "./SingleContent";
 import { useEffect, useRef, useState } from "react";
 import { MdLogout } from "react-icons/md";
@@ -11,6 +10,7 @@ import store from "../store/state";
 import Settings from "./Settings";
 import { IoSettingsOutline } from "react-icons/io5";
 import ProfilePicture from "./ProfilePicture";
+import Logo from "./Logo";
 
 const Sidebar = ({
   writings,
@@ -80,10 +80,11 @@ const Sidebar = ({
       {/* NEW CONTENT */}
       <div className="">
         <Link to={"/home"}>
-          <div className="logo flex items-center gap-2">
+          <Logo />
+          {/* <div className="logo flex items-center gap-2">
             <img src={appLogo} alt="" className="w-8" />
             <div className="font-bold text-lg">Screbbi</div>
-          </div>
+          </div> */}
         </Link>
         <button
           className="bg-lightButton text-whatNewText flex justify-between py-2 px-4 rounded-full font-semibold items-center text-sm h-fit w-full mt-2"

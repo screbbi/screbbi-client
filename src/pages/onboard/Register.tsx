@@ -9,7 +9,7 @@ import { postRequest } from "../../utils/request";
 import { toast } from "react-hot-toast";
 import AuthLayout from "../../layout/AuthLayout";
 import googleImage from "../../assets/img/google.svg";
-import logo from "../../assets/img/logo-black.svg";
+import Logo from "../../components/Logo";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -48,7 +48,9 @@ const Register = () => {
     <AuthLayout>
       <div className="onboard-form max-w-md py-8">
         <form className="top-onboard-form" onSubmit={signUpFormik.handleSubmit}>
-          <img src={logo} alt="" className="mx-auto mb-6" />
+          <div className="flex justify-center mb-2">
+            <Logo />
+          </div>
           <div className="onboard-title">Create your free account</div>
 
           <div className="onboard-subtitle">

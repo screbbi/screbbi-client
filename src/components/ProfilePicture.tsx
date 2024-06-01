@@ -1,6 +1,5 @@
 import { useStore } from "zustand";
 import store from "../store/state";
-import profile from "../assets/img/profile.svg";
 import { IoPerson } from "react-icons/io5";
 
 const ProfilePicture = () => {
@@ -10,7 +9,7 @@ const ProfilePicture = () => {
       {user && (
         <>
           {user?.picture !== "" ? (
-            <img src={profile} alt="" />
+            <img src={user.picture} alt="" />
           ) : (
             <div className="w-8 h-8 flex justify-center items-center border-2 border-gray-700 rounded-full">
               <IoPerson />

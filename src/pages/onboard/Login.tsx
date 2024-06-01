@@ -9,7 +9,7 @@ import { postRequest } from "../../utils/request";
 import { toast } from "react-hot-toast";
 import AuthLayout from "../../layout/AuthLayout";
 import googleImage from "../../assets/img/google.svg";
-import logo from "../../assets/img/logo-black.svg";
+import Logo from "../../components/Logo";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -44,7 +44,9 @@ const Login = () => {
     <AuthLayout>
       <div className="onboard-form max-w-md w-11/12">
         <form className="top-onboard-form" onSubmit={signUpFormik.handleSubmit}>
-          <img src={logo} alt="" className="mx-auto mb-6" />
+          <div className="flex justify-center mb-2">
+            <Logo />
+          </div>
           <div className="onboard-title">Log into your account</div>
 
           <div className="onboard-subtitle">
