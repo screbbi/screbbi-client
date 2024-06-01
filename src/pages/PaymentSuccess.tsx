@@ -25,7 +25,11 @@ const PaymentSuccess = () => {
       })
       .catch((err) => {
         setConfirming(false);
-        setError(err?.response?.data?.message ?? "Error Validating Payment");
+        if (err?.response?.data?.message === "Payment already validated") {
+          window.location.replace("/home");
+        } else {
+          setError(err?.response?.data?.message ?? "Error Validating Payment");
+        }
       });
   }, []);
 
