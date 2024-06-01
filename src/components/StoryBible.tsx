@@ -222,9 +222,7 @@ const StoryBible = ({
     getRequest(`/story/characters-generate/${project}`)
       .then(({ data }) => {
         setGeneratingCharacters(false);
-        // setCharacters(data.result);
         getCharacters();
-        // console.log(data);
         editToken(data.tokens.newToken);
       })
       .catch(() => {

@@ -303,11 +303,17 @@ const Generate = () => {
 
         if (currentContent.content) {
           const decoded = he.decode(currentContent.content);
-          setEditorContent(decoded ?? "Untitled Document");
+
           const parser = new DOMParser();
           const doc: any = parser.parseFromString(decoded, "text/xml");
 
-          setTitle(doc.firstChild?.querySelector("p")?.textContent);
+          if (doc.firstChild?.querySelector("p")?.textContent) {
+            setTitle(doc.firstChild?.querySelector("p")?.textContent);
+            setEditorContent(decoded);
+          } else {
+            setTitle("Untitled Document");
+            setEditorContent(`<p>Untitled Document</p> \n ${decoded}`);
+          }
         } else {
           setEditorContent(`<p>${currentContent.title}</p>`);
           setTitle(currentContent.title);
@@ -538,7 +544,14 @@ const Generate = () => {
     })
       .then(({ data }) => {
         setGeneratingChapters(false);
-        setEditorContent(`<p>${title}</p>\n <p>${data}</p>`);
+
+        if (title.trim() === "") {
+          setTitle("Untitled Document");
+          setEditorContent(`<p>Untitled Document</p>\n <p>${data.result}</p>`);
+        } else {
+          setEditorContent(`<p>${title}</p>\n <p>${data.result}</p>`);
+        }
+        editToken(data.tokens.newToken);
         saveDocument();
         setOpenChapter(false);
       })

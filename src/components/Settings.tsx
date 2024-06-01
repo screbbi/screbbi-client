@@ -1,6 +1,6 @@
 import ModalLayout from "../layout/ModalLayout";
 import { IoMdPerson } from "react-icons/io";
-import { CiEdit } from "react-icons/ci";
+// import { CiEdit } from "react-icons/ci";
 import { useStore } from "zustand";
 import store from "../store/state";
 import ProfilePicture from "./ProfilePicture";
@@ -34,15 +34,15 @@ const Settings = ({ close }: { close: () => void }) => {
           {user?.name}
         </div>
 
-        <CiEdit className="text-blue-700 text-xl" />
+        {/* <CiEdit className="text-blue-700 text-xl" /> */}
       </div>
 
-      <div>
+      {/* <div>
         <input
           type="text"
           className="border-b border-blue-700 outline-none w-full text-closeBlack"
         />
-      </div>
+      </div> */}
 
       <div className="text-xs font-semibold  py border-t border-gray-200 py-4">
         <div className="">
@@ -51,6 +51,7 @@ const Settings = ({ close }: { close: () => void }) => {
             numberFormat(user?.subscription?.subscriptionPlan?.tokens)}{" "}
           credtis left
         </div>
+
         {user?.subscription?.trialUser ? (
           <div className="flex gap-4 items-center mt-2">
             <Link to={"/billing"}>
