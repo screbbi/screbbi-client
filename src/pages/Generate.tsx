@@ -89,7 +89,6 @@ const Generate = () => {
   const [genre, setGenre] = useState("");
   const [synopsis, setSynopsis] = useState("");
   const [outline, setOutline] = useState("");
-  const [characters, setCharacters] = useState<any[]>([]);
   const [matchStyle, setMatchStyle] = useState("");
   const [beats, setBeats] = useState("");
   const [openChapter, setOpenChapter] = useState(false);
@@ -556,7 +555,6 @@ const Generate = () => {
     setChapters(story?.chapters ?? {});
     setOutline(story?.outline?.replace(/\*/g, "") ?? "");
     setBraindump(story?.braindump?.replace(/\*/g, "") ?? "");
-    setCharacters(story?.characters?.replace(/\*/g, "") ?? []);
   };
 
   useEffect(() => {
@@ -839,10 +837,8 @@ const Generate = () => {
                   setSynopsis={setSynopsis}
                   outline={outline}
                   setOutline={setOutline}
-                  setCharacters={setCharacters}
                   setMatchStyle={setMatchStyle}
                   matchStyle={matchStyle}
-                  characters={characters}
                   chapters={chapters}
                   setChapters={setChapters}
                 />

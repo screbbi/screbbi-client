@@ -35,12 +35,10 @@ const StoryBible = ({
   braindump,
   synopsis,
   matchStyle,
-  characters = [],
   outline,
   chapters,
   setChapters,
   setOutline,
-  setCharacters,
   setMatchStyle,
   setBraindump,
   setSynopsis,
@@ -50,7 +48,6 @@ const StoryBible = ({
   braindump: string;
   genre: string;
   matchStyle: any;
-  characters: any[];
   outline: string;
   chapters: any;
 
@@ -59,7 +56,6 @@ const StoryBible = ({
   setBraindump: (e: string) => void;
   setSynopsis: (e: string) => void;
   setMatchStyle: (e: string) => void;
-  setCharacters: (e: any) => void;
   setOutline: (e: string) => void;
 }) => {
   const { project } = useParams();
@@ -79,6 +75,7 @@ const StoryBible = ({
   const [currentChapter, setCurrentChapter] = useState("");
   const [addingChapter, setAddingChapter] = useState(false);
   const [openStory, setOpenStory] = useState(true);
+  const [characters, setCharacters] = useState<any[]>([]);
 
   // WORDCOUNTS
   const [brainDumpWordCount, setBrainDumpWordCount] = useState(
@@ -225,7 +222,9 @@ const StoryBible = ({
     getRequest(`/story/characters-generate/${project}`)
       .then(({ data }) => {
         setGeneratingCharacters(false);
-        setCharacters(data.result);
+        // setCharacters(data.result);
+        getCharacters();
+        // console.log(data);
         editToken(data.tokens.newToken);
       })
       .catch(() => {
@@ -313,7 +312,14 @@ const StoryBible = ({
   };
 
   useEffect(() => {
-    getCharacters();
+    // getCharacters();
+    getRequest(`/story/characters-get/${project}`)
+      .then(({ data }) => {
+        setCharacters(data);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
   }, []);
 
   return (
