@@ -25,10 +25,10 @@ const store = create<storeType>((set) => ({
       });
   },
 
-  story: localStorage.getItem("story") ?? false,
+  story: localStorage.getItem("story") ?? "false",
   setStory: (newStory) => {
     localStorage.setItem("story", newStory);
-    set(() => ({ story: newStory }));
+    set((old) => ({ ...old, story: newStory }));
   },
 
   authorize: () => {

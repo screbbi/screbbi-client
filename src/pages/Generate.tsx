@@ -44,7 +44,6 @@ const Generate = () => {
   const reWriteRef: any = useRef();
   const describeRef: any = useRef();
   const linkedRef: any = useRef();
-  // const storyRef: any = useRef();
 
   const { story, user, editToken } = useStore(store);
 
@@ -99,6 +98,7 @@ const Generate = () => {
   const [linkedChapter, setLinkedChapter] = useState<any>(null);
   const [openLinkingOption, setOpenLinkingOption] = useState(false);
   const [openChapterLiking, setOpenChapterLiking] = useState(false);
+  // const [toggleStory, setToggleStory] = useState(false);
 
   const setSenses = (sense: string) => {
     if (descriptions.includes(sense)) {
@@ -415,12 +415,6 @@ const Generate = () => {
         toast.error("Error getting history");
       });
   };
-
-  // const scrollStory = () => {
-  //   if (story === "true") {
-  //     storyRef.current.scrollIntoView({ behavior: "smooth" });
-  //   }
-  // };
 
   const insertText = (text: string) => {
     const editor = document.querySelector(".sun-editor-editable");
@@ -857,6 +851,7 @@ const Generate = () => {
 
                 {/* STORY BIBLE */}
               </div>
+
               {story === "true" && (
                 <StoryBible
                   genre={genre}

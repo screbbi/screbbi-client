@@ -6,7 +6,7 @@ import { GiMustache } from "react-icons/gi";
 import { BsStars } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa";
 import { BsPersonBoundingBox, BsMenuButtonWide } from "react-icons/bs";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   delRequest,
   getRequest,
@@ -60,7 +60,9 @@ const StoryBible = ({
 }) => {
   const { project } = useParams();
   const navigate = useNavigate();
-  const { editToken } = useStore(store);
+  const { editToken, story } = useStore(store);
+
+  const storyBibleRef: any = useRef();
 
   const [generatingSynopsis, setGeneratingSynopsis] = useState(false);
   const [generatingMatchStyle, setGeneratingMatchStyle] = useState(false);
@@ -319,6 +321,21 @@ const StoryBible = ({
       });
   }, []);
 
+  const scrolltoBible = () => {
+    // const element = document.getElementById("story");
+    // console.log(element, storyRef);
+
+    if (storyBibleRef?.current) {
+      storyBibleRef?.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  useEffect(() => {
+    if (story === "true") {
+      scrolltoBible();
+    }
+  }, [story]);
+
   return (
     <div className="w-full mt-6 pb-4">
       <div className="single-story">
@@ -407,7 +424,7 @@ const StoryBible = ({
         )}
       </div>
 
-      <div className="single-story">
+      <div className="single-story" ref={storyBibleRef}>
         <div className="single-story-top">
           <div className="flex items-center gap-2">
             <PiBrainThin />

@@ -125,13 +125,18 @@ const Sidebar = ({
               className="checkbox-wrapper-6"
               onClick={(e) => {
                 e.stopPropagation();
-                setStory(story === "true" ? "false" : "true");
+                let storyValue =
+                  story === "true" ? false : story === "false" ? true : false;
+                setStory(storyValue.toString());
               }}
             >
               <input
                 className="tgl tgl-light"
                 id="cb1-1"
                 type="checkbox"
+                onChange={(e) => {
+                  console.log(e.target.value);
+                }}
                 checked={story === "true"}
               />
               <label className="tgl-btn" />

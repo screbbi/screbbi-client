@@ -37,7 +37,7 @@ const PageLayout = ({
 
           <div>
             <Navbar setOpen={() => setOpenNav(!openNav)} open={openNav} />
-            <div className="h-full">{children}</div>
+            <div className="">{children}</div>
           </div>
         </div>
         {openNav && (

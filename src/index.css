@@ -52,7 +52,7 @@ body {
 .generate {
   @apply grid;
   grid-template-columns: 1fr 20rem;
-  height: calc(100vh - 3rem);
+  height: calc(100vh - 4rem);
 }
 .grey-text {
   @apply text-grey font-semibold text-xs;
