@@ -547,9 +547,19 @@ const Generate = () => {
 
         if (title.trim() === "") {
           setTitle("Untitled Document");
-          setEditorContent(`<p>Untitled Document</p>\n <p>${data.result}</p>`);
+          setEditorContent(
+            `<p>Untitled Document</p>\n <p>${data?.result?.replaceAll(
+              "\n",
+              "<br/>"
+            )}</p>`
+          );
         } else {
-          setEditorContent(`<p>${title}</p>\n <p>${data.result}</p>`);
+          setEditorContent(
+            `<p>${title}</p>\n  <p>${data?.result?.replaceAll(
+              "\n",
+              "<br/>"
+            )}</p>`
+          );
         }
         editToken(data.tokens.newToken);
         saveDocument();
