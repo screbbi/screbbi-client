@@ -11,10 +11,10 @@ const Navbar = ({
 }) => {
   return (
     <div className="bg-white/80 p-4 sticky top-0 z-20 lg:z-30">
-      <div className="flex justify-between lg:justify-end">
+      <div className="flex justify-between xl:justify-end">
         <div className="flex items-center gap-3 relative z-30">
           {setOpen && (
-            <div className="text-3xl lg:hidden" onClick={setOpen}>
+            <div className="text-3xl xl:hidden" onClick={setOpen}>
               {open ? <HiOutlineMenuAlt3 /> : <HiOutlineMenuAlt2 />}
             </div>
           )}

@@ -543,7 +543,7 @@ const StoryBible = ({
 
             <EmptyToken text="Match my style">
               <button
-                className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4"
+                className="text-sm text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4"
                 onClick={() => setOpenWriting(true)}
               >
                 <BsStars />
@@ -592,13 +592,13 @@ const StoryBible = ({
             />
             <EmptyToken text="Generate Synopsis">
               <button
-                className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4"
+                className="text-sm text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4"
                 type="button"
                 onClick={generateSynopsis}
                 disabled={generatingSynopsis}
               >
                 <BsStars />
-                {generatingSynopsis ? "Generating..." : "Generate Synopsis"}
+                {generatingSynopsis ? "Generating..." : "Generate"}
               </button>
             </EmptyToken>
           </div>
@@ -644,7 +644,7 @@ const StoryBible = ({
 
           <div className="flex items-center gap-4 text-nowrap">
             <button
-              className="text-base border border-buttonPurple text-buttonPurple rounded-md py-2 font-semibold gap-2 inline-flex justify-center items-center px-4"
+              className="text-sm border border-buttonPurple text-buttonPurple rounded-md py-2 font-semibold gap-2 inline-flex justify-center items-center px-4"
               onClick={addChaacter}
               disabled={generatingCharacters}
             >
@@ -654,12 +654,12 @@ const StoryBible = ({
 
             <EmptyToken text="Generate Characters">
               <button
-                className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4"
+                className="text-sm text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4"
                 onClick={generateCharacters}
                 disabled={generatingCharacters}
               >
                 <BsStars />
-                {generatingCharacters ? "Generating.." : "Generate Characters"}
+                {generatingCharacters ? "Generating.." : "Generate"}
               </button>
             </EmptyToken>
           </div>
@@ -717,7 +717,7 @@ const StoryBible = ({
             />
             <EmptyToken text="Generate Outline">
               <button
-                className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4"
+                className="text-sm text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4"
                 onClick={generateOutline}
                 disabled={generatingOutline}
               >
@@ -842,7 +842,7 @@ export default StoryBible;
               Customize
             </button>
 
-            <button className="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4">
+            <button classNamsm="text-base text-white bg-buttonPurple rounded-md py-2 font-normal gap-2 inline-flex justify-center items-center px-4">
               <BsStars />
               Generate Outline
             </button>

@@ -618,8 +618,8 @@ const Generate = () => {
           <div className={`${token <= 200 ? "generates" : "generate"}`}>
             <div className="py-2 px-6 overflow-y-scroll">
               {/* WRITE OPTIONS */}
-              <div className="flex justify-between items-center relative">
-                <div className="flex gap-2 items-center mb-4">
+              <div className="flex justify-between items-center relative mb-4">
+                <div className="flex gap-2 items-center">
                   <div
                     className="write-option"
                     onClick={() => {
@@ -754,11 +754,7 @@ const Generate = () => {
                     onClick={() => setOpenLinkingOption(true)}
                     ref={linkedRef}
                   >
-                    {linkedChapter ? (
-                      <IoMdLink className="text-2xl" />
-                    ) : (
-                      <MdLinkOff />
-                    )}
+                    {linkedChapter ? <IoMdLink className="" /> : <MdLinkOff />}
 
                     {linkedChapter ? (
                       <div>
@@ -766,7 +762,7 @@ const Generate = () => {
                         <div className="text-[10px]">{linkedChapter}</div>
                       </div>
                     ) : (
-                      "Not in Outline"
+                      <div className="text-sm">Not in Outline</div>
                     )}
 
                     {openLinkingOption && (
@@ -814,7 +810,6 @@ const Generate = () => {
               </div>
 
               {/* EDITOR */}
-
               <div
                 className="editor relative flex justify-center bg-slate-400 rounded-lg overflow-hidden shadow-lg"
                 onMouseUp={checkSelection}

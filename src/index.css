@@ -41,11 +41,11 @@ body {
   @apply text-buttonPurple;
 }
 .page-layout {
-  @apply grid grid-cols-1 lg:grid-cols-pageLayout relative;
+  @apply grid grid-cols-1 xl:grid-cols-pageLayout relative;
   height: calc(100vh - 5rem);
 }
 .sidebar {
-  @apply grid bg-whatNewText text-lightButton p-4 w-[15rem] lg:w-full absolute lg:static top-0 duration-300 z-30 h-screen;
+  @apply grid bg-whatNewText text-lightButton p-4 w-[15rem] xl:w-full absolute xl:static top-0 duration-300 z-30 h-screen;
   grid-template-rows: 6rem 1fr 10rem;
 }
 
