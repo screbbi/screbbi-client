@@ -297,7 +297,7 @@ const StoryBible = ({
       })
       .catch(() => {
         setAddingChapter(false);
-        toast.error("Unabe to Add Chapter");
+        toast.error("Unable to Add Chapter");
       });
   };
 
