@@ -49,7 +49,7 @@ const Settings = ({ close }: { close: () => void }) => {
           {user?.token && numberFormat(token)} /{" "}
           {user?.subscription?.subscriptionPlan?.tokens &&
             numberFormat(user?.subscription?.subscriptionPlan?.tokens)}{" "}
-          credtis left
+          Credits left
         </div>
 
         {user?.subscription?.trialUser ? (

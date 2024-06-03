@@ -204,6 +204,9 @@ const StoryBible = ({
         setChapters(data?.result?.chapters);
         editToken(data.tokens.newToken);
         setGeneratingOutline(false);
+
+        // const chap: any = Object.values(data?.result?.chapters)[0][0];
+        // console.log(chap);
       })
       .catch(() => {
         setGeneratingOutline(false);
@@ -249,8 +252,14 @@ const StoryBible = ({
       projectID: project,
       [field]: value,
     })
-      .then(({ data }) => {
+      .then(({ data }: { data: any }) => {
         setChapters(data["storyBible.chapters"] ?? {});
+
+        // if (currentChapter === "") {
+        //   const chap: any = Object.values(data["storyBible.chapters"])[0][0]
+        //     .chapter;
+        //   setCurrentChapter(chap);
+        // }
       })
       .catch(() => {
         toast.error(`Error Saving ${field}`);
@@ -760,6 +769,9 @@ const StoryBible = ({
                 value={currentChapter}
                 onChange={(e) => setCurrentChapter(e.target.value)}
               >
+                <option value="" disabled={true}>
+                  Select a chapter
+                </option>
                 {Object.keys(chapters)?.map((item: any, idx) => (
                   <optgroup
                     label={`Act ${idx + 1}`}
@@ -880,3 +892,5 @@ export default StoryBible;
         />
       ))} */
 }
+
+// CHAPTER  ADDING
