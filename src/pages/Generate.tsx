@@ -125,35 +125,13 @@ const Generate = () => {
         setOpenWriteOptions(false);
         setOpenPrompt(false);
         setPrompt("");
-        setEditorContent(
-          `<p>${title}</p> <br> <p>${data.replaceAll("\n", "<br>")}</p>`
-        );
-        postRequest("/writer/writing", {
-          writer,
-          content: `<p>${title}</p> <br> <p>${data.replaceAll(
-            "\n",
-            "<br>"
-          )}</p>`,
-          title,
-        })
-          .then(() => {
-            const newWritings = writings?.map((writing: any) => {
-              if (writing._id === writer) {
-                return { ...writing, title: title };
-              } else {
-                return writing;
-              }
-            });
 
-            setWritings(newWritings);
-          })
-          .catch((err) => {
-            console.log(err.response);
-          });
+        insertText(data.replaceAll(/\n/g, "<br>"));
         setLoadingPrompt(false);
       })
       .catch(() => {
         toast.error("Error getting prompt");
+
         setLoadingPrompt(false);
       });
   };
@@ -418,6 +396,12 @@ const Generate = () => {
 
   const insertText = (text: string) => {
     const editor = document.querySelector(".sun-editor-editable");
+    if (!selected) {
+      toast.error("Select a point to insert your text");
+      return;
+    }
+    // console.log(selected);
+    // return;
 
     if (editor) {
       selected?.deleteContents();

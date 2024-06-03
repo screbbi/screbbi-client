@@ -14,7 +14,10 @@ const Prompt = ({
   loading: boolean;
 }) => {
   return (
-    <div className="absolute top-full left-0 w-80 bg-white p-3 shadow-lg rounded-md">
+    <div
+      className="absolute top-full left-0 w-80 bg-white p-3 shadow-lg rounded-md"
+      onClick={(e) => e.stopPropagation()}
+    >
       <div
         className="flex items-center gap-2 p-3 text-sm border-b border-faqBorder"
         onClick={(e) => {

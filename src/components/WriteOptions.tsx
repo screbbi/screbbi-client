@@ -6,7 +6,10 @@ const WriteOptions = ({
   openPrompt: () => void;
 }) => {
   return (
-    <div className="absolute top-full left-0 w-60 bg-white p-3 shadow-lg rounded-md z-30">
+    <div
+      className="absolute top-full left-0 w-60 bg-white p-3 shadow-lg rounded-md z-30"
+      onClick={(e) => e.stopPropagation()}
+    >
       <div
         className="write-ai"
         onClick={(e) => {
