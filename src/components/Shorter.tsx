@@ -1,6 +1,6 @@
 import { IoMdLink } from "react-icons/io";
 import { MdContentCopy } from "react-icons/md";
-import he from "he";
+import he, { decode } from "he";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import sight from "../assets/img/sight.svg";
@@ -50,11 +50,7 @@ const Shorter = ({
 
   return (
     <div className="py-2 relative mb-2">
-      <div
-        className={`${
-          !showResults && "shadow-md"
-        } p-2 rounded-md relative bg-white z-20`}
-      >
+      <div className={`shadow-md  p-2 rounded-md relative bg-white z-20`}>
         <div className="text-xs font-bold text-closeBlack capitalize">
           {item.category}
         </div>
@@ -65,13 +61,13 @@ const Shorter = ({
         >
           {/* {item?.suggestions?.content} */}
           {item?.suggestions?.content?.length < 80 ? (
-            item.suggestions.content
+            decode(item.suggestions.content)
           ) : (
             <>
               <span>
                 {showMore
-                  ? item.suggestions.content
-                  : item.suggestions.content.slice(0, 80)}
+                  ? decode(item.suggestions.content)
+                  : decode(item.suggestions.content.slice(0, 80))}
               </span>{" "}
               <span
                 className="underline"

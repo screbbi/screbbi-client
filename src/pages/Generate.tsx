@@ -126,7 +126,8 @@ const Generate = () => {
         setOpenPrompt(false);
         setPrompt("");
 
-        insertText(data.replaceAll(/\n/g, "<br>"));
+        // insertText(data.replaceAll(/\n/g, "<br>"));
+        insertText(`    ${data}`);
         setLoadingPrompt(false);
       })
       .catch(() => {
@@ -219,8 +220,6 @@ const Generate = () => {
 
     const parser = new DOMParser();
     const doc = parser.parseFromString(editorContent, "text/html");
-    // console.log(doc.body.firstElementChild?.firstElementChild?.outerHTML);
-    // console.log("target: " + e.target.outerHTML);
 
     if (
       doc.body.firstElementChild?.firstElementChild?.outerHTML ==
@@ -396,17 +395,15 @@ const Generate = () => {
 
   const insertText = (text: string) => {
     const editor = document.querySelector(".sun-editor-editable");
-    if (!selected) {
-      toast.error("Select a point to insert your text");
-      return;
-    }
-    // console.log(selected);
-    // return;
 
-    if (editor) {
-      selected?.deleteContents();
-      const newNode = document.createTextNode(text);
-      selected?.insertNode(newNode);
+    if (!selected) {
+      editor?.append(text);
+    } else {
+      if (editor) {
+        selected?.deleteContents();
+        const newNode = document.createTextNode(text);
+        selected?.insertNode(newNode);
+      }
     }
   };
 
