@@ -44,6 +44,7 @@ const Generate = () => {
   const reWriteRef: any = useRef();
   const describeRef: any = useRef();
   const linkedRef: any = useRef();
+  const topPageRef: any = useRef();
 
   const { story, user, editToken, token } = useStore(store);
 
@@ -177,6 +178,9 @@ const Generate = () => {
         "redo",
       ],
     ],
+  };
+  const scrollToTop = () => {
+    topPageRef?.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   function getSelectedText() {
@@ -599,7 +603,10 @@ const Generate = () => {
           <div className={`${token <= 200 ? "generates" : "generate"}`}>
             <div className="py-2 px-6 overflow-y-scroll">
               {/* WRITE OPTIONS */}
-              <div className="flex justify-between items-center relative mb-4">
+              <div
+                className="flex justify-between items-center relative mb-4"
+                ref={topPageRef}
+              >
                 <div className="flex gap-2 items-center">
                   <div
                     className="write-option"
@@ -859,6 +866,7 @@ const Generate = () => {
                   matchStyle={matchStyle}
                   chapters={chapters}
                   setChapters={setChapters}
+                  scrollToTop={scrollToTop}
                 />
               )}
             </div>

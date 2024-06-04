@@ -43,6 +43,7 @@ const StoryBible = ({
   setBraindump,
   setSynopsis,
   setGenre,
+  scrollToTop,
 }: {
   synopsis: string;
   braindump: string;
@@ -57,6 +58,7 @@ const StoryBible = ({
   setSynopsis: (e: string) => void;
   setMatchStyle: (e: string) => void;
   setOutline: (e: string) => void;
+  scrollToTop: () => void;
 }) => {
   const { project } = useParams();
   const navigate = useNavigate();
@@ -303,6 +305,7 @@ const StoryBible = ({
       .then(({ data }) => {
         navigate(`/project/${data.project}/${data._id}`);
         setAddingChapter(false);
+        scrollToTop();
       })
       .catch(() => {
         setAddingChapter(false);
