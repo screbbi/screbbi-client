@@ -126,9 +126,7 @@ const Generate = () => {
         setOpenPrompt(false);
         setPrompt("");
 
-        // const decoded = he.decode(data.replaceAll("\n", "<br/>"));
-        // insertText(data.replaceAll(/\n/g, "<br>"));
-        insertText(`    ${data.replaceAll("\n", "<br/>")}`);
+        insertText(`${data.replaceAll("\n", "<br/>")}`);
         setLoadingPrompt(false);
       })
       .catch(() => {
@@ -421,12 +419,13 @@ const Generate = () => {
       if (editor) {
         const lines = text.split("<br/>");
 
-        const brElement = document.createElement("br");
-        selected.insertNode(brElement);
-        selected.insertNode(brElement);
-
         lines.forEach((line, index) => {
           const textNode = document.createTextNode(line);
+          if (index === 0) {
+            const brElement = document.createElement("br");
+            selected.insertNode(brElement);
+            selected.setStartAfter(brElement);
+          }
           selected.insertNode(textNode);
           selected.setStartAfter(textNode);
           if (index < lines.length - 1) {
