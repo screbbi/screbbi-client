@@ -240,6 +240,9 @@ const Generate = () => {
   };
 
   const saveDocument = () => {
+    const editor = document.querySelector(".sun-editor-editable");
+    const content: any = editor?.innerHTML;
+
     if (!writer) {
       return;
     }
@@ -250,7 +253,7 @@ const Generate = () => {
 
     postRequest("/writer/writing", {
       writer,
-      content: editorContent.outerHTML,
+      content: content,
       title,
     })
       .then(() => {
@@ -288,9 +291,19 @@ const Generate = () => {
 
           const parser = new DOMParser();
           const doc: any = parser.parseFromString(decoded, "text/xml");
+          const docContent: any = parser.parseFromString(
+            currentContent,
+            "text/xml"
+          );
 
-          if (doc.firstChild?.querySelector("p")?.textContent) {
-            setTitle(doc.firstChild?.querySelector("p")?.textContent);
+          if (
+            doc.firstChild?.querySelector("p")?.textContent ||
+            docContent?.body?.firstChild?.textContent
+          ) {
+            setTitle(
+              doc.firstChild?.querySelector("p")?.textContent ??
+                doc?.body?.firstChild?.textContent
+            );
             setEditorContent(decoded);
           } else {
             setTitle("Untitled Document");
@@ -315,9 +328,8 @@ const Generate = () => {
           setBeats("");
         }
       })
-      .catch((err: any) => {
+      .catch(() => {
         toast.error("Unable to get User writings");
-        console.log(err);
       });
   };
 
@@ -401,16 +413,32 @@ const Generate = () => {
     const editor = document.querySelector(".sun-editor-editable");
     const p = document.createElement("p");
     p.innerHTML = text;
-    const span = document.createElement("span");
-    span.innerHTML = text;
 
     if (!selected) {
       editor?.appendChild(p);
+      saveDocument();
     } else {
       if (editor) {
-        selected?.deleteContents();
-        const newNode = document.createTextNode(span.innerHTML);
-        selected?.insertNode(newNode);
+        const lines = text.split("<br/>");
+
+        const brElement = document.createElement("br");
+        selected.insertNode(brElement);
+        selected.insertNode(brElement);
+
+        lines.forEach((line, index) => {
+          const textNode = document.createTextNode(line);
+          selected.insertNode(textNode);
+          selected.setStartAfter(textNode);
+          if (index < lines.length - 1) {
+            const brElement = document.createElement("br");
+            selected.insertNode(brElement);
+            selected.setStartAfter(brElement);
+          }
+        });
+        saveDocument();
+        // selected?.deleteContents();
+        // const newNode = document.createTextNode(text);
+        // selected?.insertNode(newNode);
       }
     }
   };
@@ -478,16 +506,22 @@ const Generate = () => {
     setSelected(range);
   };
 
-  const inputting = (e: any) => {
-    // const parser = new DOMParser();
-    // const doc = parser.parseFromString(e.target.outerHTML, "text/html");
-    // const myTitle: any =
-    //   doc.body.firstElementChild?.firstElementChild?.textContent;
-    // console.log(e.target.firstElementChild.textContent);
+  const inputting = () => {
+    const editor = document.querySelector(".sun-editor-editable");
+    const content: any = editor?.innerHTML;
 
-    setRange();
-    setTitle(e.target.firstElementChild.textContent);
-    setEditorContent(e.target);
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(content, "text/html");
+
+    setTitle(doc?.body?.firstChild?.textContent);
+    setEditorContent(content);
+
+    const selection: any = window.getSelection();
+    if (selection.rangeCount > 0) {
+      const range = selection.getRangeAt(0);
+
+      setSelected(range);
+    }
   };
 
   const generateChapter = () => {
