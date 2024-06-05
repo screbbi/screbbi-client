@@ -65,14 +65,12 @@ const Generate = () => {
   const [openPrompt, setOpenPrompt] = useState(false);
   const [prompt, setPrompt] = useState("");
   const [loadingPrompt, setLoadingPrompt] = useState(false);
-  const [tonedPromptSetting, setTonedPromptSetting] = useState(
-    user?.writeSettings ?? {
-      keyDetails: "",
-      toneOfStory: "",
-      lengthOfWords: 0,
-      chapters: 1,
-    }
-  );
+  const [tonedPromptSetting, setTonedPromptSetting] = useState({
+    keyDetails: "",
+    toneOfStory: "",
+    lengthOfWords: 0,
+    chapters: 0,
+  });
   const [loadingToned, setLoadingToned] = useState(false);
   const [openRewriteOtions, setOpenRewriteOtions] = useState(false);
   const [openDescribeOptions, setOpenDescribeOptions] = useState(false);
@@ -139,6 +137,7 @@ const Generate = () => {
   const generateTonedPrompt = () => {
     if (tonedPromptSetting.keyDetails.trim() === "") {
       alert("Fill all fields");
+      return;
     }
 
     setLoadingToned(true);
@@ -282,6 +281,15 @@ const Generate = () => {
         if (!writer) return;
         const currentContent = data.find(
           (content: any) => content._id === writer
+        );
+
+        setTonedPromptSetting(
+          currentContent.writeSettings ?? {
+            keyDetails: "",
+            toneOfStory: "",
+            lengthOfWords: 0,
+            chapters: 0,
+          }
         );
 
         if (currentContent.content) {
@@ -614,10 +622,6 @@ const Generate = () => {
         toast.error(err.response.data);
       });
   }, []);
-
-  useEffect(() => {
-    setTonedPromptSetting(user?.writeSettings);
-  }, [user]);
 
   return (
     <PageLayout writings={writings} refresh={() => setRefresh(!refresh)}>
