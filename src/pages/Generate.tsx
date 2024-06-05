@@ -68,9 +68,9 @@ const Generate = () => {
   const [tonedPromptSetting, setTonedPromptSetting] = useState(
     user?.writeSettings ?? {
       keyDetails: "",
-      toneOfStory: "suspenseful",
-      lengthOfWords: 100,
-      chapters: 2,
+      toneOfStory: "",
+      lengthOfWords: 0,
+      chapters: 1,
     }
   );
   const [loadingToned, setLoadingToned] = useState(false);
@@ -99,7 +99,6 @@ const Generate = () => {
   const [linkedChapter, setLinkedChapter] = useState<any>(null);
   const [openLinkingOption, setOpenLinkingOption] = useState(false);
   const [openChapterLiking, setOpenChapterLiking] = useState(false);
-  // const [toggleStory, setToggleStory] = useState(false);
 
   const setSenses = (sense: string) => {
     if (descriptions.includes(sense)) {
@@ -127,8 +126,9 @@ const Generate = () => {
         setOpenPrompt(false);
         setPrompt("");
 
+        // const decoded = he.decode(data.replaceAll("\n", "<br/>"));
         // insertText(data.replaceAll(/\n/g, "<br>"));
-        insertText(`    ${data}`);
+        insertText(`    ${data.replaceAll("\n", "<br/>")}`);
         setLoadingPrompt(false);
       })
       .catch(() => {
@@ -399,13 +399,17 @@ const Generate = () => {
 
   const insertText = (text: string) => {
     const editor = document.querySelector(".sun-editor-editable");
+    const p = document.createElement("p");
+    p.innerHTML = text;
+    const span = document.createElement("span");
+    span.innerHTML = text;
 
     if (!selected) {
-      editor?.append(text);
+      editor?.appendChild(p);
     } else {
       if (editor) {
         selected?.deleteContents();
-        const newNode = document.createTextNode(text);
+        const newNode = document.createTextNode(span.innerHTML);
         selected?.insertNode(newNode);
       }
     }
