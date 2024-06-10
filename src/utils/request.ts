@@ -3,7 +3,7 @@ import axios from "axios";
 // export const BASE_URL = "https://ai-writer-black.vercel.app/api/v1";
 // export const BASE_URL1 = "https://ai-writer-black.vercel.app/api/v2";
 
-const axiosInstance = axios.create({
+export const axiosInstance = axios.create({
   // timeout: 10000,
   baseURL: import.meta.env.VITE_BASE_URL,
   // baseURL: import.meta.env.VITE_BASE_URL,

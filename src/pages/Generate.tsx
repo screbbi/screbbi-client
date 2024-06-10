@@ -10,7 +10,12 @@ import he from "he";
 import SunEditor from "suneditor-react";
 import "suneditor/dist/css/suneditor.min.css";
 import { useEffect, useRef, useState } from "react";
-import { getRequest, postRequest, putRequest } from "../utils/request";
+import {
+  axiosInstance,
+  getRequest,
+  postRequest,
+  putRequest,
+} from "../utils/request";
 import { Link, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import ButtonLoader1 from "../components/ButtonLoader1";
@@ -561,45 +566,88 @@ const Generate = () => {
       });
   };
 
-  const generateProse = () => {
+  const generateProse = async () => {
     if (!beats.trim()) {
       alert("Beats cannot be empty");
     }
 
     setGeneratingChapters(true);
-    postRequest(`/chapter/prose-generate`, {
-      projectID: project,
-      writing: writer,
-      beats,
-      braindump,
-    })
+
+    // const response = await
+    axiosInstance
+      .post(
+        "/chapter/prose-generate",
+        {
+          projectID: project,
+          writing: writer,
+          beats,
+          braindump,
+        }
+        // {
+        //   responseType: "stream",
+        // }
+      )
       .then(({ data }) => {
+        // console.log(data);
         setGeneratingChapters(false);
 
         if (title.trim() === "") {
           setTitle("Untitled Document");
           setEditorContent(
-            `<p>Untitled Document</p>\n <p>${data?.result?.replaceAll(
+            `<p>Untitled Document</p>\n <p>${data?.replaceAll(
               "\n",
               "<br/>"
             )}</p>`
           );
         } else {
           setEditorContent(
-            `<p>${title}</p>\n  <p>${data?.result?.replaceAll(
-              "\n",
-              "<br/>"
-            )}</p>`
+            `<p>${title}</p>\n  <p>${data?.replaceAll("\n", "<br/>")}</p>`
           );
         }
-        editToken(data.tokens.newToken);
+
+        // editToken(data.tokens.newToken);
         saveDocument();
         setOpenChapter(false);
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log(err.response.data);
         setGeneratingChapters(false);
-        toast.error("Error Generating Chapter");
       });
+
+    // postRequest(`/chapter/prose-generate`, {
+    //   projectID: project,
+    //   writing: writer,
+    //   beats,
+    //   braindump,
+    // })
+    //   .then((data) => {
+    //     setGeneratingChapters(false);
+    //     console.log(data);
+
+    //     // if (title.trim() === "") {
+    //     //   setTitle("Untitled Document");
+    //     //   setEditorContent(
+    //     //     `<p>Untitled Document</p>\n <p>${data?.result?.replaceAll(
+    //     //       "\n",
+    //     //       "<br/>"
+    //     //     )}</p>`
+    //     //   );
+    //     // } else {
+    //     //   setEditorContent(
+    //     //     `<p>${title}</p>\n  <p>${data?.result?.replaceAll(
+    //     //       "\n",
+    //     //       "<br/>"
+    //     //     )}</p>`
+    //     //   );
+    //     // }
+    //     // editToken(data.tokens.newToken);
+    //     saveDocument();
+    //     setOpenChapter(false);
+    //   })
+    //   .catch(() => {
+    //     setGeneratingChapters(false);
+    //     toast.error("Error Generating Chapter");
+    //   });
   };
 
   const retriveLocal = (story: any) => {
