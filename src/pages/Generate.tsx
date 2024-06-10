@@ -588,21 +588,17 @@ const Generate = () => {
         // }
       )
       .then(({ data }) => {
-        // console.log(data);
+        const newArray = data
+          .split("\n")
+          .map((text: string) => `<p>${text}</p>`);
+        console.log(newArray);
         setGeneratingChapters(false);
 
         if (title.trim() === "") {
           setTitle("Untitled Document");
-          setEditorContent(
-            `<p>Untitled Document</p>\n <p>${data?.replaceAll(
-              "\n",
-              "<br/>"
-            )}</p>`
-          );
+          setEditorContent(`<p>Untitled Document</p>\n ${newArray}`);
         } else {
-          setEditorContent(
-            `<p>${title}</p>\n  <p>${data?.replaceAll("\n", "<br/>")}</p>`
-          );
+          setEditorContent(`<p>${title}</p>\n  ${newArray}`);
         }
 
         // editToken(data.tokens.newToken);
@@ -610,7 +606,7 @@ const Generate = () => {
         setOpenChapter(false);
       })
       .catch((err) => {
-        console.log(err.response.data);
+        console.log(err);
         setGeneratingChapters(false);
       });
 
