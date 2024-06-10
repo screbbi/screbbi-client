@@ -591,7 +591,7 @@ const Generate = () => {
         const newArray = data
           .split("\n")
           .map((text: string) => `<p>${text}</p>`);
-        console.log(newArray);
+
         setGeneratingChapters(false);
 
         if (title.trim() === "") {
