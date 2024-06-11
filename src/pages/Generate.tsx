@@ -589,37 +589,44 @@ const Generate = () => {
       const stream = res?.body?.getReader();
       let text = "";
       let reader = await stream?.read();
-      // console.log(reader.result);
+
       while (!reader?.done) {
         const value = reader?.value;
         const decoder = new TextDecoder();
         const decoded = decoder.decode(value);
+        const response = decoded.toString();
 
-        const response = JSON.parse(decoded);
-        // const status = response?.status;
-        const data = response?.data;
+        // console.log(response);
 
-        text += data.result;
-
-        const newArray = text
-          .split("\n")
-          .map((text: string) => `<p>${text}</p>`)
-          .join("");
-
-        if (title && title?.trim() === "") {
-          setTitle("Untitled Document");
-          setEditorContent(`<p>Untitled Document</p>\n ${newArray}`);
+        if (response == "Recharge Token to continue") {
+          toast("Not Enough Token");
+          break;
         } else {
-          setEditorContent(
-            `<p>${title ?? "Untitled Document"}</p>\n  ${newArray}`
-          );
+          text += response;
+
+          const newArray = text
+            .split("\n")
+            .map((text: string) => `<p>${text}</p>`)
+            .join("");
+
+          if (
+            title?.trim() === "" ||
+            title ===
+              "This page contains the following errors:error on line 1 at column 1: Start tag expected, '<' not foundBelow is a rendering of the page up to the first error."
+          ) {
+            setTitle("Untitled Document");
+            setEditorContent(`<p>Untitled Document</p>\n ${newArray}`);
+          } else {
+            setEditorContent(
+              `<p>${title ?? "Untitled Document"}</p>\n  ${newArray}`
+            );
+          }
+          saveDocument();
         }
-        saveDocument();
 
         setOpenChapter(false);
-        // console.log("Received data chunk:", data.result);
-        editToken(data.tokens.newToken);
-        // console.log(data.tokens);
+        // console.log("Received data chunk:", response);
+        // editToken(data.tokens.newToken);
 
         reader = await stream?.read();
       }
@@ -655,8 +662,8 @@ const Generate = () => {
   return (
     <PageLayout writings={writings} refresh={() => setRefresh(!refresh)}>
       {writer ? (
-        <div className={`editors ${token <= 200 && "grid"}`}>
-          {token <= 200 && (
+        <div className={`editors ${token <= 5000 && "grid"}`}>
+          {token <= 5000 && (
             <div className="p-2">
               <div className="flex justify-between items-center p-4 bg-white rounded-lg">
                 <div className="">Your token balance of {token} is low</div>
@@ -670,7 +677,7 @@ const Generate = () => {
             </div>
           )}
 
-          <div className={`${token <= 200 ? "generates" : "generate"}`}>
+          <div className={`${token <= 5000 ? "generates" : "generate"}`}>
             <div className="py-2 px-6 overflow-y-scroll">
               {/* WRITE OPTIONS */}
               <div
@@ -877,7 +884,9 @@ const Generate = () => {
                   setDefaultStyle="font-family: 'Manrope', sans-serif; background:'transparent;"
                   setContents={editorContent}
                   height={
-                    token <= 200 ? "calc(100vh - 17rem)" : "calc(100vh - 12rem)"
+                    token <= 5000
+                      ? "calc(100vh - 17rem)"
+                      : "calc(100vh - 12rem)"
                   }
                   width="100%"
                   onInput={inputting}
