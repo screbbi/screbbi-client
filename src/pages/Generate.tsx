@@ -10,12 +10,7 @@ import he from "he";
 import SunEditor from "suneditor-react";
 import "suneditor/dist/css/suneditor.min.css";
 import { useEffect, useRef, useState } from "react";
-import {
-  axiosInstance,
-  getRequest,
-  postRequest,
-  putRequest,
-} from "../utils/request";
+import { getRequest, postRequest, putRequest } from "../utils/request";
 import { Link, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import ButtonLoader1 from "../components/ButtonLoader1";
@@ -566,81 +561,123 @@ const Generate = () => {
       });
   };
 
-  const generateProse = async () => {
+  const generateProse = () => {
     if (!beats.trim()) {
       alert("Beats cannot be empty");
     }
 
+    const postData = {
+      projectID: project,
+      writing: writer,
+    };
+
     setGeneratingChapters(true);
 
-    // const response = await
-    axiosInstance
-      .post(
-        "/chapter/prose-generate",
+    const streamProse = async () => {
+      const res = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/chapter/prose-generate`,
         {
-          projectID: project,
-          writing: writer,
-          beats,
-          braindump,
+          body: JSON.stringify(postData),
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         }
-        // {
-        //   responseType: "stream",
-        // }
-      )
-      .then(({ data }) => {
-        const newArray = data
+      );
+
+      const stream = res?.body?.getReader();
+      let text = "";
+      let reader = await stream?.read();
+      // console.log(reader.result);
+      while (!reader?.done) {
+        const value = reader?.value;
+        const decoder = new TextDecoder();
+        const decoded = decoder.decode(value);
+
+        const response = JSON.parse(decoded);
+        // const status = response?.status;
+        const data = response?.data;
+
+        text += data.result;
+
+        const newArray = text
           .split("\n")
-          .map((text: string) => `<p>${text}</p>`);
+          .map((text: string) => `<p>${text}</p>`)
+          .join("");
 
-        setGeneratingChapters(false);
-
-        if (title.trim() === "") {
+        if (title && title?.trim() === "") {
           setTitle("Untitled Document");
           setEditorContent(`<p>Untitled Document</p>\n ${newArray}`);
         } else {
-          setEditorContent(`<p>${title}</p>\n  ${newArray}`);
+          setEditorContent(
+            `<p>${title ?? "Untitled Document"}</p>\n  ${newArray}`
+          );
         }
-
-        // editToken(data.tokens.newToken);
         saveDocument();
+
         setOpenChapter(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setGeneratingChapters(false);
-      });
+        // console.log("Received data chunk:", data.result);
+        editToken(data.tokens.newToken);
+        // console.log(data.tokens);
 
-    // postRequest(`/chapter/prose-generate`, {
-    //   projectID: project,
-    //   writing: writer,
-    //   beats,
-    //   braindump,
-    // })
-    //   .then((data) => {
+        reader = await stream?.read();
+      }
+
+      setGeneratingChapters(false);
+      // console.log("LOADER");
+    };
+
+    streamProse();
+    // const response = await axios({
+    //   method: "post",
+    //   url: `${import.meta.env.VITE_BASE_URL}/chapter/prose-generate`,
+    //   data: {
+    //     projectID: project,
+    //     writing: writer,
+    //     beats,
+    //     braindump,
+    //   },
+    //   responseType: "stream",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Authorization: `Bearer ${localStorage.getItem("token")}`,
+    //   },
+    // });
+
+    // console.log(response);
+
+    // response.data.on("data", (chunk: any) => {
+    //   console.log("Received chunk:", chunk.length);
+    // });
+
+    // axiosInstance
+    //   .post("/chapter/prose-generate", {
+    //     projectID: project,
+    //     writing: writer,
+    //     beats,
+    //     braindump,
+    //   })
+    //   .then(({ data }) => {
+    //     const newArray = data
+    //       .split("\n")
+    //       .map((text: string) => `<p>${text}</p>`);
+
     //     setGeneratingChapters(false);
-    //     console.log(data);
 
-    //     // if (title.trim() === "") {
-    //     //   setTitle("Untitled Document");
-    //     //   setEditorContent(
-    //     //     `<p>Untitled Document</p>\n <p>${data?.result?.replaceAll(
-    //     //       "\n",
-    //     //       "<br/>"
-    //     //     )}</p>`
-    //     //   );
-    //     // } else {
-    //     //   setEditorContent(
-    //     //     `<p>${title}</p>\n  <p>${data?.result?.replaceAll(
-    //     //       "\n",
-    //     //       "<br/>"
-    //     //     )}</p>`
-    //     //   );
-    //     // }
+    //     if (title.trim() === "") {
+    //       setTitle("Untitled Document");
+    //       setEditorContent(`<p>Untitled Document</p>\n ${newArray}`);
+    //     } else {
+    //       setEditorContent(`<p>${title}</p>\n  ${newArray}`);
+    //     }
+
     //     // editToken(data.tokens.newToken);
     //     saveDocument();
     //     setOpenChapter(false);
     //   })
-    //   .catch(() => {
+    //   .catch((err) => {
+    //     console.log(err);
     //     setGeneratingChapters(false);
     //     toast.error("Error Generating Chapter");
     //   });
