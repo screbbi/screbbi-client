@@ -596,10 +596,10 @@ const Generate = () => {
         const decoded = decoder.decode(value);
         const response = decoded.toString();
 
-        // console.log(response);
-
         if (response == "Recharge Token to continue") {
           toast("Not Enough Token");
+          setOpenChapter(false);
+          setGeneratingChapters(false);
           break;
         } else {
           text += response;
