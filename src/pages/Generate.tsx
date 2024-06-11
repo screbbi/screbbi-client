@@ -629,58 +629,6 @@ const Generate = () => {
     };
 
     streamProse();
-    // const response = await axios({
-    //   method: "post",
-    //   url: `${import.meta.env.VITE_BASE_URL}/chapter/prose-generate`,
-    //   data: {
-    //     projectID: project,
-    //     writing: writer,
-    //     beats,
-    //     braindump,
-    //   },
-    //   responseType: "stream",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Authorization: `Bearer ${localStorage.getItem("token")}`,
-    //   },
-    // });
-
-    // console.log(response);
-
-    // response.data.on("data", (chunk: any) => {
-    //   console.log("Received chunk:", chunk.length);
-    // });
-
-    // axiosInstance
-    //   .post("/chapter/prose-generate", {
-    //     projectID: project,
-    //     writing: writer,
-    //     beats,
-    //     braindump,
-    //   })
-    //   .then(({ data }) => {
-    //     const newArray = data
-    //       .split("\n")
-    //       .map((text: string) => `<p>${text}</p>`);
-
-    //     setGeneratingChapters(false);
-
-    //     if (title.trim() === "") {
-    //       setTitle("Untitled Document");
-    //       setEditorContent(`<p>Untitled Document</p>\n ${newArray}`);
-    //     } else {
-    //       setEditorContent(`<p>${title}</p>\n  ${newArray}`);
-    //     }
-
-    //     // editToken(data.tokens.newToken);
-    //     saveDocument();
-    //     setOpenChapter(false);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     setGeneratingChapters(false);
-    //     toast.error("Error Generating Chapter");
-    //   });
   };
 
   const retriveLocal = (story: any) => {
