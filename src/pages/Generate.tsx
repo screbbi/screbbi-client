@@ -624,7 +624,7 @@ const Generate = () => {
           saveDocument();
         }
 
-        setOpenChapter(false);
+        // setOpenChapter(false);
         // console.log("Received data chunk:", response);
         // editToken(data.tokens.newToken);
 
