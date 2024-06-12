@@ -630,7 +630,7 @@ const Generate = () => {
 
         reader = await stream?.read();
       }
-
+      setOpenChapter(false);
       setGeneratingChapters(false);
       // console.log("LOADER");
     };
