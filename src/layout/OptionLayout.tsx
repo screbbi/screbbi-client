@@ -25,6 +25,7 @@ const OptionLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div className="relative" ref={optionRef}>
       <button
+        className="p-2"
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
