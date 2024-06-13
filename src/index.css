@@ -166,7 +166,7 @@ body {
 }
 
 .write-option {
-  @apply flex items-center gap-2 font-semibold text-xs py-2 px-3 bg-white rounded-full relative z-20;
+  @apply flex items-center gap-2 font-semibold text-xs py-2 px-3 bg-white rounded-full relative z-[15];
 }
 
 .write-ai {

@@ -681,7 +681,7 @@ const Generate = () => {
             <div className="py-2 px-6 overflow-y-scroll">
               {/* WRITE OPTIONS */}
               <div
-                className="flex justify-between items-center relative mb-4"
+                className="flex justify-between items-center relative mb-4 z-10"
                 ref={topPageRef}
               >
                 <div className="flex gap-2 items-center">
