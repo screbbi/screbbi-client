@@ -35,7 +35,7 @@ const Register = () => {
         })
         .catch((err) => {
           setLoading(false);
-          toast.error(err.response.data.message);
+          toast(err.response.data.message);
         });
     },
   });

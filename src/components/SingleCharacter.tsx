@@ -24,7 +24,7 @@ const SingleCharacter = ({
     })
       .then(() => {})
       .catch(() => {
-        toast.error("Unable to update");
+        toast("Unable to update");
       });
   };
 

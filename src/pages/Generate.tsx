@@ -97,6 +97,7 @@ const Generate = () => {
   const [linkedChapter, setLinkedChapter] = useState<any>(null);
   const [openLinkingOption, setOpenLinkingOption] = useState(false);
   const [openChapterLiking, setOpenChapterLiking] = useState(false);
+  const [loadingChapterText, setloadingChapterText] = useState("");
 
   const setSenses = (sense: string) => {
     if (descriptions.includes(sense)) {
@@ -128,7 +129,7 @@ const Generate = () => {
         setLoadingPrompt(false);
       })
       .catch(() => {
-        toast.error("Error getting prompt");
+        toast("Error getting prompt");
 
         setLoadingPrompt(false);
       });
@@ -149,7 +150,7 @@ const Generate = () => {
       })
       .catch(() => {
         setLoadingToned(false);
-        toast.error("Error Saving settings");
+        toast("Error Saving settings");
       });
   };
 
@@ -335,7 +336,7 @@ const Generate = () => {
         }
       })
       .catch(() => {
-        toast.error("Unable to get User writings");
+        toast("Unable to get User writings");
       });
   };
 
@@ -411,7 +412,7 @@ const Generate = () => {
         setHistory(reversed);
       })
       .catch(() => {
-        toast.error("Error getting history");
+        toast("Error getting history");
       });
   };
 
@@ -555,9 +556,9 @@ const Generate = () => {
         editToken(data.tokens.newToken);
         setGeneratingBeats(false);
       })
-      .catch((err) => {
+      .catch(() => {
         setGeneratingBeats(false);
-        console.log(err.response.data);
+        toast("Try Again");
       });
   };
 
@@ -572,70 +573,76 @@ const Generate = () => {
     };
 
     setGeneratingChapters(true);
+    setloadingChapterText("Generating");
 
-    const streamProse = async () => {
-      const res = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/chapter/prose-generate`,
-        {
-          body: JSON.stringify(postData),
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-
-      const stream = res?.body?.getReader();
-      let text = "";
-      let reader = await stream?.read();
-
-      while (!reader?.done) {
-        const value = reader?.value;
-        const decoder = new TextDecoder();
-        const decoded = decoder.decode(value);
-        const response = decoded.toString();
-
-        if (response == "Recharge Token to continue") {
-          toast("Not Enough Token");
-          setOpenChapter(false);
-          setGeneratingChapters(false);
-          break;
-        } else {
-          text += response;
-
-          const newArray = text
-            .split("\n")
-            .map((text: string) => `<p>${text}</p>`)
-            .join("");
-
-          if (
-            title?.trim() === "" ||
-            title ===
-              "This page contains the following errors:error on line 1 at column 1: Start tag expected, '<' not foundBelow is a rendering of the page up to the first error."
-          ) {
-            setTitle("Untitled Document");
-            setEditorContent(`<p>Untitled Document</p>\n ${newArray}`);
-          } else {
-            setEditorContent(
-              `<p>${title ?? "Untitled Document"}</p>\n  ${newArray}`
-            );
+    try {
+      const streamProse = async () => {
+        const res = await fetch(
+          `${import.meta.env.VITE_BASE_URL}/chapter/prose-generate`,
+          {
+            body: JSON.stringify(postData),
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
           }
-          saveDocument();
+        );
+
+        const stream = res?.body?.getReader();
+        let text = "";
+        let reader = await stream?.read();
+
+        while (!reader?.done) {
+          const value = reader?.value;
+          const decoder = new TextDecoder();
+          const decoded = decoder.decode(value);
+          const response = decoded.toString();
+
+          if (response == "Recharge Token to continue") {
+            toast("Not Enough Token");
+            setOpenChapter(false);
+            setGeneratingChapters(false);
+            break;
+          } else {
+            setloadingChapterText("Generating Text");
+            text += response;
+
+            const newArray = text
+              .split("\n")
+              .map((text: string) => `<p>${text}</p>`)
+              .join("");
+
+            if (
+              title?.trim() === "" ||
+              title ===
+                "This page contains the following errors:error on line 1 at column 1: Start tag expected, '<' not foundBelow is a rendering of the page up to the first error."
+            ) {
+              setTitle("Untitled Document");
+              setEditorContent(`<p>Untitled Document</p>\n ${newArray}`);
+            } else {
+              setEditorContent(
+                `<p>${title ?? "Untitled Document"}</p>\n  ${newArray}`
+              );
+            }
+            saveDocument();
+          }
+
+          // setOpenChapter(false);
+          // console.log("Received data chunk:", response);
+          // editToken(data.tokens.newToken);
+
+          reader = await stream?.read();
         }
+        setOpenChapter(false);
+        setGeneratingChapters(false);
+        // console.log("LOADER");
+      };
 
-        // setOpenChapter(false);
-        // console.log("Received data chunk:", response);
-        // editToken(data.tokens.newToken);
-
-        reader = await stream?.read();
-      }
-      setOpenChapter(false);
-      setGeneratingChapters(false);
-      // console.log("LOADER");
-    };
-
-    streamProse();
+      streamProse();
+    } catch (error) {
+      toast("Try Again");
+    }
   };
 
   const retriveLocal = (story: any) => {
@@ -655,7 +662,7 @@ const Generate = () => {
         retriveLocal(story);
       })
       .catch((err: any) => {
-        toast.error(err.response.data);
+        toast(err.response.data);
       });
   }, []);
 
@@ -869,6 +876,7 @@ const Generate = () => {
                       loadingChapter={generatingChapters}
                       chapters={chapters}
                       linked={linkedChapter}
+                      loadingText={loadingChapterText}
                     />
                   )}
                 </div>

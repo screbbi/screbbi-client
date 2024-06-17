@@ -19,6 +19,7 @@ const Chapter = ({
   close,
   chapters,
   linked,
+  loadingText,
 }: {
   generate: () => void;
   close: () => void;
@@ -29,6 +30,7 @@ const Chapter = ({
   loadingBeats: boolean;
   chapters: any;
   linked: string;
+  loadingText: string;
 }) => {
   const { user, token } = useStore(store);
 
@@ -183,7 +185,7 @@ const Chapter = ({
                     disabled={loadingChapter}
                   >
                     <BsStars />
-                    {loadingChapter ? "Generating..." : "Generate Chapter"}
+                    {loadingChapter ? loadingText : "Generate Chapter"}
                   </button>
                 )}
               </div>

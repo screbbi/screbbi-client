@@ -129,7 +129,7 @@ const Home = () => {
         setWritings(data);
       })
       .catch((err: any) => {
-        toast.error(err.response.data);
+        toast(err.response.data);
       });
   };
 
@@ -142,7 +142,7 @@ const Home = () => {
         navigate(`/project/${data._id}`);
       })
       .catch((err) => {
-        toast.error("Error Creating Project");
+        toast("Error Creating Project");
         console.log(err.response.data);
       });
   };

@@ -151,7 +151,7 @@ const StoryBible = ({
       })
       .catch(() => {
         setGeneratingSynopsis(false);
-        toast.error("Error generating synopsis");
+        toast("Try Again");
       });
   };
 
@@ -173,7 +173,7 @@ const StoryBible = ({
       })
       .catch(() => {
         setGeneratingMatchStyle(false);
-        toast.error("Error generating match style");
+        toast("Try Again");
       });
   };
 
@@ -194,7 +194,7 @@ const StoryBible = ({
       })
       .catch(() => {
         setCompressing(false);
-        toast.error("Error generating match style");
+        toast("Try Again");
       });
   };
 
@@ -212,7 +212,7 @@ const StoryBible = ({
       })
       .catch(() => {
         setGeneratingOutline(false);
-        toast.error("Error generating outline");
+        toast("Try Again");
       });
   };
 
@@ -234,7 +234,7 @@ const StoryBible = ({
       })
       .catch(() => {
         setGeneratingCharacters(false);
-        toast.error("Error generating characters");
+        toast("Try Again");
       });
   };
 
@@ -245,7 +245,7 @@ const StoryBible = ({
     })
       .then()
       .catch(() => {
-        toast.error(`Error Saving ${field}`);
+        toast(`Error Saving ${field}`);
       });
   };
 
@@ -256,15 +256,9 @@ const StoryBible = ({
     })
       .then(({ data }: { data: any }) => {
         setChapters(data["storyBible.chapters"] ?? {});
-
-        // if (currentChapter === "") {
-        //   const chap: any = Object.values(data["storyBible.chapters"])[0][0]
-        //     .chapter;
-        //   setCurrentChapter(chap);
-        // }
       })
       .catch(() => {
-        toast.error(`Error Saving ${field}`);
+        toast(`Error Saving ${field}`);
       });
   };
 
@@ -274,7 +268,7 @@ const StoryBible = ({
         getCharacters();
       })
       .catch(() => {
-        toast.error("Unable to delete");
+        toast("Unable to delete character");
       });
   };
 
@@ -292,7 +286,7 @@ const StoryBible = ({
         getCharacters();
       })
       .catch(() => {
-        toast.error("Unable to add character");
+        toast("Unable to add character");
       });
   };
 
@@ -309,7 +303,7 @@ const StoryBible = ({
       })
       .catch(() => {
         setAddingChapter(false);
-        toast.error("Unable to Add Chapter");
+        toast("Unable to Add Chapter");
       });
   };
 

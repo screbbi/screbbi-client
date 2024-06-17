@@ -214,7 +214,7 @@ export default Sidebar;
 //     })
 //     .catch((err: any) => {
 //       setLoadingWritings(false);
-//       toast.error(err.response.data);
+//       toast(err.response.data);
 //       console.log(err.response.data);
 //     });
 // };
