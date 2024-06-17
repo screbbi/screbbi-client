@@ -589,7 +589,13 @@ const Generate = () => {
           }
         );
 
-        console.log(res.ok, res);
+        if (!res.ok) {
+          toast("Try Again");
+          setOpenChapter(false);
+          setGeneratingChapters(false);
+          setloadingChapterText("");
+          return;
+        }
 
         const stream = res?.body?.getReader();
         let text = "";
@@ -597,14 +603,6 @@ const Generate = () => {
 
         while (!reader?.done) {
           const value = reader?.value;
-
-          if (!value) {
-            toast("Try Again");
-            setOpenChapter(false);
-            setGeneratingChapters(false);
-            break;
-          }
-
           const decoder = new TextDecoder();
           const decoded = decoder.decode(value);
           const response = decoded.toString();
