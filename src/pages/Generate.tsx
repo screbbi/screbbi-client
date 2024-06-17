@@ -589,12 +589,22 @@ const Generate = () => {
           }
         );
 
+        console.log(res.ok, res);
+
         const stream = res?.body?.getReader();
         let text = "";
         let reader = await stream?.read();
 
         while (!reader?.done) {
           const value = reader?.value;
+
+          if (!value) {
+            toast("Try Again");
+            setOpenChapter(false);
+            setGeneratingChapters(false);
+            break;
+          }
+
           const decoder = new TextDecoder();
           const decoded = decoder.decode(value);
           const response = decoded.toString();
@@ -636,12 +646,14 @@ const Generate = () => {
         }
         setOpenChapter(false);
         setGeneratingChapters(false);
-        // console.log("LOADER");
+        setloadingChapterText("");
       };
 
       streamProse();
     } catch (error) {
       toast("Try Again");
+      setOpenChapter(false);
+      setGeneratingChapters(false);
     }
   };
 
