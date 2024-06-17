@@ -605,7 +605,7 @@ const Generate = () => {
             setGeneratingChapters(false);
             break;
           } else {
-            setloadingChapterText("Generating Text");
+            setloadingChapterText("Generating Prose");
             text += response;
 
             const newArray = text

@@ -196,7 +196,7 @@ const Chapter = ({
         </div>
       </div>
 
-      {loadingChapter && (
+      {loadingText === "Generating Prose" && (
         <div className="absolute top-0 left-0 bg-white/30 backdrop-blur-sm w-full h-full flex items-center justify-center">
           <div>
             <div>
