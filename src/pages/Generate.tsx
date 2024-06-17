@@ -129,7 +129,7 @@ const Generate = () => {
         setLoadingPrompt(false);
       })
       .catch(() => {
-        toast("Error getting prompt");
+        toast("Try Again");
 
         setLoadingPrompt(false);
       });
@@ -150,7 +150,7 @@ const Generate = () => {
       })
       .catch(() => {
         setLoadingToned(false);
-        toast("Error Saving settings");
+        toast("Try Again");
       });
   };
 

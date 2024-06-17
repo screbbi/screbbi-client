@@ -39,6 +39,8 @@ const Chapter = ({
     (chap: any) => chap.chapter === linked
   );
 
+  // className = "relative z-20";
+
   return (
     <div className="chapter-modal">
       <div className="p-4 border-b border-gray-200">
@@ -193,10 +195,23 @@ const Chapter = ({
           </div>
         </div>
       </div>
+
+      {loadingChapter && (
+        <div className="absolute top-0 left-0 bg-white/30 backdrop-blur-sm w-full h-full flex items-center justify-center">
+          <div>
+            <div>
+              <div className="flex justify-center">
+                <div className="chapter-loader"></div>
+              </div>
+              <div className="text-xl font-bold text-center mt-6">
+                Generating Prose...
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
 export default Chapter;
-
-// OUTLINE SHIT
