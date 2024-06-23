@@ -10,7 +10,7 @@ import store from "../store/state";
 import Settings from "./Settings";
 import { IoSettingsOutline } from "react-icons/io5";
 import ProfilePicture from "./ProfilePicture";
-import Logo from "./Logo";
+import { GoHome } from "react-icons/go";
 
 const Sidebar = ({
   writings,
@@ -20,8 +20,8 @@ const Sidebar = ({
   writings: any;
   refresh: () => void;
   open: boolean;
-  setOpen: () => void;
 }) => {
+  // setOpen: () => void;
   const [showOption, setShowOption] = useState(false);
   const [openSettings, setOpenSettings] = useState(false);
   const { writer, project } = useParams();
@@ -80,7 +80,10 @@ const Sidebar = ({
       {/* NEW CONTENT */}
       <div className="">
         <Link to={"/home"}>
-          <Logo />
+          <div className="logo flex items-center gap-2">
+            <GoHome className="text-2xl" />
+            <div className="font-bold text-lg">Screbbi</div>
+          </div>
         </Link>
         <button
           className="bg-lightButton text-whatNewText flex justify-between py-2 px-4 rounded-full font-semibold items-center text-sm h-fit w-full mt-2"
@@ -98,7 +101,7 @@ const Sidebar = ({
             <SectionLoader />
           </div>
         ) : writings.length < 1 ? (
-          <div>No Data</div>
+          <div className="text-center">No Document Created</div>
         ) : (
           writings.map(
             (item: any) =>
@@ -114,40 +117,42 @@ const Sidebar = ({
       </div>
 
       {/* TRASH AND PROFILE */}
-      <div className="grid">
-        <div className="border border-gray-700 p-2 rounded-xl mb-3">
-          <div className="single-desc">
-            <div className="flex gap-4 items-center">
-              <div>Story Guide</div>
-            </div>
+      <div className="flex flex-col justify-end items-center">
+        {writer && (
+          <div className="border border-gray-700 p-2 rounded-xl mb-3">
+            <div className="single-desc">
+              <div className="flex gap-4 items-center">
+                <div>Story Guide</div>
+              </div>
 
-            <div
-              className="checkbox-wrapper-6"
-              onClick={(e) => {
-                e.stopPropagation();
-                let storyValue =
-                  story === "true" ? false : story === "false" ? true : false;
-                setStory(storyValue.toString());
-              }}
-            >
-              <input
-                className="tgl tgl-light"
-                id="cb1-1"
-                type="checkbox"
-                onChange={(e) => {
-                  console.log(e.target.value);
+              <div
+                className="checkbox-wrapper-6"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  let storyValue =
+                    story === "true" ? false : story === "false" ? true : false;
+                  setStory(storyValue.toString());
                 }}
-                checked={story === "true"}
-              />
-              <label className="tgl-btn" />
+              >
+                <input
+                  className="tgl tgl-light"
+                  id="cb1-1"
+                  type="checkbox"
+                  onChange={(e) => {
+                    console.log(e.target.value);
+                  }}
+                  checked={story === "true"}
+                />
+                <label className="tgl-btn" />
+              </div>
+            </div>
+
+            <div className="text-xs mt-2">
+              Get better results by telling the AI about your Characters, Genre,
+              etc.
             </div>
           </div>
-
-          <div className="text-xs mt-2">
-            Get better results by telling the AI about your Characters, Genre,
-            etc.
-          </div>
-        </div>
+        )}
 
         <div className="relative" ref={optionRef}>
           <button

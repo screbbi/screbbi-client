@@ -403,24 +403,24 @@ const StoryBible = ({
                 </div>
               </Link>
 
-              <Link to={`https://lu.ma/sudowrite`} target="_black">
+              <Link to={`https://www.thepaperhousebooks.com`} target="_black">
                 <div className="p-3 bg-[#e4f3f7] rounded-md">
                   <img src={storyClass} alt="" className="w-52" />
                   <div className="flex justify-center text-[#73cce0] items-center mt-2 gap-2 font-semibold">
-                    <div className="text">Attend a Class</div>
+                    <div className="text">Publish Your Book</div>
                     <FaArrowRight />
                   </div>
                 </div>
               </Link>
 
               <Link
-                to={`https://www.youtube.com/watch?v=iQDVMuYjvRk`}
+                to={`https://www.independentauthorsacademy.com)`}
                 target="_black"
               >
                 <div className="p-3 bg-[#e2f2e9] rounded-md">
                   <img src={storyVideo} alt="" className="w-52" />
                   <div className="flex justify-center text-[#80dbaa] items-center mt-2 gap-2 font-semibold">
-                    <div className="text">Watch the Video</div>
+                    <div className="text">Enter for Book Awards</div>
                     <FaArrowRight />
                   </div>
                 </div>

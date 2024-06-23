@@ -13,6 +13,8 @@ import rewritePng from "../assets/img/rewrite.png";
 import landing from "../assets/img/landing.png";
 import { FaPlay } from "react-icons/fa";
 import { MdDraw } from "react-icons/md";
+import { LuBrain } from "react-icons/lu";
+import { IoExpand } from "react-icons/io5";
 import Footer from "./Footer";
 import { useNavigate } from "react-router-dom";
 import LandingPageNavbar from "./LandingPageNavbar";
@@ -112,7 +114,7 @@ const Header = () => {
               <div className="right-feature-title">Rewrite</div>
 
               <div className="text-grey font-semibold">
-                Delegate the task to find the perfect word, every time
+                Delegate the task to find the perfect word, every time period
               </div>
             </div>
 
@@ -125,6 +127,31 @@ const Header = () => {
               <div className="text-grey font-semibold">
                 Describing allows readers to better empathize with your
                 characters.
+              </div>
+            </div>
+
+            <div className="text-center md:text-start">
+              <div className="right-feature-icon-contaier">
+                <IoExpand className="text-white text-2xl" />
+              </div>
+              <div className="right-feature-title">Expand</div>
+
+              <div className="text-grey font-semibold">
+                Adds detail and depth to a story element, enriching descriptions
+                and development while keeping the original tone consistent.
+              </div>
+            </div>
+
+            <div className="text-center md:text-start">
+              <div className="right-feature-icon-contaier">
+                <LuBrain className="text-white text-2xl" />
+              </div>
+              <div className="right-feature-title">Brainstorm</div>
+
+              <div className="text-grey font-semibold">
+                It sparks a variety of ideas for plot, characters, settings, and
+                themes, nurturing creativity and forming a strong narrative
+                base.
               </div>
             </div>
           </div>

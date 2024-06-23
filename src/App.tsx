@@ -33,9 +33,9 @@ function App() {
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/privacy-policies" element={<PrivacyPolicy />} />
 
-        <Route path="/generate/:writer" element={<Generate />} />
+        {/* <Route path="/generate/:writer" element={<Generate />} /> */}
         <Route path="/project/:project/:writer" element={<Generate />} />
-        <Route path="/project/:project/" element={<Generate />} />
+        <Route path="/project/:project" element={<Generate />} />
 
         <Route path="auth">
           <Route path="login" element={<Login />} />

@@ -12,9 +12,9 @@ const PageLayout = ({
   refresh: () => void;
 }) => {
   useEffect(() => {
-    if (!localStorage.getItem("token")) {
-      window.location.replace("/");
-    }
+    // if (!localStorage.getItem("token")) {
+    //   window.location.replace("/");
+    // }
   }, []);
 
   const [openNav, setOpenNav] = useState(false);
@@ -32,7 +32,7 @@ const PageLayout = ({
             writings={writings}
             refresh={refresh}
             open={openNav}
-            setOpen={() => setOpenNav(false)}
+            // setOpen={() => setOpenNav(false)}
           />
 
           <div>

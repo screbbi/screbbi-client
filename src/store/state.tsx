@@ -33,7 +33,6 @@ const store = create<storeType>((set) => ({
 
   authorize: () => {
     getRequest("/profile").then(({ data }) => {
-      // console.log(data);
       set(() => ({ user: data, token: data.token }));
     });
   },
