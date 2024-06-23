@@ -1031,11 +1031,45 @@ const Generate = () => {
           </div>
         </div>
       ) : (
-        <div className="h-[90vh] w-full bg-white flex justify-center items-center">
-          <div className="text-2xl font-semibold">
-            Click on New Content to Create Something New
+        <>
+          {token <= 5000 && (
+            <div className="p-2">
+              <div className="flex justify-between items-center p-4 bg-white rounded-lg">
+                <div className="">Your token balance of {token} is low</div>
+
+                <Link to={"/billing"}>
+                  <button className="bg-buttonPurple text-white py-2 px-4 rounded-md text-sm font-semibold">
+                    Recharge
+                  </button>
+                </Link>
+              </div>
+            </div>
+          )}
+
+          <div className="h-[90vh] w-full bg-white flex justify-center items-center">
+            <div className="text-2xl font-semibold">
+              Click on New Content to Create Something New
+            </div>
           </div>
-        </div>
+
+          {story === "true" && (
+            <StoryBible
+              genre={genre}
+              setGenre={setGenre}
+              braindump={braindump}
+              setBraindump={setBraindump}
+              synopsis={synopsis}
+              setSynopsis={setSynopsis}
+              outline={outline}
+              setOutline={setOutline}
+              setMatchStyle={setMatchStyle}
+              matchStyle={matchStyle}
+              chapters={chapters}
+              setChapters={setChapters}
+              scrollToTop={scrollToTop}
+            />
+          )}
+        </>
       )}
     </PageLayout>
   );
