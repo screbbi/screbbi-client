@@ -117,42 +117,40 @@ const Sidebar = ({
       </div>
 
       {/* TRASH AND PROFILE */}
-      <div className="flex flex-col justify-end items-center">
-        {writer && (
-          <div className="border border-gray-700 p-2 rounded-xl mb-3">
-            <div className="single-desc">
-              <div className="flex gap-4 items-center">
-                <div>Story Guide</div>
-              </div>
-
-              <div
-                className="checkbox-wrapper-6"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  let storyValue =
-                    story === "true" ? false : story === "false" ? true : false;
-                  setStory(storyValue.toString());
-                }}
-              >
-                <input
-                  className="tgl tgl-light"
-                  id="cb1-1"
-                  type="checkbox"
-                  onChange={(e) => {
-                    console.log(e.target.value);
-                  }}
-                  checked={story === "true"}
-                />
-                <label className="tgl-btn" />
-              </div>
+      <div className="grid">
+        <div className="border border-gray-700 p-2 rounded-xl mb-3">
+          <div className="single-desc">
+            <div className="flex gap-4 items-center">
+              <div>Story Guide</div>
             </div>
 
-            <div className="text-xs mt-2">
-              Get better results by telling the AI about your Characters, Genre,
-              etc.
+            <div
+              className="checkbox-wrapper-6"
+              onClick={(e) => {
+                e.stopPropagation();
+                let storyValue =
+                  story === "true" ? false : story === "false" ? true : false;
+                setStory(storyValue.toString());
+              }}
+            >
+              <input
+                className="tgl tgl-light"
+                id="cb1-1"
+                type="checkbox"
+                onChange={(e) => {
+                  console.log(e.target.value);
+                }}
+                checked={story === "true"}
+              />
+              <label className="tgl-btn" />
             </div>
           </div>
-        )}
+
+          <div className="text-xs mt-2">
+            Get better results by telling the AI about your Characters, Genre,
+            etc.
+          </div>
+        </div>
 
         <div className="relative" ref={optionRef}>
           <button
