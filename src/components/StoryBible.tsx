@@ -348,7 +348,7 @@ const StoryBible = ({
         <div className="flex justify-between items-center">
           <div className="flex gap-2 items-center">
             <img src={storyBible} alt="" />
-            <div>Story Bible</div>
+            <div>Story Guide</div>
           </div>
 
           <div>
@@ -384,7 +384,7 @@ const StoryBible = ({
               </div>
 
               <div className="sudo-text">
-                Once your Story Bible is all filled out, we'll help you write
+                Once your Story Guide is all filled out, we'll help you write
                 your first chapter!
               </div>
             </div>
@@ -482,7 +482,7 @@ const StoryBible = ({
               <div className="tooltip-title">How it works</div>
               <div className="my-4">
                 Genre affects the tropes, tone, and style of the outlines and
-                prose that Story Bible generates. Edit this section to remove
+                prose that Story Guide generates. Edit this section to remove
                 clichés or shift the tone.
               </div>
               <div>This section affects:</div>
@@ -561,7 +561,7 @@ const StoryBible = ({
 
         <textarea
           className="single-story-textarea"
-          placeholder={`Write the style of prose you want Story Bible to write.\n\n e.g. short sentences, lots of dialogue, show don’t tell`}
+          placeholder={`Write the style of prose you want Story Guide to write.\n\n e.g. short sentences, lots of dialogue, show don’t tell`}
           value={matchStyle}
           onChange={(e) => {
             setMatchStyle(e.target.value);
@@ -629,7 +629,7 @@ const StoryBible = ({
             <Tooltip>
               <div className="tooltip-title">How it works</div>
               <div className="my-4">
-                The Characters section tells Story Bible how to write your
+                The Characters section tells Story Guide how to write your
                 Characters. This can affect how their dialog is written, what
                 choices they make, and how they interact with the other
                 characters. Update this section as your characters evolve in the

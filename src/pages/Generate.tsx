@@ -307,10 +307,7 @@ const Generate = () => {
             doc.firstChild?.querySelector("p")?.textContent ||
             docContent?.body?.firstChild?.textContent
           ) {
-            setTitle(
-              doc.firstChild?.querySelector("p")?.textContent ??
-                doc?.body?.firstChild?.textContent
-            );
+            setTitle(currentContent.title);
             setEditorContent(decoded);
           } else {
             setTitle("Untitled Document");
@@ -946,7 +943,7 @@ const Generate = () => {
                   </div>
                 )}
 
-                {/* STORY BIBLE */}
+                {/* STORY GUIDE */}
               </div>
 
               {story === "true" && (
@@ -1036,7 +1033,7 @@ const Generate = () => {
       ) : (
         <div className="h-[90vh] w-full bg-white flex justify-center items-center">
           <div className="text-2xl font-semibold">
-            Select a Document to edit
+            Click on New Content to Create Something New
           </div>
         </div>
       )}

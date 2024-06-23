@@ -118,7 +118,7 @@ const Sidebar = ({
         <div className="border border-gray-700 p-2 rounded-xl mb-3">
           <div className="single-desc">
             <div className="flex gap-4 items-center">
-              <div>Story Bible</div>
+              <div>Story Guide</div>
             </div>
 
             <div
@@ -145,7 +145,7 @@ const Sidebar = ({
 
           <div className="text-xs mt-2">
             Get better results by telling the AI about your Characters, Genre,
-            etc. Powered by Story Engine.
+            etc.
           </div>
         </div>
 

@@ -132,7 +132,7 @@ const Register = () => {
             <div className="text-onboardSubtitle reader p-0 text-center my-6 max-w-80 mx-auto">
               By continuing, you agree to the{" "}
               <Link to={"/privacy-policies"}>Privacy policy</Link> and{" "}
-              <Link to={"/terms-of-services"}>Terms of service</Link>
+              <Link to={"/terms-and-conditions"}>Terms of service</Link>
             </div>
 
             <div className="text-center text-onboardSubtitle reader mt-6">

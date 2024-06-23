@@ -182,7 +182,16 @@ const Home = () => {
         </div>
       ) : writings?.length < 1 ? (
         <div className="h-40 flex justify-center items-center">
-          <div className="text-2xl">No Data</div>
+          <div className="text-2xl text-center">
+            <div>
+              Click{" "}
+              <span className="cursor-pointer" onClick={newWrite}>
+                +
+              </span>{" "}
+              To Create a New Project.
+            </div>
+            <div>All Your Projects Will Appear On This Page.</div>
+          </div>
         </div>
       ) : (
         <div className="writings-grid">

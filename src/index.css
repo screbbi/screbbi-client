@@ -459,3 +459,18 @@ ul {
     transform: scaleY(-1) rotate(-135deg);
   }
 }
+
+.terms-main-title {
+  @apply text-3xl font-bold;
+}
+
+.terms-title {
+  @apply text-2xl font-semibold mt-4;
+}
+
+.terms-text {
+  @apply mt-2 text-sm md:text-base;
+}
+.terms-list {
+  list-style-type: circle;
+}

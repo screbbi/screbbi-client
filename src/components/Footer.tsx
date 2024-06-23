@@ -1,34 +1,41 @@
+import { Link } from "react-router-dom";
+import logo from "../assets/img/ai-logo.png";
+
 const Footer = () => {
   return (
     <footer className="bg-whatNewText py-16">
       <div className="text-sm w-11/12 mx-auto max-w-4xl grid md:grid-cols-4 sm:grid-cols-2 gap-4">
         <div className="text-white text-2xl font-semibold sm:col-span-2 lg:col-span-1">
-          AI WRITER
+          <img src={logo} alt="" className="w-14" />
         </div>
         <div className="">
           <div className="text-white">LEARN</div>
-          <div className="text-grey my-2">Changelog</div>
-          <div className="text-grey my-2">Testimonials</div>
-          <div className="text-grey my-2">FAQ</div>
+          <div className="text-grey my-2">
+            <Link to={"/faq"}>FAQ</Link>
+          </div>
         </div>
 
         <div className="">
           <div className="text-white">CONNECT</div>
-          <div className="text-grey my-2">Join Our Discord</div>
-          <div className="text-grey my-2">Become an Affiliate</div>
-          <div className="text-grey my-2">Join us on X</div>
-          <div className="text-grey my-2">Email us</div>
+          <div className="text-grey my-2">Join us on Instagram </div>
+          <div className="text-grey my-2">
+            <a href={"mailto:hi@screbbi.com"}>Email us</a>
+          </div>
         </div>
 
         <div className="">
           <div className="text-white">LEGAL</div>
-          <div className="text-grey my-2">Terms & Conditions</div>
-          <div className="text-grey my-2">Privacy Policy</div>
+          <div className="text-grey my-2">
+            <Link to={"/terms-and-conditions"}>Terms & Conditions</Link>
+          </div>
+          <div className="text-grey my-2">
+            <Link to={"/privacy-policies"}>Privacy Policy</Link>
+          </div>
         </div>
       </div>
 
       <div className="text-grey text-center font-semibold mt-8">
-        © 2024 AI Writer Platform. All rights reserved
+        © 2024 Screbbi Platform. All rights reserved
       </div>
     </footer>
   );

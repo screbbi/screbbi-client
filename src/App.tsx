@@ -8,6 +8,9 @@ import { Toaster } from "react-hot-toast";
 import Home from "./pages/Home";
 import Billing from "./pages/Billing";
 import PaymentSuccess from "./pages/PaymentSuccess";
+import FAQ from "./pages/FAQ";
+import TermsAndConditions from "./pages/TermsAndConditions";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 function App() {
   return (
@@ -25,6 +28,10 @@ function App() {
 
         <Route path="/billing" element={<Billing />} />
         <Route path="/payment/success" element={<PaymentSuccess />} />
+
+        <Route path="/faq" element={<FAQ />} />
+        <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+        <Route path="/privacy-policies" element={<PrivacyPolicy />} />
 
         <Route path="/generate/:writer" element={<Generate />} />
         <Route path="/project/:project/:writer" element={<Generate />} />

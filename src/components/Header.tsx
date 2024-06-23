@@ -36,11 +36,12 @@ const Header = () => {
             <div className="font-semibold">Powered GPT-based models</div>
           </div>
 
-          <div className="font-semibold text-4xl text-center max-w-3xl mx-auto my-8">
-            Screbbi is the non-judgemental, unexpectedly creative AI writing
-            tool that sounds like you, not a robot.
+          <div className="font-semibold text-base md:text-3xl text-center max-w-4xl mx-auto my-8">
+            Screbbi is your indispensable companion for writing excellence
+            across all genres. Whether you're a novelist, student, or
+            professional, unleash your creativity with advanced AI features
+            tailored to inspire and support your projects.
           </div>
-          {/* AI mind writer powered by Chatgpt */}
 
           <div className=" font-semibold text-grey text-center max-w-sm mx-auto my-8">
             AI-powered text generation and editing suggestions
@@ -77,10 +78,10 @@ const Header = () => {
         {/* FEATURES */}
         <div className="flex justify-center md:justify-between features w-11/12 mx-auto my-10 flex-wrap gap-4">
           <div className="feature">AI Essay Writer</div>
-          <div className="feature">Essay Rewriter</div>
-          <div className="feature">Essay Shortener</div>
-          <div className="feature">Essay Extender</div>
-          <div className="feature">Essay Introduction Generator</div>
+          <div className="feature">Essay/Novel Rewriter</div>
+          <div className="feature">Essay/Novel Shortener</div>
+          <div className="feature">Essay/Novel Extender</div>
+          <div className="feature">Essay/Novel Introduction Generator</div>
           <div className="feature">Free Essay Conclusion Generator </div>
         </div>
 
@@ -100,7 +101,7 @@ const Header = () => {
 
               <div className="text-grey font-semibold">
                 Write a story from start to finish, with a perfect tone for each
-                paragraph and ablilty to select from various tone{" "}
+                paragraph and abililty to select from various tone{" "}
               </div>
             </div>
 
@@ -147,9 +148,9 @@ const Header = () => {
               </div>
 
               <div className="text-grey font-semibold">
-                <span className="font-semibold">Story Bible</span>
-                takes you step-by-step from idea, to outline, to beating out
-                chapters, and then writes 1,000s of words,
+                <span className="font-semibold">Story Guide</span> takes you
+                step-by-step from idea, to outline, to beating out chapters, and
+                then writes 1,000s of words, in your style.
                 <span className="font-semibold">in your style.</span>
               </div>
 
@@ -182,8 +183,8 @@ const Header = () => {
               </div>
 
               <div className="text-closeBlack text-xl font-semibold my-4">
-                Story Engine guides you through writing a complete novel in a
-                short period
+                Story Guide guides you through writing a complete novel in a
+                short period.” And change the name in the description part too.
               </div>
 
               <div className="text-grey font-semibold">
@@ -304,17 +305,6 @@ const Header = () => {
             </div>
           </div>
         </div>
-
-        {/* FAQ */}
-        {/* <div className="w-[90%] max-w-md mx-auto py-16">
-          <div className="font-bold text-2xl mb-6 p-2">FAQ</div>
-
-          <FAQ />
-          <FAQ />
-          <FAQ />
-          <FAQ />
-          <FAQ />
-        </div> */}
 
         {/* FOOTER */}
         <Footer />

@@ -24,7 +24,7 @@ const SingleBilling = ({
           <div className="text-3xl font-bold">
             $
             {annual
-              ? (plan.price * ((100 - plan.annualDiscount) / 100))?.toFixed(1)
+              ? (plan.price * ((100 - plan.annualDiscount) / 100))?.toFixed(0)
               : plan.price}
           </div>
           <div className="text-sm">per month</div>

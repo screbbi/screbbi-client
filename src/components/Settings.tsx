@@ -33,16 +33,7 @@ const Settings = ({ close }: { close: () => void }) => {
           <ProfilePicture />
           {user?.name}
         </div>
-
-        {/* <CiEdit className="text-blue-700 text-xl" /> */}
       </div>
-
-      {/* <div>
-        <input
-          type="text"
-          className="border-b border-blue-700 outline-none w-full text-closeBlack"
-        />
-      </div> */}
 
       <div className="text-xs font-semibold  py border-t border-gray-200 py-4">
         <div className="">
@@ -73,7 +64,7 @@ const Settings = ({ close }: { close: () => void }) => {
             </div>
             <div>
               Duration :{" "}
-              <span className="text-gray-400">
+              <span className="text-gray-400 capitalize">
                 {user?.subscription?.subscriptionPlan?.period}
               </span>
             </div>
