@@ -91,7 +91,7 @@ const Billing = () => {
     <div className="bg-[url(https://editor.sudowrite.com/assets/sorbet-background.png)] bg-cover bg-no-repeat pb-10 billing min-h-screen">
       <div className="flex justify-between p-4">
         <Link to={"/home"}>
-          <img src={appLogo} alt="" className="w-10" />
+          <img src={appLogo} alt="" className="h-10" />
         </Link>
         <div>Pricing</div>
       </div>

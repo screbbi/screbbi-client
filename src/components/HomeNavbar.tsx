@@ -15,7 +15,7 @@ const HomeNavbar = ({ newWrite }: { newWrite: () => void }) => {
       </div>
 
       <div className="flex justify-center">
-        <img src={appLogo} alt="" className="w-10" />
+        <img src={appLogo} alt="" className="h-10" />
       </div>
 
       <div className="flex justify-end">

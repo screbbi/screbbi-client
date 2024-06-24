@@ -6,7 +6,7 @@ const Footer = () => {
     <footer className="bg-whatNewText py-16">
       <div className="text-sm w-11/12 mx-auto max-w-4xl grid md:grid-cols-4 sm:grid-cols-2 gap-4">
         <div className="text-white text-2xl font-semibold sm:col-span-2 lg:col-span-1">
-          <img src={logo} alt="" className="w-14" />
+          <img src={logo} alt="" className="h-10" />
         </div>
         <div className="">
           <div className="text-white">LEARN</div>

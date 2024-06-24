@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+// import appLogo from "../assets/img/";
 import appLogo from "../assets/img/ai-logo.png";
 import profile from "../assets/img/profile.svg";
 import { HiOutlineMenuAlt2, HiOutlineMenuAlt3 } from "react-icons/hi";
@@ -21,8 +22,7 @@ const LandingPageNavbar = () => {
               </Link>
             ) : (
               <div className="logo flex items-center gap-2">
-                <img src={appLogo} alt="" className="w-10" />
-                <div className="font-bold text-xl">AI ContentWriter</div>
+                <img src={appLogo} alt="" className="h-10" />
               </div>
             )}
           </div>
