@@ -22,19 +22,21 @@ const LandingPageNavbar = () => {
               </Link>
             ) : (
               <div className="logo flex items-center gap-2">
-                <img src={appLogo} alt="" className="h-10" />
+                <img src={appLogo} alt="" className="h-6 md:h-10" />
               </div>
             )}
           </div>
 
           <div className="links flex items-center gap-4">
-            <Link to={"/billing"}>
-              <button>Pricing</button>
-            </Link>
+            <div className="hidden md:inline">
+              <Link to={"/billing"}>
+                <button>Pricing</button>
+              </Link>
+            </div>
             {localStorage.getItem("token") && <img src={profile} alt="" />}
 
             {!localStorage.getItem("token") && (
-              <div className="flex gap-6 items-center">
+              <div className="hidden md:flex gap-6 items-center">
                 <Link to={"/auth/login"}>
                   <button>Login</button>
                 </Link>
@@ -62,6 +64,10 @@ const LandingPageNavbar = () => {
         <div className="">
           {!localStorage.getItem("token") && (
             <div className="flex flex-col gap-6 items-center">
+              <Link to={"/billing"}>
+                <button>Pricing</button>
+              </Link>
+
               <Link to={"/auth/login"}>
                 <button>Login</button>
               </Link>
