@@ -1046,29 +1046,30 @@ const Generate = () => {
             </div>
           )}
 
-          <div className="h-[90vh] w-full bg-white flex justify-center items-center">
-            <div className="text-2xl font-semibold">
-              Click on New Content to Create Something New
+          <div className="h-[90vh] w-full bg-white overflow-auto">
+            <div className="h-[90vh] flex justify-center items-center">
+              <div className="text-2xl font-semibold">
+                Click on New Content to Create Something New
+              </div>
             </div>
+            {story === "true" && (
+              <StoryBible
+                genre={genre}
+                setGenre={setGenre}
+                braindump={braindump}
+                setBraindump={setBraindump}
+                synopsis={synopsis}
+                setSynopsis={setSynopsis}
+                outline={outline}
+                setOutline={setOutline}
+                setMatchStyle={setMatchStyle}
+                matchStyle={matchStyle}
+                chapters={chapters}
+                setChapters={setChapters}
+                scrollToTop={scrollToTop}
+              />
+            )}
           </div>
-
-          {story === "true" && (
-            <StoryBible
-              genre={genre}
-              setGenre={setGenre}
-              braindump={braindump}
-              setBraindump={setBraindump}
-              synopsis={synopsis}
-              setSynopsis={setSynopsis}
-              outline={outline}
-              setOutline={setOutline}
-              setMatchStyle={setMatchStyle}
-              matchStyle={matchStyle}
-              chapters={chapters}
-              setChapters={setChapters}
-              scrollToTop={scrollToTop}
-            />
-          )}
         </>
       )}
     </PageLayout>
