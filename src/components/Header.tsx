@@ -171,7 +171,7 @@ const Header = () => {
               </div>
 
               <div className="text-closeBlack text-xl font-semibold my-4">
-                Write a novel from start to finish. In a week.
+                Write a novel from start to finish In a week.
               </div>
 
               <div className="text-grey font-semibold">
