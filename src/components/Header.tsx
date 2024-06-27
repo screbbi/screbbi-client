@@ -210,7 +210,7 @@ const Header = () => {
 
               <div className="text-closeBlack text-xl font-semibold my-4">
                 Story Guide guides you through writing a complete novel in a
-                short period.” And change the name in the description part too.
+                short period.
               </div>
 
               <div className="text-grey font-semibold">
