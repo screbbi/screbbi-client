@@ -205,7 +205,7 @@ const Header = () => {
                   AI
                 </div>
 
-                <div className="font-semibold">Story Engine</div>
+                <div className="font-semibold">Story Guide</div>
               </div>
 
               <div className="text-closeBlack text-xl font-semibold my-4">
