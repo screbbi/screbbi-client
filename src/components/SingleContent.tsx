@@ -25,11 +25,6 @@ const SingleContent = ({
   const [renaming, setRenaming] = useState(false);
 
   useEffect(() => {
-    const decoded = he.decode(title);
-    setTitle(decoded);
-  }, [title]);
-
-  useEffect(() => {
     const decoded = he.decode(writing.title);
     setTitle(decoded);
   }, [writing.title]);
@@ -58,7 +53,8 @@ const SingleContent = ({
           type="text"
           value={title}
           onChange={(e) => {
-            setTitle(e.target.value);
+            const decoded = he.decode(e.target.value);
+            setTitle(decoded);
           }}
           className="outline-0 bg-transparent border-gray-500 border text-xs w-40"
           onClick={(e) => e.stopPropagation()}

@@ -23,7 +23,6 @@ const Sidebar = ({
   open: boolean;
   rename: (e: string) => void;
 }) => {
-  // setOpen: () => void;
   const [showOption, setShowOption] = useState(false);
   const [openSettings, setOpenSettings] = useState(false);
   const { writer, project } = useParams();
@@ -194,48 +193,3 @@ const Sidebar = ({
 };
 
 export default Sidebar;
-
-{
-  /* <div className="day text-[10px]">Today</div> */
-}
-
-{
-  /* <div className="flex items-center gap-2 text-black font-semibold py-1 my-1">
-                <IoSettingsOutline /> <div>Settings</div>
-              </div> */
-}
-{
-  /* <button className="flex p-2 items-center gap-4 rounded-md w-full">
-          <FiTrash />
-          Trash (0)
-        </button> */
-}
-
-// const getUserWriting = () => {
-//   setLoadingWritings(true);
-//   getRequest(`/writer/writings`)
-//     .then(({ data }) => {
-//       setWritings(data);
-//       setLoadingWritings(false);
-//     })
-//     .catch((err: any) => {
-//       setLoadingWritings(false);
-//       toast(err.response.data);
-//       console.log(err.response.data);
-//     });
-// };
-
-// useEffect(() => {
-//   getUserWriting();
-// getRequest("/profile")
-//   .then((data) => {
-//     console.log(data);
-//   })
-//   .catch((err) => {
-//     console.log(err.response.data);
-//   });
-// }, [refresh]);
-
-// const [refresh, setRefresh] = useState(false);
-// const [loadingWritings, setLoadingWritings] = useState(false);
-// const [writings, setWritings] = useState([]);

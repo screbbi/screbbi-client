@@ -297,10 +297,7 @@ const Generate = () => {
           const decoded = he.decode(currentContent.content);
           setTitle(currentContent.title);
 
-          if (
-            currentContent.content !== "" &&
-            currentContent.content !== "No Content"
-          ) {
+          if (currentContent.content !== "No Content") {
             setEditorContent(decoded);
           } else {
             setEditorContent(`<p>${currentContent.title}</p>`);

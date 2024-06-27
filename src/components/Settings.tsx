@@ -7,12 +7,12 @@ import ProfilePicture from "./ProfilePicture";
 import { Link } from "react-router-dom";
 import { numberFormat } from "../utils/functions";
 import OnboardInput from "./OnboardInput";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { putRequest } from "../utils/request";
 import toast from "react-hot-toast";
 
 const Settings = ({ close }: { close: () => void }) => {
-  const { user, token } = useStore(store);
+  const { user, token, authorize } = useStore(store);
 
   const [usernames, setUsernames] = useState<{
     lastName: string;
@@ -23,6 +23,13 @@ const Settings = ({ close }: { close: () => void }) => {
   });
   const [editing, setEditing] = useState(false);
   const [updatig, setUpdatig] = useState(false);
+  const [newName, setNewName] = useState<{
+    lastName: string;
+    firstName: string;
+  }>({
+    firstName: user.firstName,
+    lastName: user.lastName,
+  });
 
   const change = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -36,12 +43,21 @@ const Settings = ({ close }: { close: () => void }) => {
       .then(() => {
         setUpdatig(false);
         setEditing(false);
+        setNewName(usernames);
+        authorize();
       })
       .catch(() => {
         setUpdatig(false);
         toast("Try Again");
       });
   };
+
+  useEffect(() => {
+    setNewName({
+      firstName: user?.firstName,
+      lastName: user?.lastName,
+    });
+  }, [user]);
 
   return (
     <ModalLayout close={close} title="Settings">
@@ -65,7 +81,7 @@ const Settings = ({ close }: { close: () => void }) => {
         <div className="flex justify-between items-center mt-2">
           <div className="flex gap-2 rounded-md w-full text-closeBlack text-xs items-center group">
             <ProfilePicture />
-            {user?.name}
+            {newName.firstName} {newName.lastName}
             <CiEdit
               className="opacity-0 group-hover:opacity-100 duration-500"
               onClick={() => setEditing(true)}
@@ -99,11 +115,13 @@ const Settings = ({ close }: { close: () => void }) => {
             </div>
 
             <button
-              className="bg-buttonPurple text-white py-2 rounded-md"
+              className={`bg-buttonPurple text-white py-2 rounded-md ${
+                updatig && "opacity-60"
+              }`}
               onClick={updateName}
               disabled={updatig}
             >
-              {updatig ? "Updating" : "Update"}
+              Update
             </button>
             <button className=" py-2" onClick={() => setEditing(false)}>
               Cancel
