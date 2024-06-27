@@ -1,3 +1,4 @@
+import { FaPlay } from "react-icons/fa";
 import greenBg from "../assets/img/green-header-bg.svg";
 import purpleBg from "../assets/img/purple-header-bg.svg";
 import Footer from "../components/Footer";
@@ -20,6 +21,10 @@ const FAQ = () => {
         <SingleFAQ title="What does Screbbi do, really?">
           <div>
             <div>Check out the video below for a full explanation.</div>
+            <button className="py-2 px-6 rounded-full text-white bg-buttonPurple flex gap-2 items-center">
+              <FaPlay />
+              Watch Tour
+            </button>
           </div>
         </SingleFAQ>
 
