@@ -7,7 +7,7 @@ import SingleFAQ from "../components/SingleFAQ";
 
 const FAQ = () => {
   return (
-    <div className="">
+    <div className="w-screen overflow-x-hidden">
       <LandingPageNavbar />
 
       <img src={greenBg} alt="" className="fixed -right-10 -top-8 -z-10" />
@@ -21,7 +21,7 @@ const FAQ = () => {
         <SingleFAQ title="What does Screbbi do, really?">
           <div>
             <div>Check out the video below for a full explanation.</div>
-            <button className="py-2 px-6 rounded-full text-white bg-buttonPurple flex gap-2 items-center">
+            <button className="py-2 px-6 rounded-full text-white bg-buttonPurple flex gap-2 items-center mt-2">
               <FaPlay />
               Watch Tour
             </button>
