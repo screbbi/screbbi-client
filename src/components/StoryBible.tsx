@@ -414,7 +414,7 @@ const StoryBible = ({
               </Link>
 
               <Link
-                to={`https://www.independentauthorsacademy.com)`}
+                to={`https://www.independentauthorsacademy.com`}
                 target="_black"
               >
                 <div className="p-3 bg-[#e2f2e9] rounded-md">

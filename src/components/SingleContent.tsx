@@ -12,12 +12,11 @@ const SingleContent = ({
   deleteWrite: () => void;
 }) => {
   const [showOption, setShowOption] = useState(false);
-
   const { writer, project } = useParams();
-
   const optionRef: any = useRef();
-
   const navigate = useNavigate();
+
+  const [title, setTitle] = useState(writing.title);
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
@@ -36,6 +35,8 @@ const SingleContent = ({
     };
   }, []);
 
+  console.log(writing);
+
   return (
     <div
       className={`flex justify-between items-center p-2 group cursor-pointer w-full rounded-md ${
@@ -46,7 +47,14 @@ const SingleContent = ({
       }}
     >
       <div className="text-xs w-40 truncate">
-        {writing.title !== "" ? writing.title : "Untitled Document"}
+        {/* {writing.title !== "" ? writing.title : "Untitled Document"} */}
+        <input
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          className="outline-0 bg-transparent border-gray-500 border"
+          onClick={(e) => e.stopPropagation()}
+        />
       </div>
 
       <div className="relative" ref={optionRef}>
