@@ -57,28 +57,30 @@ const LandingPageNavbar = () => {
       </div>
 
       <div
-        className={`absolute md:hidden duration-300 bg-white z-30 top-full p-6 flex flex-col items-center gap-6 ${
+        className={`absolute md:hidden duration-300 bg-white z-30 top-full p-6 flex flex-col items-center gap-6  ${
           open ? "right-0" : "-right-60"
         } `}
       >
         <div className="">
-          {!localStorage.getItem("token") && (
-            <div className="flex flex-col gap-6 items-center">
-              <Link to={"/billing"}>
-                <button>Pricing</button>
-              </Link>
+          <div className="flex flex-col gap-6 items-center">
+            <Link to={"/billing"}>
+              <button>Pricing</button>
+            </Link>
 
-              <Link to={"/auth/login"}>
-                <button>Login</button>
-              </Link>
+            {!localStorage.getItem("token") && (
+              <div className="text-center flex flex-col gap-6">
+                <Link to={"/auth/login"}>
+                  <button>Login</button>
+                </Link>
 
-              <Link to={"/auth/register"} className="w-full">
-                <button className="py-2 px-4 rounded-md text-white bg-buttonPurple w-full">
-                  Sign Up
-                </button>
-              </Link>
-            </div>
-          )}
+                <Link to={"/auth/register"} className="w-full">
+                  <button className="py-2 px-4 rounded-md text-white bg-buttonPurple w-full">
+                    Sign Up
+                  </button>
+                </Link>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
