@@ -103,7 +103,7 @@ const Header = () => {
 
               <div className="text-grey font-semibold">
                 Write a story from start to finish, with a perfect tone for each
-                paragraph and abililty to select from various tone{" "}
+                paragraph and abililty to select from various tone.
               </div>
             </div>
 
@@ -114,7 +114,7 @@ const Header = () => {
               <div className="right-feature-title">Rewrite</div>
 
               <div className="text-grey font-semibold">
-                Delegate the task to find the perfect word, every time period
+                Delegate the task to find the perfect word, every time.
               </div>
             </div>
 
@@ -178,7 +178,6 @@ const Header = () => {
                 <span className="font-semibold">Story Guide</span> takes you
                 step-by-step from idea, to outline, to beating out chapters, and
                 then writes 1,000s of words, in your style.
-                <span className="font-semibold">in your style.</span>
               </div>
 
               <button
