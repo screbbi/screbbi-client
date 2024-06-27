@@ -214,7 +214,7 @@ const Header = () => {
               </div>
 
               <div className="text-grey font-semibold">
-                Embark on a journey with Story Engine as it guides you through
+                Embark on a journey with Story Guide as it guides you through
                 generating ideas, creating outlines, developing chapters, and
                 producing thousands of words in your unique writing style.
               </div>
