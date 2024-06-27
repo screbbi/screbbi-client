@@ -390,10 +390,7 @@ const StoryBible = ({
             </div>
 
             <div className="flex items-center gap-6">
-              <Link
-                to={`https://sudowrite.notion.site/Story-Bible-Guide-7cffc29ac9094a6e82ae517cd7fbb81c?pvs=4`}
-                target="_black"
-              >
+              <Link to={`#`} target="_black">
                 <div className="p-3 bg-[#ece6fa] rounded-md">
                   <img src={storyGuide} alt="" className="w-52" />
                   <div className="flex justify-center text-[#ad90ea] items-center mt-2 gap-2 font-semibold">
