@@ -295,23 +295,15 @@ const Generate = () => {
 
         if (currentContent.content) {
           const decoded = he.decode(currentContent.content);
-
-          const parser = new DOMParser();
-          const doc: any = parser.parseFromString(decoded, "text/xml");
-          const docContent: any = parser.parseFromString(
-            currentContent,
-            "text/xml"
-          );
+          setTitle(currentContent.title);
 
           if (
-            doc.firstChild?.querySelector("p")?.textContent ||
-            docContent?.body?.firstChild?.textContent
+            currentContent.content !== "" &&
+            currentContent.content !== "No Content"
           ) {
-            setTitle(currentContent.title);
             setEditorContent(decoded);
           } else {
-            setTitle("Untitled Document");
-            setEditorContent(`<p>Untitled Document</p> \n ${decoded}`);
+            setEditorContent(`<p>${currentContent.title}</p>`);
           }
         } else {
           setEditorContent(`<p>${currentContent.title}</p>`);
@@ -673,8 +665,39 @@ const Generate = () => {
       });
   }, []);
 
+  const renameDocument = (newName: string) => {
+    const newContent = editorContent?.replace(title, newName);
+
+    setEditorContent(newContent);
+    setTitle(newName);
+
+    postRequest("/writer/writing", {
+      writer,
+      content: newContent,
+      title: newName,
+    })
+      .then(() => {
+        const newWritings = writings?.map((writing: any) => {
+          if (writing._id === writer) {
+            return { ...writing, title: title };
+          } else {
+            return writing;
+          }
+        });
+
+        setWritings(newWritings);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  };
+
   return (
-    <PageLayout writings={writings} refresh={() => setRefresh(!refresh)}>
+    <PageLayout
+      writings={writings}
+      refresh={() => setRefresh(!refresh)}
+      rename={renameDocument}
+    >
       {writer ? (
         <div className={`editors ${token <= 5000 && "grid"}`}>
           {token <= 5000 && (

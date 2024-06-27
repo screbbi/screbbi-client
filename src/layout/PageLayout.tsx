@@ -6,10 +6,12 @@ const PageLayout = ({
   children,
   writings,
   refresh,
+  rename,
 }: {
   children: ReactNode;
   writings?: any;
   refresh: () => void;
+  rename: (e: string) => void;
 }) => {
   useEffect(() => {
     if (!localStorage.getItem("token")) {
@@ -32,7 +34,7 @@ const PageLayout = ({
             writings={writings}
             refresh={refresh}
             open={openNav}
-            // setOpen={() => setOpenNav(false)}
+            rename={rename}
           />
 
           <div>

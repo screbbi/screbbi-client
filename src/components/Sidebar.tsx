@@ -16,10 +16,12 @@ const Sidebar = ({
   writings,
   refresh,
   open,
+  rename,
 }: {
   writings: any;
   refresh: () => void;
   open: boolean;
+  rename: (e: string) => void;
 }) => {
   // setOpen: () => void;
   const [showOption, setShowOption] = useState(false);
@@ -110,6 +112,7 @@ const Sidebar = ({
                   writing={item}
                   key={item._id}
                   deleteWrite={() => deleteWrite(item._id)}
+                  rename={rename}
                 />
               )
           )

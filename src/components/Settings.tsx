@@ -1,14 +1,42 @@
 import ModalLayout from "../layout/ModalLayout";
 import { IoMdPerson } from "react-icons/io";
-// import { CiEdit } from "react-icons/ci";
+import { CiEdit } from "react-icons/ci";
 import { useStore } from "zustand";
 import store from "../store/state";
 import ProfilePicture from "./ProfilePicture";
 import { Link } from "react-router-dom";
 import { numberFormat } from "../utils/functions";
+import OnboardInput from "./OnboardInput";
+import { ChangeEvent, useState } from "react";
+import { postRequest, putRequest } from "../utils/request";
 
 const Settings = ({ close }: { close: () => void }) => {
   const { user, token } = useStore(store);
+
+  const [usernames, setUsernames] = useState<{
+    lastName: string;
+    firstName: string;
+  }>({
+    firstName: user.firstName,
+    lastName: user.lastName,
+  });
+  const [editing, setEditing] = useState(false);
+
+  const change = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    setUsernames({ ...usernames, [name]: value });
+  };
+
+  const updateame = () => {
+    postRequest("/profile", usernames)
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <ModalLayout close={close} title="Settings">
@@ -28,13 +56,55 @@ const Settings = ({ close }: { close: () => void }) => {
       )}
       <div className="text-xs font-semibold mt-1">{user?.email}</div>
 
-      <div className="flex justify-between items-center mt-2">
-        <div className="flex gap-2 rounded-md w-full text-closeBlack text-xs items-center">
-          <ProfilePicture />
-          {user?.name}
+      {!editing ? (
+        <div className="flex justify-between items-center mt-2">
+          <div className="flex gap-2 rounded-md w-full text-closeBlack text-xs items-center group">
+            <ProfilePicture />
+            {user?.name}
+            <CiEdit
+              className="opacity-0 group-hover:opacity-100 duration-500"
+              onClick={() => setEditing(true)}
+            />
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="my-2">
+          <div className="text-sm font-semibold">Edit Profile</div>
+          <div className="grid grid-cols-6 gap-4 items-center">
+            <div className="col-span-2">
+              <OnboardInput
+                value={usernames.firstName}
+                change={change}
+                type="text"
+                placeholder="First Name"
+                label="First Name"
+                name="firstName"
+              />
+            </div>
 
+            <div className="col-span-2">
+              <OnboardInput
+                value={usernames.lastName}
+                change={change}
+                type="text"
+                placeholder="Last Name"
+                label="Last Name"
+                name="lastName"
+              />
+            </div>
+
+            <button
+              className="bg-buttonPurple text-white py-2 rounded-md"
+              onClick={updateame}
+            >
+              Update
+            </button>
+            <button className=" py-2" onClick={() => setEditing(false)}>
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
       <div className="text-xs font-semibold  py border-t border-gray-200 py-4">
         <div className="">
           {user?.token && numberFormat(token)} /{" "}
