@@ -8,7 +8,8 @@ import { Link } from "react-router-dom";
 import { numberFormat } from "../utils/functions";
 import OnboardInput from "./OnboardInput";
 import { ChangeEvent, useState } from "react";
-import { postRequest, putRequest } from "../utils/request";
+import { putRequest } from "../utils/request";
+import toast from "react-hot-toast";
 
 const Settings = ({ close }: { close: () => void }) => {
   const { user, token } = useStore(store);
@@ -21,6 +22,7 @@ const Settings = ({ close }: { close: () => void }) => {
     lastName: user.lastName,
   });
   const [editing, setEditing] = useState(false);
+  const [updatig, setUpdatig] = useState(false);
 
   const change = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -28,13 +30,16 @@ const Settings = ({ close }: { close: () => void }) => {
     setUsernames({ ...usernames, [name]: value });
   };
 
-  const updateame = () => {
-    postRequest("/profile", usernames)
-      .then((data) => {
-        console.log(data);
+  const updateName = () => {
+    setUpdatig(true);
+    putRequest("/profile", usernames)
+      .then(() => {
+        setUpdatig(false);
+        setEditing(false);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        setUpdatig(false);
+        toast("Try Again");
       });
   };
 
@@ -95,9 +100,10 @@ const Settings = ({ close }: { close: () => void }) => {
 
             <button
               className="bg-buttonPurple text-white py-2 rounded-md"
-              onClick={updateame}
+              onClick={updateName}
+              disabled={updatig}
             >
-              Update
+              {updatig ? "Updating" : "Update"}
             </button>
             <button className=" py-2" onClick={() => setEditing(false)}>
               Cancel
