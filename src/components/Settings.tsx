@@ -129,7 +129,7 @@ const Settings = ({ close }: { close: () => void }) => {
             </div>
 
             <button
-              className={`bg-buttonPurple text-white py-2 rounded-md ${
+              className={`bg-buttonPurple text-white py-2 rounded-md text-xs ${
                 updatig && "opacity-60"
               }`}
               onClick={updateName}
@@ -137,7 +137,7 @@ const Settings = ({ close }: { close: () => void }) => {
             >
               Update
             </button>
-            <button className=" py-2" onClick={() => setEditing(false)}>
+            <button className="text-xs py-2" onClick={() => setEditing(false)}>
               Cancel
             </button>
           </div>
