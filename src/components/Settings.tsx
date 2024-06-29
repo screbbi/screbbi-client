@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { numberFormat } from "../utils/functions";
 import OnboardInput from "./OnboardInput";
 import { ChangeEvent, useEffect, useState } from "react";
-import { putRequest } from "../utils/request";
+import { getRequest, putRequest } from "../utils/request";
 import toast from "react-hot-toast";
 
 const Settings = ({ close }: { close: () => void }) => {
@@ -30,6 +30,7 @@ const Settings = ({ close }: { close: () => void }) => {
     firstName: user.firstName,
     lastName: user.lastName,
   });
+  const [managing, setManaging] = useState(false);
 
   const change = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -58,6 +59,19 @@ const Settings = ({ close }: { close: () => void }) => {
       lastName: user?.lastName,
     });
   }, [user]);
+
+  const manageSubscription = () => {
+    setManaging(true);
+    getRequest("/subscription/portal")
+      .then(({ data: { url } }) => {
+        setManaging(false);
+        window.location.href = url;
+      })
+      .catch(() => {
+        setManaging(false);
+        toast("Try Again");
+      });
+  };
 
   return (
     <ModalLayout close={close} title="Settings">
@@ -129,6 +143,7 @@ const Settings = ({ close }: { close: () => void }) => {
           </div>
         </div>
       )}
+
       <div className="text-xs font-semibold  py border-t border-gray-200 py-4">
         <div className="">
           {user?.token && numberFormat(token)} /{" "}
@@ -156,18 +171,30 @@ const Settings = ({ close }: { close: () => void }) => {
                 {user?.subscription?.subscriptionPlan?.name}
               </span>
             </div>
+
             <div>
               Duration :{" "}
               <span className="text-gray-400 capitalize">
                 {user?.subscription?.subscriptionPlan?.period}
               </span>
             </div>
+
             <div>
               Description :
               <span className="text-gray-400">
                 {user?.subscription?.subscriptionPlan?.description}
               </span>
             </div>
+
+            <button
+              className={`bg-buttonPurple text-white px-4 py-2 text-xs rounded-md mt-2 ${
+                managing && "opacity-50"
+              }`}
+              onClick={manageSubscription}
+              disabled={managing}
+            >
+              Manage Subscription
+            </button>
           </div>
         )}
       </div>
