@@ -17,7 +17,7 @@ const SingleBilling = ({
   loading: boolean;
 }) => {
   return (
-    <div>
+    <div className={`${plan.name === "starter" && "-translate-y-4"}`}>
       <div className="text-center capitalize text-2xl py-4 font-semibold">
         {plan.name}
       </div>
@@ -46,7 +46,10 @@ const SingleBilling = ({
           </div>
         </div>
 
-        <div>{plan.description}</div>
+        <div>
+          {plan.description}
+          {plan.description.slice(-1) !== "." && "."}
+        </div>
 
         <button className="subscribe-button" onClick={click} disabled={loading}>
           {loading ? <ButtonLoader /> : "Subscribe"}

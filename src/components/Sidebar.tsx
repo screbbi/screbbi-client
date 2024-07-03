@@ -81,9 +81,9 @@ const Sidebar = ({
       {/* NEW CONTENT */}
       <div className="">
         <Link to={"/home"}>
-          <div className="logo flex items-center gap-2">
+          <div className="logo flex items-center gap-2 topp">
             <GoHome className="text-2xl" />
-            <div className="font-bold text-lg">Screbbi</div>
+            <div className="font-semibold text-2xl mt-1">Screbbi</div>
           </div>
         </Link>
         <button

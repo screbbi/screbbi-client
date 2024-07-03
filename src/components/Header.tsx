@@ -9,7 +9,6 @@ import story from "../assets/img/story.png";
 import believe from "../assets/img/believe.png";
 import description from "../assets/img/description.png";
 import pacing from "../assets/img/pacing.png";
-import rewritePng from "../assets/img/rewrite.png";
 import landing from "../assets/img/landing.png";
 import { FaPlay } from "react-icons/fa";
 import { MdDraw } from "react-icons/md";
@@ -272,7 +271,6 @@ const Header = () => {
 
             <div className="w-full max-w-sm mx-auto">
               <img src={believe} alt="" />
-              <img src={rewritePng} alt="" />
             </div>
           </div>
 
