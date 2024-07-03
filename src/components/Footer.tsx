@@ -18,7 +18,7 @@ const Footer = () => {
         <div className="">
           <div className="text-white">CONNECT</div>
           <div className="text-grey my-2">
-            <a href="e https://www.instagram.com/screbbi/" target="_blank">
+            <a href="https://www.instagram.com/screbbi/" target="_blank">
               Join us on Instagram
             </a>
           </div>
