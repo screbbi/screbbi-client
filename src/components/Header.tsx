@@ -18,6 +18,7 @@ import { IoExpand } from "react-icons/io5";
 import Footer from "./Footer";
 import { useNavigate } from "react-router-dom";
 import LandingPageNavbar from "./LandingPageNavbar";
+import { TbPlugConnectedX } from "react-icons/tb";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ const Header = () => {
             <div className="font-semibold">Powered GPT-based models</div>
           </div>
 
-          <div className="font-semibold text-base md:text-3xl text-center max-w-4xl mx-auto my-8">
+          <div className="font-semibold text-base md:text-3xl text-center max-w-4xl mx-auto my-8 w-11/12">
             Screbbi is your indispensable companion for writing excellence
             across all genres. Whether you're a novelist, student, or
             professional, unleash your creativity with advanced AI features
@@ -103,7 +104,7 @@ const Header = () => {
 
               <div className="text-grey font-semibold">
                 Write a story from start to finish, with a perfect tone for each
-                paragraph and abililty to select from various tone.
+                paragraph and ability to select from various tone.
               </div>
             </div>
 
@@ -152,6 +153,18 @@ const Header = () => {
                 It sparks a variety of ideas for plot, characters, settings, and
                 themes, nurturing creativity and forming a strong narrative
                 base.
+              </div>
+            </div>
+
+            <div className="text-center md:text-start">
+              <div className="right-feature-icon-contaier">
+                <TbPlugConnectedX className="text-white text-2xl" />
+              </div>
+              <div className="right-feature-title">Plugins</div>
+
+              <div className="text-grey font-semibold">
+                Expands creative tools, enriching narratives and character
+                development while preserving the writer's unique voice.
               </div>
             </div>
           </div>
@@ -240,7 +253,7 @@ const Header = () => {
               </div>
 
               <div className="text-closeBlack text-xl font-semibold my-4">
-                When the words just won’t come out – Write can do it for you
+                When the words just won’t come out – Write can do it for you.
               </div>
 
               <div className="text-grey font-semibold">
@@ -310,7 +323,8 @@ const Header = () => {
               </div>
 
               <div className="text-closeBlack text-xl font-semibold my-4">
-                Pacing too fast? Presto expand–o
+                Pacing too fast?{" "}
+                <span className="text-no-wrap">Presto&nbsp;expand–o</span>
               </div>
 
               <div className="text-grey font-semibold">

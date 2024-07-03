@@ -181,8 +181,8 @@ const Home = () => {
           <div className="text-2xl">Loading My Projects</div>
         </div>
       ) : writings?.length < 1 ? (
-        <div className="h-40 flex justify-center items-center">
-          <div className="text-2xl text-center">
+        <div className="h-40 flex justify-center items-center mt-10">
+          <div className="text-xl text-center">
             <div>
               Click{" "}
               <span className="cursor-pointer" onClick={newWrite}>

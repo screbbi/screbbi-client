@@ -1,15 +1,16 @@
 import Footer from "../components/Footer";
 import LandingPageNavbar from "../components/LandingPageNavbar";
-import greenBg from "../assets/img/green-header-bg.svg";
-import purpleBg from "../assets/img/purple-header-bg.svg";
 
 const TermsAndConditions = () => {
   return (
-    <div>
+    <div className="">
       <LandingPageNavbar />
 
-      <img src={greenBg} alt="" className="fixed -right-10 -top-8 -z-10" />
-      <img src={purpleBg} alt="" className="fixed -left-10 -top-8 -z-10" />
+      <img
+        src="https://editor.sudowrite.com/assets/sorbet-background.png"
+        alt=""
+        className="fixed top-0 left-0 -z-10 w-full h-full"
+      />
 
       <div className="w-10/12 mx-auto my-8">
         <div className="terms-main-title">Terms and Conditions</div>

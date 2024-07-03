@@ -394,7 +394,7 @@ const StoryBible = ({
                 <div className="p-3 bg-[#ece6fa] rounded-md">
                   <img src={storyGuide} alt="" className="w-52" />
                   <div className="flex justify-center text-[#ad90ea] items-center mt-2 gap-2 font-semibold">
-                    <div className="text">Read the guide</div>
+                    <div className="text">Watch the Video Tour</div>
                     <FaArrowRight />
                   </div>
                 </div>

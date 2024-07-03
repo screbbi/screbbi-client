@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getRequest, postRequest } from "../utils/request";
 import appLogo from "../assets/img/ai-logo.png";
 import ButtonLoader from "../components/ButtonLoader";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { numberFormat } from "../utils/functions";
 
 const SingleBilling = ({
@@ -18,7 +18,9 @@ const SingleBilling = ({
 }) => {
   return (
     <div>
-      <div className="text-center capitalize text-2xl py-4">{plan.name}</div>
+      <div className="text-center capitalize text-2xl py-4 font-semibold">
+        {plan.name}
+      </div>
       <div className="text-center bg-white shadow-lg mx-auto max-w-xs p-6 rounded-3xl">
         <div className="">
           <div className="text-3xl font-bold">
@@ -62,6 +64,8 @@ const Billing = () => {
   const [plans, setPlans] = useState<any>(null);
   const [annual, setAnnual] = useState(true);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     getRequest("/subscription/plans")
       .then(({ data }) => {
@@ -90,9 +94,15 @@ const Billing = () => {
   return (
     <div className="bg-[url(https://editor.sudowrite.com/assets/sorbet-background.png)] bg-cover bg-no-repeat pb-10 billing min-h-screen">
       <div className="flex justify-between p-4">
-        <Link to={"/home"}>
-          <img src={appLogo} alt="" className="h-10" />
+        <Link to={"/"}>
+          <img
+            src={appLogo}
+            alt=""
+            className="h-10 cursor-pointer"
+            onClick={() => navigate(-1)}
+          />
         </Link>
+
         <div>Pricing</div>
       </div>
 
@@ -145,6 +155,16 @@ const Billing = () => {
             ))}
           </div>
         )}
+
+        <div className="text-center mt-4 text-xl">
+          Unsure if you need Screbbi?{" "}
+          <Link
+            to={localStorage.getItem("token") ? "/home" : "/"}
+            className="text-blue-700"
+          >
+            Try it For FREE
+          </Link>
+        </div>
       </div>
     </div>
   );

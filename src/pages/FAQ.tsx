@@ -1,17 +1,18 @@
 import { FaPlay } from "react-icons/fa";
-import greenBg from "../assets/img/green-header-bg.svg";
-import purpleBg from "../assets/img/purple-header-bg.svg";
 import Footer from "../components/Footer";
 import LandingPageNavbar from "../components/LandingPageNavbar";
 import SingleFAQ from "../components/SingleFAQ";
 
 const FAQ = () => {
   return (
-    <div className="w-screen overflow-x-hidden">
+    <div className="faq billing min-h-screen">
       <LandingPageNavbar />
 
-      <img src={greenBg} alt="" className="fixed -right-10 -top-8 -z-10" />
-      <img src={purpleBg} alt="" className="fixed -left-10 -top-8 -z-10" />
+      <img
+        src="https://editor.sudowrite.com/assets/sorbet-background.png"
+        alt=""
+        className="fixed top-0 left-0 -z-10 w-full h-full"
+      />
 
       <div className="max-w-3xl w-10/12 mx-auto  relative z-10 my-10">
         <div className="text-2xl text-center font-semibold mb-4">
@@ -54,7 +55,7 @@ const FAQ = () => {
           </div>
         </SingleFAQ>
 
-        <SingleFAQ title="Can Screbbi produce plagiarized content??">
+        <SingleFAQ title="Can Screbbi produce plagiarized content?">
           <div>
             <div>
               In short, Screbbi will not plagiarize unless you force it to,
@@ -115,7 +116,7 @@ const FAQ = () => {
           </div>
         </SingleFAQ>
 
-        <SingleFAQ title="How do I cancel before signing up??">
+        <SingleFAQ title="How do I cancel before signing up?">
           <div>
             <div>
               It’s simple. Visit your subscription page and click cancel. No
@@ -134,15 +135,15 @@ const FAQ = () => {
           </div>
         </SingleFAQ>
 
-        <SingleFAQ title="Didn't see your question here??">
+        <SingleFAQ title="Didn't see your question here?">
           <div>
             <div>
-              Contact us directly! (Please make contact us directly linked to
+              {/* Contact us directly! (Please make contact us directly linked to
               our email{" "}
+              ) */}
               <a href="mailto:hi@screbbi.com" className="text-blue-700">
-                hi@screbbi.com
+                Contact Us
               </a>
-              )
             </div>
           </div>
         </SingleFAQ>

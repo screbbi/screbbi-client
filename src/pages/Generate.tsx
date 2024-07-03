@@ -700,7 +700,7 @@ const Generate = () => {
           {token <= 5000 && (
             <div className="p-2">
               <div className="flex justify-between items-center p-4 bg-white rounded-lg">
-                <div className="">Your token balance of {token} is low</div>
+                <div className="">Your credit balance of {token} is low.</div>
 
                 <Link to={"/billing"}>
                   <button className="bg-buttonPurple text-white py-2 px-4 rounded-md text-sm font-semibold">
@@ -1055,7 +1055,7 @@ const Generate = () => {
           {token <= 5000 && (
             <div className="p-2">
               <div className="flex justify-between items-center p-4 bg-white rounded-lg">
-                <div className="">Your token balance of {token} is low</div>
+                <div className="">Your credit balance of {token} is low</div>
 
                 <Link to={"/billing"}>
                   <button className="bg-buttonPurple text-white py-2 px-4 rounded-md text-sm font-semibold">

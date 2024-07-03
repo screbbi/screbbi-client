@@ -10,7 +10,9 @@ body {
 .billing {
   font-family: "Inter", sans-serif;
 }
-
+.faq {
+  @apply bg-[url(https://editor.sudowrite.com/assets/sorbet-background.png)] bg-cover bg-no-repeat;
+}
 .linkes {
   @apply md:flex hidden gap-3 items-center text-sm;
 }

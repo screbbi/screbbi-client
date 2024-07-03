@@ -11,13 +11,17 @@ const Footer = () => {
         <div className="">
           <div className="text-white">LEARN</div>
           <div className="text-grey my-2">
-            <Link to={"/faq"}>FAQ</Link>
+            <Link to={"/faq"}>FAQs</Link>
           </div>
         </div>
 
         <div className="">
           <div className="text-white">CONNECT</div>
-          <div className="text-grey my-2">Join us on Instagram </div>
+          <div className="text-grey my-2">
+            <a href="e https://www.instagram.com/screbbi/" target="_blank">
+              Join us on Instagram
+            </a>
+          </div>
           <div className="text-grey my-2">
             <a href={"mailto:hi@screbbi.com"}>Email us</a>
           </div>

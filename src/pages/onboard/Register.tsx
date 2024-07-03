@@ -31,7 +31,7 @@ const Register = () => {
           setLoading(false);
           localStorage.setItem("token", data.token);
 
-          window.location.replace("/home");
+          window.location.replace("/billing");
         })
         .catch((err) => {
           setLoading(false);

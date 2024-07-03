@@ -10,6 +10,7 @@ import OnboardInput from "./OnboardInput";
 import { ChangeEvent, useEffect, useState } from "react";
 import { getRequest, putRequest } from "../utils/request";
 import toast from "react-hot-toast";
+import { LuLogOut } from "react-icons/lu";
 
 const Settings = ({ close }: { close: () => void }) => {
   const { user, token, authorize } = useStore(store);
@@ -197,6 +198,11 @@ const Settings = ({ close }: { close: () => void }) => {
             </button>
           </div>
         )}
+
+        <button className="flex gap-2 items-center bg-buttonPurple text-white py-2 rounded-md px-4 text-sm mt-2">
+          <LuLogOut />
+          <div>Log Out</div>
+        </button>
       </div>
     </ModalLayout>
   );
