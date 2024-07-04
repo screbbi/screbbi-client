@@ -17,7 +17,7 @@ const SingleBilling = ({
   loading: boolean;
 }) => {
   return (
-    <div className={`${plan.name === "starter" && "-translate-y-4"}`}>
+    <div className={`${plan.name === "starter" && "-translate-y-6"}`}>
       <div className="text-center capitalize text-2xl py-4 font-semibold">
         {plan.name}
       </div>

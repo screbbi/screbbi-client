@@ -19,11 +19,9 @@ const LandingPageNavbar = () => {
           </div>
 
           <div className="links flex items-center gap-4">
-            <div className="hidden md:inline">
-              <Link to={"/billing"}>
-                <button>Pricing</button>
-              </Link>
-            </div>
+            <Link to={"/billing"}>
+              <button>Pricing</button>
+            </Link>
 
             {/* {localStorage.getItem("token") && <img src={profile} alt="" />} */}
 
