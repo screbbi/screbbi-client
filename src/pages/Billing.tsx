@@ -159,7 +159,7 @@ const Billing = () => {
           </div>
         )}
 
-        <div className="text-center mt-4 text-xl">
+        <div className="text-center mt-4 text-lg">
           Unsure if you need Screbbi?{" "}
           <Link
             to={localStorage.getItem("token") ? "/home" : "/"}

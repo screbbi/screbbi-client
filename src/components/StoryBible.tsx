@@ -22,9 +22,9 @@ import Compressed from "./Compressed";
 import SingleCharacter from "./SingleCharacter";
 import Tooltip from "../layout/Tooltip";
 import storyBible from "../assets/img/story-bible.svg";
-import storyGuide from "../assets/img/story-engine-guide.png";
-import storyClass from "../assets/img/story-engine-class.png";
-import storyVideo from "../assets/img/story-engine-video.png";
+import storyGuide from "../assets/img/story-engine-tour.jpeg";
+import storyClass from "../assets/img/story-engine-publish.jpeg";
+import storyVideo from "../assets/img/story-engine-award.jpeg";
 import { FaArrowRight } from "react-icons/fa6";
 import EmptyToken from "../layout/EmptyToken";
 import { useStore } from "zustand";
@@ -392,7 +392,11 @@ const StoryBible = ({
             <div className="flex items-center gap-6">
               <Link to={`#`} target="_black">
                 <div className="p-3 bg-[#ece6fa] rounded-md">
-                  <img src={storyGuide} alt="" className="w-52" />
+                  <img
+                    src={storyGuide}
+                    alt=""
+                    className="w-52 h-32 object-cover rounded-md"
+                  />
                   <div className="flex justify-center text-[#ad90ea] items-center mt-2 gap-2 font-semibold">
                     <div className="text">Watch the Video Tour</div>
                     <FaArrowRight />
@@ -402,7 +406,11 @@ const StoryBible = ({
 
               <Link to={`https://www.thepaperhousebooks.com`} target="_black">
                 <div className="p-3 bg-[#e4f3f7] rounded-md">
-                  <img src={storyClass} alt="" className="w-52" />
+                  <img
+                    src={storyClass}
+                    alt=""
+                    className="w-52 h-32 object-cover rounded-md"
+                  />
                   <div className="flex justify-center text-[#73cce0] items-center mt-2 gap-2 font-semibold">
                     <div className="text">Publish Your Book</div>
                     <FaArrowRight />
@@ -415,7 +423,11 @@ const StoryBible = ({
                 target="_black"
               >
                 <div className="p-3 bg-[#e2f2e9] rounded-md">
-                  <img src={storyVideo} alt="" className="w-52" />
+                  <img
+                    src={storyVideo}
+                    alt=""
+                    className="w-52 h-32 object-cover rounded-md"
+                  />
                   <div className="flex justify-center text-[#80dbaa] items-center mt-2 gap-2 font-semibold">
                     <div className="text">Enter for Book Awards</div>
                     <FaArrowRight />

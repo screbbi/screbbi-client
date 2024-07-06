@@ -1,10 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import appLogo from "../assets/img/ai-logo.png";
 import { HiOutlineMenuAlt2, HiOutlineMenuAlt3 } from "react-icons/hi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const LandingPageNavbar = () => {
   const [open, setOpen] = useState(false);
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   return (
     <div className="relative w-screen">

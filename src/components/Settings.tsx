@@ -199,7 +199,14 @@ const Settings = ({ close }: { close: () => void }) => {
           </div>
         )}
 
-        <button className="flex gap-2 items-center bg-buttonPurple text-white py-2 rounded-md px-4 text-sm mt-2">
+        <button
+          className="flex gap-2 items-center bg-buttonPurple text-white py-2 rounded-md px-4 text-sm mt-2"
+          onClick={() => {
+            localStorage.removeItem("token");
+            localStorage.removeItem("projects");
+            window.location.replace("/");
+          }}
+        >
           <LuLogOut />
           <div>Log Out</div>
         </button>
