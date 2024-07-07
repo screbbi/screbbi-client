@@ -17,7 +17,7 @@ const SingleBilling = ({
   loading: boolean;
 }) => {
   return (
-    <div className={`${plan.name === "starter" && "-translate-y-6"}`}>
+    <div>
       <div className="text-center capitalize text-2xl py-4 font-semibold">
         {plan.name}
       </div>
@@ -46,7 +46,7 @@ const SingleBilling = ({
           </div>
         </div>
 
-        <div>
+        <div className={`${plan.name !== "starter" && "py-6"}`}>
           {plan.description}
           {plan.description.slice(-1) !== "." && "."}
         </div>
