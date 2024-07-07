@@ -102,7 +102,7 @@ const Billing = () => {
             src={appLogo}
             alt=""
             className="h-10 cursor-pointer"
-            onClick={() => navigate(-1)}
+            // onClick={() => navigate(-1)}
           />
         </Link>
 
