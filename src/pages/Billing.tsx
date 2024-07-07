@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getRequest, postRequest } from "../utils/request";
 import appLogo from "../assets/img/ai-logo.png";
 import ButtonLoader from "../components/ButtonLoader";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { numberFormat } from "../utils/functions";
 
 const SingleBilling = ({
@@ -67,7 +67,7 @@ const Billing = () => {
   const [plans, setPlans] = useState<any>(null);
   const [annual, setAnnual] = useState(true);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     getRequest("/subscription/plans")
