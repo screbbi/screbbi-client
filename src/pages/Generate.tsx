@@ -193,7 +193,7 @@ const Generate = () => {
         if (window.innerWidth < 1024) {
           setStyle({ left: `${left - 15 * 4}px`, top: `${top - 16 * 10}px` });
         } else {
-          setStyle({ left: `${left - 15 * 19}px`, top: `${top - 16 * 10}px` });
+          setStyle({ left: `${left - 15 * 18}px`, top: `${top - 16 * 10}px` });
         }
 
         selectedText = window?.getSelection()?.toString();
