@@ -1,0 +1,312 @@
+import { BiArrowBack } from "react-icons/bi";
+import { LiaTimesSolid } from "react-icons/lia";
+import dialogue from "../assets/brainstorm/dialogue.svg";
+import characters from "../assets/brainstorm/characters.svg";
+import worldBuilding from "../assets/brainstorm/world-building.svg";
+import plotPoint from "../assets/brainstorm/plot-points.svg";
+import names from "../assets/brainstorm/names.svg";
+import places from "../assets/brainstorm/places.svg";
+import objects from "../assets/brainstorm/objects.svg";
+import descriptions from "../assets/brainstorm/descriptions.svg";
+import articleIdeas from "../assets/brainstorm/article-ideas.svg";
+import tweets from "../assets/brainstorm/tweets.svg";
+import somethingElse from "../assets/brainstorm/something-else.svg";
+import kickstart from "../assets/brainstorm/kickstart.svg";
+import doubleArrow from "../assets/brainstorm/doublearraw.svg";
+import { ChangeEvent, useState } from "react";
+import BrainstormInput from "./BrainstormInput";
+import { FaPlus } from "react-icons/fa";
+import BrainstormTextArea from "./BrainstormTextarea";
+import { TfiReload } from "react-icons/tfi";
+import { FaPen } from "react-icons/fa6";
+import { IoReload } from "react-icons/io5";
+import { GoThumbsup } from "react-icons/go";
+import SingleKeeper from "./SingleKeeper";
+
+const SingleBrainstorm = ({
+  text,
+  img,
+  handleClick,
+}: {
+  text: string;
+  img: any;
+  handleClick: () => void;
+}) => {
+  return (
+    <div
+      className="text-center p-4 border border-black cursor-pointer hover:bg-slate-100 duration-300"
+      onClick={handleClick}
+    >
+      <div className="flex justify-center items-center h-20">
+        <img src={img} alt="" />
+      </div>
+      <div className="uppercase font-semibold">{text}</div>
+    </div>
+  );
+};
+
+const Brainstorm = ({ close }: { close: () => void }) => {
+  const brainstorms = [
+    { text: "dialogue", img: dialogue },
+    { text: "characters", img: characters },
+    { text: "world building", img: worldBuilding },
+    { text: "plot points", img: plotPoint },
+    { text: "names", img: names },
+    { text: "places", img: places },
+    { text: "objects", img: objects },
+    { text: "descriptions", img: descriptions },
+    { text: "article ideas", img: articleIdeas },
+    { text: "tweets", img: tweets },
+    { text: "something else", img: somethingElse },
+  ];
+  const [currentBrainstorm, setCurrentBrainstorm] = useState<string>("");
+  const [data, setData] = useState({
+    tip: "Believable lines of dialogue for the beginning of a passionate love scene",
+    context:
+      "The two characters are coworkers who have worked together for a long time but were ashamed to admit they were attracted to one another.",
+    example: [
+      "I've been waiting for this for so long",
+      "Will you just kiss me already?",
+      "Let's get this over with",
+    ],
+  });
+  const [loading, setLoading] = useState(false);
+  const [reloading, setReloading] = useState(false);
+  const [content, setContent] = useState("");
+
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value, id } = e.target;
+    if (name !== "example") {
+      setData({ ...data, [name]: value });
+    } else {
+      const newExample = data.example.map((item: string, idx: number) => {
+        if (idx === Number(id)) {
+          return value;
+        } else {
+          return item;
+        }
+      });
+
+      setData({ ...data, example: newExample });
+    }
+  };
+
+  const addNewExample = () => {
+    setData({ ...data, example: [...data.example, ""] });
+  };
+
+  const generateBrainstorm = () => {
+    setLoading(true);
+
+    setTimeout(() => {
+      setContent("nsfivsf");
+      setLoading(false);
+    }, 2000);
+  };
+
+  const reloadContent = () => {
+    setReloading(true);
+
+    setTimeout(() => {
+      setReloading(false);
+    }, 2000);
+  };
+
+  return (
+    <div className="fixed top-0 left-0 inset-0 bg-white p-10 z-30 overflow-y-auto">
+      <div className="flex justify-between items-center text-2xl">
+        <div>
+          {!content ? (
+            <BiArrowBack
+              className="cursor-pointer"
+              onClick={() => {
+                if (content) {
+                  setContent("");
+                } else {
+                  if (currentBrainstorm !== "") {
+                    setCurrentBrainstorm("");
+                  } else close();
+                }
+              }}
+            />
+          ) : (
+            <div
+              className="flex items-center text-sm cursor-pointer"
+              onClick={() => {
+                setContent("");
+                setCurrentBrainstorm("");
+              }}
+            >
+              <img src={doubleArrow} alt="" className="h-5" />
+              <div>Start Over</div>
+            </div>
+          )}
+        </div>
+
+        {currentBrainstorm ? (
+          <div className="flex justify-between gap-10  w-full max-w-2xl">
+            <div>
+              <div className="font-bold text-3xl">
+                Kickstart your Brainstorm
+              </div>
+              <div className="font-semibold text-base">
+                What kind of ideas are you looking for?
+                <br /> The more detail, the better.
+              </div>
+            </div>
+
+            <img src={kickstart} alt="" />
+          </div>
+        ) : (
+          <div className="font-bold text-3xl">
+            What do you want to brainstorm?
+          </div>
+        )}
+        <LiaTimesSolid className="cursor-pointer" onClick={close} />
+      </div>
+
+      {!content && (
+        <>
+          {!currentBrainstorm ? (
+            <div className="grid grid-cols-4 max-w-2xl mx-auto rounded-xl border border-black overflow-hidden mt-10">
+              {brainstorms?.map((item, idx: number) => (
+                <div
+                  key={idx}
+                  className={`${
+                    idx === brainstorms.length - 1 && "col-span-2"
+                  }`}
+                >
+                  <SingleBrainstorm
+                    text={item.text}
+                    img={item.img}
+                    handleClick={() => setCurrentBrainstorm(item.text)}
+                  />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 max-w-2xl mx-auto mt-10 gap-4">
+              <div className="col-span-2 relative">
+                <BrainstormInput
+                  label="Give me a list of:"
+                  name="tip"
+                  id="tip"
+                  handleChange={handleChange}
+                  value={data.tip}
+                />
+                <TfiReload
+                  className={`absolute bottom-6 right-1 text-sm cursor-pointer ${
+                    reloading ? "spin" : ""
+                  }`}
+                  onClick={reloadContent}
+                />
+              </div>
+
+              <div className="">
+                <BrainstormTextArea
+                  label="Context (optional)"
+                  name="context"
+                  id="context"
+                  handleChange={handleChange}
+                  value={data.context}
+                />
+              </div>
+
+              <div className="">
+                <div>Example</div>
+                {data?.example?.map((item, idx) => (
+                  <BrainstormInput
+                    key={idx}
+                    name="example"
+                    id={`${idx}`}
+                    handleChange={handleChange}
+                    value={item}
+                  />
+                ))}
+
+                {data.example.length < 5 && (
+                  <button
+                    className="border border-black text-xs font-semibold flex gap-2 items-center px-2 py-1 rounded-full"
+                    onClick={addNewExample}
+                  >
+                    <FaPlus /> ADD ANOTHER
+                  </button>
+                )}
+
+                <div className="flex justify-end mt-4">
+                  <button
+                    className={`text-white ${
+                      loading ? "bg-gray-500" : "bg-buttonPurple"
+                    } font-semibold px-4 py-2 rounded-full`}
+                    onClick={generateBrainstorm}
+                  >
+                    {loading ? "Thinking..." : "Start"}
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </>
+      )}
+
+      {content && (
+        <div className="grid grid-cols-5 max-w-2xl mx-auto mt-10">
+          <div className="col-span-3">
+            <div className="w-full flex gap-4 items-center">
+              <div className="inline-flex gap-2 items-center bg-gray-100 py-1 px-2 rounded-full w-5/6">
+                <div className="truncate text-sm">
+                  A sensory detail about the ramen a supernatural detective eats
+                  after successfully capturing a ghost that was terrorizing a
+                  small family
+                </div>
+                <FaPen className="text-2xl cursor-pointer" />
+              </div>
+
+              <div className="bg-gray-100 p-2 rounded-full">
+                <IoReload />
+              </div>
+            </div>
+          </div>
+
+          <div className="col-span-2">
+            <div className="bg-gray-100 p-2 rounded-lg">
+              <div className="flex justify-center items-center relative py-1 text-sm gap-2">
+                <GoThumbsup />
+                <div>KEEPERS</div>
+                <button className="absolute right-1 top-1 bg-buttonPurple text-white py-[1px] px-3 rounded-full">
+                  +
+                </button>
+              </div>
+
+              <div>
+                {data.example.map((item, idx) => {
+                  if (item === "") {
+                    return "";
+                  }
+                  return <SingleKeeper key={idx} text={item} />;
+                })}
+              </div>
+            </div>
+
+            <div className="flex justify-center mt-4">
+              <button
+                className="border border-black font-semibold px-4 py-2 rounded-full"
+                onClick={() => {
+                  setContent("");
+                  setCurrentBrainstorm("");
+                  close();
+                }}
+              >
+                Save & Edit
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Brainstorm;

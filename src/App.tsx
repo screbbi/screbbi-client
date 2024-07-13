@@ -11,6 +11,10 @@ import PaymentSuccess from "./pages/PaymentSuccess";
 import FAQ from "./pages/FAQ";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Shrinkray from "./pages/plugins/Shrinkray";
+import Twist from "./pages/plugins/Twist";
+import Characters from "./pages/plugins/Characters";
+import Poems from "./pages/plugins/Poems";
 
 function App() {
   return (
@@ -33,9 +37,13 @@ function App() {
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/privacy-policies" element={<PrivacyPolicy />} />
 
-        {/* <Route path="/generate/:writer" element={<Generate />} /> */}
         <Route path="/project/:project/:writer" element={<Generate />} />
         <Route path="/project/:project" element={<Generate />} />
+
+        <Route path="/summary" element={<Shrinkray />} />
+        <Route path="/twist" element={<Twist />} />
+        <Route path="/characters" element={<Characters />} />
+        <Route path="/poem" element={<Poems />} />
 
         <Route path="auth">
           <Route path="login" element={<Login />} />

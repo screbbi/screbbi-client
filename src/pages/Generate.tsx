@@ -28,6 +28,8 @@ import { MdLinkOff } from "react-icons/md";
 import Notlinked from "../components/Notlinked";
 import CHaptersList from "../components/CHaptersList";
 import SubscribeButton from "../components/SubscribeButton";
+import Brainstorm from "../components/Brainstorm";
+import brainstormImage from "../assets/brainstorm/brainstorm.svg";
 
 const types = [
   "Rephrase",
@@ -98,6 +100,7 @@ const Generate = () => {
   const [openLinkingOption, setOpenLinkingOption] = useState(false);
   const [openChapterLiking, setOpenChapterLiking] = useState(false);
   const [loadingChapterText, setloadingChapterText] = useState("");
+  const [openBrainstorm, setOpenBrainstorm] = useState(false);
 
   const setSenses = (sense: string) => {
     if (descriptions.includes(sense)) {
@@ -845,6 +848,14 @@ const Generate = () => {
                       />
                     )}
                   </div>
+
+                  <div
+                    className="write-option cursor-pointer"
+                    onClick={() => setOpenBrainstorm(true)}
+                  >
+                    <img src={brainstormImage} alt="" />
+                    Brainstorm
+                  </div>
                 </div>
 
                 <div className="flex items-center gap-4">
@@ -1092,6 +1103,8 @@ const Generate = () => {
           </div>
         </>
       )}
+
+      {openBrainstorm && <Brainstorm close={() => setOpenBrainstorm(false)} />}
     </PageLayout>
   );
 };
