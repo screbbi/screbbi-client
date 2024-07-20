@@ -43,7 +43,7 @@ const SingleBrainstorm = ({
       <div className="flex justify-center items-center h-20">
         <img src={img} alt="" />
       </div>
-      <div className="uppercase font-semibold">{text}</div>
+      <div className="uppercase font-semibold">{text.replace("_", " ")}</div>
     </div>
   );
 };
@@ -51,18 +51,26 @@ const SingleBrainstorm = ({
 const Brainstorm = ({ close }: { close: () => void }) => {
   const { writer } = useParams();
 
+  const something_else = [
+    {
+      description: "",
+      context: "",
+      examples: ["", ""],
+    },
+  ];
+
   const brainstorms = [
     { text: "dialogue", img: dialogue },
     { text: "characters", img: characters },
-    { text: "world building", img: worldBuilding },
-    { text: "plot points", img: plotPoint },
+    { text: "world_building", img: worldBuilding },
+    { text: "plot_points", img: plotPoint },
     { text: "names", img: names },
     { text: "places", img: places },
     { text: "objects", img: objects },
     { text: "descriptions", img: descriptions },
     { text: "article ideas", img: articleIdeas },
     { text: "tweets", img: tweets },
-    { text: "something else", img: somethingElse },
+    { text: "something_else", img: somethingElse },
   ];
   const [currentBrainstorm, setCurrentBrainstorm] = useState<string>("");
   const [loading, setLoading] = useState(false);
@@ -75,7 +83,7 @@ const Brainstorm = ({ close }: { close: () => void }) => {
 
   useEffect(() => {
     getRequest("/brainstorm/options").then(({ data }) => {
-      setOptions(data);
+      setOptions({ ...data, something_else });
     });
   }, []);
 
@@ -127,6 +135,20 @@ const Brainstorm = ({ close }: { close: () => void }) => {
   };
 
   const generateBrainstorm = () => {
+    if (!options[currentBrainstorm][currentIndex].description.trim()) {
+      toast("Description is required");
+      return;
+    }
+    if (!options[currentBrainstorm][currentIndex].context.trim()) {
+      toast("Description is required");
+      return;
+    }
+
+    // if (!options[currentBrainstorm][currentIndex].context.trim()) {
+    //   toast("Description is required");
+    //   return;
+    // }
+
     setLoading(true);
 
     postRequest("/brainstorm/think", {
@@ -288,7 +310,6 @@ const Brainstorm = ({ close }: { close: () => void }) => {
                       if (!options) {
                         return;
                       }
-
                       setCurrentBrainstorm(item.text);
                       setCurrentIndex(0);
                     }}
@@ -304,7 +325,12 @@ const Brainstorm = ({ close }: { close: () => void }) => {
                   name="description"
                   id="description"
                   handleChange={handleChange}
-                  value={options[currentBrainstorm][currentIndex].description}
+                  placeholder="Description"
+                  value={
+                    options[currentBrainstorm]
+                      ? options[currentBrainstorm][currentIndex].description
+                      : ""
+                  }
                 />
                 <TfiReload
                   className={`absolute bottom-6 right-1 text-sm cursor-pointer ${
@@ -320,7 +346,12 @@ const Brainstorm = ({ close }: { close: () => void }) => {
                   name="context"
                   id="context"
                   handleChange={handleChange}
-                  value={options[currentBrainstorm][currentIndex].context}
+                  placeholder="Context"
+                  value={
+                    options[currentBrainstorm]
+                      ? options[currentBrainstorm][currentIndex].context
+                      : ""
+                  }
                 />
               </div>
 
@@ -334,6 +365,7 @@ const Brainstorm = ({ close }: { close: () => void }) => {
                       id={`${idx}`}
                       handleChange={handleChange}
                       value={item}
+                      placeholder={`Example ${idx + 1}`}
                     />
                   )
                 )}

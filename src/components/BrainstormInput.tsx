@@ -6,6 +6,7 @@ type inputType = {
   handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
   name: string;
   id: string;
+  placeholder?: string;
 };
 
 const BrainstormInput = ({
@@ -14,6 +15,7 @@ const BrainstormInput = ({
   handleChange,
   name,
   id,
+  placeholder,
 }: inputType) => {
   return (
     <div>
@@ -25,6 +27,7 @@ const BrainstormInput = ({
         name={name}
         id={id}
         className="block w-full border border-gray-300 p-2 rounded-md outline-2 outline-buttonPurple text-sm my-3"
+        placeholder={placeholder}
       />
     </div>
   );
