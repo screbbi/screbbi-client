@@ -100,7 +100,13 @@ const Shorter = ({
               <div className="grey-text mt-2">
                 {decodeText(result?.suggestion?.text ?? result.suggestion)}
               </div>
-
+              {/* <div
+                dangerouslySetInnerHTML={{
+                  __html: decodeText(
+                    result?.suggestion?.text ?? result.suggestion
+                  ),
+                }}
+              /> */}
               <div className="flex items-center divide-x-2 mt-2">
                 <div className="flex gap-2 items-center pr-2">
                   <button

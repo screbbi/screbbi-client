@@ -4,11 +4,17 @@ import { HiPencil } from "react-icons/hi";
 import { MdDeleteOutline } from "react-icons/md";
 import { copyToClipboard } from "../utils/functions";
 
-const SingleKeeper = ({ text }: { text: string }) => {
+const SingleKeeper = ({
+  text,
+  deleteKeep,
+}: {
+  text: string;
+  deleteKeep: () => void;
+}) => {
   const [editing, setEditing] = useState(false);
 
   return (
-    <div className="bg-white p-2 my-2 rounded-lg relative group shadow-md">
+    <div className="bg-white p-2 my-2 rounded-lg relative group shadow-md w-full">
       {!editing ? (
         <div>
           <div className="text-xs font-semibold">{text}</div>
@@ -22,16 +28,15 @@ const SingleKeeper = ({ text }: { text: string }) => {
               className="cursor-pointer"
               onClick={() => setEditing(true)}
             />
-            <MdDeleteOutline className="cursor-pointer" />
+            <MdDeleteOutline className="cursor-pointer" onClick={deleteKeep} />
           </div>
         </div>
       ) : (
         <div>
-          <input
-            type="text"
+          <textarea
             value={text}
             onChange={() => {}}
-            className="outline-0 border-0 bg-transparent text-xs w-full"
+            className="outline-0 border-0 bg-transparent text-xs w-full h-32 resize-none"
             placeholder="Edit me"
             onBlur={() => setEditing(false)}
             autoFocus

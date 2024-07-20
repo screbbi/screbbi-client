@@ -15,15 +15,16 @@ import kickstart from "../assets/brainstorm/kickstart.svg";
 import doubleArrow from "../assets/brainstorm/doublearraw.svg";
 import { ChangeEvent, useEffect, useState } from "react";
 import BrainstormInput from "./BrainstormInput";
-import { FaPlus } from "react-icons/fa";
+import { FaRegThumbsDown, FaRegThumbsUp, FaPlus } from "react-icons/fa";
 import BrainstormTextArea from "./BrainstormTextarea";
 import { TfiReload } from "react-icons/tfi";
-import { FaPen } from "react-icons/fa6";
+// import { FaPen } from "react-icons/fa6";
 import { IoReload } from "react-icons/io5";
 import { GoThumbsup } from "react-icons/go";
-// import SingleKeeper from "./SingleKeeper";
+import SingleKeeper from "./SingleKeeper";
 import { getRequest, postRequest } from "../utils/request";
 import toast from "react-hot-toast";
+import { useParams } from "react-router-dom";
 
 const SingleBrainstorm = ({
   text,
@@ -48,6 +49,8 @@ const SingleBrainstorm = ({
 };
 
 const Brainstorm = ({ close }: { close: () => void }) => {
+  const { writer } = useParams();
+
   const brainstorms = [
     { text: "dialogue", img: dialogue },
     { text: "characters", img: characters },
@@ -64,9 +67,11 @@ const Brainstorm = ({ close }: { close: () => void }) => {
   const [currentBrainstorm, setCurrentBrainstorm] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const [reloading, setReloading] = useState(false);
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState<any>(null);
   const [options, setOptions] = useState<any>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [keeps, setKeeps] = useState<string[]>([]);
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     getRequest("/brainstorm/options").then(({ data }) => {
@@ -124,16 +129,12 @@ const Brainstorm = ({ close }: { close: () => void }) => {
   const generateBrainstorm = () => {
     setLoading(true);
 
-    // context: options[currentBrainstorm][currentIndex].context,
-    // examples: options[currentBrainstorm][currentIndex].examples,
-    // description: options[currentBrainstorm][currentIndex].description,
-
     postRequest("/brainstorm/think", {
       ...options[currentBrainstorm][currentIndex],
     })
-      .then(() => {
-        toast("Brainstorm Generated");
-        close();
+      .then(({ data }) => {
+        setLoading(false);
+        setContent(data.result);
       })
       .catch(() => {
         toast("Try Again");
@@ -174,6 +175,48 @@ const Brainstorm = ({ close }: { close: () => void }) => {
     setOptions(newOptions);
   };
 
+  const addKeep = (keep: string) => {
+    setKeeps((prevKeep) => {
+      return [...prevKeep, keep];
+    });
+
+    setContent((prevContent: any) => {
+      return prevContent.filter((item: string) => item !== keep);
+    });
+  };
+
+  const removeKeep = (index: number) => {
+    setKeeps((prevKeep: any) => {
+      return prevKeep.map((_: string, idx: number) => idx !== index);
+    });
+  };
+
+  const deleteKeep = (keep: string) => {
+    setKeeps((prevContent: any) => {
+      return prevContent.filter((item: string) => item !== keep);
+    });
+  };
+
+  const saveBrainStorm = () => {
+    setSaving(true);
+    postRequest("/brainstorm/save", {
+      ...options[currentBrainstorm][currentIndex],
+      writer,
+      category: currentBrainstorm,
+      result: keeps,
+    })
+      .then(() => {
+        setSaving(false);
+        setContent(null);
+        setCurrentBrainstorm("");
+        close();
+      })
+      .catch(() => {
+        setSaving(false);
+        toast("Error Saving Brainstorm");
+      });
+  };
+
   return (
     <div className="fixed top-0 left-0 inset-0 bg-white p-10 z-30 overflow-y-auto">
       <div className="flex justify-between items-center text-2xl">
@@ -183,7 +226,7 @@ const Brainstorm = ({ close }: { close: () => void }) => {
               className="cursor-pointer"
               onClick={() => {
                 if (content) {
-                  setContent("");
+                  setContent([]);
                 } else {
                   if (currentBrainstorm !== "") {
                     setCurrentBrainstorm("");
@@ -195,7 +238,7 @@ const Brainstorm = ({ close }: { close: () => void }) => {
             <div
               className="flex items-center text-sm cursor-pointer"
               onClick={() => {
-                setContent("");
+                setContent([]);
                 setCurrentBrainstorm("");
               }}
             >
@@ -242,6 +285,10 @@ const Brainstorm = ({ close }: { close: () => void }) => {
                     text={item.text}
                     img={item.img}
                     handleClick={() => {
+                      if (!options) {
+                        return;
+                      }
+
                       setCurrentBrainstorm(item.text);
                       setCurrentIndex(0);
                     }}
@@ -319,7 +366,7 @@ const Brainstorm = ({ close }: { close: () => void }) => {
       )}
 
       {content && (
-        <div className="grid grid-cols-5 max-w-2xl mx-auto mt-10">
+        <div className="grid grid-cols-5 max-w-2xl mx-auto mt-10 gap-4">
           <div className="col-span-3">
             <div className="w-full flex gap-4 items-center">
               <div className="inline-flex gap-2 items-center bg-gray-100 py-1 px-2 rounded-full w-5/6">
@@ -328,32 +375,65 @@ const Brainstorm = ({ close }: { close: () => void }) => {
                   after successfully capturing a ghost that was terrorizing a
                   small family
                 </div>
-                <FaPen className="text-2xl cursor-pointer" />
+                {/* <FaPen className="text-2xl cursor-pointer" /> */}
               </div>
 
               <div className="bg-gray-100 p-2 rounded-full">
-                <IoReload />
+                <IoReload
+                  onClick={generateBrainstorm}
+                  className={`${loading && "spin"}`}
+                />
               </div>
+            </div>
+
+            <div className="h-[70vh] overflow-auto">
+              {content?.map((item: string, idx: number) => (
+                <div
+                  key={idx}
+                  className="grid grid-cols-12 bg-gray-100 rounded-lg my-4 items-center divide-x-2"
+                >
+                  <div className="p-4 col-span-2">
+                    <FaRegThumbsDown
+                      className="text-3xl cursor-pointer"
+                      onClick={() => removeKeep(idx)}
+                    />
+                  </div>
+
+                  <div className="col-span-8 text-sm p-4 text-center">
+                    {item}
+                  </div>
+
+                  <div className="p-4 col-span-2">
+                    <FaRegThumbsUp
+                      className="text-3xl cursor-pointer"
+                      onClick={() => addKeep(item)}
+                    />
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
           <div className="col-span-2">
             <div className="bg-gray-100 p-2 rounded-lg">
-              <div className="flex justify-center items-center relative py-1 text-sm gap-2">
-                <GoThumbsup />
-                <div>KEEPERS</div>
-                <button className="absolute right-1 top-1 bg-buttonPurple text-white py-[1px] px-3 rounded-full">
-                  +
-                </button>
+              <div>
+                <div className="flex justify-center items-center relative py-1 text-sm gap-2">
+                  <GoThumbsup />
+                  <div>KEEPERS</div>
+                  {/* <button className="absolute right-1 top-1 bg-buttonPurple text-white py-[1px] px-3 rounded-full">
+                    +
+                  </button> */}
+                </div>
               </div>
 
-              <div>
-                {/* {data.example.map((item, idx) => {
-                  if (item === "") {
-                    return "";
-                  }
-                  return <SingleKeeper key={idx} text={item} />;
-                })} */}
+              <div className="h-[70vh] overflow-auto">
+                {keeps?.map((item, idx) => (
+                  <SingleKeeper
+                    key={idx}
+                    text={item}
+                    deleteKeep={() => deleteKeep(item)}
+                  />
+                ))}
               </div>
             </div>
 
@@ -361,12 +441,11 @@ const Brainstorm = ({ close }: { close: () => void }) => {
               <button
                 className="border border-black font-semibold px-4 py-2 rounded-full"
                 onClick={() => {
-                  setContent("");
-                  setCurrentBrainstorm("");
-                  close();
+                  saveBrainStorm();
                 }}
+                disabled={saving}
               >
-                Save & Edit
+                {saving ? "Saving" : "Save"}
               </button>
             </div>
           </div>
