@@ -16,7 +16,7 @@ import Twist from "./pages/plugins/Twist";
 import Characters from "./pages/plugins/Characters";
 import Poems from "./pages/plugins/Poems";
 import Plugins from "./pages/Plugins";
-import Editor from "./pages/Editor";
+// import Editor from "./pages/Editor";
 
 function App() {
   return (
@@ -45,7 +45,7 @@ function App() {
         {/* <Route path="/project/:project/:writer" element={<Generate />} /> */}
         <Route path="project/:project/:writer">
           <Route path="" element={<Generate />} />
-          <Route path="editor" element={<Editor />} />
+          {/* <Route path="editor" element={<Editor />} /> */}
           <Route path="summary" element={<Shrinkray />} />
           <Route path="twist" element={<Twist />} />
           <Route path="characters" element={<Characters />} />
