@@ -10,7 +10,7 @@ const Poems = () => {
         </div>
 
         <div className="col-span-3">
-          <div className="bg-gray-100 p-4 rounded-lg">
+          <div className="bg-white/50 backdrop-blur-md p-4 rounded-lg">
             <div className="font-bold mb-2 text-xl">Poem</div>
 
             <input
@@ -38,7 +38,7 @@ const Poems = () => {
           </div>
         </div>
 
-        <div className="col-span-2 bg-gray-200/50 h-fit p-4 rounded-lg font-semibold">
+        <div className="col-span-2 bg-gray-100/50 backdrop-blur-md  h-fit p-4 rounded-lg font-semibold">
           <div className="font-bold mb-2">How this works</div>
 
           <div>Poem generates a contemporary free verse poem.</div>

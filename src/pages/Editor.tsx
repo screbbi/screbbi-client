@@ -29,9 +29,9 @@ import Notlinked from "../components/Notlinked";
 import CHaptersList from "../components/CHaptersList";
 import SubscribeButton from "../components/SubscribeButton";
 import Brainstorm from "../components/Brainstorm";
-import brainstormImage from "../assets/brainstorm/brainstorm.svg";
-// import { IoExtensionPuzzleSharp } from "react-icons/io5";
-// import Plugins from "../components/Plugins";
+// import brainstormImage from "../assets/brainstorm/brainstorm.svg";
+import { IoExtensionPuzzleSharp } from "react-icons/io5";
+import Plugins from "../components/Plugins";
 
 const types = [
   "Rephrase",
@@ -42,7 +42,7 @@ const types = [
   "More intense",
 ];
 
-const Generate = () => {
+const Editor = () => {
   const { writer, project } = useParams();
   const optionRef: any = useRef();
   const reWriteRef: any = useRef();
@@ -104,8 +104,7 @@ const Generate = () => {
   const [openChapterLiking, setOpenChapterLiking] = useState(false);
   const [loadingChapterText, setloadingChapterText] = useState("");
   const [openBrainstorm, setOpenBrainstorm] = useState(false);
-  const [_, setOpenPlugins] = useState(false);
-  // const [openPlugins, setOpenPlugins] = useState(false);
+  const [openPlugins, setOpenPlugins] = useState(false);
 
   const setSenses = (sense: string) => {
     if (descriptions.includes(sense)) {
@@ -245,6 +244,12 @@ const Generate = () => {
     }
   };
 
+  useEffect(() => {
+    const editor = document.querySelector(".sun-editor-editable");
+    // console.log(editor);
+    // editor.getSe
+  }, []);
+
   const saveDocument = () => {
     const editor = document.querySelector(".sun-editor-editable");
     const content: any = editor?.innerHTML;
@@ -335,6 +340,7 @@ const Generate = () => {
   };
 
   useEffect(() => {
+    return;
     let timeoutId: NodeJS.Timeout;
 
     const handleKeyUp = () => {
@@ -725,11 +731,11 @@ const Generate = () => {
             </div>
           )}
 
+          {/* WRITE OPTIONS */}
           <div className={`${token <= 5000 ? "generates" : "generate"}`}>
             <div className="py-2 px-6 overflow-y-scroll">
-              {/* WRITE OPTIONS */}
               <div
-                className="flex justify-between items-center relative mb-4 z-10"
+                className="flex justify-between items-center relative mb-4 z-10 select-none"
                 ref={topPageRef}
               >
                 <div className="flex gap-2 items-center">
@@ -860,15 +866,15 @@ const Generate = () => {
                     )}
                   </div>
 
-                  <div
+                  {/* <div
                     className="write-option cursor-pointer"
                     onClick={() => setOpenBrainstorm(true)}
                   >
                     <img src={brainstormImage} alt="" />
                     Brainstorm
-                  </div>
+                  </div> */}
 
-                  {/* <div
+                  <div
                     className="write-option"
                     ref={pluginRef}
                     onClick={() => {
@@ -881,7 +887,7 @@ const Generate = () => {
                     <IoIosArrowDown className="text-base" />
 
                     {openPlugins && <Plugins />}
-                  </div> */}
+                  </div>
                 </div>
 
                 <div className="flex items-center gap-4">
@@ -947,10 +953,8 @@ const Generate = () => {
               </div>
 
               {/* EDITOR */}
-              <div
-                className="editor relative flex justify-center bg-slate-400 rounded-lg overflow-hidden shadow-lg"
-                onMouseUp={checkSelection}
-              >
+              <div className="editor relative flex justify-center bg-slate-400 rounded-lg overflow-hidden shadow-lg">
+                {/* // onMouseUp={checkSelection} */}
                 <SunEditor
                   setOptions={options}
                   setDefaultStyle="font-family: 'Manrope', sans-serif; background:'transparent;"
@@ -1022,7 +1026,7 @@ const Generate = () => {
               )}
             </div>
 
-            <div className="controls bg-white p-4 h-full overflow-y-auto">
+            <div className="controls bg-white p-4 h-full overflow-y-auto no-select">
               <div>
                 <div className="title mb-5">
                   <div className="text-sm text-closeBlack font-bold">
@@ -1090,7 +1094,7 @@ const Generate = () => {
       ) : (
         <>
           {token <= 5000 && (
-            <div className="p-2">
+            <div className="p-2 no-select">
               <div className="flex justify-between items-center p-4 bg-white rounded-lg">
                 <div className="">Your credit balance of {token} is low</div>
 
@@ -1135,4 +1139,4 @@ const Generate = () => {
   );
 };
 
-export default Generate;
+export default Editor;

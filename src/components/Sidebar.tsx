@@ -77,7 +77,7 @@ const Sidebar = ({
   }, []);
 
   return (
-    <div className={`sidebar ${open ? "left-0" : "-left-[20rem]"}`}>
+    <div className={`sidebar no-select ${open ? "left-0" : "-left-[20rem]"}`}>
       {/* NEW CONTENT */}
       <div className="">
         <Link to={"/home"}>

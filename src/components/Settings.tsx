@@ -19,8 +19,8 @@ const Settings = ({ close }: { close: () => void }) => {
     lastName: string;
     firstName: string;
   }>({
-    firstName: user.firstName,
-    lastName: user.lastName,
+    firstName: user?.firstName,
+    lastName: user?.lastName,
   });
   const [editing, setEditing] = useState(false);
   const [updatig, setUpdatig] = useState(false);
@@ -28,8 +28,8 @@ const Settings = ({ close }: { close: () => void }) => {
     lastName: string;
     firstName: string;
   }>({
-    firstName: user.firstName,
-    lastName: user.lastName,
+    firstName: user?.firstName,
+    lastName: user?.lastName,
   });
   const [managing, setManaging] = useState(false);
 

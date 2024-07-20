@@ -13,7 +13,7 @@ import tweets from "../assets/brainstorm/tweets.svg";
 import somethingElse from "../assets/brainstorm/something-else.svg";
 import kickstart from "../assets/brainstorm/kickstart.svg";
 import doubleArrow from "../assets/brainstorm/doublearraw.svg";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import BrainstormInput from "./BrainstormInput";
 import { FaPlus } from "react-icons/fa";
 import BrainstormTextArea from "./BrainstormTextarea";
@@ -21,7 +21,9 @@ import { TfiReload } from "react-icons/tfi";
 import { FaPen } from "react-icons/fa6";
 import { IoReload } from "react-icons/io5";
 import { GoThumbsup } from "react-icons/go";
-import SingleKeeper from "./SingleKeeper";
+// import SingleKeeper from "./SingleKeeper";
+import { getRequest, postRequest } from "../utils/request";
+import toast from "react-hot-toast";
 
 const SingleBrainstorm = ({
   text,
@@ -60,58 +62,116 @@ const Brainstorm = ({ close }: { close: () => void }) => {
     { text: "something else", img: somethingElse },
   ];
   const [currentBrainstorm, setCurrentBrainstorm] = useState<string>("");
-  const [data, setData] = useState({
-    tip: "Believable lines of dialogue for the beginning of a passionate love scene",
-    context:
-      "The two characters are coworkers who have worked together for a long time but were ashamed to admit they were attracted to one another.",
-    example: [
-      "I've been waiting for this for so long",
-      "Will you just kiss me already?",
-      "Let's get this over with",
-    ],
-  });
   const [loading, setLoading] = useState(false);
   const [reloading, setReloading] = useState(false);
   const [content, setContent] = useState("");
+  const [options, setOptions] = useState<any>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    getRequest("/brainstorm/options").then(({ data }) => {
+      setOptions(data);
+    });
+  }, []);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value, id } = e.target;
+
     if (name !== "example") {
-      setData({ ...data, [name]: value });
+      const newOptions = {
+        ...options,
+        [currentBrainstorm]: options[currentBrainstorm].map(
+          (item: any, idx: number) => {
+            if (idx === currentIndex) {
+              return { ...item, [name]: value };
+            } else {
+              return item;
+            }
+          }
+        ),
+      };
+
+      setOptions(newOptions);
     } else {
-      const newExample = data.example.map((item: string, idx: number) => {
-        if (idx === Number(id)) {
-          return value;
-        } else {
-          return item;
-        }
-      });
+      const newOptions = {
+        ...options,
+        [currentBrainstorm]: options[currentBrainstorm].map(
+          (item: any, idx: number) => {
+            if (idx === currentIndex) {
+              return {
+                ...item,
+                examples: item.examples.map((example: string, idx: any) => {
+                  if (idx === Number(id)) {
+                    return value;
+                  } else {
+                    return example;
+                  }
+                }),
+              };
+            } else {
+              return item;
+            }
+          }
+        ),
+      };
 
-      setData({ ...data, example: newExample });
+      setOptions(newOptions);
     }
-  };
-
-  const addNewExample = () => {
-    setData({ ...data, example: [...data.example, ""] });
   };
 
   const generateBrainstorm = () => {
     setLoading(true);
 
-    setTimeout(() => {
-      setContent("nsfivsf");
-      setLoading(false);
-    }, 2000);
+    // context: options[currentBrainstorm][currentIndex].context,
+    // examples: options[currentBrainstorm][currentIndex].examples,
+    // description: options[currentBrainstorm][currentIndex].description,
+
+    postRequest("/brainstorm/think", {
+      ...options[currentBrainstorm][currentIndex],
+    })
+      .then(() => {
+        toast("Brainstorm Generated");
+        close();
+      })
+      .catch(() => {
+        toast("Try Again");
+      });
   };
 
   const reloadContent = () => {
-    setReloading(true);
+    if (currentIndex < options[currentBrainstorm].length - 1) {
+      const newCurrent = currentIndex + 1;
+      setCurrentIndex(newCurrent);
+    } else {
+      setReloading(true);
+      setCurrentIndex(0);
+      getRequest("/brainstorm/options").then(({ data }) => {
+        setReloading(false);
+        setOptions(data);
+      });
+    }
+  };
 
-    setTimeout(() => {
-      setReloading(false);
-    }, 2000);
+  const addExample = () => {
+    const newOptions = {
+      ...options,
+      [currentBrainstorm]: options[currentBrainstorm].map(
+        (item: any, idx: number) => {
+          if (idx === currentIndex) {
+            return {
+              ...item,
+              examples: [...item.examples, ""],
+            };
+          } else {
+            return item;
+          }
+        }
+      ),
+    };
+
+    setOptions(newOptions);
   };
 
   return (
@@ -181,7 +241,10 @@ const Brainstorm = ({ close }: { close: () => void }) => {
                   <SingleBrainstorm
                     text={item.text}
                     img={item.img}
-                    handleClick={() => setCurrentBrainstorm(item.text)}
+                    handleClick={() => {
+                      setCurrentBrainstorm(item.text);
+                      setCurrentIndex(0);
+                    }}
                   />
                 </div>
               ))}
@@ -191,10 +254,10 @@ const Brainstorm = ({ close }: { close: () => void }) => {
               <div className="col-span-2 relative">
                 <BrainstormInput
                   label="Give me a list of:"
-                  name="tip"
-                  id="tip"
+                  name="description"
+                  id="description"
                   handleChange={handleChange}
-                  value={data.tip}
+                  value={options[currentBrainstorm][currentIndex].description}
                 />
                 <TfiReload
                   className={`absolute bottom-6 right-1 text-sm cursor-pointer ${
@@ -210,26 +273,29 @@ const Brainstorm = ({ close }: { close: () => void }) => {
                   name="context"
                   id="context"
                   handleChange={handleChange}
-                  value={data.context}
+                  value={options[currentBrainstorm][currentIndex].context}
                 />
               </div>
 
               <div className="">
                 <div>Example</div>
-                {data?.example?.map((item, idx) => (
-                  <BrainstormInput
-                    key={idx}
-                    name="example"
-                    id={`${idx}`}
-                    handleChange={handleChange}
-                    value={item}
-                  />
-                ))}
+                {options[currentBrainstorm][currentIndex].examples?.map(
+                  (item: any, idx: number) => (
+                    <BrainstormInput
+                      key={idx}
+                      name="example"
+                      id={`${idx}`}
+                      handleChange={handleChange}
+                      value={item}
+                    />
+                  )
+                )}
 
-                {data.example.length < 5 && (
+                {options[currentBrainstorm][currentIndex].examples.length <
+                  5 && (
                   <button
                     className="border border-black text-xs font-semibold flex gap-2 items-center px-2 py-1 rounded-full"
-                    onClick={addNewExample}
+                    onClick={addExample}
                   >
                     <FaPlus /> ADD ANOTHER
                   </button>
@@ -241,6 +307,7 @@ const Brainstorm = ({ close }: { close: () => void }) => {
                       loading ? "bg-gray-500" : "bg-buttonPurple"
                     } font-semibold px-4 py-2 rounded-full`}
                     onClick={generateBrainstorm}
+                    disabled={loading}
                   >
                     {loading ? "Thinking..." : "Start"}
                   </button>
@@ -281,12 +348,12 @@ const Brainstorm = ({ close }: { close: () => void }) => {
               </div>
 
               <div>
-                {data.example.map((item, idx) => {
+                {/* {data.example.map((item, idx) => {
                   if (item === "") {
                     return "";
                   }
                   return <SingleKeeper key={idx} text={item} />;
-                })}
+                })} */}
               </div>
             </div>
 

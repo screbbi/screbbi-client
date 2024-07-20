@@ -15,6 +15,8 @@ import Shrinkray from "./pages/plugins/Shrinkray";
 import Twist from "./pages/plugins/Twist";
 import Characters from "./pages/plugins/Characters";
 import Poems from "./pages/plugins/Poems";
+import Plugins from "./pages/Plugins";
+import Editor from "./pages/Editor";
 
 function App() {
   return (
@@ -37,13 +39,18 @@ function App() {
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/privacy-policies" element={<PrivacyPolicy />} />
 
-        <Route path="/project/:project/:writer" element={<Generate />} />
         <Route path="/project/:project" element={<Generate />} />
+        <Route path="/plugins" element={<Plugins />} />
 
-        <Route path="/summary" element={<Shrinkray />} />
-        <Route path="/twist" element={<Twist />} />
-        <Route path="/characters" element={<Characters />} />
-        <Route path="/poem" element={<Poems />} />
+        {/* <Route path="/project/:project/:writer" element={<Generate />} /> */}
+        <Route path="project/:project/:writer">
+          <Route path="" element={<Generate />} />
+          <Route path="editor" element={<Editor />} />
+          <Route path="summary" element={<Shrinkray />} />
+          <Route path="twist" element={<Twist />} />
+          <Route path="characters" element={<Characters />} />
+          <Route path="poem" element={<Poems />} />
+        </Route>
 
         <Route path="auth">
           <Route path="login" element={<Login />} />

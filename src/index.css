@@ -86,6 +86,17 @@ body {
 .controls {
   @apply grid;
   grid-template-rows: 1fr 3rem;
+
+  user-select: none !important; /* Standard */
+  -webkit-user-select: none !important; /* Safari */
+  -moz-user-select: none !important; /* Firefox */
+  -ms-user-select: none !important; /* Internet Explorer/Edge */
+}
+.top-options * {
+  user-select: none !important; /* Standard */
+  -webkit-user-select: none !important; /* Safari */
+  -moz-user-select: none !important; /* Firefox */
+  -ms-user-select: none !important; /* Internet Explorer/Edge */
 }
 
 .popup {
@@ -290,11 +301,23 @@ ul {
   list-style-type: circle;
 }
 .back-btn {
-  @apply bg-transparent hover:bg-slate-100 p-2 rounded-lg text-sm flex items-center gap-2;
+  @apply bg-white/80 hover:bg-white p-2 rounded-lg text-sm flex items-center gap-2;
 }
 .character-plugin-input {
   @apply border border-black rounded-md p-2 block bg-transparent w-full outline-buttonPurple;
 }
 .plugin-link {
   @apply text-buttonPurple;
+}
+.plugin-cards {
+  @apply grid gap-4 mt-4;
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+}
+
+/* NO SELECT */
+.no-select {
+  user-select: none !important; /* Standard */
+  -webkit-user-select: none !important; /* Safari */
+  -moz-user-select: none !important; /* Firefox */
+  -ms-user-select: none !important; /* Internet Explorer/Edge */
 }

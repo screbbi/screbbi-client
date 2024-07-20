@@ -343,7 +343,7 @@ const StoryBible = ({
   }, [story]);
 
   return (
-    <div className="w-full mt-6 pb-4">
+    <div className="w-full mt-6 pb-4 no-select">
       <div className="single-story">
         <div className="flex justify-between items-center">
           <div className="flex gap-2 items-center">
