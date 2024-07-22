@@ -7,9 +7,11 @@ import { copyToClipboard } from "../utils/functions";
 const SingleKeeper = ({
   text,
   deleteKeep,
+  editkeeps,
 }: {
   text: string;
   deleteKeep: () => void;
+  editkeeps: (val: string) => void;
 }) => {
   const [editing, setEditing] = useState(false);
 
@@ -35,8 +37,8 @@ const SingleKeeper = ({
         <div>
           <textarea
             value={text}
-            onChange={() => {}}
-            className="outline-0 border-0 bg-transparent text-xs w-full h-32 resize-none"
+            onChange={(e) => editkeeps(e.target.value)}
+            className="outline-0 border-0 bg-transparent text-xs w-full h-24 resize-none"
             placeholder="Edit me"
             onBlur={() => setEditing(false)}
             autoFocus

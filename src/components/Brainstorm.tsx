@@ -154,6 +154,7 @@ const Brainstorm = ({ close }: { close: () => void }) => {
         setContent(data.result);
       })
       .catch(() => {
+        setLoading(false);
         toast("Try Again");
       });
   };
@@ -232,6 +233,18 @@ const Brainstorm = ({ close }: { close: () => void }) => {
         setSaving(false);
         toast("Error Saving Brainstorm");
       });
+  };
+
+  const editkeeps = (index: number, value: string) => {
+    setKeeps((prevKeep) => {
+      return prevKeep.map((item, idx) => {
+        if (idx === index) {
+          return value;
+        } else {
+          return item;
+        }
+      });
+    });
   };
 
   return (
@@ -398,9 +411,7 @@ const Brainstorm = ({ close }: { close: () => void }) => {
             <div className="w-full flex gap-4 items-center">
               <div className="inline-flex gap-2 items-center bg-gray-100 py-1 px-2 rounded-full w-5/6">
                 <div className="truncate text-sm">
-                  A sensory detail about the ramen a supernatural detective eats
-                  after successfully capturing a ghost that was terrorizing a
-                  small family
+                  {options[currentBrainstorm][currentIndex].description}
                 </div>
                 {/* <FaPen className="text-2xl cursor-pointer" /> */}
               </div>
@@ -413,7 +424,7 @@ const Brainstorm = ({ close }: { close: () => void }) => {
               </div>
             </div>
 
-            <div className="h-[70vh] overflow-auto">
+            <div className="h-[70vh] overflow-auto no-scrollbar">
               {content?.map((item: string, idx: number) => (
                 <div
                   key={idx}
@@ -453,12 +464,13 @@ const Brainstorm = ({ close }: { close: () => void }) => {
                 </div>
               </div>
 
-              <div className="h-[70vh] overflow-auto">
+              <div className="h-[70vh] overflow-auto no-scrollbar">
                 {keeps?.map((item, idx) => (
                   <SingleKeeper
                     key={idx}
                     text={item}
                     deleteKeep={() => deleteKeep(item)}
+                    editkeeps={(val) => editkeeps(idx, val)}
                   />
                 ))}
               </div>
