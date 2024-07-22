@@ -144,11 +144,6 @@ const Brainstorm = ({ close }: { close: () => void }) => {
       return;
     }
 
-    // if (!options[currentBrainstorm][currentIndex].context.trim()) {
-    //   toast("Description is required");
-    //   return;
-    // }
-
     setLoading(true);
 
     postRequest("/brainstorm/think", {

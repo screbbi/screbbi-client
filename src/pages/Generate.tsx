@@ -29,9 +29,9 @@ import Notlinked from "../components/Notlinked";
 import CHaptersList from "../components/CHaptersList";
 import SubscribeButton from "../components/SubscribeButton";
 import Brainstorm from "../components/Brainstorm";
-import brainstormImage from "../assets/brainstorm/brainstorm.svg";
-// import { IoExtensionPuzzleSharp } from "react-icons/io5";
-// import Plugins from "../components/Plugins";
+// import brainstormImage from "../assets/brainstorm/brainstorm.svg";
+import { IoExtensionPuzzleSharp } from "react-icons/io5";
+import Plugins from "../components/Plugins";
 
 const types = [
   "Rephrase",
@@ -104,8 +104,7 @@ const Generate = () => {
   const [openChapterLiking, setOpenChapterLiking] = useState(false);
   const [loadingChapterText, setloadingChapterText] = useState("");
   const [openBrainstorm, setOpenBrainstorm] = useState(false);
-  const [_, setOpenPlugins] = useState(false);
-  // const [openPlugins, setOpenPlugins] = useState(false);
+  const [openPlugins, setOpenPlugins] = useState(false);
 
   const setSenses = (sense: string) => {
     if (descriptions.includes(sense)) {
@@ -860,15 +859,15 @@ const Generate = () => {
                     )}
                   </div>
 
-                  <div
+                  {/* <div
                     className="write-option cursor-pointer"
                     onClick={() => setOpenBrainstorm(true)}
                   >
                     <img src={brainstormImage} alt="" />
                     Brainstorm
-                  </div>
+                  </div> */}
 
-                  {/* <div
+                  <div
                     className="write-option"
                     ref={pluginRef}
                     onClick={() => {
@@ -880,8 +879,10 @@ const Generate = () => {
 
                     <IoIosArrowDown className="text-base" />
 
-                    {openPlugins && <Plugins />}
-                  </div> */}
+                    {openPlugins && (
+                      <Plugins openBrain={() => setOpenBrainstorm(true)} />
+                    )}
+                  </div>
                 </div>
 
                 <div className="flex items-center gap-4">
@@ -892,14 +893,14 @@ const Generate = () => {
                   >
                     {linkedChapter ? <IoMdLink className="" /> : <MdLinkOff />}
 
-                    {linkedChapter ? (
+                    {/* {linkedChapter ? (
                       <div>
                         <div className="text-xs">Outline Linked</div>
                         <div className="text-[10px]">{linkedChapter}</div>
                       </div>
                     ) : (
                       <div className="text-sm">Not in Outline</div>
-                    )}
+                    )} */}
 
                     {openLinkingOption && (
                       <Notlinked

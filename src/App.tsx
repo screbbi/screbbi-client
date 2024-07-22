@@ -16,6 +16,8 @@ import Twist from "./pages/plugins/Twist";
 import Characters from "./pages/plugins/Characters";
 import Poems from "./pages/plugins/Poems";
 import Plugins from "./pages/Plugins";
+import Create from "./pages/plugins/Create";
+import ViewPlugin from "./pages/plugins/ViewPlugin";
 // import Editor from "./pages/Editor";
 
 function App() {
@@ -41,8 +43,12 @@ function App() {
 
         <Route path="/project/:project" element={<Generate />} />
         <Route path="/plugins" element={<Plugins />} />
+        <Route path="/plugins/category/:category" element={<Plugins />} />
+        <Route path="/plugins/category/" element={<Plugins />} />
+        <Route path="/plugins/create" element={<Create />} />
+        <Route path="/plugins/:id" element={<ViewPlugin />} />
+        <Route path="/plugins/edit/:id" element={<Create />} />
 
-        {/* <Route path="/project/:project/:writer" element={<Generate />} /> */}
         <Route path="project/:project/:writer">
           <Route path="" element={<Generate />} />
           {/* <Route path="editor" element={<Editor />} /> */}

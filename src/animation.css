@@ -161,6 +161,10 @@
   animation: l3 1s infinite linear;
 }
 
+.section-loader.black {
+  background: #000000;
+}
+
 @keyframes l3 {
   to {
     transform: rotate(1turn);

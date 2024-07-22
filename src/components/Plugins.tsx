@@ -1,11 +1,17 @@
 import { Link, useLocation } from "react-router-dom";
 
-const Plugins = () => {
+const Plugins = ({ openBrain }: { openBrain: () => void }) => {
   const { pathname } = useLocation();
 
   return (
     <div>
       <div className="absolute top-full left-0 w-48 bg-white p-3 shadow-lg rounded-md">
+        <Link to={`/plugins`}>
+          <div className="single-desc cursor-pointer hover:bg-slate-200/60 px-2 rounded-md text-blue-600">
+            <div>Explore Plugin</div>
+          </div>
+        </Link>
+
         <Link to={`${pathname}/summary`}>
           <div className="single-desc cursor-pointer hover:bg-slate-200/60 px-2 rounded-md">
             <div>Shrink Ray</div>
@@ -29,6 +35,13 @@ const Plugins = () => {
             <div>Poem</div>
           </div>
         </Link>
+
+        <div
+          className="single-desc cursor-pointer hover:bg-slate-200/60 px-2 rounded-md"
+          onClick={openBrain}
+        >
+          <div>Brainstorm</div>
+        </div>
 
         <div className="single-desc cursor-pointer hover:bg-slate-200/60 px-2 rounded-md">
           <div>Visualize</div>

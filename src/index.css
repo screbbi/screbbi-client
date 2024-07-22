@@ -5,6 +5,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
+
 body {
   font-family: "Manrope", sans-serif;
 }
@@ -310,7 +321,7 @@ ul {
   @apply text-buttonPurple;
 }
 .plugin-cards {
-  @apply grid gap-4 mt-4;
+  @apply grid gap-4 mt-4 pb-10;
   grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
 }
 
@@ -320,4 +331,14 @@ ul {
   -webkit-user-select: none !important; /* Safari */
   -moz-user-select: none !important; /* Firefox */
   -ms-user-select: none !important; /* Internet Explorer/Edge */
+}
+.highlighted {
+  @apply bg-buttonPurple text-white;
+}
+.long-text {
+  @apply p-2 text-sm w-full h-48 resize-none bg-transparent border border-buttonPurple rounded-md outline-0 font-medium;
+}
+.plugin-cont {
+  @apply w-11/12 mx-auto grid gap-6;
+  grid-template-columns: 12rem 1fr;
 }
