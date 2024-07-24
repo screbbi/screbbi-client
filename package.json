@@ -12,6 +12,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tiptap/core": "^2.5.5",
+    "@tiptap/extension-image": "^2.5.5",
+    "@tiptap/extension-underline": "^2.5.5",
+    "@tiptap/react": "^2.5.5",
+    "@tiptap/starter-kit": "^2.5.5",
     "@types/he": "^1.2.3",
     "@types/uuid": "^9.0.8",
     "axios": "^1.6.8",
@@ -19,6 +24,7 @@
     "formik": "^2.4.5",
     "he": "^1.2.0",
     "nanoid": "^5.0.7",
+    "prosemirror-schema-basic": "^1.2.3",
     "react": "^18.2.0",
     "react-aria-components": "^1.2.0",
     "react-dom": "^18.2.0",

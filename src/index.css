@@ -342,3 +342,29 @@ ul {
   @apply w-11/12 mx-auto grid gap-6;
   grid-template-columns: 12rem 1fr;
 }
+
+/* TIPTAP */
+.ProseMirror {
+  @apply outline-0 h-full p-2 overflow-auto text-sm;
+  /* height: calc(100vh - 12rem); */
+}
+
+.control-group {
+  @apply flex justify-between items-center;
+}
+
+.button-group {
+  @apply flex py-2 px-2 gap-4 items-center;
+}
+
+.line {
+  @apply w-[1px] h-5 bg-slate-400;
+}
+.editor-bottom {
+  @apply overflow-auto;
+}
+.editor {
+  @apply grid;
+  grid-template-rows: auto 1fr;
+  height: calc(100vh - 12rem);
+}
