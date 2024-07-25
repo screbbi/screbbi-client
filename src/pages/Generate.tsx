@@ -1131,7 +1131,12 @@ const Generate = () => {
         </>
       )}
 
-      {openBrainstorm && <Brainstorm close={() => setOpenBrainstorm(false)} />}
+      {openBrainstorm && (
+        <Brainstorm
+          close={() => setOpenBrainstorm(false)}
+          refresh={getHistory}
+        />
+      )}
     </PageLayout>
   );
 };
