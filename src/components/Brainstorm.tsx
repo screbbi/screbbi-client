@@ -48,7 +48,13 @@ const SingleBrainstorm = ({
   );
 };
 
-const Brainstorm = ({ close }: { close: () => void }) => {
+const Brainstorm = ({
+  close,
+  refresh,
+}: {
+  close: () => void;
+  refresh: () => void;
+}) => {
   const { writer } = useParams();
 
   const something_else = [
@@ -203,6 +209,12 @@ const Brainstorm = ({ close }: { close: () => void }) => {
     });
   };
 
+  const removeContent = (index: number) => {
+    setContent((prevCont: string[]) =>
+      prevCont.filter((_, idx: number) => idx !== index)
+    );
+  };
+
   const removeKeep = (index: number) => {
     setKeeps((prevKeep: any) => {
       return prevKeep.map((_: string, idx: number) => idx !== index);
@@ -227,6 +239,7 @@ const Brainstorm = ({ close }: { close: () => void }) => {
         setSaving(false);
         setContent(null);
         setCurrentBrainstorm("");
+        refresh();
         close();
       })
       .catch(() => {
@@ -433,7 +446,7 @@ const Brainstorm = ({ close }: { close: () => void }) => {
                   <div className="p-4 col-span-2">
                     <FaRegThumbsDown
                       className="text-3xl cursor-pointer"
-                      onClick={() => removeKeep(idx)}
+                      onClick={() => removeContent(idx)}
                     />
                   </div>
 

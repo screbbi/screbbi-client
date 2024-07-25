@@ -50,8 +50,8 @@ function App() {
         <Route path="/plugins/edit/:id" element={<Create />} />
 
         <Route path="project/:project/:writer">
-          <Route path="" element={<Generate />} />
-          <Route path="editor" element={<Editors />} />
+          <Route path="" element={<Editors />} />
+          <Route path="editor" element={<Generate />} />
           <Route path="summary" element={<Shrinkray />} />
           <Route path="twist" element={<Twist />} />
           <Route path="characters" element={<Characters />} />

@@ -285,7 +285,7 @@ ul {
   @apply text-sm font-semibold;
 }
 .chapter-modal {
-  @apply absolute right-[3%] top-36 bg-white w-[94%] mx-auto z-10 rounded-md;
+  @apply absolute right-[4%] top-20 bg-white w-[92%] mx-auto z-10 rounded-md;
   box-shadow: 0 0 10px 5px rgba(197, 197, 197, 0.508);
 }
 .sudo-text {
@@ -361,10 +361,14 @@ ul {
   @apply w-[1px] h-5 bg-slate-400;
 }
 .editor-bottom {
-  @apply overflow-auto;
+  @apply overflow-auto no-scrollbar;
 }
 .editor {
-  @apply grid;
+  @apply grid relative  rounded-lg overflow-hidden shadow-lg bg-white;
   grid-template-rows: auto 1fr;
-  height: calc(100vh - 12rem);
+  height: calc(100% - 3.5rem);
+}
+
+.pasted {
+  @apply text-blue-500;
 }

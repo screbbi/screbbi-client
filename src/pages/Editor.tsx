@@ -156,7 +156,7 @@ const Editors = () => {
   };
 
   const handleReplace = (text: string) => {
-    const newText = `<br />${text}<br />`;
+    const newText = `<p>${text}</p>`;
 
     if (editor) {
       const { from, to } = editor.state.selection;
@@ -401,8 +401,7 @@ const Editors = () => {
   };
 
   const insertText = (text: string) => {
-    const newText = `<p>${text}</p>`;
-    handleReplace(newText);
+    handleReplace(text);
   };
 
   useEffect(() => {
@@ -634,23 +633,6 @@ const Editors = () => {
   useEffect(() => {
     adjustHeight();
   }, [title]);
-
-  useEffect(() => {
-    if (!editor) {
-      return;
-    }
-
-    const handleUpdate = () => {
-      const text = editor.getHTML();
-      setEditorContent(text);
-    };
-
-    editor.on("update", handleUpdate);
-
-    return () => {
-      editor.off("update", handleUpdate);
-    };
-  }, [editor]);
 
   return (
     <PageLayout
@@ -898,7 +880,7 @@ const Editors = () => {
               </div>
 
               {/* EDITOR */}
-              <div className="editor relative  rounded-lg overflow-hidden shadow-lg bg-white">
+              <div className="editor">
                 <div className="control-group">
                   <div className="button-group">
                     <button
@@ -1059,10 +1041,14 @@ const Editors = () => {
                 <div className="editor-bottom">
                   <textarea
                     className="w-full outline-none px-2 resize-none no-scrollbar font-semibold"
-                    value={title}
+                    value={title ?? ""}
                     onChange={(e) => setTitle(e.target.value)}
                     onKeyUp={(e) => {
-                      if (e.keyCode === 13) editor?.chain().focus();
+                      if (e.keyCode === 13) {
+                        editor?.chain().focus();
+                        setTitle((prevTitle: string) => prevTitle.slice(0, -1));
+                        return;
+                      }
                     }}
                     ref={textAreaRef}
                   />
@@ -1243,7 +1229,12 @@ const Editors = () => {
         </>
       )}
 
-      {openBrainstorm && <Brainstorm close={() => setOpenBrainstorm(false)} />}
+      {openBrainstorm && (
+        <Brainstorm
+          close={() => setOpenBrainstorm(false)}
+          refresh={getHistory}
+        />
+      )}
     </PageLayout>
   );
 };

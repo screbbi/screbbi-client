@@ -64,7 +64,7 @@ const Chapter = ({
         )}
       </div>
 
-      <div className="base -my-4">
+      <div className="base -my-8">
         <div className="single-story">
           <div className="single-story-top">
             <div className="flex items-center gap-2">
