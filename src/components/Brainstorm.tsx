@@ -215,12 +215,6 @@ const Brainstorm = ({
     );
   };
 
-  const removeKeep = (index: number) => {
-    setKeeps((prevKeep: any) => {
-      return prevKeep.map((_: string, idx: number) => idx !== index);
-    });
-  };
-
   const deleteKeep = (keep: string) => {
     setKeeps((prevContent: any) => {
       return prevContent.filter((item: string) => item !== keep);
