@@ -178,19 +178,22 @@ const Create = () => {
   };
 
   const publishPlugin = () => {
-    if (
-      !payload.name.trim() ||
-      !payload.description.trim() ||
-      !payload.category.trim()
-    ) {
+    if (!payload.name.trim() || !payload.description.trim()) {
       toast("All fields are required");
       return;
     }
+
+    if (!payload.category.trim()) {
+      toast("Category cannot be empty");
+      return;
+    }
+
     setLoading(true);
     postRequest("/plugin/create", payload)
       .then(() => {
         setLoading(false);
         setPayload(initValue);
+        navigate("/plugins");
       })
       .catch(() => {
         setLoading(false);
@@ -518,7 +521,6 @@ example output: Reader 1: &quot;spike of electricity? really? how cliche..."
 
               <div className="border border-black p-4 rounded-lg">
                 <div className="flex justify-between">
-                  {/* <div className="flex gap-4 items-center"></div> */}
                   <div>
                     <div>Allow Users to Give Instructions</div>
                     <div className="text-gray-400">
@@ -550,7 +552,7 @@ example output: Reader 1: &quot;spike of electricity? really? how cliche..."
                   </div>
                 </div>
 
-                <div className="mt-6">
+                {/* <div className="mt-6">
                   <div>Customize your Pop-up</div>
                   <div className="text-gray-500 text-sm">
                     Tell users what to put in. For example, if your plugin
@@ -568,7 +570,7 @@ example output: Reader 1: &quot;spike of electricity? really? how cliche..."
                       value={payload.instruction}
                     />
                   </div>
-                </div>
+                </div> */}
               </div>
             </>
           )}
