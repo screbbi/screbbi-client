@@ -418,6 +418,21 @@ example output: Reader 1: &quot;spike of electricity? really? how cliche..."
             </div>
           </div>
 
+          <div className="mb-6 font-semibold mt-2">
+            <label htmlFor="name">Instruction</label>
+            <div className="text-sm">
+              Screbbi will read the highlighted text or the text before the
+              cursor, then follow these instructions:
+            </div>
+            <textarea
+              className="long-text"
+              placeholder="Paste or type an example input for the preceding text."
+              name="instruction"
+              onChange={handleChange}
+              value={payload.instruction}
+            />
+          </div>
+
           {payload.pluginType === "advanced" && (
             <>
               <div className="mb-6 font-semibold">
