@@ -1,7 +1,17 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { pluginType } from "../utils/interface";
+// import { Link, useLocation } from "react-router-dom";
 
-const Plugins = ({ openBrain }: { openBrain: () => void }) => {
-  const { pathname } = useLocation();
+const Plugins = ({
+  openBrain,
+  plugins,
+  usePlugin,
+}: {
+  openBrain: () => void;
+  plugins: pluginType[];
+  usePlugin: (e: pluginType) => void;
+}) => {
+  // const { pathname } = useLocation();
 
   return (
     <div>
@@ -12,7 +22,17 @@ const Plugins = ({ openBrain }: { openBrain: () => void }) => {
           </div>
         </Link>
 
-        <Link to={`${pathname}/summary`}>
+        {plugins.map((item) => (
+          <div
+            className="single-desc cursor-pointer hover:bg-slate-200/60 px-2 rounded-md"
+            key={item._id}
+            onClick={() => usePlugin(item)}
+          >
+            <div>{item.name}</div>
+          </div>
+        ))}
+
+        {/* <Link to={`${pathname}/summary`}>
           <div className="single-desc cursor-pointer hover:bg-slate-200/60 px-2 rounded-md">
             <div>Shrink Ray</div>
           </div>
@@ -34,7 +54,7 @@ const Plugins = ({ openBrain }: { openBrain: () => void }) => {
           <div className="single-desc cursor-pointer hover:bg-slate-200/60 px-2 rounded-md">
             <div>Poem</div>
           </div>
-        </Link>
+        </Link> */}
 
         <div
           className="single-desc cursor-pointer hover:bg-slate-200/60 px-2 rounded-md"
@@ -43,13 +63,13 @@ const Plugins = ({ openBrain }: { openBrain: () => void }) => {
           <div>Brainstorm</div>
         </div>
 
-        <div className="single-desc cursor-pointer hover:bg-slate-200/60 px-2 rounded-md">
+        {/* <div className="single-desc cursor-pointer hover:bg-slate-200/60 px-2 rounded-md">
           <div>Visualize</div>
         </div>
 
         <div className="single-desc cursor-pointer hover:bg-slate-200/60 px-2 rounded-md">
           <div>Feedback</div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

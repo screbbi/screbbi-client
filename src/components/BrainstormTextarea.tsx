@@ -1,4 +1,5 @@
 import { ChangeEvent } from "react";
+import Tooltip from "../layout/Tooltip";
 
 type inputType = {
   value: string;
@@ -7,6 +8,7 @@ type inputType = {
   name: string;
   id: string;
   placeholder?: string;
+  desc: string;
 };
 
 const BrainstormTextArea = ({
@@ -16,10 +18,19 @@ const BrainstormTextArea = ({
   name,
   id,
   placeholder,
+  desc,
 }: inputType) => {
   return (
     <div>
-      {label && <label className="font-semibold">{label}</label>}
+      {label && (
+        <label className="font-semibold flex items-center">
+          {label}
+          <Tooltip small>
+            <div className="font-semibold mb-2">Pro Tip</div>
+            <div>{desc}</div>
+          </Tooltip>
+        </label>
+      )}
       <textarea
         value={value}
         onChange={handleChange}

@@ -43,6 +43,7 @@ import Underline from "@tiptap/extension-underline";
 import { FiUnderline } from "react-icons/fi";
 import { FaListUl } from "react-icons/fa";
 import { GrUndo, GrRedo } from "react-icons/gr";
+import { pluginType } from "../utils/interface";
 
 const types = [
   "Rephrase",
@@ -68,9 +69,7 @@ const Editors = () => {
   const [editor, setEditor] = useState<Editor | null>(null);
 
   const [selectionCoords, setSelectionCoords] = useState<any>(null);
-  const [editorContent, setEditorContent] = useState<any>(
-    "<p>I am coming tomorrow</p>"
-  );
+  const [editorContent, setEditorContent] = useState<any>("");
   const [title, setTitle] = useState<any>("");
   const [highlightedText, setHighlightedText] = useState("");
   const [currentType, setCurrentType] = useState(types[0]);
@@ -119,6 +118,7 @@ const Editors = () => {
   const [loadingChapterText, setloadingChapterText] = useState("");
   const [openBrainstorm, setOpenBrainstorm] = useState(false);
   const [openPlugins, setOpenPlugins] = useState(false);
+  const [myPlugins, setMyPlugins] = useState<pluginType[]>([]);
 
   useEffect(() => {
     const newEditor = new Editor({
@@ -630,6 +630,44 @@ const Editors = () => {
     }
   };
 
+  const getMyPlugins = () => {
+    getRequest(`/plugin/plugins?sort=added&category=&forme=yes`)
+      .then(({ data }) => {
+        console.log(data);
+        setMyPlugins(data);
+      })
+      .catch(() => {
+        toast("Error Getting Plugins");
+      });
+  };
+
+  const usePlugin = (plugin: pluginType) => {
+    if (highlightedText === "") {
+      toast("No text is highlighted");
+      return;
+    }
+
+    postRequest("/plugin/test", {
+      highlited_text: highlightedText,
+      preceeding_text: plugin.preceeding_text ?? "",
+      instruction:
+        plugin.instruction ??
+        "Analyze user input to identify the writing needs, suggest ideas or enhancements based on the chosen mode (Idea Generation, Content Enhancement, Auto-Completion), present personalized suggestions, refine text according to user feedback, and ensure the final output is cohesive and aligned with the user's specified tone and preferences.",
+      storyBible: { synopsis, genre, matchStyle, outline, braindump, chapters },
+      writer,
+    })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch(() => {
+        toast("Try Again");
+      });
+  };
+
+  useEffect(() => {
+    getMyPlugins();
+  }, []);
+
   useEffect(() => {
     adjustHeight();
   }, [title]);
@@ -812,7 +850,11 @@ const Editors = () => {
                     <IoIosArrowDown className="text-base" />
 
                     {openPlugins && (
-                      <Plugins openBrain={() => setOpenBrainstorm(true)} />
+                      <Plugins
+                        openBrain={() => setOpenBrainstorm(true)}
+                        plugins={myPlugins}
+                        usePlugin={usePlugin}
+                      />
                     )}
                   </div>
                 </div>

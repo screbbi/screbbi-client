@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/onboard/Login";
 import Register from "./pages/onboard/Register";
 import Verify from "./pages/onboard/Verify";
-import Generate from "./pages/Generate";
+// import Generate from "./pages/Generate";
 import { Toaster } from "react-hot-toast";
 import Home from "./pages/Home";
 import Billing from "./pages/Billing";
@@ -51,7 +51,7 @@ function App() {
 
         <Route path="project/:project/:writer">
           <Route path="" element={<Editors />} />
-          <Route path="editor" element={<Generate />} />
+          {/* <Route path="editor" element={<Generate />} /> */}
           <Route path="summary" element={<Shrinkray />} />
           <Route path="twist" element={<Twist />} />
           <Route path="characters" element={<Characters />} />

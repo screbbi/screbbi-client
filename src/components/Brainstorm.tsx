@@ -25,6 +25,7 @@ import SingleKeeper from "./SingleKeeper";
 import { getRequest, postRequest } from "../utils/request";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
+import Tooltip from "../layout/Tooltip";
 
 const SingleBrainstorm = ({
   text,
@@ -341,6 +342,7 @@ const Brainstorm = ({
                   id="description"
                   handleChange={handleChange}
                   placeholder="Description"
+                  desc="Brainstorm can make lists of anything! Like features for an app, headlines for an article, or plot points in a mystery thriller."
                   value={
                     options[currentBrainstorm]
                       ? options[currentBrainstorm][currentIndex].description
@@ -362,6 +364,7 @@ const Brainstorm = ({
                   id="context"
                   handleChange={handleChange}
                   placeholder="Context"
+                  desc="Brainstorm can make lists of anything! Like features for an app, headlines for an article, or plot points in a mystery thriller."
                   value={
                     options[currentBrainstorm]
                       ? options[currentBrainstorm][currentIndex].context
@@ -371,7 +374,20 @@ const Brainstorm = ({
               </div>
 
               <div className="">
-                <div>Example</div>
+                <div className="flex items-center gap-2">
+                  Example{" "}
+                  <Tooltip small>
+                    <div className="font-semibold mb-2">Pro Tip</div>
+                    <div className="my-2">
+                      Varying your starting examples is important.
+                    </div>
+                    <div>
+                      “Using Gleeberry” and “Flooberry” as examples would likely
+                      result in Brainstorm giving you words ending in “berry”.
+                      Adding “Fleeblurp” (for example) would mix it up.
+                    </div>
+                  </Tooltip>
+                </div>
                 {options[currentBrainstorm][currentIndex].examples?.map(
                   (item: any, idx: number) => (
                     <BrainstormInput
@@ -437,22 +453,22 @@ const Brainstorm = ({
                   key={idx}
                   className="grid grid-cols-12 bg-gray-100 rounded-lg my-4 items-center divide-x-2"
                 >
-                  <div className="p-4 col-span-2">
-                    <FaRegThumbsDown
-                      className="text-3xl cursor-pointer"
-                      onClick={() => removeContent(idx)}
-                    />
+                  <div
+                    className="p-4 col-span-2 cursor-pointer h-full flex items-center justify-center"
+                    onClick={() => removeContent(idx)}
+                  >
+                    <FaRegThumbsDown className="text-3xl cursor-pointer" />
                   </div>
 
                   <div className="col-span-8 text-sm p-4 text-center">
                     {item}
                   </div>
 
-                  <div className="p-4 col-span-2">
-                    <FaRegThumbsUp
-                      className="text-3xl cursor-pointer"
-                      onClick={() => addKeep(item)}
-                    />
+                  <div
+                    className="p-4 col-span-2 cursor-pointer h-full flex items-center justify-center"
+                    onClick={() => addKeep(item)}
+                  >
+                    <FaRegThumbsUp className="text-3xl cursor-pointer" />
                   </div>
                 </div>
               ))}

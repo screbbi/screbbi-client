@@ -137,6 +137,9 @@
   animation: tooltip 0.5s;
 }
 
+.bottom-up.small {
+  @apply w-60;
+}
 @keyframes tooltip {
   from {
     transform: translateY(3rem);

@@ -5,19 +5,7 @@ import { FaPlus } from "react-icons/fa6";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getRequest, postRequest } from "../utils/request";
 import toast from "react-hot-toast";
-
-type pluginType = {
-  author: { firstName: string; lastName: string };
-  category: string;
-  createdAt: Date;
-  description: string;
-  instruction_visibility: string;
-  name: string;
-  updatedAt: Date;
-  users: number;
-  visibility: string;
-  _id: string;
-};
+import { pluginType } from "../utils/interface";
 
 const PluginCard = ({
   plugin,
@@ -34,9 +22,9 @@ const PluginCard = ({
       action: myPlugin ? "remove" : "add",
       plugin: plugin._id,
     })
-      .then((data) => {
+      .then(() => {
         setInstalling(false);
-        console.log(data);
+        // console.log(data);
       })
       .catch(() => {
         setInstalling(false);
@@ -69,13 +57,16 @@ const PluginCard = ({
           </button>
         </div>
 
-        <div className="text-sm">{plugin.description}</div>
+        <div
+          className="text-sm"
+          dangerouslySetInnerHTML={{ __html: plugin.description }}
+        ></div>
       </div>
     </Link>
   );
 };
 
-const tabs = ["popular", "newest", "added", "yours"];
+const tabs: string[] = ["popular", "newest", "added", "yours"];
 
 const Plugins = () => {
   const navigate = useNavigate();
@@ -105,9 +96,12 @@ const Plugins = () => {
   ];
 
   const getPlugins = () => {
+    setPlugins([]);
     setLoadingPlugins(true);
     getRequest(
-      `/plugin/plugins?sort=${currentTab}&category=${category ?? ""}&forme=${
+      `/plugin/plugins?sort=${
+        currentTab !== "yours" ? currentTab : ""
+      }&category=${category ?? ""}&forme=${
         currentTab === "yours" ? "yes" : "no"
       }`
     )
@@ -139,12 +133,16 @@ const Plugins = () => {
         className="fixed top-0 left-0 -z-10 w-full h-full"
       />
       <div className="flex justify-between p-2">
-        <img src={appLogo} alt="" className="w-32" />
+        <Link to={"/home"}>
+          <img src={appLogo} alt="" className="w-32" />
+        </Link>
 
-        <div className="flex gap-2 items-center">
-          <IoExtensionPuzzleSharp className="text-lg" />
-          <div>Plugins</div>
-        </div>
+        <Link to={"/plugins"}>
+          <div className="flex gap-2 items-center">
+            <IoExtensionPuzzleSharp className="text-lg" />
+            <div>Plugins</div>
+          </div>
+        </Link>
         <div></div>
       </div>
 
