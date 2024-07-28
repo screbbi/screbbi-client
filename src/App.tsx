@@ -41,7 +41,7 @@ function App() {
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/privacy-policies" element={<PrivacyPolicy />} />
 
-        <Route path="/project/:project" element={<Generate />} />
+        {/* <Route path="/project/:project" element={<Generate />} /> */}
         <Route path="/plugins" element={<Plugins />} />
         <Route path="/plugins/category/:category" element={<Plugins />} />
         <Route path="/plugins/category/" element={<Plugins />} />
