@@ -130,6 +130,7 @@ const Editors = () => {
         Underline,
         Placeholder.configure({
           placeholder: "Type here...",
+          emptyEditorClass: "is-editor-empty",
         }),
       ],
       content: editorContent,
@@ -290,19 +291,11 @@ const Editors = () => {
           }
         );
 
-        if (currentContent.content) {
-          const decoded = he.decode(currentContent.content);
-          setTitle(currentContent.title);
-
-          if (currentContent.content !== "No Content") {
-            setEditorContent(decoded);
-          } else {
-            setEditorContent(`<p>${currentContent.title}</p>`);
-          }
-        } else {
-          setEditorContent(`<p>${currentContent.title}</p>`);
-          setTitle(currentContent.title);
-        }
+        const decoded = he.decode(currentContent.content);
+        setTitle(
+          currentContent.title === "" ? "Untitled" : currentContent.title
+        );
+        setEditorContent(decoded);
 
         if (currentContent?.linkedChapter) {
           setOpenChapter(true);

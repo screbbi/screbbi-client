@@ -92,7 +92,7 @@ const SingleContent = ({
           }}
         >
           <div className="text-xs w-40 truncate">
-            {title !== "" ? title : "Untitled Document"}
+            {title !== "" ? title : "Untitled"}
           </div>
 
           <div className="relative" ref={optionRef}>

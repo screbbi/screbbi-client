@@ -4,6 +4,7 @@ import { getRequest, postRequest } from "../../utils/request";
 import PluginsLayout from "../../layout/PluginsLayout";
 import { GoDownload } from "react-icons/go";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 type pluginType = {
   author: { firstName: string; lastName: string };
@@ -20,7 +21,7 @@ type pluginType = {
 
 const ViewPlugin = () => {
   const { id } = useParams();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [plugin, setPlugin] = useState<pluginType>({
     name: "",
@@ -85,7 +86,7 @@ const ViewPlugin = () => {
                   {removing ? "Adding" : "Add"} <GoDownload />
                 </button>
 
-                {/* <button
+                <button
                   className="bg-buttonPurple/20 p-2 rounded-md"
                   onClick={() => navigate(`/plugins/edit/${id}`)}
                 >
@@ -98,7 +99,7 @@ const ViewPlugin = () => {
                   disabled={removing}
                 >
                   {removing ? "Removing" : "Remove"}
-                </button> */}
+                </button>
               </div>
             </div>
 

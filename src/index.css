@@ -345,7 +345,7 @@ ul {
 
 /* TIPTAP */
 .ProseMirror {
-  @apply outline-0 h-full p-2 overflow-auto text-sm;
+  @apply outline-0 min-h-[80vh] p-2 overflow-auto text-sm;
   /* height: calc(100vh - 12rem); */
 }
 
@@ -371,4 +371,10 @@ ul {
 
 .pasted {
   @apply text-blue-500;
+}
+.is-editor-empty::before {
+  content: attr(data-placeholder);
+  color: #454545;
+  pointer-events: none;
+  position: absolute;
 }
