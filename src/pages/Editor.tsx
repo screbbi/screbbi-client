@@ -44,6 +44,7 @@ import { FiUnderline } from "react-icons/fi";
 import { FaListUl } from "react-icons/fa";
 import { GrUndo, GrRedo } from "react-icons/gr";
 import { pluginType } from "../utils/interface";
+import Placeholder from "@tiptap/extension-placeholder";
 
 const types = [
   "Rephrase",
@@ -122,7 +123,15 @@ const Editors = () => {
 
   useEffect(() => {
     const newEditor = new Editor({
-      extensions: [StarterKit, Image, FontSize, Underline],
+      extensions: [
+        StarterKit,
+        Image,
+        FontSize,
+        Underline,
+        Placeholder.configure({
+          placeholder: "Type here...",
+        }),
+      ],
       content: editorContent,
       onSelectionUpdate: ({ editor }) => {
         handleSelectionUpdate(editor);
@@ -235,13 +244,9 @@ const Editors = () => {
       return;
     }
 
-    if (title?.trim === "") {
-      return;
-    }
-
     postRequest("/writer/writing", {
       writer,
-      content: editorContent,
+      content: editor?.getHTML(),
       title,
     })
       .then(() => {
@@ -261,6 +266,8 @@ const Editors = () => {
   };
 
   const getUserWriting = () => {
+    setEditorContent("");
+    setTitle("");
     setWritings(null);
     getRequest(`/writer/writings?project=${project}`)
       .then(({ data }) => {
@@ -427,11 +434,10 @@ const Editors = () => {
         descriptions,
       })
         .then(() => {
+          getHistory();
           setLoading(false);
           setRewriteText("");
-          setHighlightedText("");
           selectionCoords(null);
-          getHistory();
         })
         .catch(() => {
           setHighlightedText("");
@@ -446,11 +452,10 @@ const Editors = () => {
         type: currentType,
       })
         .then(() => {
+          getHistory();
           setLoading(false);
           setRewriteText("");
-          setHighlightedText("");
           selectionCoords(null);
-          getHistory();
         })
         .catch(() => {
           setHighlightedText("");
@@ -641,19 +646,15 @@ const Editors = () => {
       });
   };
 
-  const usePlugin = (plugin: pluginType) => {
+  const usePlugin = (id: string) => {
     if (highlightedText === "") {
       toast("No text is highlighted");
       return;
     }
 
-    postRequest("/plugin/test", {
+    postRequest("/plugin/use", {
       highlited_text: highlightedText,
-      preceeding_text: plugin.preceeding_text ?? "",
-      instruction:
-        plugin.instruction ??
-        "Analyze user input to identify the writing needs, suggest ideas or enhancements based on the chosen mode (Idea Generation, Content Enhancement, Auto-Completion), present personalized suggestions, refine text according to user feedback, and ensure the final output is cohesive and aligned with the user's specified tone and preferences.",
-      storyBible: { synopsis, genre, matchStyle, outline, braindump, chapters },
+      plugin: id,
       writer,
     })
       .then((data) => {

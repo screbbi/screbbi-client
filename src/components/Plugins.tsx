@@ -9,7 +9,7 @@ const Plugins = ({
 }: {
   openBrain: () => void;
   plugins: pluginType[];
-  usePlugin: (e: pluginType) => void;
+  usePlugin: (e: string) => void;
 }) => {
   // const { pathname } = useLocation();
 
@@ -26,7 +26,7 @@ const Plugins = ({
           <div
             className="single-desc cursor-pointer hover:bg-slate-200/60 px-2 rounded-md"
             key={item._id}
-            onClick={() => usePlugin(item)}
+            onClick={() => usePlugin(item._id)}
           >
             <div>{item.name}</div>
           </div>
