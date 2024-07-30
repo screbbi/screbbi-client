@@ -105,7 +105,7 @@ const EditPlugin = () => {
     }
     getRequest(`/plugin/view?plugin=${id}`)
       .then(({ data }) => {
-        const current = data.find((item: any) => item._id === id);
+        const current = data;
         const newCurret = {
           ...current,
           popup_instruction: current.advanceSettings.popup_instruction,
@@ -118,7 +118,6 @@ const EditPlugin = () => {
             current.advanceSettings.preceeding_text_config.max,
         };
         setPayload(newCurret);
-        console.log(newCurret);
       })
       .catch(() => {
         setLoading(false);
@@ -467,43 +466,27 @@ example output: Reader 1: &quot;spike of electricity? really? how cliche..."
             </>
           )}
 
-          {!id && (
-            <div className="flex justify-end mt-6">
-              <button
-                className={`bg-buttonPurple text-white p-2 rounded-lg font-semibold ${
-                  loading && "opacity-40"
-                }`}
-                onClick={publishPlugin}
-                disabled={loading}
-              >
-                {!loading ? "Publish Plugin" : "Publishing"}
-              </button>
-            </div>
-          )}
+          <div className="flex justify-between mt-6">
+            <button
+              className={`text-red-500 p-2 rounded-lg font-semibold ${
+                loading && "opacity-40"
+              }`}
+              onClick={publishPlugin}
+              disabled={loading}
+            >
+              {/* {!loading ? "Delete Plugin" : "Deleting"} */}
+            </button>
 
-          {id && (
-            <div className="flex justify-between mt-6">
-              <button
-                className={`text-red-500 p-2 rounded-lg font-semibold ${
-                  loading && "opacity-40"
-                }`}
-                onClick={publishPlugin}
-                disabled={loading}
-              >
-                {/* {!loading ? "Delete Plugin" : "Deleting"} */}
-              </button>
-
-              <button
-                className={`text-buttonPurple border border-buttonPurple p-2 rounded-lg font-semibold ${
-                  loading && "opacity-40"
-                }`}
-                onClick={saveEdits}
-                disabled={saving}
-              >
-                {!saving ? "Save Plugin" : "Saving"}
-              </button>
-            </div>
-          )}
+            <button
+              className={`text-buttonPurple border border-buttonPurple p-2 rounded-lg font-semibold ${
+                loading && "opacity-40"
+              }`}
+              onClick={saveEdits}
+              disabled={saving}
+            >
+              {!saving ? "Save Plugin" : "Saving"}
+            </button>
+          </div>
         </div>
       </div>
     </PluginLayout>

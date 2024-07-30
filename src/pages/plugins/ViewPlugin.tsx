@@ -30,8 +30,7 @@ const ViewPlugin = () => {
     setLoading(true);
     getRequest(`/plugin/view?plugin=${id}`)
       .then(({ data }) => {
-        const current = data.find((item: pluginType) => item._id === id);
-        setPlugin(current);
+        setPlugin(data);
         setLoading(false);
       })
       .catch(() => {
