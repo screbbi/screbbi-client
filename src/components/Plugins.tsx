@@ -6,10 +6,12 @@ const Plugins = ({
   openBrain,
   plugins,
   usePlugin,
+  using,
 }: {
   openBrain: () => void;
   plugins: pluginType[];
   usePlugin: (e: string, f?: string) => void;
+  using: boolean;
 }) => {
   return (
     <div>
@@ -21,7 +23,12 @@ const Plugins = ({
         </Link>
 
         {plugins.map((item) => (
-          <SiglePlugin key={item._id} plugin={item} usePlugin={usePlugin} />
+          <SiglePlugin
+            key={item._id}
+            plugin={item}
+            usePlugin={usePlugin}
+            using={using}
+          />
         ))}
 
         <div

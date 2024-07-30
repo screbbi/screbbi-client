@@ -1,5 +1,4 @@
-import { ReactNode, useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
+import { ReactNode, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 
 const PageLayout = ({
@@ -7,19 +6,21 @@ const PageLayout = ({
   writings,
   refresh,
   rename,
+  openNav,
+  setOpenNav,
 }: {
   children: ReactNode;
   writings?: any;
   refresh: () => void;
+  setOpenNav: (e: boolean) => void;
   rename: (e: string) => void;
+  openNav: boolean;
 }) => {
   useEffect(() => {
     if (!localStorage.getItem("token")) {
       window.location.replace("/");
     }
   }, []);
-
-  const [openNav, setOpenNav] = useState(false);
 
   return (
     <div className="h-screen overflow-y-hidden">
@@ -38,7 +39,6 @@ const PageLayout = ({
           />
 
           <div>
-            <Navbar setOpen={() => setOpenNav(!openNav)} open={openNav} />
             <div className="">{children}</div>
           </div>
         </div>

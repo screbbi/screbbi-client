@@ -6,9 +6,11 @@ import toast from "react-hot-toast";
 const SiglePlugin = ({
   plugin,
   usePlugin,
+  using,
 }: {
   plugin: pluginType;
   usePlugin: (e: string, f?: string) => void;
+  using: boolean;
 }) => {
   const [additionalDetails, setAdditionalDetails] = useState("");
   const [showAdd, setShowAdd] = useState(false);
@@ -23,6 +25,7 @@ const SiglePlugin = ({
         className="single-desc cursor-pointer hover:bg-slate-200/60 px-2 rounded-md"
         key={plugin._id}
         onClick={() => {
+          if (using) return;
           if (
             plugin.advanceSettings.popup_instruction &&
             plugin.advanceSettings.popup_instruction !== null
@@ -34,6 +37,8 @@ const SiglePlugin = ({
         }}
       >
         <div>{plugin.name}</div>
+
+        {using && <div className="plugging"></div>}
       </div>
 
       {showAdd && (

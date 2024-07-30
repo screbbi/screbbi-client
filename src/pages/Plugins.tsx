@@ -102,22 +102,31 @@ const Plugins = () => {
     { label: "Others", value: "others" },
   ];
 
-  const getPlugins = () => {
-    setPlugins([]);
+  const getPlugins = (page: number = 1, plugins: pluginType[] = []) => {
     setLoadingPlugins(true);
     getRequest(
       `/plugin/plugins?sort=${
         currentTab !== "yours" ? currentTab : ""
       }&category=${category ?? ""}&forme=${
         currentTab === "yours" ? "yes" : "no"
-      }`
+      }&page=${page}`
     )
-      .then(({ data }: { data: pluginType[] }) => {
-        setLoadingPlugins(false);
-        setPlugins(data);
-      })
-      .catch((err) => {
-        console.log(err.response.data);
+      .then(
+        ({
+          data,
+        }: {
+          data: { docs: pluginType[]; totalPages: number; page: number };
+        }) => {
+          setPlugins([...plugins, ...data.docs]);
+
+          if (data.totalPages !== data.page && data.totalPages !== 0) {
+            getPlugins(data.page + 1, [...plugins, ...data.docs]);
+          } else {
+            setLoadingPlugins(false);
+          }
+        }
+      )
+      .catch(() => {
         setLoadingPlugins(false);
       });
   };
@@ -169,7 +178,10 @@ const Plugins = () => {
                 ? "border-buttonPurple bg-buttonPurple/20"
                 : "border-transparent"
             }`}
-            onClick={() => navigate(`/plugins`)}
+            onClick={() => {
+              setPlugins([]);
+              navigate(`/plugins`);
+            }}
           >
             All
           </div>
@@ -181,7 +193,10 @@ const Plugins = () => {
                   ? "border-buttonPurple bg-buttonPurple/20"
                   : "border-transparent"
               }`}
-              onClick={() => navigate(`/plugins/category/${item.value}`)}
+              onClick={() => {
+                setPlugins([]);
+                navigate(`/plugins/category/${item.value}`);
+              }}
             >
               {item.label}
             </div>
@@ -202,7 +217,10 @@ const Plugins = () => {
                           ? "text-buttonPurple border-buttonPurple"
                           : "text-gray-400 border-transparent"
                       }`}
-                      onClick={() => setCurrentTab(item)}
+                      onClick={() => {
+                        setPlugins([]);
+                        setCurrentTab(item);
+                      }}
                     >
                       {item}
                     </div>
@@ -229,11 +247,17 @@ const Plugins = () => {
           </div>
 
           <div>
-            {loadingPlugins ? (
-              <div className="flex justify-center h-40 items-center">
-                <div className="section-loader black"></div>
-              </div>
-            ) : plugins.length < 1 ? (
+            <div className="plugin-cards">
+              {filterPlugin()?.map((item: pluginType) => (
+                <PluginCard
+                  plugin={item}
+                  changePlugins={changePlugins}
+                  key={item._id}
+                />
+              ))}
+            </div>
+
+            {plugins.length < 1 && !loadingPlugins && (
               <div className="w-full text-center h-40 flex items-center justify-center">
                 <div>
                   No Plugin Created{" "}
@@ -242,15 +266,11 @@ const Plugins = () => {
                   </Link>
                 </div>
               </div>
-            ) : (
-              <div className="plugin-cards">
-                {filterPlugin().map((item: pluginType) => (
-                  <PluginCard
-                    key={item._id}
-                    plugin={item}
-                    changePlugins={changePlugins}
-                  />
-                ))}
+            )}
+
+            {loadingPlugins && (
+              <div className="flex justify-center h-40 items-center">
+                <div className="section-loader black"></div>
               </div>
             )}
           </div>

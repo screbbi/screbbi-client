@@ -32,6 +32,7 @@ import Brainstorm from "../components/Brainstorm";
 // import brainstormImage from "../assets/brainstorm/brainstorm.svg";
 import { IoExtensionPuzzleSharp } from "react-icons/io5";
 import Plugins from "../components/Plugins";
+import { HiOutlineMenuAlt2, HiOutlineMenuAlt3 } from "react-icons/hi";
 
 import { Editor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -45,6 +46,7 @@ import { FaListUl } from "react-icons/fa";
 import { GrUndo, GrRedo } from "react-icons/gr";
 import { pluginType } from "../utils/interface";
 import Placeholder from "@tiptap/extension-placeholder";
+import OpenSettings from "../components/OpenSettings";
 
 const types = [
   "Rephrase",
@@ -120,6 +122,8 @@ const Editors = () => {
   const [openBrainstorm, setOpenBrainstorm] = useState(false);
   const [openPlugins, setOpenPlugins] = useState(false);
   const [myPlugins, setMyPlugins] = useState<pluginType[]>([]);
+  const [usingPlugin, setUsingPlugin] = useState(false);
+  const [openNav, setOpenNav] = useState(false);
 
   useEffect(() => {
     const newEditor = new Editor({
@@ -632,8 +636,7 @@ const Editors = () => {
   const getMyPlugins = () => {
     getRequest(`/plugin/plugins?sort=added&category=&forme=`)
       .then(({ data }) => {
-        console.log(data);
-        setMyPlugins(data);
+        setMyPlugins(data.docs);
       })
       .catch(() => {
         toast("Error Getting Plugins");
@@ -646,6 +649,7 @@ const Editors = () => {
       return;
     }
 
+    setUsingPlugin(true);
     postRequest("/plugin/use", {
       highlited_text: highlightedText,
       plugin: id,
@@ -654,9 +658,12 @@ const Editors = () => {
     })
       .then(() => {
         setSelectionCoords(null);
+        setUsingPlugin(false);
         getHistory();
+        setOpenPlugins(false);
       })
       .catch(() => {
+        setUsingPlugin(false);
         toast("Try Again");
       });
   };
@@ -674,28 +681,24 @@ const Editors = () => {
       writings={writings}
       refresh={() => setRefresh(!refresh)}
       rename={renameDocument}
+      setOpenNav={setOpenNav}
+      openNav={openNav}
     >
-      {writer ? (
-        <div className={`editors ${token <= 5000 && "grid"}`}>
-          {token <= 5000 && (
-            <div className="p-2">
-              <div className="flex justify-between items-center p-4 bg-white rounded-lg">
-                <div className="">Your credit balance of {token} is low.</div>
-
-                <Link to={"/billing"}>
-                  <button className="bg-buttonPurple text-white py-2 px-4 rounded-md text-sm font-semibold">
-                    Recharge
-                  </button>
-                </Link>
+      <div className="bg-white/80 p-4 sticky top-0 z-20 lg:z-40">
+        <div className={`flex ${writer ? "justify-between" : "justify-end"}`}>
+          <div className="flex">
+            <div className="flex items-center gap-3 relative z-30">
+              <div
+                className="text-3xl xl:hidden"
+                onClick={() => setOpenNav(!openNav)}
+              >
+                {openNav ? <HiOutlineMenuAlt3 /> : <HiOutlineMenuAlt2 />}
               </div>
             </div>
-          )}
 
-          <div className={`${token <= 5000 ? "generates" : "generate"}`}>
-            <div className="py-2 px-6 overflow-y-scroll">
-              {/* WRITE OPTIONS */}
+            {writer && (
               <div
-                className="flex justify-between items-center relative mb-4 z-30"
+                className="flex justify-between items-center relative z-30"
                 ref={topPageRef}
               >
                 <div className="flex gap-2 items-center">
@@ -826,14 +829,6 @@ const Editors = () => {
                     )}
                   </div>
 
-                  {/* <div
-                    className="write-option cursor-pointer"
-                    onClick={() => setOpenBrainstorm(true)}
-                  >
-                    <img src={brainstormImage} alt="" />
-                    Brainstorm
-                  </div> */}
-
                   <div
                     className="write-option"
                     ref={pluginRef}
@@ -851,13 +846,55 @@ const Editors = () => {
                         openBrain={() => setOpenBrainstorm(true)}
                         plugins={myPlugins}
                         usePlugin={usePlugin}
+                        using={usingPlugin}
                       />
                     )}
                   </div>
                 </div>
               </div>
+            )}
+          </div>
 
-              {/* EDITOR */}
+          <div className="links flex items-center divide-x-2">
+            <div className="linkes pl-4">
+              {!localStorage.getItem("token") && (
+                <div className="flex gap-2 items-center">
+                  <Link to={"/auth/login"}>
+                    <button>Login</button>
+                  </Link>
+
+                  <Link to={"/auth/register"}>
+                    <button className="py-2 px-4 rounded-md text-white bg-buttonPurple">
+                      Sign Up
+                    </button>
+                  </Link>
+                </div>
+              )}
+
+              {localStorage.getItem("token") && <OpenSettings />}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {writer ? (
+        <div className={`editors ${token <= 5000 && "grid"}`}>
+          {token <= 5000 && (
+            <div className="p-2">
+              <div className="flex justify-between items-center p-4 bg-white rounded-lg">
+                <div className="">Your credit balance of {token} is low.</div>
+
+                <Link to={"/billing"}>
+                  <button className="bg-buttonPurple text-white py-2 px-4 rounded-md text-sm font-semibold">
+                    Recharge
+                  </button>
+                </Link>
+              </div>
+            </div>
+          )}
+
+          <div className={`${token <= 5000 ? "generates" : "generate"}`}>
+            <div className="py-2 px-6 overflow-y-scroll">
               <div className="editor">
                 <div className="control-group">
                   <div className="button-group">
@@ -1218,3 +1255,13 @@ const Editors = () => {
 };
 
 export default Editors;
+
+{
+  /* <div
+                    className="write-option cursor-pointer"
+                    onClick={() => setOpenBrainstorm(true)}
+                  >
+                    <img src={brainstormImage} alt="" />
+                    Brainstorm
+                  </div> */
+}
