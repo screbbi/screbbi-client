@@ -630,8 +630,9 @@ const Editors = () => {
   };
 
   const getMyPlugins = () => {
-    getRequest(`/plugin/plugins?sort=&category=&forme=yes`)
+    getRequest(`/plugin/plugins?sort=added&category=&forme=`)
       .then(({ data }) => {
+        console.log(data);
         setMyPlugins(data);
       })
       .catch(() => {
