@@ -503,3 +503,5 @@ const Brainstorm = ({
 };
 
 export default Brainstorm;
+
+// how to build an app that loads data from an api and make another request when the last element is in view
