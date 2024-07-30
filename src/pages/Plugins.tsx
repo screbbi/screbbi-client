@@ -121,7 +121,7 @@ const Plugins = () => {
         }) => {
           setPlugins([...plugins, ...data.docs]);
 
-          if (data.totalPages !== data.page && data.totalPages !== 0) {
+          if (data.totalPages > data.page && data.totalPages !== 0) {
             setPage(data.page + 1);
           } else {
             setLoadingPlugins(false);
