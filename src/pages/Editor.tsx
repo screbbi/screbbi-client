@@ -455,6 +455,7 @@ const Editors = () => {
           setLoading(false);
         });
     }
+    setSelectionCoords(null)
   };
 
   const generateChapter = () => {
@@ -650,8 +651,9 @@ const Editors = () => {
       plugin: id,
       writer,
     })
-      .then((data) => {
-        console.log(data);
+      .then(() => {
+        selectionCoords(null);
+        getHistory();
       })
       .catch(() => {
         toast("Try Again");
