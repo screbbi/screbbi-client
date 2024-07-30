@@ -209,6 +209,7 @@ const Plugins = () => {
             }`}
             onClick={() => {
               setPlugins([]);
+              setPage(1);
               navigate(`/plugins`);
             }}
           >
@@ -224,6 +225,7 @@ const Plugins = () => {
               }`}
               onClick={() => {
                 setPlugins([]);
+                setPage(1);
                 navigate(`/plugins/category/${item.value}`);
               }}
             >
@@ -248,6 +250,7 @@ const Plugins = () => {
                       }`}
                       onClick={() => {
                         setPlugins([]);
+                        setPage(1);
                         setCurrentTab(item);
                       }}
                     >
