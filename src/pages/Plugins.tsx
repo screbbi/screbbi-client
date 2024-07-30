@@ -145,7 +145,7 @@ const Plugins = () => {
       <img
         src="https://editor.sudowrite.com/assets/sorbet-background.png"
         alt=""
-        className="fixed top-0 left-0 -z-10 w-full h-full opacity-70"
+        className="fixed top-0 left-0 -z-10 w-full h-full opacity-30"
       />
       <div className="flex justify-between p-2">
         <Link to={"/home"}>

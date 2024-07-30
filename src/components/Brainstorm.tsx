@@ -12,13 +12,11 @@ import articleIdeas from "../assets/brainstorm/article-ideas.svg";
 import tweets from "../assets/brainstorm/tweets.svg";
 import somethingElse from "../assets/brainstorm/something-else.svg";
 import kickstart from "../assets/brainstorm/kickstart.svg";
-import doubleArrow from "../assets/brainstorm/doublearraw.svg";
 import { ChangeEvent, useEffect, useState } from "react";
 import BrainstormInput from "./BrainstormInput";
 import { FaRegThumbsDown, FaRegThumbsUp, FaPlus } from "react-icons/fa";
 import BrainstormTextArea from "./BrainstormTextarea";
 import { TfiReload } from "react-icons/tfi";
-// import { FaPen } from "react-icons/fa6";
 import { IoReload } from "react-icons/io5";
 import { GoThumbsup } from "react-icons/go";
 import SingleKeeper from "./SingleKeeper";
@@ -259,31 +257,18 @@ const Brainstorm = ({
     <div className="fixed top-0 left-0 inset-0 bg-white p-10 z-30 overflow-y-auto">
       <div className="flex justify-between items-center text-2xl">
         <div>
-          {!content ? (
-            <BiArrowBack
-              className="cursor-pointer"
-              onClick={() => {
-                if (content) {
-                  setContent([]);
-                } else {
-                  if (currentBrainstorm !== "") {
-                    setCurrentBrainstorm("");
-                  } else close();
-                }
-              }}
-            />
-          ) : (
-            <div
-              className="flex items-center text-sm cursor-pointer"
-              onClick={() => {
-                setContent([]);
-                setCurrentBrainstorm("");
-              }}
-            >
-              <img src={doubleArrow} alt="" className="h-5" />
-              <div>Start Over</div>
-            </div>
-          )}
+          <BiArrowBack
+            className="cursor-pointer"
+            onClick={() => {
+              if (content) {
+                setContent(null);
+              } else {
+                if (currentBrainstorm !== "") {
+                  setCurrentBrainstorm("");
+                } else close();
+              }
+            }}
+          />
         </div>
 
         {currentBrainstorm ? (
