@@ -1,8 +1,9 @@
 export type pluginType = {
   author: { firstName: string; lastName: string; id: string };
+  user: { firstName: string; lastName: string; _id: string };
   category: string;
   createdAt: Date;
-  description: string;
+  description: any;
   instruction_visibility: string;
   name: string;
   updatedAt: Date;

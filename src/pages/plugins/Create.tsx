@@ -15,7 +15,7 @@ type pluginPayloadType = {
   instruction_visibility: string;
   visibility: string;
   pluginType: string;
-  allow_user_instructions: boolean;
+  allow_user_interactions: boolean;
   highlited_text_min: number | null;
   highlited_text_max: number | null;
   preceeding_text: string | null;
@@ -51,7 +51,7 @@ const initValue: pluginPayloadType = {
   preceeding_text: null,
   preceeding_text_max: null,
   preceeding_text_min: null,
-  allow_user_instructions: false,
+  allow_user_interactions: false,
   popup_instruction: "",
 };
 
@@ -534,27 +534,27 @@ example output: Reader 1: &quot;spike of electricity? really? how cliche..."
                   <div className="checkbox-wrapper-6">
                     <input
                       className="tgl tgl-light"
-                      id="allow_user_instructions"
+                      id="allow_user_interactions"
                       type="checkbox"
-                      name="allow_user_instructions"
+                      name="allow_user_interactions"
                       onChange={() => {
                         setCustom(
-                          "allow_user_instructions",
-                          payload.allow_user_instructions === true
+                          "allow_user_interactions",
+                          payload.allow_user_interactions === true
                             ? false
                             : true
                         );
                       }}
-                      checked={payload.allow_user_instructions === true}
+                      checked={payload.allow_user_interactions === true}
                     />
                     <label
                       className="tgl-btn"
-                      htmlFor="allow_user_instructions"
+                      htmlFor="allow_user_interactions"
                     />
                   </div>
                 </div>
 
-                {payload.allow_user_instructions && (
+                {payload.allow_user_interactions && (
                   <div className="mt-6">
                     <div>Customize your Pop-up</div>
                     <div className="text-gray-500 text-sm">

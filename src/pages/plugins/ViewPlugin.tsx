@@ -87,7 +87,7 @@ const ViewPlugin = () => {
                   </button>
                 )}
 
-                {plugin.author?.id === localStorage.getItem("userId") && (
+                {plugin.user?._id === localStorage.getItem("userId") && (
                   <button
                     className="bg-buttonPurple/20 p-2 rounded-md"
                     onClick={() => navigate(`/plugins/edit/${id}`)}
@@ -102,17 +102,21 @@ const ViewPlugin = () => {
               <div className="border border-gray-400 rounded-lg text-center p-2">
                 <div className="text-sm">Created by</div>
                 <div className="text-xl">
-                  {plugin?.author?.firstName} {plugin?.author?.lastName}
+                  {plugin?.user?.firstName} {plugin?.user?.lastName}
                 </div>
               </div>
 
-              <div className="border border-gray-400 rounded-lg text-center p-2">
+              {/* <div className="border border-gray-400 rounded-lg text-center p-2">
                 <div className="text-sm">Users</div>
                 <div className="text-xl">{plugin.users}</div>
-              </div>
+              </div> */}
             </div>
 
-            <div className="mt-4">{plugin.description}</div>
+            <div
+              className="mt-4"
+              dangerouslySetInnerHTML={{ __html: plugin.description }}
+            ></div>
+            {/* {plugin.description} */}
           </div>
         )}
       </PluginsLayout>

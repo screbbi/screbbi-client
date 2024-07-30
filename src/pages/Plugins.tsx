@@ -32,6 +32,13 @@ const PluginCard = ({
       });
   };
 
+  function truncateText(text: string) {
+    if (text.length > 200) {
+      return text.slice(0, 200 - 3) + "...";
+    }
+    return text;
+  }
+
   return (
     <Link to={`/plugins/${plugin._id}`}>
       <div className="p-4 bg-white rounded-lg shadow-lg h-full overflow-hidden">
@@ -59,7 +66,7 @@ const PluginCard = ({
 
         <div
           className="text-sm"
-          dangerouslySetInnerHTML={{ __html: plugin.description }}
+          dangerouslySetInnerHTML={{ __html: truncateText(plugin.description) }}
         ></div>
       </div>
     </Link>
