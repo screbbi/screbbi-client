@@ -34,6 +34,7 @@ const store = create<storeType>((set) => ({
   authorize: () => {
     getRequest("/profile").then(({ data }) => {
       set(() => ({ user: data, token: data.token }));
+      localStorage.setItem("userId", data._id);
     });
   },
   token: 0,

@@ -4,31 +4,19 @@ import { getRequest, postRequest } from "../../utils/request";
 import PluginsLayout from "../../layout/PluginsLayout";
 import { GoDownload } from "react-icons/go";
 import toast from "react-hot-toast";
-// import { useNavigate } from "react-router-dom";
-
-type pluginType = {
-  author: { firstName: string; lastName: string };
-  category: string;
-  createdAt: Date;
-  description: string;
-  instruction_visibility: string;
-  name: string;
-  updatedAt: Date;
-  users: number;
-  visibility: string;
-  _id: string;
-};
+import { useNavigate } from "react-router-dom";
+import { pluginType } from "../../utils/interface";
 
 const ViewPlugin = () => {
   const { id } = useParams();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  const [plugin, setPlugin] = useState<pluginType>({
+  const [plugin, setPlugin] = useState<Partial<pluginType>>({
     name: "",
     description: "",
     users: 0,
     _id: "",
-    author: { firstName: "", lastName: "" },
+    author: { firstName: "", lastName: "", id: "" },
     category: "",
     createdAt: new Date(),
     instruction_visibility: "",
@@ -42,8 +30,8 @@ const ViewPlugin = () => {
     setLoading(true);
     getRequest(`/plugin/view?plugin=${id}`)
       .then(({ data }) => {
-        console.log(data);
-        setPlugin(data[0]);
+        const current = data.find((item: pluginType) => item._id === id);
+        setPlugin(current);
         setLoading(false);
       })
       .catch(() => {
@@ -55,10 +43,14 @@ const ViewPlugin = () => {
     setRemoving(true);
     postRequest("/plugin/action", {
       action,
-      plugin: plugin._id,
+      plugin: id,
     })
       .then(() => {
         setRemoving(false);
+
+        setPlugin((prev) => {
+          return { ...prev, installed: !prev.installed };
+        });
       })
       .catch(() => {
         setRemoving(false);
@@ -78,28 +70,32 @@ const ViewPlugin = () => {
             <div className="flex justify-between items-center">
               <div className="text-3xl font-semibold">{plugin?.name}</div>
               <div className="flex gap-4">
-                <button
-                  className="bg-buttonPurple text-white px-4 py-2 rounded-md flex items-center gap-2"
-                  onClick={() => removePlugin("add")}
-                  disabled={removing}
-                >
-                  {removing ? "Adding" : "Add"} <GoDownload />
-                </button>
+                {!plugin.installed ? (
+                  <button
+                    className="bg-buttonPurple text-white px-4 py-2 rounded-md flex items-center gap-2"
+                    onClick={() => removePlugin("add")}
+                    disabled={removing}
+                  >
+                    {removing ? "Adding" : "Add"} <GoDownload />
+                  </button>
+                ) : (
+                  <button
+                    className="bg-buttonPurple/20 p-2 rounded-md"
+                    onClick={() => removePlugin("remove")}
+                    disabled={removing}
+                  >
+                    {removing ? "Removing" : "Remove"}
+                  </button>
+                )}
 
-                {/* <button
-                  className="bg-buttonPurple/20 p-2 rounded-md"
-                  onClick={() => navigate(`/plugins/edit/${id}`)}
-                >
-                  Edit
-                </button>
-
-                <button
-                  className="bg-buttonPurple/20 p-2 rounded-md"
-                  onClick={() => removePlugin("remove")}
-                  disabled={removing}
-                >
-                  {removing ? "Removing" : "Remove"}
-                </button> */}
+                {plugin.author?.id === localStorage.getItem("userId") && (
+                  <button
+                    className="bg-buttonPurple/20 p-2 rounded-md"
+                    onClick={() => navigate(`/plugins/edit/${id}`)}
+                  >
+                    Edit
+                  </button>
+                )}
               </div>
             </div>
 
@@ -107,7 +103,7 @@ const ViewPlugin = () => {
               <div className="border border-gray-400 rounded-lg text-center p-2">
                 <div className="text-sm">Created by</div>
                 <div className="text-xl">
-                  {plugin.author.firstName} {plugin.author.lastName}
+                  {plugin?.author?.firstName} {plugin?.author?.lastName}
                 </div>
               </div>
 

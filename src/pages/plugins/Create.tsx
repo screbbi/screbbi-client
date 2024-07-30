@@ -15,12 +15,13 @@ type pluginPayloadType = {
   instruction_visibility: string;
   visibility: string;
   pluginType: string;
-  allow_user_interactions: boolean;
+  allow_user_instructions: boolean;
   highlited_text_min: number | null;
   highlited_text_max: number | null;
   preceeding_text: string | null;
   preceeding_text_min: number | null;
   preceeding_text_max: number | null;
+  popup_instruction: string;
 };
 
 type testType = {
@@ -50,7 +51,8 @@ const initValue: pluginPayloadType = {
   preceeding_text: null,
   preceeding_text_max: null,
   preceeding_text_min: null,
-  allow_user_interactions: false,
+  allow_user_instructions: false,
+  popup_instruction: "",
 };
 
 type optionType = {
@@ -208,7 +210,10 @@ const Create = () => {
     }
 
     setTestingPlugin(true);
-    postRequest("/plugin/test", testData)
+    postRequest("/plugin/test", {
+      ...testData,
+      instruction: payload.instruction,
+    })
       .then(({ data }) => {
         setTestResult(data);
         setTestingPlugin(false);
@@ -275,29 +280,26 @@ const Create = () => {
               />
             </div>
 
-            {!id && (
-              <div className="flex font-semibold">
-                <div
-                  className={`${
-                    payload.pluginType === "basic" &&
-                    "bg-buttonPurple text-white"
-                  } py-1 px-2 rounded-lg`}
-                  onClick={() => setCustom("pluginType", "basic")}
-                >
-                  Basic
-                </div>
-
-                <div
-                  className={`${
-                    payload.pluginType === "advanced" &&
-                    "bg-buttonPurple text-white"
-                  } py-1 px-2 rounded-lg`}
-                  onClick={() => setCustom("pluginType", "advanced")}
-                >
-                  Advanced
-                </div>
+            <div className="flex font-semibold">
+              <div
+                className={`${
+                  payload.pluginType === "basic" && "bg-buttonPurple text-white"
+                } py-1 px-2 rounded-lg`}
+                onClick={() => setCustom("pluginType", "basic")}
+              >
+                Basic
               </div>
-            )}
+
+              <div
+                className={`${
+                  payload.pluginType === "advanced" &&
+                  "bg-buttonPurple text-white"
+                } py-1 px-2 rounded-lg`}
+                onClick={() => setCustom("pluginType", "advanced")}
+              >
+                Advanced
+              </div>
+            </div>
           </div>
 
           <div className="mb-6 font-semibold">
@@ -532,45 +534,47 @@ example output: Reader 1: &quot;spike of electricity? really? how cliche..."
                   <div className="checkbox-wrapper-6">
                     <input
                       className="tgl tgl-light"
-                      id="allow_user_interactions"
+                      id="allow_user_instructions"
                       type="checkbox"
-                      name="allow_user_interactions"
+                      name="allow_user_instructions"
                       onChange={() => {
                         setCustom(
-                          "allow_user_interactions",
-                          payload.allow_user_interactions === true
+                          "allow_user_instructions",
+                          payload.allow_user_instructions === true
                             ? false
                             : true
                         );
                       }}
-                      checked={payload.allow_user_interactions === true}
+                      checked={payload.allow_user_instructions === true}
                     />
                     <label
                       className="tgl-btn"
-                      htmlFor="allow_user_interactions"
+                      htmlFor="allow_user_instructions"
                     />
                   </div>
                 </div>
 
-                {/* <div className="mt-6">
-                  <div>Customize your Pop-up</div>
-                  <div className="text-gray-500 text-sm">
-                    Tell users what to put in. For example, if your plugin
-                    generates series outlines, you might ask the user “How many
-                    books do you want in your series?”
-                  </div>
+                {payload.allow_user_instructions && (
+                  <div className="mt-6">
+                    <div>Customize your Pop-up</div>
+                    <div className="text-gray-500 text-sm">
+                      Tell users what to put in. For example, if your plugin
+                      generates series outlines, you might ask the user “How
+                      many books do you want in your series?”
+                    </div>
 
-                  <div className="">
-                    <input
-                      type="text"
-                      className="inputs p-2 text-sm w-60 bg-transparent border border-buttonPurple rounded-md outline-0 font-medium"
-                      placeholder="Give instructions"
-                      name="instruction"
-                      onChange={handleChange}
-                      value={payload.instruction}
-                    />
+                    <div className="">
+                      <input
+                        type="text"
+                        className="inputs p-2 text-sm w-full bg-transparent border border-buttonPurple rounded-md outline-0 font-medium"
+                        placeholder="Give instructions"
+                        name="popup_instruction"
+                        onChange={handleChange}
+                        value={payload.popup_instruction}
+                      />
+                    </div>
                   </div>
-                </div> */}
+                )}
               </div>
             </>
           )}

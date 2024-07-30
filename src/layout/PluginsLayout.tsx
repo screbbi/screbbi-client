@@ -1,17 +1,22 @@
 import { ReactNode } from "react";
 import { IoExtensionPuzzleSharp } from "react-icons/io5";
 import appLogo from "../assets/img/ai-logo.png";
+import { Link } from "react-router-dom";
 
 const PluginsLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div>
       <div className="flex justify-between p-2">
-        <img src={appLogo} alt="" className="w-32" />
+        <Link to={"/home"}>
+          <img src={appLogo} alt="" className="w-32" />
+        </Link>
 
-        <div className="flex gap-2 items-center">
-          <IoExtensionPuzzleSharp className="text-lg" />
-          <div>Plugins</div>
-        </div>
+        <Link to={"/plugins"}>
+          <div className="flex gap-2 items-center">
+            <IoExtensionPuzzleSharp className="text-lg" />
+            <div>Plugins</div>
+          </div>
+        </Link>
         <div></div>
       </div>
       <img

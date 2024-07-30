@@ -455,7 +455,7 @@ const Editors = () => {
           setLoading(false);
         });
     }
-    setSelectionCoords(null)
+    setSelectionCoords(null);
   };
 
   const generateChapter = () => {
@@ -640,7 +640,7 @@ const Editors = () => {
       });
   };
 
-  const usePlugin = (id: string) => {
+  const usePlugin = (id: string, input?: string) => {
     if (highlightedText === "") {
       toast("No text is highlighted");
       return;
@@ -650,9 +650,10 @@ const Editors = () => {
       highlited_text: highlightedText,
       plugin: id,
       writer,
+      user_input: input ?? "",
     })
       .then(() => {
-        selectionCoords(null);
+        setSelectionCoords(null);
         getHistory();
       })
       .catch(() => {
@@ -694,7 +695,7 @@ const Editors = () => {
             <div className="py-2 px-6 overflow-y-scroll">
               {/* WRITE OPTIONS */}
               <div
-                className="flex justify-between items-center relative mb-4 z-10"
+                className="flex justify-between items-center relative mb-4 z-30"
                 ref={topPageRef}
               >
                 <div className="flex gap-2 items-center">
@@ -854,67 +855,6 @@ const Editors = () => {
                     )}
                   </div>
                 </div>
-
-                {/* <div className="flex items-center gap-4">
-                  <div
-                    className="flex bg-gray-200 items-center px-2 py-1 rounded-full gap-2 relative"
-                    onClick={() => setOpenLinkingOption(true)}
-                    ref={linkedRef}
-                  >
-                    {linkedChapter ? <IoMdLink className="" /> : <MdLinkOff />}
-
-                    {linkedChapter ? (
-                      <div>
-                        <div className="text-xs">Outline Linked</div>
-                        <div className="text-[10px]">{linkedChapter}</div>
-                      </div>
-                    ) : (
-                      <div className="text-sm">Not in Outline</div>
-                    )}
-
-                    {openLinkingOption && (
-                      <Notlinked
-                        linked={linkedChapter}
-                        handleClick={() => {
-                          setOpenLinkingOption(false);
-                          setOpenChapterLiking(true);
-                        }}
-                      />
-                    )}
-
-                    {openChapterLiking && (
-                      <CHaptersList
-                        chapters={chapters}
-                        handleClick={(chap) => {
-                          setLinkedChapter(chap);
-                          setOpenChapterLiking(false);
-                        }}
-                      />
-                    )}
-                  </div>
-
-                  <button
-                    title="Chapter"
-                    onClick={() => setOpenChapter(!openChapter)}
-                  >
-                    <img src={chapter} alt="" />
-                  </button>
-
-                  {openChapter && (
-                    <Chapter
-                      close={() => setOpenChapter(false)}
-                      generate={generateChapter}
-                      beats={beats}
-                      setBeats={setBeats}
-                      generateProse={generateProse}
-                      loadingBeats={generatingBeats}
-                      loadingChapter={generatingChapters}
-                      chapters={chapters}
-                      linked={linkedChapter}
-                      loadingText={loadingChapterText}
-                    />
-                  )}
-                </div> */}
               </div>
 
               {/* EDITOR */}

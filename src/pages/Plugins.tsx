@@ -9,22 +9,22 @@ import { pluginType } from "../utils/interface";
 
 const PluginCard = ({
   plugin,
-  myPlugin,
+  changePlugins,
 }: {
   plugin: pluginType;
-  myPlugin: boolean;
+  changePlugins: (e: string) => void;
 }) => {
   const [installing, setInstalling] = useState(false);
 
   const installPlugin = () => {
     setInstalling(true);
     postRequest("/plugin/action", {
-      action: myPlugin ? "remove" : "add",
+      action: plugin.installed ? "remove" : "add",
       plugin: plugin._id,
     })
       .then(() => {
         setInstalling(false);
-        // console.log(data);
+        changePlugins(plugin._id);
       })
       .catch(() => {
         setInstalling(false);
@@ -53,7 +53,7 @@ const PluginCard = ({
               installPlugin();
             }}
           >
-            {myPlugin ? "REMOVE" : "ADD"}
+            {plugin.installed ? "REMOVE" : "ADD"}
           </button>
         </div>
 
@@ -123,6 +123,14 @@ const Plugins = () => {
     return plugins.filter((item) =>
       item.name.toLocaleLowerCase().includes(searchString)
     );
+  };
+
+  const changePlugins = (id: string) => {
+    setPlugins((prevPlogin) => {
+      return prevPlogin.map((item) =>
+        item._id === id ? { ...item, installed: !item.installed } : item
+      );
+    });
   };
 
   return (
@@ -233,7 +241,7 @@ const Plugins = () => {
                   <PluginCard
                     key={item._id}
                     plugin={item}
-                    myPlugin={currentTab === "yours" || currentTab === "added"}
+                    changePlugins={changePlugins}
                   />
                 ))}
               </div>

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { pluginType } from "../utils/interface";
-// import { Link, useLocation } from "react-router-dom";
+import SiglePlugin from "./SiglePlugin";
 
 const Plugins = ({
   openBrain,
@@ -9,13 +9,11 @@ const Plugins = ({
 }: {
   openBrain: () => void;
   plugins: pluginType[];
-  usePlugin: (e: string) => void;
+  usePlugin: (e: string, f?: string) => void;
 }) => {
-  // const { pathname } = useLocation();
-
   return (
     <div>
-      <div className="absolute top-full left-0 w-48 bg-white p-3 shadow-lg rounded-md">
+      <div className="absolute top-full left-0 w-48 bg-white p-3 shadow-lg rounded-md z-50">
         <Link to={`/plugins`}>
           <div className="single-desc cursor-pointer hover:bg-slate-200/60 px-2 rounded-md text-blue-600">
             <div>Explore Plugin</div>
@@ -23,16 +21,24 @@ const Plugins = ({
         </Link>
 
         {plugins.map((item) => (
-          <div
-            className="single-desc cursor-pointer hover:bg-slate-200/60 px-2 rounded-md"
-            key={item._id}
-            onClick={() => usePlugin(item._id)}
-          >
-            <div>{item.name}</div>
-          </div>
+          <SiglePlugin key={item._id} plugin={item} usePlugin={usePlugin} />
         ))}
 
-        {/* <Link to={`${pathname}/summary`}>
+        <div
+          className="single-desc cursor-pointer hover:bg-slate-200/60 px-2 rounded-md"
+          onClick={openBrain}
+        >
+          <div>Brainstorm</div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Plugins;
+
+{
+  /* <Link to={`${pathname}/summary`}>
           <div className="single-desc cursor-pointer hover:bg-slate-200/60 px-2 rounded-md">
             <div>Shrink Ray</div>
           </div>
@@ -54,25 +60,15 @@ const Plugins = ({
           <div className="single-desc cursor-pointer hover:bg-slate-200/60 px-2 rounded-md">
             <div>Poem</div>
           </div>
-        </Link> */}
+        </Link> */
+}
 
-        <div
-          className="single-desc cursor-pointer hover:bg-slate-200/60 px-2 rounded-md"
-          onClick={openBrain}
-        >
-          <div>Brainstorm</div>
-        </div>
-
-        {/* <div className="single-desc cursor-pointer hover:bg-slate-200/60 px-2 rounded-md">
+{
+  /* <div className="single-desc cursor-pointer hover:bg-slate-200/60 px-2 rounded-md">
           <div>Visualize</div>
         </div>
 
         <div className="single-desc cursor-pointer hover:bg-slate-200/60 px-2 rounded-md">
           <div>Feedback</div>
-        </div> */}
-      </div>
-    </div>
-  );
-};
-
-export default Plugins;
+        </div> */
+}
