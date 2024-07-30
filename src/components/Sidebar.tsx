@@ -169,7 +169,7 @@ const Sidebar = ({
                 className="flex items-center gap-2 text-whatNewBorder font-semibold py-1 my-1"
                 onClick={() => {
                   localStorage.removeItem("token");
-                  localStorage.removeItem("projects");
+                  localStorage.removeItem("userId");
                   window.location.replace("/");
                 }}
               >

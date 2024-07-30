@@ -3,8 +3,6 @@ import PluginLayout from "../../layout/PluginLayout";
 import Select, { SingleValue } from "react-select";
 import toast from "react-hot-toast";
 import { getRequest, postRequest, putRequest } from "../../utils/request";
-
-import { IoIosArrowForward } from "react-icons/io";
 import { useNavigate, useParams } from "react-router-dom";
 
 type pluginPayloadType = {
@@ -22,20 +20,6 @@ type pluginPayloadType = {
   preceeding_text_min: number | null;
   preceeding_text_max: number | null;
   popup_instruction: string;
-};
-
-type testType = {
-  highlited_text: string;
-  preceeding_text: string;
-  instruction: string;
-  storyBible: {
-    braindump: string;
-    genre: string;
-    style: string;
-    synopsis: string;
-    characters: string;
-    outline: string;
-  };
 };
 
 const initValue: pluginPayloadType = {
@@ -73,82 +57,13 @@ const categories: optionType[] = [
   { label: "Others", value: "others" },
 ];
 
-const synopsisText = `In the heart of the woods around Willow Creek, a young boy and his loyal dog embark on an adventure that will take them to the very limits of their imagination. 
-They explore every inch of the forest with a sense of wonder and curiosity, always eager to discover what secrets lie hidden in the trees.
-  It is during one of these explorations that they stumble upon a mysterious creature unlike anything they have ever seen before. Standing tall and powerful, with shaggy hair and piercing eyes, the creature is none other than Bigfoot himself. To their surprise, the boy and his dog find that they share a deep connection with this legendary creature, and soon they forge an unlikely friendship that will change their lives forever.
-  As their bond grows stronger, the boy and his dog begin to uncover more about Bigfoot's world and the challenges he faces in the wild. They learn about the dangers that lurk in the shadows, from predatory animals to human hunters who seek to capture and exploit Bigfoot for their own gain. With each passing day, the boy and his dog become more determined to protect their new friend and ensure that he is safe from harm.
-  But as they delve deeper into the mysteries of the forest, they realize that their journey will not be easy. They must confront their fears and face incredible obstacles if they hope to save Bigfoot and preserve the natural world around them. With every step they take, the stakes grow higher, and the boy and his dog must rely on their courage, quick thinking, and unbreakable bond to overcome the challenges that lie ahead.
-  Through it all, the boy and his dog never lose sight of their ultimate goal: to protect Bigfoot and ensure that he can live free in his natural habitat. As they work together to overcome seemingly insurmountable odds, they discover that true friendship knows no bounds, and that even the most unlikely allies can band together to achieve greatness.
-  In the end, the boy and his dog emerge victorious, having saved Bigfoot from harm and ensured that he can continue to roam free in the woods around Willow Creek. Their adventure has taught them valuable lessons about the power of friendship, the importance of protecting the natural world, and the incredible things that can be accomplished when we work together towards a common goal.`;
-
-const characterText = `1. Jacob "Jake" Montgomery: A curious and adventurous young boy with a wild imagination and a fearless spirit. He has short, messy brown hair, 
-bright blue eyes, and a constant smirk that hints at his mischievous nature. Jake is determined, resourceful, and always ready to embark on a new adventure. His strong connection to nature and loyalty towards his friends make him an unlikely hero.
-  2. Max: Jake's loyal and courageous dog, a golden retriever with a heart of gold. Max has an uncanny ability to sense danger and is fiercely protective of Jake. His intelligence and resourcefulness make him an invaluable companion during their adventures.
-  3. Samuel "Sam" Hunter: An enigmatic and reclusive man who lives in the woods near Willow Creek. With piercing green eyes, long grey hair, and a tall, lean frame, Sam is a skilled hunter and tracker. He possesses a wealth of knowledge about the forest and its inhabitants but harbors deep-rooted fears that prevent him from forming close connections with others.
-  4. Bigfoot: A legendary creature that stands tall and powerful, with shaggy hair and piercing eyes. Bigfoot has an air of mystery surrounding him that draws Jake and Max into his world. Despite his imposing appearance, he possesses a gentle soul and forms an unlikely friendship with the boy and his dog.
-  5. Felicity "Flick" Thompson: A feisty and determined girl with wild red hair and freckles that cover her cheeks. Flick is an animal lover with an innate curiosity for the natural world. She is independent, strong-willed, and possesses an unwavering sense of justice that drives her to stand up for what she believes in.
-  6. Nora Montgomery: Jake's kind-hearted and loving mother who encourages her son's sense of adventure and curiosity. Nora has wavy brown hair, warm brown eyes, and a caring smile that never leaves her face. She is supportive and nurturing, always providing a safe haven for her family.
-  7. Gerald "Gerry" Baxter: A shifty and opportunistic man with a short stature and a thin mustache. His slicked-back, greasy black hair and beady brown eyes make him appear untrustworthy. Gerry is a cunning individual who seeks personal gain above all else, not hesitating to exploit others to achieve his goals.
-  8. Daisy: A playful and energetic border collie who belongs to Flick. Daisy is fiercely loyal to her owner and forms a strong bond with Max during their adventures together. She has a keen sense of smell and an uncanny ability to locate hidden paths and trails in the forest.
-  9. Sheriff Thomas "Tom" Wilson: The experienced and respected sheriff of Willow Creek, with short-cropped grey hair, a strong jawline, and piercing blue eyes. Sheriff Wilson is dedicated to maintaining order and ensuring the safety of the residents in his town. He is fair, level-headed, and possesses an unwavering resolve to uncover the truth.`;
-
-const outlineText = `Act 1 - Introduction:
-  Chapter 1: Introduction - Jake Montgomery and his loyal dog Max explore the woods around Willow Creek. They are both adventurous and curious, and they love discovering new things in the forest. Jake's mother, Nora Montgomery, encourages her son's sense of adventure and curiosity.
-  Chapter 2: Inciting Incident - While exploring the forest, Jake and Max stumble upon a mysterious creature with shaggy hair and piercing eyes - Bigfoot. They are both surprised and amazed by this discovery. Jake decides to keep their finding a secret from his mother, Nora.
-  Chapter 3: Call to Action - Jake and Max decide to return to the woods to learn more about Bigfoot and see if they can communicate with him. They feel a deep connection with this legendary creature and are determined to find out more about his world.
-
-  Act 2 - Rising Tension:
-  Chapter 4: Meeting the Mentor - Jake and Max encounter Samuel "Sam" Hunter, a reclusive hunter who lives in the woods. Sam shares his knowledge about Bigfoot, warning them about the dangers that Bigfoot faces from predatory animals and human hunters.
-  Chapter 5: Training - Under Sam's guidance, Jake and Max learn how to track and navigate the forest safely. They also learn how to communicate with Bigfoot through a series of gestures and vocalizations.
-  Chapter 6: First Challenge - Jake, Max, and Sam discover that a cunning man named Gerry Baxter is trying to capture Bigfoot for his own gain. They must work together to thwart his plans and protect their new friend.
-  Chapter 7: Gathering Allies - Jake and Max meet Felicity "Flick" Thompson and her border collie, Daisy, in the woods. Flick is an animal lover with a strong sense of justice. She agrees to help them protect Bigfoot from Gerry Baxter.
-  Chapter 8: Exploration - The group of friends uncover hidden paths and trails in the forest, leading them to Bigfoot's secret home. They learn more about his world and the importance of protecting his natural habitat.
-  Chapter 9: Romance - A romantic subplot develops between Jake and Flick as they bond over their shared love for nature and their determination to protect Bigfoot.
-
-  Act 3 - Crisis Point:
-  Chapter 10: Betrayal - Sam reveals his deep-rooted fears about getting close to others and confesses that he initially planned to capture Bigfoot himself. He now regrets his past actions and wants to help protect him.
-  Chapter 11: Quest or Mission - The group's main goal becomes clear - they must protect Bigfoot from Gerry Baxter's relentless pursuit and ensure that he can live safely in his natural habitat.
-  Chapter 12: Rising Tension - As Gerry Baxter intensifies his efforts to capture Bigfoot, the group must come up with new strategies to outsmart him and keep their friend safe.
-  Chapter 13: Midpoint Reveal - The group discovers that Sheriff Thomas "Tom" Wilson is also interested in capturing Bigfoot, believing that it will ensure the safety of the residents of Willow Creek.
-  Chapter 14: Backstory - Sam shares his personal connection to Bigfoot, revealing that he had been secretly observing and protecting him for years before meeting Jake and Max.
-  Chapter 15: Crisis Point - Gerry Baxter manages to capture Bigfoot, forcing the group to come up with a plan to rescue him before it's too late.
-
-  Act 4 - Climax and Resolution:
-  Chapter 16: All Is Lost - Jake, Max, Flick, and Sam feel defeated as they struggle to find a way to save Bigfoot from Gerry Baxter's clutches.
-  Chapter 17: Dark Night of the Soul - Jake doubts himself and his ability to save Bigfoot, but Max's unwavering loyalty and Flick's encouragement help him find the inner strength to continue.
-  Chapter 18: Plot Twist - The group discovers that Sheriff Wilson is actually opposed to Gerry Baxter's plan and wants to protect Bigfoot as well. He offers to help them with their rescue mission.
-  Chapter 19: Resurrection - With renewed resolve, Jake, Max, Flick, Sam, and Sheriff Wilson work together to rescue Bigfoot from Gerry Baxter.
-  Chapter 20: Battle or Showdown - The group confronts Gerry Baxter in a tense standoff, ultimately outsmarting him and freeing Bigfoot from his grasp.
-  Chapter 21: Climax - Bigfoot is saved and Gerry Baxter is arrested, bringing the group's quest to a triumphant close.
-  Chapter 22: Resolution - Bigfoot is returned safely to his home in the forest, and the group reflects on their journey and the importance of protecting the natural world.
-  Chapter 23: Returning Home - Jake, Max, Flick, and Sam bid farewell to Bigfoot and return to their lives in Willow Creek. They promise to continue watching over their friend and his forest home.
-  Chapter 24: Epilogue - The characters' lives have been forever changed by their adventure. Jake and Flick continue to explore the natural world together, while Sam becomes a more active protector of the forest. Sheriff Wilson works to safeguard both the town and its surrounding wilderness. Bigfoot roams free in the woods around Willow Creek, knowing that he has true friends who will always look out for him.`;
-
-const Create = () => {
+const EditPlugin = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
   const [instructionVisibility, setInstructionVisibility] = useState("hidden");
   const [payload, setPayload] = useState<pluginPayloadType>(initValue);
   const [loading, setLoading] = useState(false);
-
-  const [openAdditionalOptions, setOpenAdditionalOptions] = useState(false);
-  const [testData, setTestData] = useState<testType>({
-    highlited_text: "",
-    preceeding_text: "",
-    instruction: "",
-    storyBible: {
-      braindump:
-        "This is a story about a boy and his dog who explore the woods around willow creek.  They stumble upon bigfoot one day and start building a friendship.",
-      characters: characterText,
-      genre: "Young Adult Novel",
-      outline: outlineText,
-      style: "Uses simple words and dialogue.",
-      synopsis: synopsisText,
-    },
-  });
-  const [testingPlugin, setTestingPlugin] = useState(false);
-  const [testResult, setTestResult] = useState("");
   const [saving, setSaving] = useState(false);
 
   const handleChange = (
@@ -156,23 +71,6 @@ const Create = () => {
   ) => {
     const { name, value } = e.target;
     setPayload({ ...payload, [name]: value });
-  };
-
-  const handleTestChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setTestData({ ...testData, [name]: value });
-  };
-
-  const handleTestStoryChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setTestData({
-      ...testData,
-      storyBible: { ...testData.storyBible, [name]: value },
-    });
   };
 
   const setCustom = (field: string, value: string | boolean) => {
@@ -203,34 +101,26 @@ const Create = () => {
       });
   };
 
-  const testPlugin = () => {
-    if (!testData.highlited_text.trim() || !testData.instruction.trim()) {
-      toast("All fields are required");
-      return;
-    }
-
-    setTestingPlugin(true);
-    postRequest("/plugin/test", {
-      ...testData,
-      instruction: payload.instruction,
-    })
-      .then(({ data }) => {
-        setTestResult(data);
-        setTestingPlugin(false);
-      })
-      .catch(() => {
-        setTestingPlugin(false);
-        toast("Try again");
-      });
-  };
-
   useEffect(() => {
     if (!id) {
       return;
     }
     getRequest(`/plugin/view?plugin=${id}`)
       .then(({ data }) => {
-        setPayload(data[0]);
+        const current = data.find((item: any) => item._id === id);
+        const newCurret = {
+          ...current,
+          popup_instruction: current.advanceSettings.popup_instruction,
+          preceeding_text: current.advanceSettings.preceeding_text,
+          highlited_text_min: current.advanceSettings.highlited_text_config.min,
+          highlited_text_max: current.advanceSettings.highlited_text_config.max,
+          preceeding_text_min:
+            current.advanceSettings.preceeding_text_config.min,
+          preceeding_text_max:
+            current.advanceSettings.preceeding_text_config.max,
+        };
+        setPayload(newCurret);
+        console.log(newCurret);
       })
       .catch(() => {
         setLoading(false);
@@ -423,7 +313,7 @@ example output: Reader 1: &quot;spike of electricity? really? how cliche..."
             </div>
           </div>
 
-          <div className="mb-6 font-semibold mt-2">
+          {/* <div className="mb-6 font-semibold mt-2">
             <label htmlFor="name">Instruction</label>
             <div className="text-sm">
               Screbbi will read the highlighted text or the text before the
@@ -436,7 +326,7 @@ example output: Reader 1: &quot;spike of electricity? really? how cliche..."
               onChange={handleChange}
               value={payload.instruction}
             />
-          </div>
+          </div> */}
 
           {payload.pluginType === "advanced" && (
             <>
@@ -617,136 +507,9 @@ example output: Reader 1: &quot;spike of electricity? really? how cliche..."
             </div>
           )}
         </div>
-
-        {!id && (
-          <div className="bg-white/20 p-4 mt-10">
-            <textarea
-              className="long-text"
-              placeholder="Paste or type an example input (text highlight)."
-              name="highlited_text"
-              onChange={handleTestChange}
-              value={testData.highlited_text}
-            />
-
-            <div className="flex items-center gap-2 mt-2">
-              <IoIosArrowForward
-                className={`${
-                  openAdditionalOptions ? "rotate-90" : "rotate-0"
-                } duration-500`}
-                onClick={() => setOpenAdditionalOptions(!openAdditionalOptions)}
-              />
-              <div>Additional Variables</div>
-            </div>
-
-            {openAdditionalOptions && (
-              <>
-                <div className="mb-6 font-semibold mt-2">
-                  <label htmlFor="name">Instruction</label>
-
-                  <textarea
-                    className="long-text"
-                    placeholder="Paste or type an example input for the preceding text."
-                    name="instruction"
-                    onChange={handleTestChange}
-                    value={testData.instruction}
-                  />
-                </div>
-
-                <div className="mb-6 font-semibold mt-2">
-                  <label htmlFor="name">Proceeding Text</label>
-
-                  <textarea
-                    className="long-text"
-                    placeholder="Paste or type an example input for the preceding text."
-                    name="preceeding_text"
-                    onChange={handleTestChange}
-                    value={testData.preceeding_text}
-                  />
-                </div>
-
-                <div className="mb-6 font-semibold mt-2">
-                  <label htmlFor="name">Braindump</label>
-
-                  <textarea
-                    className="long-text"
-                    placeholder="Paste or type an example input for the preceding text."
-                    name="braindump"
-                    onChange={handleTestStoryChange}
-                    value={testData.storyBible.braindump}
-                  />
-                </div>
-
-                <div className="mb-6 font-semibold mt-2">
-                  <label htmlFor="name">Genre</label>
-
-                  <textarea
-                    className="long-text"
-                    placeholder="Paste or type an example input for the preceding text."
-                    name="genre"
-                    onChange={handleTestStoryChange}
-                    value={testData.storyBible.genre}
-                  />
-                </div>
-
-                <div className="mb-6 font-semibold mt-2">
-                  <label htmlFor="name">Style</label>
-
-                  <textarea
-                    className="long-text"
-                    placeholder="Paste or type an example input for the preceding text."
-                    name="style"
-                    onChange={handleTestStoryChange}
-                    value={testData.storyBible.style}
-                  />
-                </div>
-
-                <div className="mb-6 font-semibold mt-2">
-                  <label htmlFor="name">Characters</label>
-
-                  <textarea
-                    className="long-text"
-                    placeholder="Paste or type an example input for the preceding text."
-                    name="characters"
-                    onChange={handleTestStoryChange}
-                    value={testData.storyBible.characters}
-                  />
-                </div>
-
-                <div className="mb-6 font-semibold mt-2">
-                  <label htmlFor="name">Outline</label>
-
-                  <textarea
-                    className="long-text"
-                    placeholder="Paste or type an example input for the preceding text."
-                    name="outline"
-                    onChange={handleTestStoryChange}
-                    value={testData.storyBible.outline}
-                  />
-                </div>
-              </>
-            )}
-
-            <div className="flex justify-end mt-6">
-              <button
-                className={`bg-buttonPurple text-white p-2 rounded-lg font-semibold ${
-                  testingPlugin && "opacity-40"
-                }`}
-                onClick={testPlugin}
-                disabled={testingPlugin}
-              >
-                {!testingPlugin ? "Run Test" : "Testing"}
-              </button>
-            </div>
-
-            <div>
-              <div>Test Result:</div>
-              <div>{testResult}</div>
-            </div>
-          </div>
-        )}
       </div>
     </PluginLayout>
   );
 };
 
-export default Create;
+export default EditPlugin;
