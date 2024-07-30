@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import appLogo from "../assets/img/ai-logo.png";
 import { IoExtensionPuzzleSharp } from "react-icons/io5";
 import { FaPlus } from "react-icons/fa6";
@@ -78,11 +78,13 @@ const tabs: string[] = ["popular", "newest", "added", "yours"];
 const Plugins = () => {
   const navigate = useNavigate();
   const { category } = useParams();
+  const lastRef: any = useRef();
 
   const [plugins, setPlugins] = useState<pluginType[]>([]);
   const [loadingPlugins, setLoadingPlugins] = useState(false);
   const [currentTab, setCurrentTab] = useState(tabs[0]);
   const [searchString, setSearchString] = useState("");
+  const [page, setPage] = useState(1);
 
   type optionType = {
     label: string;
@@ -102,7 +104,7 @@ const Plugins = () => {
     { label: "Others", value: "others" },
   ];
 
-  const getPlugins = (page: number = 1, plugins: pluginType[] = []) => {
+  const getPlugins = () => {
     setLoadingPlugins(true);
     getRequest(
       `/plugin/plugins?sort=${
@@ -120,7 +122,7 @@ const Plugins = () => {
           setPlugins([...plugins, ...data.docs]);
 
           if (data.totalPages !== data.page && data.totalPages !== 0) {
-            getPlugins(data.page + 1, [...plugins, ...data.docs]);
+            setPage(data.page + 1);
           } else {
             setLoadingPlugins(false);
           }
@@ -130,6 +132,33 @@ const Plugins = () => {
         setLoadingPlugins(false);
       });
   };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries, observer) => {
+        const entry = entries[0];
+
+        if (entry.isIntersecting) {
+          getPlugins();
+          observer.unobserve(entry.target);
+        }
+      },
+      {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.1,
+      }
+    );
+
+    if (lastRef && lastRef?.current) {
+      observer.observe(lastRef?.current);
+    }
+    return () => {
+      if (lastRef && lastRef.current) {
+        observer.unobserve(lastRef.current);
+      }
+    };
+  }, [lastRef, plugins]);
 
   useEffect(() => {
     getPlugins();
@@ -269,7 +298,10 @@ const Plugins = () => {
             )}
 
             {loadingPlugins && (
-              <div className="flex justify-center h-40 items-center">
+              <div
+                className="flex justify-center h-40 items-center"
+                ref={lastRef}
+              >
                 <div className="section-loader black"></div>
               </div>
             )}
