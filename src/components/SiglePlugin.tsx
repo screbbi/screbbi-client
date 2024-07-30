@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { pluginType } from "../utils/interface";
 import Overlay from "./Overlay";
 import toast from "react-hot-toast";
@@ -7,13 +7,22 @@ const SiglePlugin = ({
   plugin,
   usePlugin,
   using,
+  selected,
 }: {
   plugin: pluginType;
   usePlugin: (e: string, f?: string) => void;
   using: boolean;
+  selected: string;
 }) => {
   const [additionalDetails, setAdditionalDetails] = useState("");
   const [showAdd, setShowAdd] = useState(false);
+  const [loading, setLoading] = useState(using);
+
+  useEffect(() => {
+    if (using === false) {
+      setLoading(false);
+    }
+  }, [using]);
 
   return (
     <div
@@ -32,13 +41,18 @@ const SiglePlugin = ({
           ) {
             setShowAdd(true);
           } else {
+            if (!selected.trim()) {
+              toast("No Text Highlighted");
+              return;
+            }
             usePlugin(plugin._id);
+            setLoading(true);
           }
         }}
       >
         <div>{plugin.name}</div>
 
-        {using && <div className="plugging"></div>}
+        {loading && <div className="plugging"></div>}
       </div>
 
       {showAdd && (
@@ -66,8 +80,14 @@ const SiglePlugin = ({
                     toast("Input cannot be empty");
                     return;
                   } else {
-                    usePlugin(plugin._id, additionalDetails);
                     setShowAdd(false);
+
+                    if (!selected.trim()) {
+                      toast("No Text Highlighted");
+                      return;
+                    }
+                    usePlugin(plugin._id, additionalDetails);
+                    setLoading(true);
                   }
                 }}
               >

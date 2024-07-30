@@ -847,6 +847,7 @@ const Editors = () => {
                         plugins={myPlugins}
                         usePlugin={usePlugin}
                         using={usingPlugin}
+                        selected={highlightedText}
                       />
                     )}
                   </div>

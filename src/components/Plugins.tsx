@@ -7,11 +7,13 @@ const Plugins = ({
   plugins,
   usePlugin,
   using,
+  selected,
 }: {
   openBrain: () => void;
   plugins: pluginType[];
   usePlugin: (e: string, f?: string) => void;
   using: boolean;
+  selected: string;
 }) => {
   return (
     <div>
@@ -28,6 +30,7 @@ const Plugins = ({
             plugin={item}
             usePlugin={usePlugin}
             using={using}
+            selected={selected}
           />
         ))}
 
