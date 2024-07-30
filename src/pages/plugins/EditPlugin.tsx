@@ -8,7 +8,6 @@ import { useNavigate, useParams } from "react-router-dom";
 type pluginPayloadType = {
   name: string;
   description: string;
-  instruction: string;
   category: string;
   instruction_visibility: string;
   visibility: string;
@@ -25,7 +24,6 @@ type pluginPayloadType = {
 const initValue: pluginPayloadType = {
   name: "",
   description: "",
-  instruction: "Provide an instruction",
   category: "",
   instruction_visibility: "hidden",
   visibility: "published",

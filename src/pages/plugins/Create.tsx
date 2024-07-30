@@ -41,7 +41,7 @@ type testType = {
 const initValue: pluginPayloadType = {
   name: "",
   description: "",
-  instruction: "Provide an instruction",
+  instruction: "",
   category: "",
   instruction_visibility: "hidden",
   visibility: "published",
