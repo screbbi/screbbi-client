@@ -25,6 +25,12 @@ import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import Tooltip from "../layout/Tooltip";
 
+const defaultData = {
+  description: "",
+  context: "",
+  examples: ["", ""],
+};
+
 const SingleBrainstorm = ({
   text,
   img,
@@ -86,6 +92,8 @@ const Brainstorm = ({
   const [keeps, setKeeps] = useState<string[]>([]);
   const [saving, setSaving] = useState(false);
 
+  const [currentData, setCurrentData] = useState(defaultData);
+
   useEffect(() => {
     getRequest("/brainstorm/options").then(({ data }) => {
       setOptions({ ...data, something_else });
@@ -98,62 +106,32 @@ const Brainstorm = ({
     const { name, value, id } = e.target;
 
     if (name !== "example") {
-      const newOptions = {
-        ...options,
-        [currentBrainstorm]: options[currentBrainstorm].map(
-          (item: any, idx: number) => {
-            if (idx === currentIndex) {
-              return { ...item, [name]: value };
-            } else {
-              return item;
-            }
-          }
-        ),
-      };
-
-      setOptions(newOptions);
+      setCurrentData({ ...currentData, [name]: value });
     } else {
-      const newOptions = {
-        ...options,
-        [currentBrainstorm]: options[currentBrainstorm].map(
-          (item: any, idx: number) => {
-            if (idx === currentIndex) {
-              return {
-                ...item,
-                examples: item.examples.map((example: string, idx: any) => {
-                  if (idx === Number(id)) {
-                    return value;
-                  } else {
-                    return example;
-                  }
-                }),
-              };
-            } else {
-              return item;
-            }
-          }
-        ),
-      };
-
-      setOptions(newOptions);
+      setCurrentData((prev) => {
+        return {
+          ...currentData,
+          examples: prev.examples.map((item, idx) =>
+            idx === Number(id) ? value : item
+          ),
+        };
+      });
     }
   };
 
   const generateBrainstorm = () => {
-    if (!options[currentBrainstorm][currentIndex].description.trim()) {
+    if (!currentData.description.trim()) {
       toast("Description is required");
       return;
     }
-    if (!options[currentBrainstorm][currentIndex].context.trim()) {
-      toast("Description is required");
+    if (!currentData.context.trim()) {
+      toast("Context is required");
       return;
     }
 
     setLoading(true);
 
-    postRequest("/brainstorm/think", {
-      ...options[currentBrainstorm][currentIndex],
-    })
+    postRequest("/brainstorm/think", currentData)
       .then(({ data }) => {
         setLoading(false);
         setContent(data.result);
@@ -165,37 +143,37 @@ const Brainstorm = ({
   };
 
   const reloadContent = () => {
-    if (currentIndex < options[currentBrainstorm].length - 1) {
-      const newCurrent = currentIndex + 1;
-      setCurrentIndex(newCurrent);
-    } else {
+    if (!options) {
+      return;
+    }
+
+    if (!options) {
       setReloading(true);
       setCurrentIndex(0);
       getRequest("/brainstorm/options").then(({ data }) => {
         setReloading(false);
         setOptions(data);
       });
+    } else {
+      if (currentIndex < options[currentBrainstorm].length - 1) {
+        const newCurrent = currentIndex + 1;
+        setCurrentIndex(newCurrent);
+        setCurrentData(options[currentBrainstorm][currentIndex]);
+      } else {
+        setReloading(true);
+        setCurrentIndex(0);
+        getRequest("/brainstorm/options").then(({ data }) => {
+          setReloading(false);
+          setOptions(data);
+        });
+      }
     }
   };
 
   const addExample = () => {
-    const newOptions = {
-      ...options,
-      [currentBrainstorm]: options[currentBrainstorm].map(
-        (item: any, idx: number) => {
-          if (idx === currentIndex) {
-            return {
-              ...item,
-              examples: [...item.examples, ""],
-            };
-          } else {
-            return item;
-          }
-        }
-      ),
-    };
-
-    setOptions(newOptions);
+    setCurrentData((prev) => {
+      return { ...prev, examples: [...prev.examples, ""] };
+    });
   };
 
   const addKeep = (keep: string) => {
@@ -253,8 +231,16 @@ const Brainstorm = ({
     });
   };
 
+  useEffect(() => {
+    if (options && currentBrainstorm) {
+      setCurrentData(options[currentBrainstorm][0]);
+    } else {
+      setCurrentData(defaultData);
+    }
+  }, [currentBrainstorm, options]);
+
   return (
-    <div className="fixed top-0 left-0 inset-0 bg-white p-10 z-30 overflow-y-auto">
+    <div className="fixed top-0 left-0 inset-0 bg-white p-10 z-40 overflow-y-auto">
       <div className="flex justify-between items-center text-2xl">
         <div>
           <BiArrowBack
@@ -308,9 +294,9 @@ const Brainstorm = ({
                     text={item.text}
                     img={item.img}
                     handleClick={() => {
-                      if (!options) {
-                        return;
-                      }
+                      // if (!options) {
+                      //   return;
+                      // }
                       setCurrentBrainstorm(item.text);
                       setCurrentIndex(0);
                     }}
@@ -328,11 +314,7 @@ const Brainstorm = ({
                   handleChange={handleChange}
                   placeholder="Description"
                   desc="Brainstorm can make lists of anything! Like features for an app, headlines for an article, or plot points in a mystery thriller."
-                  value={
-                    options[currentBrainstorm]
-                      ? options[currentBrainstorm][currentIndex].description
-                      : ""
-                  }
+                  value={currentData.description}
                 />
                 <TfiReload
                   className={`absolute bottom-6 right-1 text-sm cursor-pointer ${
@@ -350,11 +332,7 @@ const Brainstorm = ({
                   handleChange={handleChange}
                   placeholder="Context"
                   desc="Brainstorm can make lists of anything! Like features for an app, headlines for an article, or plot points in a mystery thriller."
-                  value={
-                    options[currentBrainstorm]
-                      ? options[currentBrainstorm][currentIndex].context
-                      : ""
-                  }
+                  value={currentData.context}
                 />
               </div>
 
@@ -373,21 +351,19 @@ const Brainstorm = ({
                     </div>
                   </Tooltip>
                 </div>
-                {options[currentBrainstorm][currentIndex].examples?.map(
-                  (item: any, idx: number) => (
-                    <BrainstormInput
-                      key={idx}
-                      name="example"
-                      id={`${idx}`}
-                      handleChange={handleChange}
-                      value={item}
-                      placeholder={`Example ${idx + 1}`}
-                    />
-                  )
-                )}
 
-                {options[currentBrainstorm][currentIndex].examples.length <
-                  5 && (
+                {currentData.examples?.map((item: any, idx: number) => (
+                  <BrainstormInput
+                    key={idx}
+                    name="example"
+                    id={`${idx}`}
+                    handleChange={handleChange}
+                    value={item}
+                    placeholder={`Example ${idx + 1}`}
+                  />
+                ))}
+
+                {currentData.examples.length < 5 && (
                   <button
                     className="border border-black text-xs font-semibold flex gap-2 items-center px-2 py-1 rounded-full"
                     onClick={addExample}

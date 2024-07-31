@@ -6,6 +6,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { getRequest, postRequest } from "../utils/request";
 import toast from "react-hot-toast";
 import { pluginType } from "../utils/interface";
+import { IoIosArrowRoundBack } from "react-icons/io";
 
 const PluginCard = ({
   plugin,
@@ -199,6 +200,14 @@ const Plugins = () => {
         <div></div>
       </div>
 
+      <div className="w-11/12 mx-auto">
+        <button
+          className="flex gap-2 items-center p-2 text-sm"
+          onClick={() => navigate(-1)}
+        >
+          <IoIosArrowRoundBack /> Back
+        </button>
+      </div>
       <div className="plugin-cont sticky top-0 h-screen">
         <div className="side sticky top-0">
           <div
@@ -234,7 +243,7 @@ const Plugins = () => {
           ))}
         </div>
 
-        <div className="h-full overflow-auto no-scrollbar">
+        <div className="h-[90%] overflow-auto no-scrollbar">
           <div>
             <div className="paging flex justify-between">
               <div></div>
