@@ -684,7 +684,7 @@ const Editors = () => {
       setOpenNav={setOpenNav}
       openNav={openNav}
     >
-      <div className="bg-white/80 p-4 sticky top-0 z-20 lg:z-40">
+      <div className="bg-white/80 p-4 sticky top-0 z-30 lg:z-40">
         <div className={`flex ${writer ? "justify-between" : "justify-end"}`}>
           <div className="flex">
             <div className="flex items-center gap-3 relative z-30">
@@ -698,7 +698,7 @@ const Editors = () => {
 
             {writer && (
               <div
-                className="flex justify-between items-center relative z-30"
+                className="flex justify-between items-center relative z-20"
                 ref={topPageRef}
               >
                 <div className="flex gap-2 items-center">
