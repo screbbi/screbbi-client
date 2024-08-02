@@ -149,9 +149,13 @@ const StoryBible = ({
         editToken(data.tokens.newToken);
         setGeneratingSynopsis(false);
       })
-      .catch(() => {
+      .catch((err) => {
         setGeneratingSynopsis(false);
-        toast("Try Again");
+        if (err.response.data.message === "Recharge Token to continue") {
+          toast("Low Credit Balance");
+        } else {
+          toast("Try Again");
+        }
       });
   };
 
@@ -171,9 +175,13 @@ const StoryBible = ({
         setOpenWriting(false);
         setOpenCompressWriting(true);
       })
-      .catch(() => {
+      .catch((err) => {
         setGeneratingMatchStyle(false);
-        toast("Try Again");
+        if (err.response.data.message === "Recharge Token to continue") {
+          toast("Low Credit Balance");
+        } else {
+          toast("Try Again");
+        }
       });
   };
 
@@ -192,9 +200,13 @@ const StoryBible = ({
         setOpenCompressWriting(false);
         setOpenInsertModal(true);
       })
-      .catch(() => {
+      .catch((err) => {
         setCompressing(false);
-        toast("Try Again");
+        if (err.response.data.message === "Recharge Token to continue") {
+          toast("Low Credit Balance");
+        } else {
+          toast("Try Again");
+        }
       });
   };
 
@@ -206,13 +218,14 @@ const StoryBible = ({
         setChapters(data?.result?.chapters);
         editToken(data.tokens.newToken);
         setGeneratingOutline(false);
-
-        // const chap: any = Object.values(data?.result?.chapters)[0][0];
-        // console.log(chap);
       })
-      .catch(() => {
+      .catch((err) => {
         setGeneratingOutline(false);
-        toast("Try Again");
+        if (err.response.data.message === "Recharge Token to continue") {
+          toast("Low Credit Balance");
+        } else {
+          toast("Try Again");
+        }
       });
   };
 
@@ -232,9 +245,17 @@ const StoryBible = ({
         getCharacters();
         editToken(data.tokens.newToken);
       })
-      .catch(() => {
+      .catch((err) => {
+        if (
+          err.response.data.message ===
+          "Cannot read properties of undefined (reading 'result')"
+        ) {
+          toast("Low Credit Balance");
+        } else {
+          toast("Try Again");
+        }
+
         setGeneratingCharacters(false);
-        toast("Try Again");
       });
   };
 

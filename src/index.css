@@ -77,7 +77,7 @@ body {
 .generates {
   @apply grid;
   grid-template-columns: 1fr 20rem;
-  height: calc(100vh - 6rem);
+  height: calc(100vh - 10rem);
 }
 .editors {
   grid-template-rows: 5.5rem 1fr;

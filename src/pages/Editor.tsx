@@ -295,7 +295,13 @@ const Editors = () => {
           }
         );
 
-        const decoded = he.decode(currentContent.content);
+        let decoded;
+        if (currentContent.content) {
+          decoded = he.decode(currentContent.content);
+        } else {
+          decoded = currentContent.content;
+        }
+
         setTitle(
           currentContent.title === "" ? "Untitled" : currentContent.title
         );
@@ -486,9 +492,13 @@ const Editors = () => {
         editToken(data.tokens.newToken);
         setGeneratingBeats(false);
       })
-      .catch(() => {
+      .catch((err) => {
         setGeneratingBeats(false);
-        toast("Try Again");
+        if (err.response.data.message === "Recharge Token to continue") {
+          toast("Low Credit Balance");
+        } else {
+          toast("Try Again");
+        }
       });
   };
 
