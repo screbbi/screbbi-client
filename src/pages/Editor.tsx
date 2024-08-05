@@ -707,10 +707,7 @@ const Editors = () => {
             </div>
 
             {writer && (
-              <div
-                className="flex justify-between items-center relative z-20"
-                ref={topPageRef}
-              >
+              <div className="flex justify-between items-center relative z-20">
                 <div className="flex gap-2 items-center">
                   <div
                     className="write-option"
@@ -906,7 +903,7 @@ const Editors = () => {
 
           <div className={`${token <= 5000 ? "generates" : "generate"}`}>
             <div className="py-2 px-6 overflow-y-scroll">
-              <div className="editor">
+              <div className="editor" ref={topPageRef}>
                 <div className="control-group">
                   <div className="button-group">
                     <button

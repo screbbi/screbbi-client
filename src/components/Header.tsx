@@ -35,7 +35,7 @@ const Header = () => {
               New
             </div>
 
-            <div className="font-semibold">Powered GPT-based models</div>
+            <div className="font-semibold">Powered AI-based models</div>
           </div>
 
           <div className="font-semibold text-base md:text-3xl text-center max-w-4xl mx-auto my-8 w-11/12">
