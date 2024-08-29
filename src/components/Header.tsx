@@ -18,6 +18,7 @@ import Footer from "./Footer";
 import { useNavigate } from "react-router-dom";
 import LandingPageNavbar from "./LandingPageNavbar";
 import { TbPlugConnectedX } from "react-icons/tb";
+import { openTourVideo } from "../utils/functions";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -56,7 +57,10 @@ const Header = () => {
             >
               Try for free
             </button>
-            <button className="py-2 px-6 rounded-full text-white bg-buttonPurple flex gap-2 items-center">
+            <button
+              className="py-2 px-6 rounded-full text-white bg-buttonPurple flex gap-2 items-center"
+              onClick={openTourVideo}
+            >
               <FaPlay />
               Watch Tour
             </button>

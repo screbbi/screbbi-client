@@ -23,3 +23,7 @@ export const formatDate = (date: any) => {
 export const numberFormat = (num: number) => {
   return new Intl.NumberFormat().format(num);
 };
+
+export const openTourVideo = () => {
+  window.open("https://www.youtube.com/watch?v=GRM3IkkrsZQ", "_blank");
+};

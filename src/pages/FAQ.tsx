@@ -2,6 +2,7 @@ import { FaPlay } from "react-icons/fa";
 import Footer from "../components/Footer";
 import LandingPageNavbar from "../components/LandingPageNavbar";
 import SingleFAQ from "../components/SingleFAQ";
+import { openTourVideo } from "../utils/functions";
 
 const FAQ = () => {
   return (
@@ -22,7 +23,10 @@ const FAQ = () => {
         <SingleFAQ title="What does Screbbi do, really?">
           <div>
             <div>Check out the video below for a full explanation.</div>
-            <button className="py-2 px-6 rounded-full text-white bg-buttonPurple flex gap-2 items-center mt-2">
+            <button
+              className="py-2 px-6 rounded-full text-white bg-buttonPurple flex gap-2 items-center mt-2"
+              onClick={openTourVideo}
+            >
               <FaPlay />
               Watch Tour
             </button>

@@ -14,7 +14,7 @@ import {
   putRequest,
 } from "../utils/request";
 import toast from "react-hot-toast";
-import { copyToClipboard } from "../utils/functions";
+import { copyToClipboard, openTourVideo } from "../utils/functions";
 import Writing from "./Writing";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import CompressMatchStyle from "./CompressMatchStyle";
@@ -411,19 +411,20 @@ const StoryBible = ({
             </div>
 
             <div className="flex items-center gap-6">
-              <Link to={`#`} target="_black">
-                <div className="p-3 bg-[#ece6fa] rounded-md">
-                  <img
-                    src={storyGuide}
-                    alt=""
-                    className="w-52 h-32 object-cover rounded-md"
-                  />
-                  <div className="flex justify-center text-[#ad90ea] items-center mt-2 gap-2 font-semibold">
-                    <div className="text">Watch the Video Tour</div>
-                    <FaArrowRight />
-                  </div>
+              <div
+                className="p-3 bg-[#ece6fa] rounded-md cursor-pointer"
+                onClick={openTourVideo}
+              >
+                <img
+                  src={storyGuide}
+                  alt=""
+                  className="w-52 h-32 object-cover rounded-md"
+                />
+                <div className="flex justify-center text-[#ad90ea] items-center mt-2 gap-2 font-semibold">
+                  <div className="text">Watch the Video Tour</div>
+                  <FaArrowRight />
                 </div>
-              </Link>
+              </div>
 
               <Link to={`https://www.thepaperhousebooks.com`} target="_black">
                 <div className="p-3 bg-[#e4f3f7] rounded-md">
