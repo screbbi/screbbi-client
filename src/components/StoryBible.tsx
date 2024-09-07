@@ -14,7 +14,7 @@ import {
   putRequest,
 } from "../utils/request";
 import toast from "react-hot-toast";
-import { copyToClipboard, openTourVideo } from "../utils/functions";
+import { copyToClipboard } from "../utils/functions";
 import Writing from "./Writing";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import CompressMatchStyle from "./CompressMatchStyle";
@@ -29,6 +29,7 @@ import { FaArrowRight } from "react-icons/fa6";
 import EmptyToken from "../layout/EmptyToken";
 import { useStore } from "zustand";
 import store from "../store/state";
+import VideoTourModal from "./VideoTourModal";
 
 const StoryBible = ({
   genre,
@@ -80,6 +81,7 @@ const StoryBible = ({
   const [addingChapter, setAddingChapter] = useState(false);
   const [openStory, setOpenStory] = useState(true);
   const [characters, setCharacters] = useState<any[]>([]);
+  const [openTourVideo, setOpenTourVideo] = useState(false)
 
   // WORDCOUNTS
   const [brainDumpWordCount, setBrainDumpWordCount] = useState(
@@ -413,7 +415,7 @@ const StoryBible = ({
             <div className="flex items-center gap-6">
               <div
                 className="p-3 bg-[#ece6fa] rounded-md cursor-pointer"
-                onClick={openTourVideo}
+                onClick={() => setOpenTourVideo(v => !v)}
               >
                 <img
                   src={storyGuide}
@@ -425,6 +427,11 @@ const StoryBible = ({
                   <FaArrowRight />
                 </div>
               </div>
+
+              {openTourVideo && <VideoTourModal close={() => {
+              setOpenTourVideo(v => !v);
+              return openTourVideo
+            }}/>}
 
               <Link to={`https://www.thepaperhousebooks.com`} target="_black">
                 <div className="p-3 bg-[#e4f3f7] rounded-md">
