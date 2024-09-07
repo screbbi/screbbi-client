@@ -18,10 +18,14 @@ import Footer from "./Footer";
 import { useNavigate } from "react-router-dom";
 import LandingPageNavbar from "./LandingPageNavbar";
 import { TbPlugConnectedX } from "react-icons/tb";
-import { openTourVideo } from "../utils/functions";
+import { useState } from "react";
+import VideoTourModal from "./VideoTourModal";
 
 const Header = () => {
+  const [openTourVideo, setOpenTourVideo] = useState(false)
+
   const navigate = useNavigate();
+
   return (
     <div className="">
       <div className="relative overflow-hidden min-h-[100vh]">
@@ -59,11 +63,16 @@ const Header = () => {
             </button>
             <button
               className="py-2 px-6 rounded-full text-white bg-buttonPurple flex gap-2 items-center"
-              onClick={openTourVideo}
+              onClick={() => setOpenTourVideo(v => !v)}
             >
               <FaPlay />
               Watch Tour
             </button>
+
+            {openTourVideo && <VideoTourModal close={() => {
+              setOpenTourVideo(v => !v);
+              return openTourVideo
+            }}/>}
           </div>
         </div>
 
