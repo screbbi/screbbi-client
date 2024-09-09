@@ -51,16 +51,16 @@ export const forgetPasswordSchema = yup.object().shape({
 });
 
 export const resetPasswordSchema = yup.object().shape({
-  resetCode: yup.number().required("Reset Code is required"),
-  newPassword: yup
+  resetCode: yup.string().required("Reset Code is required"),
+  password: yup
     .string()
     .required("Password is required")
     .min(8, "Password must be at least 8 characters"),
 
-  confirmNewPassword: yup
+    confirmPassword: yup
     .string()
     .required("Password is required")
-    .oneOf([yup.ref("newPassword")], "Passwords must match"),
+    .oneOf([yup.ref("password")], "Passwords must match"),
 });
 
 export const composeMessageSchema = yup.object().shape({

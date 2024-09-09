@@ -1,33 +1,34 @@
 import { useState } from "react";
 import OnboardInput from "../../components/OnboardInput";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import OnboardButton from "../../components/OnboardButton";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
-import { loginValidationSchema } from "../../yup/validation";
+import { resetPasswordSchema } from "../../yup/validation";
 import { useFormik } from "formik";
 import { postRequest } from "../../utils/request";
 import { toast } from "react-hot-toast";
 import AuthLayout from "../../layout/AuthLayout";
-import googleImage from "../../assets/img/google.svg";
 import Logo from "../../components/Logo";
 
-const Login = () => {
+const ResetPassword = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [searchParams] = useSearchParams();
 
   const signUpFormik = useFormik({
     initialValues: {
-      email: "",
       password: "",
+      confirmPassword: "",
+      resetCode: searchParams.get("resetCode")
     },
-    validationSchema: loginValidationSchema,
+    validationSchema: resetPasswordSchema,
     onSubmit: (values) => {
       setLoading(true);
-      postRequest("/auth/login", values)
+      postRequest("/password/reset", values)
         .then(({ data }) => {
           setLoading(false);
-          localStorage.setItem("token", data.token);
-          window.location.replace("/home");
+          toast("Continue to login");
+          setTimeout(() => window.location.replace("/auth/login"), 2000)
         })
         .catch((err) => {
           setLoading(false);
@@ -36,10 +37,6 @@ const Login = () => {
     },
   });
 
-  const signInWithGoogle = () => {
-    window.location.href = `${import.meta.env.VITE_BASE_URL}/auth/google`;
-  };
-
   return (
     <AuthLayout>
       <div className="onboard-form max-w-md w-11/12">
@@ -47,40 +44,26 @@ const Login = () => {
           <div className="flex justify-center mb-2">
             <Logo />
           </div>
-          <div className="onboard-title">Log into your account</div>
+          <div className="onboard-title">ResetPassword</div>
 
-          <div className="onboard-subtitle">
-            Enjoy a seemingly writing assistant
-          </div>
-
-          <button
-            className="border border-black w-full rounded-lg py-2 flex items-center gap-2 justify-center text-sm font-semibold"
-            type="button"
-            onClick={signInWithGoogle}
-            disabled={loading}
-          >
-            <img src={googleImage} alt="" />
-            Continue With Google
-          </button>
-
-          <div className="bg-[#D9D9D9] w-full h-[2px] my-8"></div>
-
+          
           <div className="main-form">
             <OnboardInput
-              name="email"
-              value={signUpFormik.values.email}
+              name="password"
+              value={signUpFormik.values.password}
               change={signUpFormik.handleChange}
-              error={signUpFormik.errors.email}
-              label="Email"
-              placeholder="user@gmail.com"
+              error={signUpFormik.errors.password}
+              label="New Password"
+              placeholder="****"
+              type={showPassword ? "text" : "password"}
             />
             <label htmlFor="" className="-mb-4">
-              Password
+              Confirm Password
             </label>
             <div className="grid pass-grid border border-black rounded-md mt-1">
               <OnboardInput
-                name="password"
-                value={signUpFormik.values.password}
+                name="confirmPassword"
+                value={signUpFormik.values.confirmPassword}
                 change={signUpFormik.handleChange}
                 placeholder="Password"
                 showBor={true}
@@ -93,26 +76,14 @@ const Login = () => {
                 {!showPassword ? <FaEye /> : <FaEyeSlash />}
               </div>
             </div>
-              <div className="text-sm text-onboardSubtitle reader">
-              <Link to={"/password/forgot"} className="text-teal-500">
-                Forgot password
-              </Link>
-              </div>
-            {signUpFormik.errors.password && (
+            {signUpFormik.errors.confirmPassword && (
               <div className="text-red-400 text-sm">
-                {signUpFormik.errors.password}
+                {signUpFormik.errors.confirmPassword}
               </div>
             )}
 
             <div className="mt-8">
-              <OnboardButton text="Continue" type="submit" loading={loading} />
-            </div>
-
-            <div className="text-center text-onboardSubtitle reader mt-6">
-              Already have an account?{" "}
-              <Link to={"/auth/register"} className="text-teal-500">
-                Register
-              </Link>
+              <OnboardButton text="Reset" type="submit" loading={loading} />
             </div>
           </div>
         </form>
@@ -121,4 +92,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ResetPassword;
