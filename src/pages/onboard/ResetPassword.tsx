@@ -1,6 +1,6 @@
 import { useState } from "react";
 import OnboardInput from "../../components/OnboardInput";
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import OnboardButton from "../../components/OnboardButton";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import { resetPasswordSchema } from "../../yup/validation";
@@ -25,7 +25,7 @@ const ResetPassword = () => {
     onSubmit: (values) => {
       setLoading(true);
       postRequest("/password/reset", values)
-        .then(({ data }) => {
+        .then(() => {
           setLoading(false);
           toast("Continue to login");
           setTimeout(() => window.location.replace("/auth/login"), 2000)

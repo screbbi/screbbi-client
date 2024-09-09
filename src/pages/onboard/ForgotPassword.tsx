@@ -20,7 +20,7 @@ const ForgotPassword = () => {
     onSubmit: (values) => {
       setLoading(true);
       postRequest("/password/forgot", values)
-        .then(({ data }) => {
+        .then(() => {
           setLoading(false);
           toast("Check Email To Continue");
           setTimeout(() => window.location.replace("/auth/login"), 3000)
