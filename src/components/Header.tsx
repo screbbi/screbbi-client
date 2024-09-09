@@ -82,7 +82,7 @@ const Header = () => {
           <img
             src={landing}
             alt=""
-            className="w-5/6 max-w-3xl mx-auto relative z-10"
+            className="w-5/6 max-w-3xl mx-auto relative"
           />
 
           <div className="font-semibold text-lg text-center mt-20">
