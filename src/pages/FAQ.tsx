@@ -3,12 +3,8 @@ import Footer from "../components/Footer";
 import LandingPageNavbar from "../components/LandingPageNavbar";
 import SingleFAQ from "../components/SingleFAQ";
 import { openTourVideo } from "../utils/functions";
-import { useState } from "react";
-import VideoTourModal from "../components/VideoTourModal";
 
 const FAQ = () => {
-  const [openVideo, setOpenVideo] = useState(false)
-
   return (
     <div className="faq billing min-h-screen">
       <LandingPageNavbar />
@@ -29,15 +25,13 @@ const FAQ = () => {
             <div>Check out the video below for a full explanation.</div>
             <button
               className="py-2 px-6 rounded-full text-white bg-buttonPurple flex gap-2 items-center mt-2"
-              onClick={() => setOpenVideo(v => !v)}
+              onClick={openTourVideo}
             >
               <FaPlay />
               Watch Tour
             </button>
           </div>
         </SingleFAQ>
-
-        {openVideo && <VideoTourModal close={() => setOpenVideo(v => !v)} />}
 
         <SingleFAQ title="Which languages does Screbbi support?">
           <div>
