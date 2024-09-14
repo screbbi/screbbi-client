@@ -2,7 +2,7 @@ import { FaPlay } from "react-icons/fa";
 import Footer from "../components/Footer";
 import LandingPageNavbar from "../components/LandingPageNavbar";
 import SingleFAQ from "../components/SingleFAQ";
-import { openTourVideo } from "../utils/functions";
+// import { openTourVideo } from "../utils/functions";
 import { useState } from "react";
 import VideoTourModal from "../components/VideoTourModal";
 
