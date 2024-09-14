@@ -32,7 +32,7 @@ const FAQ = () => {
               onClick={() => setOpenVideo(v => !v)}
             >
               <FaPlay />
-              Watch Tour
+              Watch tour
             </button>
           </div>
         </SingleFAQ>
