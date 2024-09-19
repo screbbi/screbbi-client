@@ -92,12 +92,18 @@ const Header = () => {
 
         {/* FEATURES */}
         <div className="flex justify-center md:justify-between features w-11/12 mx-auto my-10 flex-wrap gap-4">
-          <div className="feature">AI Essay Writer</div>
+        <div className="feature">Non-Fiction Writing/ instructional books, self-help, or biographies</div>
+        <div className="feature">Novel writing/ plot integration, character development, scene creation</div>
+        <div className="feature">Screenwriting/ dialogue, action, scene descriptions</div>
+        <div className="feature">Children's books/ story creation, adaptable writing style</div>
+        <div className="feature">General Writing Tasks/ Essay writing, blog posts, emails and letters</div>
+        <div className="feature"> Students/ Essay writing, reports and case studies, dissertations and theses, creative writing assignments</div>
+          {/* <div className="feature">AI Essay Writer</div>
           <div className="feature">Essay/Novel Rewriter</div>
           <div className="feature">Essay/Novel Shortener</div>
           <div className="feature">Essay/Novel Extender</div>
           <div className="feature">Essay/Novel Introduction Generator</div>
-          <div className="feature">Free Essay Conclusion Generator </div>
+          <div className="feature">Free Essay Conclusion Generator </div> */}
         </div>
 
         {/* RIGHT FEATURES */}
