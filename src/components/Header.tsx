@@ -91,7 +91,7 @@ const Header = () => {
         </div>
 
         {/* FEATURES */}
-        <div className="flex justify-center md:justify-between features w-11/12 mx-auto my-10 flex-wrap gap-4">
+        <div className="flex justify-center features w-11/12 mx-auto my-10 flex-wrap gap-4">
         <div className="feature">Non-Fiction Writing/ instructional books, self-help, or biographies</div>
         <div className="feature">Novel writing/ plot integration, character development, scene creation</div>
         <div className="feature">Screenwriting/ dialogue, action, scene descriptions</div>
