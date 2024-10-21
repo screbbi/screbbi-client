@@ -40,10 +40,7 @@ const Header = () => {
           </div>
 
           <div className="font-semibold text-base md:text-3xl text-center max-w-4xl mx-auto my-8 w-11/12">
-            Screbbi is your indispensable companion for writing excellence
-            across all genres. Whether you're a novelist, student, or
-            professional, unleash your creativity with advanced AI features
-            tailored to inspire and support your projects.
+            Write a book in 5 days with Screbbi.
           </div>
 
           <div className=" font-semibold text-grey text-center max-w-sm mx-auto my-8">
