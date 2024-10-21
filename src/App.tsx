@@ -20,6 +20,8 @@ import Create from "./pages/plugins/Create";
 import ViewPlugin from "./pages/plugins/ViewPlugin";
 import Editors from "./pages/Editor";
 import EditPlugin from "./pages/plugins/EditPlugin";
+import ForgotPassword from "./pages/onboard/ForgotPassword";
+import ResetPassword from "./pages/onboard/ResetPassword";
 
 function App() {
   return (
@@ -63,6 +65,10 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="verify" element={<Verify />} />
+        </Route>
+        <Route path="password">
+          <Route path="forgot" element={<ForgotPassword />} />
+          <Route path="reset" element={<ResetPassword />} />
         </Route>
       </Routes>
     </Router>

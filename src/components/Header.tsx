@@ -18,10 +18,14 @@ import Footer from "./Footer";
 import { useNavigate } from "react-router-dom";
 import LandingPageNavbar from "./LandingPageNavbar";
 import { TbPlugConnectedX } from "react-icons/tb";
-import { openTourVideo } from "../utils/functions";
+import { useState } from "react";
+import VideoTourModal from "./VideoTourModal";
 
 const Header = () => {
+  const [openTourVideo, setOpenTourVideo] = useState(false)
+
   const navigate = useNavigate();
+
   return (
     <div className="">
       <div className="relative overflow-hidden min-h-[100vh]">
@@ -56,11 +60,16 @@ const Header = () => {
             </button>
             <button
               className="py-2 px-6 rounded-full text-white bg-buttonPurple flex gap-2 items-center"
-              onClick={openTourVideo}
+              onClick={() => setOpenTourVideo(v => !v)}
             >
               <FaPlay />
               Watch Tour
             </button>
+
+            {openTourVideo && <VideoTourModal close={() => {
+              setOpenTourVideo(v => !v);
+              return openTourVideo
+            }}/>}
           </div>
         </div>
 
@@ -70,7 +79,7 @@ const Header = () => {
           <img
             src={landing}
             alt=""
-            className="w-5/6 max-w-3xl mx-auto relative z-10"
+            className="w-5/6 max-w-3xl mx-auto relative"
           />
 
           <div className="font-semibold text-lg text-center mt-20">
@@ -79,13 +88,21 @@ const Header = () => {
         </div>
 
         {/* FEATURES */}
-        <div className="flex justify-center md:justify-between features w-11/12 mx-auto my-10 flex-wrap gap-4">
-          <div className="feature">AI Essay Writer</div>
+        <div className="flex justify-center features w-11/12 mx-auto my-10 flex-wrap gap-4">
+        <div className="feature"><span className="font-semibold">NON-FICTION WRITING: </span>instructional books, self-help, or biographies
+        </div>
+        <div className="feature"><span className="font-semibold">NOVEL WRITING: </span>plot integration, character development, scene creation</div>
+        <div className="feature"><span className="font-semibold">SCREENWRITING: </span>dialogue, action, scene descriptions
+        </div>
+        <div className="feature"><span className="font-semibold">CHILDREN'S BOOKS: </span>story creation, adaptable writing style</div>
+        <div className="feature"><span className="font-semibold">GENERAL WRITING TASKS: </span>Essay writing, blog posts, emails and letters</div>
+        <div className="feature"> <span className="font-semibold">STUDENTS: </span> Essay writing, reports and case studies, dissertations and theses, creative writing assignments</div>
+          {/* <div className="feature">AI Essay Writer</div>
           <div className="feature">Essay/Novel Rewriter</div>
           <div className="feature">Essay/Novel Shortener</div>
           <div className="feature">Essay/Novel Extender</div>
           <div className="feature">Essay/Novel Introduction Generator</div>
-          <div className="feature">Free Essay Conclusion Generator </div>
+          <div className="feature">Free Essay Conclusion Generator </div> */}
         </div>
 
         {/* RIGHT FEATURES */}

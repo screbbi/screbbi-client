@@ -92,7 +92,7 @@ const WriteSettings = ({
             id="keyDetails"
             onChange={change}
             value={writeSetting?.keyDetails ?? ""}
-            placeholder="What important details about you story should we keep in mind?"
+            placeholder="What important details about your story should we keep in mind?"
             className="p-2 w-full h-40 rounded-md resize-none outline-0 text-black border border-selectText mt-1 text-[10px]"
           ></textarea>
         </div>

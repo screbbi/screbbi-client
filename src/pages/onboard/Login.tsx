@@ -93,6 +93,11 @@ const Login = () => {
                 {!showPassword ? <FaEye /> : <FaEyeSlash />}
               </div>
             </div>
+              <div className="text-sm text-onboardSubtitle reader">
+              <Link to={"/password/forgot"} className="text-teal-500">
+                Forgot password
+              </Link>
+              </div>
             {signUpFormik.errors.password && (
               <div className="text-red-400 text-sm">
                 {signUpFormik.errors.password}
