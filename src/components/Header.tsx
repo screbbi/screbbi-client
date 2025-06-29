@@ -43,35 +43,33 @@ const Header = () => {
             <div className="font-semibold">Powered AI-based models</div>
           </div>
 
-          <div className="font-semibold text-base md:text-3xl text-center max-w-4xl mx-auto my-8 w-11/12">
-            Write a book in 5 days with Screbbi.
-          </div>
+          <div className="font-bold text-2xl md:text-4xl text-center max-w-3xl mx-auto my-8">
+  Turn your book idea into reality — in days, not months.
+</div>
 
-          <div className=" font-semibold text-grey text-center max-w-sm mx-auto my-8">
-            AI-powered text generation and editing suggestions
-          </div>
+<div className="text-grey text-base md:text-lg text-center max-w-md mx-auto mb-8">
+  Screbbi uses AI to guide you step-by-step — from blank page to finished novel, blog, or screenplay.
+</div>
 
-          <div className="buttons flex items-center gap-4 justify-center text-sm font-semibold">
-            <button
-              className="py-2 px-6 rounded-full text-white bg-black"
-              onClick={() => navigate("/auth/register")}
-            >
-              Try for free
-            </button>
-            <button
-              className="py-2 px-6 rounded-full text-white bg-buttonPurple flex gap-2 items-center"
-              onClick={() => setOpenTourVideo(v => !v)}
-            >
-              <FaPlay />
-              Watch Tour
-            </button>
+<div className="buttons flex items-center gap-4 justify-center text-sm font-semibold">
+  <button
+    className="py-2 px-6 rounded-full text-white bg-black"
+    onClick={() => navigate("/auth/register")}
+  >
+    Start Writing — It's Free
+  </button>
+  <button
+    className="py-2 px-6 rounded-full text-white bg-buttonPurple flex gap-2 items-center"
+    onClick={() => setOpenTourVideo(v => !v)}
+  >
+    <FaPlay />
+    Watch Tour
+  </button>
+</div>
 
-            {openTourVideo && <VideoTourModal close={() => {
-              setOpenTourVideo(v => !v);
-              return openTourVideo
-            }}/>}
-          </div>
-        </div>
+          <div className="mt-6 text-center text-sm text-gray-500">
+  No credit card required · Cancel anytime · Built for writers, students & creatives
+</div>
 
         <div className="relative">
           <img src={orangeBg} alt="" className="absolute left-10 -bottom-20" />
@@ -82,10 +80,13 @@ const Header = () => {
             className="w-5/6 max-w-3xl mx-auto relative"
           />
 
-          <div className="font-semibold text-lg text-center mt-20">
-            Try Our Powerful, All-in-One AI Writing
-          </div>
-        </div>
+          <div className="font-semibold text-2xl md:text-3xl text-center mt-20">
+  Powerful Tools for Every Writer
+</div>
+
+<div className="text-center text-grey font-medium mt-2">
+  Whether you're writing a novel, a blog post, a children's book, or an academic essay — Screbbi helps you write better, faster.
+</div>
 
         {/* FEATURES */}
         <div className="flex justify-center features w-11/12 mx-auto my-10 flex-wrap gap-4">
@@ -120,8 +121,8 @@ const Header = () => {
               <div className="right-feature-title">Write</div>
 
               <div className="text-grey font-semibold">
-                Write a story from start to finish, with a perfect tone for each
-                paragraph and ability to select from various tone.
+                Write full-length stories from beginning to end with ease. 
+                Screbbi’s AI adapts to your unique voice, ensuring every paragraph flows naturally and carries the perfect tone, pacing, and style.
               </div>
             </div>
 
@@ -132,7 +133,8 @@ const Header = () => {
               <div className="right-feature-title">Rewrite</div>
 
               <div className="text-grey font-semibold">
-                Delegate the task to find the perfect word, every time.
+                Rewrite effortlessly – let Screbbi polish your drafts for clarity and style. 
+                Every sentence is refined to perfectly capture your intended voice.
               </div>
             </div>
 
@@ -143,8 +145,8 @@ const Header = () => {
               <div className="right-feature-title">Describe</div>
 
               <div className="text-grey font-semibold">
-                Describing allows readers to better empathize with your
-                characters.
+                Describe your scenes in vivid detail so readers truly connect with your characters. 
+                Add layers of emotion and context to bring your narrative to life.
               </div>
             </div>
 
@@ -167,9 +169,8 @@ const Header = () => {
               <div className="right-feature-title">Brainstorm</div>
 
               <div className="text-grey font-semibold">
-                It sparks a variety of ideas for plot, characters, settings, and
-                themes, nurturing creativity and forming a strong narrative
-                base.
+                Brainstorm fresh ideas instantly. Get creative sparks for plot twists, character development, 
+                and setting details that lay the groundwork for a compelling story.
               </div>
             </div>
 
@@ -180,8 +181,8 @@ const Header = () => {
               <div className="right-feature-title">Plugins</div>
 
               <div className="text-grey font-semibold">
-                Expands creative tools, enriching narratives and character
-                development while preserving the writer's unique voice.
+                Leverage powerful plugins to supercharge your writing. 
+                Integrate extra creative tools that boost your storytelling capabilities without losing your unique voice.
               </div>
             </div>
           </div>
