@@ -206,7 +206,7 @@ const Header = () => {
               </div>
 
               <div className="text-grey font-semibold">
-                <span className="font-semibold">Story Guide</span> takes you
+                <span className="font-semibold">Screbbi's Write</span> takes you
                 step-by-step from idea, to outline, to beating out chapters, and
                 then writes 1,000s of words, in your style.
               </div>
@@ -240,8 +240,8 @@ const Header = () => {
               </div>
 
               <div className="text-closeBlack text-xl font-semibold my-4">
-                Story Guide guides you through writing a complete novel in a
-                short period.
+                Your personal guide to writing a complete novel 
+                from idea to final draft.
               </div>
 
               <div className="text-grey font-semibold">
@@ -271,11 +271,11 @@ const Header = () => {
               </div>
 
               <div className="text-closeBlack text-xl font-semibold my-4">
-                When the words just won’t come out – Write can do it for you.
+                Struggling with the right words? Let Screbbi handle the rewrite.
               </div>
 
               <div className="text-grey font-semibold">
-                Write is like autocomplete on steroids. It analyzes your
+                Rewrite is like autocomplete on steroids. It analyzes your
                 characters, tone, and plot arc and generates the next 300 words
                 in your voice. It even gives you options!
               </div>
@@ -363,6 +363,109 @@ const Header = () => {
           </div>
         </div>
 
+        {/* TESTIMONIAL SECTION */}
+<div className="bg-[#f9f9f9] py-16 px-6 md:px-12">
+  <div className="text-center mb-12">
+    <h2 className="text-2xl md:text-4xl font-bold mb-4 text-closeBlack">
+      What Our Users Are Saying
+    </h2>
+    <p className="text-grey font-medium max-w-2xl mx-auto">
+      Writers from all walks of life use Screbbi to bring their ideas to life — faster, easier, and with more confidence.
+    </p>
+  </div>
+
+  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+    {[
+      {
+        name: "Emily",
+        role: "Author",
+        text: "Screbbi completely changed how I write. I went from procrastinating for months to finishing my book in under two weeks!",
+      },
+      {
+        name: "Daniel",
+        role: "Blogger",
+        text: "I use Screbbi every single day. The Rewrite and Describe tools are life-savers when I get stuck.",
+      },
+      {
+        name: "Chloe",
+        role: "Creative Writer",
+        text: "The pacing and dialogue suggestions feel like having a second brain. It’s like magic — but real.",
+      },
+      {
+        name: "Oliver",
+        role: "Student",
+        text: "Screbbi helped me structure my essays and creative pieces faster. Super helpful tool.",
+      },
+      {
+        name: "Rachel",
+        role: "Content Creator",
+        text: "From landing page copy to blog posts, I now create content 3x faster with Screbbi.",
+      },
+    ].map((review, i) => (
+      <div key={i} className="bg-white rounded-xl shadow-md p-6">
+        <div className="flex items-center gap-4 mb-4">
+          <div className="w-12 h-12 rounded-full bg-gray-200" />
+          <div>
+            <div className="font-semibold">{review.name}</div>
+            <div className="text-sm text-gray-500">{review.role}</div>
+          </div>
+        </div>
+        <div className="text-yellow-500 mb-2">
+          {"★★★★★".split("").map((star, i) => (
+            <span key={i}>{star}</span>
+          ))}
+        </div>
+        <p className="text-sm text-gray-700">{review.text}</p>
+      </div>
+    ))}
+  </div>
+</div>
+
+        {/* TRUST BADGES SECTION */}
+<div className="bg-white py-12 px-6 md:px-12 border-t">
+  <div className="max-w-6xl mx-auto text-center">
+    <h3 className="text-xl md:text-2xl font-semibold mb-8 text-closeBlack">
+      Trusted Technology. Built for Writers.
+    </h3>
+
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-sm text-gray-700">
+      <div className="flex flex-col items-center">
+        <span className="text-3xl mb-2">⚡</span>
+        <p>AI-Powered & Lightning Fast</p>
+      </div>
+      <div className="flex flex-col items-center">
+        <span className="text-3xl mb-2">🔒</span>
+        <p>Secure & SSL Encrypted</p>
+      </div>
+      <div className="flex flex-col items-center">
+        <span className="text-3xl mb-2">🧠</span>
+        <p>Smart Writing Suggestions</p>
+      </div>
+      <div className="flex flex-col items-center">
+        <span className="text-3xl mb-2">🙌</span>
+        <p>Used by Thousands of Creators</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+       {/* FINAL CTA SECTION */}
+<div className="bg-black text-white py-16 px-6 md:px-12 text-center">
+  <h2 className="text-2xl md:text-4xl font-bold mb-4">
+    Ready to Start Writing Smarter?
+  </h2>
+  <p className="text-gray-300 mb-8 max-w-xl mx-auto">
+    Sign up for free and see how Screbbi can help you write better, faster, and with less stress — whether you're a seasoned author or just getting started.
+  </p>
+
+  <button
+    onClick={() => navigate("/auth/register")}
+    className="bg-buttonPurple text-white px-8 py-3 rounded-full text-sm font-semibold hover:bg-purple-700 transition"
+  >
+    Start Free – No Credit Card Needed
+  </button>
+</div>
+   
         {/* FOOTER */}
         <Footer />
       </div>
