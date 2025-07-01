@@ -370,7 +370,7 @@ const Header = () => {
       What Our Users Are Saying
     </h2>
     <p className="text-grey font-medium max-w-2xl mx-auto">
-      Writers from all walks of life use Screbbi to bring their ideas to life — faster, easier, and with more confidence.
+      Join thousands of satisfied writers using Screbbi to turn ideas into books, stories, and more — effortlessly.
     </p>
   </div>
 
