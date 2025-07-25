@@ -44,7 +44,7 @@ const Header = () => {
           </div>
 
           <div className="font-semibold text-base md:text-3xl text-center max-w-4xl mx-auto my-8 w-11/12">
-            Write a book in 5 days with Screbbi.
+            Welcome to Screbbi.
           </div>
 
           <div className=" font-semibold text-grey text-center max-w-sm mx-auto my-8">
