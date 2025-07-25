@@ -470,6 +470,8 @@ const Header = () => {
         <Footer />
       </div>
     </div>
+        </div>
+    </div>
   );
 };
 
