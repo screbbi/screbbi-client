@@ -48,7 +48,7 @@ const Header = () => {
 </div>
 
 <div className="text-grey text-base md:text-lg text-center max-w-md mx-auto mb-8">
-  Screbbi uses AI to guide you step-by-step — from blank page to finished novel, blog, or screenplay.
+  Screbbi uses AI to guide you step-by-step from blank page to finished novel, blog, or screenplay.
 </div>
 
 <div className="buttons flex items-center gap-4 justify-center text-sm font-semibold">
@@ -56,7 +56,7 @@ const Header = () => {
     className="py-2 px-6 rounded-full text-white bg-black"
     onClick={() => navigate("/auth/register")}
   >
-    Start Writing — It's Free!
+    Try for Free
   </button>
   <button
     className="py-2 px-6 rounded-full text-white bg-buttonPurple flex gap-2 items-center"
@@ -67,18 +67,19 @@ const Header = () => {
   </button>
 </div>
 
-          <div className="mt-6 text-center text-sm text-gray-500">
-  No credit card required · Cancel anytime · Built for writers, students & creatives
+          <div className="mt-6 mb-8 text-center text-sm text-gray-500">
+  No credit card required · Cancel anytime · Built for Authors, Entrepreneurs & Creatives
 </div>
 
-        <div className="relative">
-          <img src={orangeBg} alt="" className="absolute left-10 -bottom-20" />
-          <img src={lightOrangeBg} alt="" className="absolute right-20 top-0" />
-          <img
-            src={landing}
-            alt=""
-            className="w-5/6 max-w-3xl mx-auto relative"
-          />
+<div className="relative mt-8">
+  <img src={orangeBg} alt="" className="absolute left-10 -bottom-20" />
+  <img src={lightOrangeBg} alt="" className="absolute right-20 top-0" />
+  <img
+    src={landing}
+    alt=""
+    className="w-5/6 max-w-3xl mx-auto relative"
+  />
+</div>
 
           <div className="font-semibold text-2xl md:text-3xl text-center mt-20">
   Powerful Tools for Every Writer
@@ -90,14 +91,14 @@ const Header = () => {
 
         {/* FEATURES */}
         <div className="flex justify-center features w-11/12 mx-auto my-10 flex-wrap gap-4">
-        <div className="feature"><span className="font-semibold">NON-FICTION WRITING: </span>instructional books, self-help, or biographies
+        <div className="feature"><span className="font-semibold">NON-FICTION WRITING: </span>Instructional books, Self-help, or Biographies
         </div>
-        <div className="feature"><span className="font-semibold">NOVEL WRITING: </span>plot integration, character development, scene creation</div>
-        <div className="feature"><span className="font-semibold">SCREENWRITING: </span>dialogue, action, scene descriptions
+        <div className="feature"><span className="font-semibold">NOVEL WRITING: </span>Plot integration, Character development, Scene creation</div>
+        <div className="feature"><span className="font-semibold">SCREENWRITING: </span>Dialogue, Action, Scene descriptions
         </div>
-        <div className="feature"><span className="font-semibold">CHILDREN'S BOOKS: </span>story creation, adaptable writing style</div>
-        <div className="feature"><span className="font-semibold">GENERAL WRITING TASKS: </span>Essay writing, blog posts, emails and letters</div>
-        <div className="feature"> <span className="font-semibold">STUDENTS: </span> Essay writing, reports and case studies, dissertations and theses, creative writing assignments</div>
+        <div className="feature"><span className="font-semibold">CHILDREN'S BOOKS: </span>Story creation, Adaptable writing style</div>
+        <div className="feature"><span className="font-semibold">GENERAL WRITING TASKS: </span>Essay writing, Blog posts, Emails and letters</div>
+        <div className="feature"> <span className="font-semibold">STUDENTS: </span> Essay writing, Reports and case studies, Dissertations and theses, Creative writing assignments</div>
           {/* <div className="feature">AI Essay Writer</div>
           <div className="feature">Essay/Novel Rewriter</div>
           <div className="feature">Essay/Novel Shortener</div>
@@ -389,22 +390,29 @@ const Header = () => {
       {
         name: "Chloe",
         role: "Creative Writer",
-        text: "The pacing and dialogue suggestions feel like having a second brain. It’s like magic — but real.",
+        text: "The pacing and dialogue suggestions feel like having a second brain. It feels like magic but real. I'm so happy I found this site!",
       },
       {
         name: "Oliver",
         role: "Student",
-        text: "Screbbi helped me structure my essays and creative pieces faster. Super helpful tool.",
+        text: "Screbbi helped me structure my essays, assignments and creative pieces faster. Super helpful tool. Highly recommended.",
       },
       {
         name: "Rachel",
         role: "Content Creator",
-        text: "From landing page copy to blog posts, I now create content 3x faster with Screbbi.",
+        text: "I've been using Screbbi for a while now and it's been great. Whenever I'm working on a landing page or writing up a new blog post, it helps me get my ideas out faster and more clearly. I'm easily creating content 3x faster than before.",
+      },
+      {
+        name: "Jasmine",
+        role: "Best-Selling Author",
+        text: "Writing used to feel overwhelming, especially when I hit creative blocks. Screbbi helped me push past that. I finished my latest novel in record time, and it even gave me ideas I hadn’t thought of. It’s like having a co-author who never runs out of inspiration.",
       },
     ].map((review, i) => (
       <div key={i} className="bg-white rounded-xl shadow-md p-6">
         <div className="flex items-center gap-4 mb-4">
-          <div className="w-12 h-12 rounded-full bg-gray-200" />
+          <div className="w-12 h-12 rounded-full bg-buttonPurple text-white flex items-center justify-center font-bold text-lg">
+            {review.name.charAt(0)}
+          </div>
           <div>
             <div className="font-semibold">{review.name}</div>
             <div className="text-sm text-gray-500">{review.role}</div>
@@ -443,19 +451,19 @@ const Header = () => {
       </div>
       <div className="flex flex-col items-center">
         <span className="text-3xl mb-2">🙌</span>
-        <p>Used by Thousands of Creators</p>
+        <p>Used by Thousands of Authors</p>
       </div>
     </div>
   </div>
 </div>
 
        {/* FINAL CTA SECTION */}
-<div className="bg-black text-white py-16 px-6 md:px-12 text-center">
+<div className="bg-gradient-to-br from-[#1c1c1e] to-[#2d2d30] text-white py-16 px-6 md:px-12 text-center relative z-10">
   <h2 className="text-2xl md:text-4xl font-bold mb-4">
     Ready to Start Writing Smarter?
   </h2>
   <p className="text-gray-300 mb-8 max-w-xl mx-auto">
-    Sign up for free and see how Screbbi can help you write better, faster, and with less stress — whether you're a seasoned author or just getting started.
+    Sign up for free and see how Screbbi can help you write better, faster, and with less stress whether you're a seasoned author or just getting started.
   </p>
 
   <button
