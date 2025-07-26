@@ -90,7 +90,7 @@ const Header = () => {
 </div>
 
         {/* FEATURES */}
-        <div className="flex justify-center features w-11/12 mx-auto my-10 flex-wrap gap-4">
+        <div className="flex flex-col md:flex-row md:flex-wrap justify-center items-center gap-4 w-11/12 max-w-5xl mx-auto my-10">
         <div className="feature"><span className="font-semibold">NON-FICTION WRITING: </span>Instructional books, Self-help, or Biographies
         </div>
         <div className="feature"><span className="font-semibold">NOVEL WRITING: </span>Plot integration, Character development, Scene creation</div>
