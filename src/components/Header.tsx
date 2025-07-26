@@ -56,7 +56,7 @@ const Header = () => {
     className="py-2 px-6 rounded-full text-white bg-black"
     onClick={() => navigate("/auth/register")}
   >
-    Try for Free
+    Write for Free
   </button>
   <button
     className="py-2 px-6 rounded-full text-white bg-buttonPurple flex gap-2 items-center"
