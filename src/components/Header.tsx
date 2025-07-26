@@ -363,6 +363,7 @@ const Header = () => {
             </div>
           </div>
         </div>
+      </div>
 
         {/* TESTIMONIAL SECTION */}
 <div className="bg-[#f9f9f9] py-16 px-6 md:px-12">
@@ -477,8 +478,6 @@ const Header = () => {
         {/* FOOTER */}
         <Footer />
       </div>
-    </div>
-        </div>
     </div>
   );
 };
